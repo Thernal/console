@@ -1,0 +1,288 @@
+#!/usr/bin/env bash
+# ─────────────────────────────────────────────────────────────────────────────
+# pre-commit hook — Detekt static analysis (blocking on NEW violations)
+#
+# Flow (scoped to changed .kt files):
+#   1. Collect changed .kt files (staged + unstaged) as absolute paths
+#   2. Snapshot violation keys for those files from the current XML report
+#   3. Run detektClearTodos → detektChangedFormat → detektChanged → detektMergeDelta → detektAnnotate
+#      (format runs BEFORE analysis so XML line numbers match the final file state)
+#   4. Compare: if the new report has violation keys NOT in the snapshot → EXIT 1
+#   5. If no NEW violations → commit proceeds (EXIT 0)
+#
+# A "violation key" is:  absolute/file/path::RuleName
+# ─────────────────────────────────────────────────────────────────────────────
+
+set -euo pipefail
+
+PROJECT_ROOT="$(git rev-parse --show-toplevel)"
+XML_REPORT="$PROJECT_ROOT/.misc/detekt/detekt-report.xml"
+
+mkdir -p "$PROJECT_ROOT/.misc/detekt"
+
+# ── Helper: extract violation keys from XML report ───────────────────────────
+canonicalize_path() {
+    local input="$1"
+    local normalized="$input"
+    local dir base
+
+    normalized="${normalized//\\//}"
+
+    if [[ "$normalized" =~ ^[A-Za-z]:/ ]]; then
+        if command -v cygpath >/dev/null 2>&1; then
+            normalized="$(cygpath -u "$normalized")"
+        else
+            normalized="/$(printf "%s" "$normalized" | sed -E 's#^([A-Za-z]):/#\L\1/#')"
+        fi
+    fi
+
+    dir="$(dirname "$normalized")"
+    base="$(basename "$normalized")"
+
+    if [ -d "$dir" ]; then
+        printf "%s/%s\n" "$(cd "$dir" && pwd -P)" "$base"
+    else
+        printf "%s\n" "$normalized"
+    fi
+}
+
+extract_keys() {
+    local xml="$1"
+    local filter="${2:-}"
+    [ -f "$xml" ] || return 0
+
+    local filter_file=""
+    if [ -n "$filter" ]; then
+        filter_file="$(mktemp)"
+        while IFS= read -r p; do
+            [ -n "$p" ] || continue
+            canonicalize_path "$p" >> "$filter_file"
+        done < <(printf "%s" "$filter" | awk -v RS=',' '1')
+    fi
+
+    awk '
+        {
+            if (match($0, /<file name="[^"]+"/)) {
+                current = substr($0, RSTART + 12, RLENGTH - 13)
+            }
+            if (match($0, /<error [^>]*>/) && current != "") {
+                line = "0"
+                src = ""
+                if (match($0, /line="[0-9]+"/)) {
+                    line = substr($0, RSTART + 6, RLENGTH - 7)
+                }
+                if (match($0, /source="[^"]*"/)) {
+                    src = substr($0, RSTART + 8, RLENGTH - 9)
+                }
+                rule = src
+                sub(/^.*\./, "", rule)
+                printf "%s\t%s\t%s\n", current, line, rule
+            }
+        }
+    ' "$xml" | while IFS=$'\t' read -r raw_path line rule; do
+        [ -n "$raw_path" ] || continue
+        local canon_path
+        if [[ "$raw_path" = /* ]] || [[ "$raw_path" =~ ^[A-Za-z]:[\\/] ]]; then
+            canon_path="$(canonicalize_path "$raw_path")"
+        else
+            canon_path="$(canonicalize_path "$PROJECT_ROOT/$raw_path")"
+        fi
+
+        if [ -n "$filter_file" ] && ! grep -Fqx "$canon_path" "$filter_file"; then
+            continue
+        fi
+        printf "%s::%s::%s\n" "$canon_path" "$line" "$rule"
+    done | sort
+
+    if [ -n "$filter_file" ] && [ -f "$filter_file" ]; then
+        rm -f "$filter_file"
+    fi
+}
+
+# ── Helper: extract Detekt TODO markers from files ────────────────────────────
+extract_todo_keys() {
+    local rel_paths="$1"
+    local out=""
+    while IFS= read -r rel; do
+        [ -z "$rel" ] && continue
+        local abs="$PROJECT_ROOT/$rel"
+        [ -f "$abs" ] || continue
+        local hits
+        hits=$(grep -n "TODO: Detekt" "$abs" || true)
+        [ -z "$hits" ] && continue
+        while IFS= read -r hit; do
+            [ -z "$hit" ] && continue
+            local line="${hit%%:*}"
+            local text="${hit#*:}"
+            out="${out}${abs}::${line}::${text}"$'\n'
+        done <<< "$hits"
+    done <<< "$rel_paths"
+    printf "%s" "$out" | sort
+}
+
+# ── 1. Collect changed .kt files (staged + unstaged) ────────────────────────
+STAGED_KT=$(git -C "$PROJECT_ROOT" diff --cached --name-only --diff-filter=ACMR | grep '\.kt$' || true)
+WORKTREE_KT=$(git -C "$PROJECT_ROOT" diff --name-only --diff-filter=ACMR | grep '\.kt$' || true)
+CHANGED_KT=$(printf "%s\n%s\n" "$STAGED_KT" "$WORKTREE_KT" | awk 'NF' | sort -u)
+STALE_KT=$(
+    git -C "$PROJECT_ROOT" diff --cached --name-status --diff-filter=DR | awk '
+        BEGIN { FS="\t" }
+        $1 ~ /^D/ { if ($2 ~ /\.kt$/) print $2 }
+        $1 ~ /^R/ { if ($2 ~ /\.kt$/) print $2 }
+    ' || true
+)
+
+if [ -z "$CHANGED_KT" ] && [ -z "$STALE_KT" ]; then
+    echo ""
+    echo "┌─────────────────────────────────────────────┐"
+    echo "│  detekt — no changed .kt files, skipping    │"
+    echo "└─────────────────────────────────────────────┘"
+    echo ""
+    exit 0
+fi
+
+to_abs_csv() {
+    local rel_paths="$1"
+    [ -n "$rel_paths" ] || return 0
+    awk -v root="$PROJECT_ROOT" 'NF { print root "/" $0 }' <<< "$rel_paths" | paste -sd, -
+}
+
+CHANGED_KT_ABS=$(to_abs_csv "$CHANGED_KT")
+STALE_KT_ABS=$(to_abs_csv "$STALE_KT")
+
+# Delete/rename-only commit: only purge stale report paths.
+if [ -z "$CHANGED_KT" ] && [ -n "$STALE_KT" ]; then
+    echo ""
+    echo "┌─────────────────────────────────────────────┐"
+    echo "│  detekt — purging stale report paths...     │"
+    echo "└─────────────────────────────────────────────┘"
+    echo ""
+
+    "$PROJECT_ROOT/gradlew" \
+        -p "$PROJECT_ROOT" \
+        -PdetektStaleReportFiles="$STALE_KT_ABS" \
+        detektMergeDelta \
+        --continue \
+        --quiet \
+        2>&1 | sed 's/^/  /'
+
+    echo ""
+    echo "┌─────────────────────────────────────────────┐"
+    echo "│  ✓  Commit proceeding — stale report cleaned│"
+    echo "└─────────────────────────────────────────────┘"
+    echo ""
+    exit 0
+fi
+
+# ── 2. Snapshot violations BEFORE detekt ────────────────────────────────────
+if [ -n "$CHANGED_KT_ABS" ]; then
+    BEFORE_KEYS_WITH_LINE=$(extract_keys "$XML_REPORT" "$CHANGED_KT_ABS")
+    BEFORE_KEYS=$(echo "$BEFORE_KEYS_WITH_LINE" | awk -F'::' 'NF>=3{print $1 "::" $3}' | sort -u)
+else
+    BEFORE_KEYS_WITH_LINE=""
+    BEFORE_KEYS=""
+fi
+BEFORE_TODOS=$(extract_todo_keys "$CHANGED_KT")
+
+# ── 3. Capture originally staged files ───────────────────────────────────────
+STAGED_FILES=$(git -C "$PROJECT_ROOT" diff --cached --name-only)
+
+echo ""
+echo "┌─────────────────────────────────────────────┐"
+echo "│  detekt — running static analysis...        │"
+echo "└─────────────────────────────────────────────┘"
+
+"$PROJECT_ROOT/gradlew" \
+    -p "$PROJECT_ROOT" \
+    -PdetektChangedFiles="$CHANGED_KT_ABS" \
+    -PdetektStaleReportFiles="$STALE_KT_ABS" \
+    detektClearTodos detektChangedFormat detektChanged detektMergeDelta detektAnnotate \
+    --continue \
+    --quiet \
+    2>&1 | sed 's/^/  /'
+
+echo ""
+
+# ── 4. Re-stage originally staged files ──────────────────────────────────────
+if [ -n "$STAGED_FILES" ]; then
+    while IFS= read -r f; do
+        [ -f "$PROJECT_ROOT/$f" ] && git -C "$PROJECT_ROOT" add "$PROJECT_ROOT/$f"
+    done <<< "$STAGED_FILES"
+fi
+
+# ── 5. Compare: detect NEW violations ────────────────────────────────────────
+if [ -n "$CHANGED_KT_ABS" ]; then
+    AFTER_KEYS_WITH_LINE=$(extract_keys "$XML_REPORT" "$CHANGED_KT_ABS")
+    AFTER_KEYS=$(echo "$AFTER_KEYS_WITH_LINE" | awk -F'::' 'NF>=3{print $1 "::" $3}' | sort -u)
+else
+    AFTER_KEYS_WITH_LINE=""
+    AFTER_KEYS=""
+fi
+
+NEW_KEYS=$(comm -13 <(echo "$BEFORE_KEYS" | sort) <(echo "$AFTER_KEYS" | sort))
+
+AFTER_TODOS=$(extract_todo_keys "$CHANGED_KT")
+NEW_TODOS=$(comm -13 <(echo "$BEFORE_TODOS" | sort) <(echo "$AFTER_TODOS" | sort))
+
+if [ -n "$NEW_KEYS" ] || [ -n "$NEW_TODOS" ]; then
+    NEW_COUNT=$(echo "$NEW_KEYS" | grep -c . || true)
+    TODO_COUNT=$(echo "$NEW_TODOS" | grep -c . || true)
+    BLOCK_COUNT=$((NEW_COUNT + TODO_COUNT))
+
+    echo "┌─────────────────────────────────────────────┐"
+    echo "│  ✗  Commit BLOCKED — $BLOCK_COUNT unresolved issue(s)      │"
+    echo "└─────────────────────────────────────────────┘"
+    echo ""
+    if [ -n "$NEW_KEYS" ]; then
+        echo "  New Detekt violations introduced by this commit:"
+        echo ""
+        while IFS= read -r key; do
+            path="${key%%::*}"
+            rest="${key#*::}"
+            rule="$rest"
+            rel="${path#$PROJECT_ROOT/}"
+            printf "  • %-12s  %s\n" "$rule" "$rel"
+        done <<< "$NEW_KEYS"
+        echo ""
+    fi
+    if [ -n "$NEW_TODOS" ]; then
+        echo "  New TODO annotations added by detekt (autocorrect could not fix):"
+        echo ""
+        while IFS= read -r key; do
+            [ -z "$key" ] && continue
+            path="${key%%::*}"
+            rest="${key#*::}"
+            line="${rest%%::*}"
+            rel="${path#$PROJECT_ROOT/}"
+            printf "  • %-12s  %s:%s\n" "TODO:Detekt" "$rel" "$line"
+        done <<< "$NEW_TODOS"
+        echo ""
+    fi
+    echo "  Fix these Detekt violations and re-commit."
+    echo ""
+    exit 1
+fi
+
+if [ -n "$NEW_TODOS" ]; then
+    echo "┌─────────────────────────────────────────────┐"
+    echo "│  i  Commit proceeding — TODO notes updated  │"
+    echo "└─────────────────────────────────────────────┘"
+    echo ""
+    echo "  New TODO annotations added by detekt:"
+    echo ""
+    while IFS= read -r key; do
+        [ -z "$key" ] && continue
+        path="${key%%::*}"
+        rest="${key#*::}"
+        line="${rest%%::*}"
+        rel="${path#$PROJECT_ROOT/}"
+        printf "  • %-12s  %s:%s\n" "TODO:Detekt" "$rel" "$line"
+    done <<< "$NEW_TODOS"
+    echo ""
+fi
+
+echo "┌─────────────────────────────────────────────┐"
+echo "│  ✓  Commit proceeding — no new violations   │"
+echo "└─────────────────────────────────────────────┘"
+echo ""
+exit 0

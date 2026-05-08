@@ -1,0 +1,38 @@
+# Gradle
+.gradle/
+build/
+**/build/
+local.properties
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# iOS
+xcuserdata/
+DerivedData/
+*.ipa
+
+# Kotlin
+.kotlin/
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.misc/
+
+# Kotlin (compiled/generated)
+*.class
+*.kotlin_module
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Detekt reports (generated — not committed)
+!.misc/detekt/detekt-report-delta.xml

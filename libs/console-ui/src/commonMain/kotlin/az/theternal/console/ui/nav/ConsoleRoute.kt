@@ -1,0 +1,17 @@
+package az.theternal.console.ui.nav
+
+import androidx.compose.runtime.Immutable
+import androidx.navigation3.runtime.NavKey
+
+@Immutable
+sealed interface ConsoleRoute : NavKey {
+
+    @Immutable
+    data object Main : ConsoleRoute
+
+    @Immutable
+    data class LogDetail(
+        val groupId: String,
+        val logId: String,
+    ) : ConsoleRoute
+}
