@@ -13,7 +13,7 @@ class ConsoleNavController internal constructor(
     }
 
     fun popBack() {
-        if (backStack.size > 1) {
+        if (backStack.size > 2) {
             backStack.removeLastOrNull()
         } else {
             onClose()

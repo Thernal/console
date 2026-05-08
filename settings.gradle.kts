@@ -70,6 +70,7 @@ run {
 include(":sample:app")
 include(":sample:android")
 include(":sample:ios")
+include(":sample:jvm")
 
 include(":console-ui")
 

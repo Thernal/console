@@ -16,7 +16,7 @@ import az.theternal.console.ui.screen.logs.LogsNavGraph
 @Composable
 internal fun ConsoleNavHost(onClose: () -> Unit) {
     remember { ConsoleNavigation.register(LogsNavGraph) }
-    val backStack = remember { mutableStateListOf<NavKey>(ConsoleRoute.Main) }
+    val backStack = remember { mutableStateListOf<NavKey>(ConsoleRoute.Stub, ConsoleRoute.Main) }
     val navController = remember(backStack, onClose) {
         ConsoleNavController(backStack = backStack, onClose = onClose)
     }
@@ -31,6 +31,7 @@ internal fun ConsoleNavHost(onClose: () -> Unit) {
                 rememberViewModelStoreNavEntryDecorator(),
             ),
             entryProvider = entryProvider {
+                entry<ConsoleRoute.Stub> { }
                 entry<ConsoleRoute.Main> {
                     ConsoleScreen(onClose = onClose)
                 }

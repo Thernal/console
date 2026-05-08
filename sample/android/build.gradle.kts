@@ -25,4 +25,5 @@ dependencies {
     implementation(projects.sample.app)
     implementation(libs.androidx.activity.compose)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(projects.sample.jvm)
 }

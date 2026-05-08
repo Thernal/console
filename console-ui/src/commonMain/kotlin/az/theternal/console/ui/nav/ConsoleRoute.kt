@@ -7,6 +7,9 @@ import androidx.navigation3.runtime.NavKey
 sealed interface ConsoleRoute : NavKey {
 
     @Immutable
+    data object Stub : ConsoleRoute
+
+    @Immutable
     data object Main : ConsoleRoute
 
     @Immutable

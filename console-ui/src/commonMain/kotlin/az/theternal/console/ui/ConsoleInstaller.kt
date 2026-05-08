@@ -1,5 +1,8 @@
 package az.theternal.console.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -8,8 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import az.theternal.console.core.Console
 import az.theternal.console.ui.gesture.ConsoleTrigger
 import az.theternal.console.ui.gesture.Swipe
@@ -41,22 +42,18 @@ fun ConsoleInstaller(
     Box(Modifier.fillMaxSize().then(gestureModifier)) {
         content()
 
-        // Persistent overlays contributed by other libs (e.g. DebugStepper floating card).
         ConsoleOverlays.overlays.forEach { overlay -> overlay() }
-    }
 
-    if (consoleVisible) {
-        Dialog(
-            onDismissRequest = { consoleVisible = false },
-            properties = DialogProperties(
-                usePlatformDefaultWidth = false,
-                dismissOnBackPress = true,
-                dismissOnClickOutside = false,
-            ),
+        AnimatedVisibility(
+            visible = consoleVisible,
+            enter = fadeIn(),
+            exit = fadeOut(),
         ) {
-            ConsoleTheme {
-                Box(Modifier.fillMaxSize()) {
-                    ConsoleNavHost(onClose = { consoleVisible = false })
+            if (consoleVisible) {
+                ConsoleTheme {
+                    Box(Modifier.fillMaxSize()) {
+                        ConsoleNavHost(onClose = { consoleVisible = false })
+                    }
                 }
             }
         }
