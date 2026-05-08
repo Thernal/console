@@ -71,11 +71,15 @@ include(":sample:app")
 include(":sample:android")
 include(":sample:ios")
 
-// Auto-discover all lib modules under libs/
-settingsDir.resolve("libs").walkTopDown()
-    .filter { it.resolve("build.gradle.kts").exists() }
-    .forEach { dir ->
-        val path = ":libs:" + dir.relativeTo(settingsDir.resolve("libs"))
-            .path.replace(File.separator, ":")
-        include(path)
-    }
+include(":console-ui")
+
+// Auto-discover modules under core/, uikit/, addons/
+listOf("core", "uikit", "addons").forEach { group ->
+    settingsDir.resolve(group).walkTopDown()
+        .filter { it.resolve("build.gradle.kts").exists() }
+        .forEach { dir ->
+            val path = ":$group:" + dir.relativeTo(settingsDir.resolve(group))
+                .path.replace(File.separator, ":")
+            include(path)
+        }
+}
