@@ -7,7 +7,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.consoleUi)
             implementation(projects.core.core)
-            implementation(projects.addons.details)
+            implementation(projects.addons.detailsUi)
             implementation(projects.addons.stepper)
             implementation(libs.compose.material3)
             implementation(libs.compose.foundation)
