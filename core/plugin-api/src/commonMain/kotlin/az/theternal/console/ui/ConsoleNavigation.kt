@@ -5,7 +5,7 @@ import az.theternal.console.ui.base.NavGraph
 
 object ConsoleNavigation {
     private val _graphs = mutableStateListOf<NavGraph>()
-    val graphs: List<NavGraph> get() = _graphs
+    val graphs: List<NavGraph> get() = _graphs.sortedBy { it.order }
 
     fun register(graph: NavGraph) {
         if (_graphs.none { it::class == graph::class }) _graphs.add(graph)

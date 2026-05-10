@@ -14,6 +14,7 @@ import az.theternal.console.ui.screen.detail.LogDetailScreen
 internal object LogsNavGraph : NavGraph {
     override val title = "Logs"
     override val icon: ImageVector = Icons.Default.Menu
+    override val order = 0
 
     @Composable
     override fun Content() {
