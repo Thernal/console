@@ -21,15 +21,12 @@ import az.theternal.console.ui.designsystem.ConsoleTheme
 fun ConsoleInstaller(
     enabled: Boolean = true,
     trigger: ConsoleTrigger = ConsoleTrigger.swipeSequence(Swipe.UP, Swipe.DOWN),
-    plugins: List<ConsolePlugin> = emptyList(),
     content: @Composable () -> Unit,
 ) {
     if (!Console.isEnabled) {
         content()
         return
     }
-
-    remember { plugins.forEach { it.install() } }
 
     var consoleVisible by remember { mutableStateOf(false) }
 

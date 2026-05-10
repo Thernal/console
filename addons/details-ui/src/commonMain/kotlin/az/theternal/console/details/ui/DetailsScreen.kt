@@ -1,4 +1,4 @@
-package az.theternal.console.info.ui
+package az.theternal.console.details.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -13,14 +13,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import az.theternal.console.info.ConsoleDetails
+import az.theternal.console.details.ConsoleDetails
 import az.theternal.console.ui.designsystem.DsTheme
 import az.theternal.console.ui.ds.DsDivider
 import az.theternal.console.ui.ds.DsText
 import az.theternal.console.ui.ds.DsTextStyle
 
 @Composable
-internal fun InfoScreen() {
+internal fun DetailsScreen() {
     val details by ConsoleDetails.flow.collectAsState()
 
     if (details.isEmpty()) {

@@ -6,7 +6,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.consoleUi)
-            implementation(projects.core.core)
+            implementation(projects.core.runtime)
             implementation(projects.addons.detailsUi)
             implementation(projects.addons.stepper)
             implementation(libs.compose.material3)

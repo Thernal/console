@@ -1,4 +1,4 @@
-package az.theternal.console.info
+package az.theternal.console.details
 
 interface ConsoleKey {
     val name: String

@@ -1,4 +1,4 @@
-package az.theternal.console.info.ui
+package az.theternal.console.details.ui
 
 import az.theternal.console.ui.ConsoleNavigation
 import kotlin.experimental.ExperimentalNativeApi
@@ -9,6 +9,6 @@ import kotlin.native.EagerInitialization
 @Suppress("unused")
 private val init = object {
     init {
-        ConsoleNavigation.register(InfoNavGraph)
+        ConsoleNavigation.register(DetailsNavGraph)
     }
 }

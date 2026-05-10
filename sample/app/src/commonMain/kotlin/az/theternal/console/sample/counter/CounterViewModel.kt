@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import az.theternal.console.core.Console
 import az.theternal.console.core.base.Log
-import az.theternal.console.info.ConsoleDetails
+import az.theternal.console.details.ConsoleDetails
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

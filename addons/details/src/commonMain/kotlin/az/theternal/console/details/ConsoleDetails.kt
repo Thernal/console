@@ -1,4 +1,4 @@
-package az.theternal.console.info
+package az.theternal.console.details
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

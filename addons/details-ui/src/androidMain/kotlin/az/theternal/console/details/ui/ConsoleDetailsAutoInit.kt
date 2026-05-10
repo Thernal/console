@@ -1,4 +1,4 @@
-package az.theternal.console.info.ui
+package az.theternal.console.details.ui
 
 import android.content.ContentProvider
 import android.content.ContentValues
@@ -6,9 +6,9 @@ import android.database.Cursor
 import android.net.Uri
 import az.theternal.console.ui.ConsoleNavigation
 
-internal class ConsoleInfoAutoInit : ContentProvider() {
+internal class ConsoleDetailsAutoInit : ContentProvider() {
     override fun onCreate(): Boolean {
-        ConsoleNavigation.register(InfoNavGraph)
+        ConsoleNavigation.register(DetailsNavGraph)
         return true
     }
 
