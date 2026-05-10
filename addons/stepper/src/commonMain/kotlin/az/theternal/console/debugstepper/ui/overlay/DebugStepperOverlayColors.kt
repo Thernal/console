@@ -7,6 +7,9 @@ internal val DisabledColor = Color(0xFF6B7280)
 internal val PausedColor = Color(0xFFFBBF24)
 internal val EmptyColor = Color(0xFF60A5FA)
 internal val SuccessColor = Color(0xFF22C55E)
+internal val ContentMutedColor = Color(0xFF9CA3AF)
+internal val OverlayDividerColor = Color(0xFF2D3142)
+internal val OverlayCodeBg = Color(0xFF1E2029)
 
 internal const val EXPAND_FADE_IN_MS = 150
 internal const val EXPAND_SIZE_MS = 200

@@ -2,7 +2,7 @@ package az.theternal.console.core
 
 import az.theternal.console.core.base.Log
 import az.theternal.console.core.base.LogObserver
-import az.theternal.console.core.details.ConsoleLogObserver
+import az.theternal.console.core.ConsoleLogObserver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

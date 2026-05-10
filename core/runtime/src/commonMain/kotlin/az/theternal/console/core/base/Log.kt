@@ -15,11 +15,11 @@ abstract class Log {
         operator fun invoke(
             message: String,
             tag: String? = null,
-        ): Log {
-            return object : Log() {
-                override val tag: String? = tag
-                override val message: String = message
-            }
-        }
+        ): Log = BasicLog(message, tag)
     }
+
+    private data class BasicLog(
+        override val message: String,
+        override val tag: String? = null,
+    ) : Log()
 }

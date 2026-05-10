@@ -10,8 +10,15 @@ object ConsoleDetails {
     private val detailsState = MutableStateFlow<Map<String, String>>(emptyMap())
     val flow: StateFlow<Map<String, String>> = detailsState.asStateFlow()
 
+    fun put(
+        key: String,
+        value: String,
+    ) {
+        detailsState.update { it + (key to value) }
+    }
+
     fun put(detail: Pair<String, String>) {
-        detailsState.update { it + detail }
+        put(detail.first, detail.second)
     }
 
     fun remove(key: String) {

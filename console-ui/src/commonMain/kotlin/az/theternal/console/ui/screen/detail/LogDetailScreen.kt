@@ -25,11 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import az.theternal.console.core.Console
-
-private const val MILLIS_PER_SECOND = 1000L
-private const val SECONDS_PER_MINUTE = 60L
-private const val SECONDS_PER_HOUR = 3600L
-private const val HOURS_PER_DAY = 24L
+import az.theternal.console.ui.utils.formatLogTimestamp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +70,7 @@ internal fun LogDetailScreen(
                 Spacer(Modifier.height(16.dp))
                 DetailRow("Tag", log.tag ?: "—")
                 DetailRow("Group", groupId.ifBlank { "—" })
-                DetailRow("Time (UTC)", formatTimestamp(log.timestamp))
+                DetailRow("Time (UTC)", formatLogTimestamp(log.timestamp))
                 DetailRow("ID", log.id)
             }
         }
@@ -91,12 +87,4 @@ private fun DetailRow(
         Text(value, style = MaterialTheme.typography.bodySmall)
     }
     Spacer(Modifier.height(8.dp))
-}
-
-private fun formatTimestamp(epochMillis: Long): String {
-    val totalSeconds = epochMillis / MILLIS_PER_SECOND
-    val hh = totalSeconds / SECONDS_PER_HOUR % HOURS_PER_DAY
-    val mm = totalSeconds / SECONDS_PER_MINUTE % SECONDS_PER_MINUTE
-    val ss = totalSeconds % SECONDS_PER_MINUTE
-    return "${hh.toString().padStart(2, '0')}:${mm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')}"
 }

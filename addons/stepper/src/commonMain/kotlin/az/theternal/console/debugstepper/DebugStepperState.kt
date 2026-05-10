@@ -7,6 +7,6 @@ data class DebugStepperState(
     val paused: Boolean = false,
     val events: List<Log> = emptyList(),
     val pendingLogs: Int = 0,
-    val currentStep: String? = null,
+    val blockedLogId: String? = null,
     val blockedTag: String? = null,
 )

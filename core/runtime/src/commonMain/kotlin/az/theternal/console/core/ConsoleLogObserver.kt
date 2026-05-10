@@ -1,4 +1,4 @@
-package az.theternal.console.core.details
+package az.theternal.console.core
 
 import az.theternal.console.core.base.Log
 import az.theternal.console.core.base.LogObserver

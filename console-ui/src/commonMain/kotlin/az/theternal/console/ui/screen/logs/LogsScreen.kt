@@ -14,16 +14,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import az.theternal.console.core.Console
-
-private const val MILLIS_PER_SECOND = 1000L
-private const val SECONDS_PER_MINUTE = 60L
-private const val SECONDS_PER_HOUR = 3600L
-private const val HOURS_PER_DAY = 24L
+import az.theternal.console.ui.utils.formatLogTimestamp
 
 @Composable
 internal fun LogsScreen(onNavigateToLogDetail: (groupId: String, logId: String) -> Unit) {
@@ -36,8 +33,10 @@ internal fun LogsScreen(onNavigateToLogDetail: (groupId: String, logId: String) 
         return
     }
 
+    val reversedLogs = remember(logs) { logs.asReversed() }
+
     LazyColumn(Modifier.fillMaxSize()) {
-        items(logs.asReversed(), key = { it.id }) { log ->
+        items(reversedLogs, key = { it.id }) { log ->
             Column(
                 Modifier
                     .fillMaxWidth()
@@ -58,7 +57,7 @@ internal fun LogsScreen(onNavigateToLogDetail: (groupId: String, logId: String) 
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    text = formatTimestamp(log.timestamp),
+                    text = formatLogTimestamp(log.timestamp),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -66,12 +65,4 @@ internal fun LogsScreen(onNavigateToLogDetail: (groupId: String, logId: String) 
             HorizontalDivider()
         }
     }
-}
-
-private fun formatTimestamp(epochMillis: Long): String {
-    val totalSeconds = epochMillis / MILLIS_PER_SECOND
-    val hh = totalSeconds / SECONDS_PER_HOUR % HOURS_PER_DAY
-    val mm = totalSeconds / SECONDS_PER_MINUTE % SECONDS_PER_MINUTE
-    val ss = totalSeconds % SECONDS_PER_MINUTE
-    return "${hh.toString().padStart(2, '0')}:${mm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')} UTC"
 }

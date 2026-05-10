@@ -100,7 +100,7 @@ internal fun DebugStepperFullscreenPanel(
 
                 DsText(
                     text = uiState.statusText,
-                    color = Color(0xFF9CA3AF),
+                    color = ContentMutedColor,
                     fontSize = 11.sp,
                 )
 
@@ -111,7 +111,7 @@ internal fun DebugStepperFullscreenPanel(
                 )
             }
 
-            DsDivider(color = Color(0xFF2D3142))
+            DsDivider(color = OverlayDividerColor)
 
             // Scrollable content
             Column(
@@ -126,7 +126,7 @@ internal fun DebugStepperFullscreenPanel(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(8.dp))
-                        .background(Color(0xFF1E2029))
+                        .background(OverlayCodeBg)
                         .padding(12.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
@@ -136,18 +136,18 @@ internal fun DebugStepperFullscreenPanel(
                         fontSize = 13.sp,
                     )
                     DsText(
-                        text = "Current step: ${stepperState.currentStep ?: "—"}",
-                        color = Color(0xFF9CA3AF),
+                        text = "Current step: ${uiState.currentStepDisplay ?: "—"}",
+                        color = ContentMutedColor,
                         fontSize = 12.sp,
                     )
                     DsText(
                         text = "Queued logs: ${stepperState.pendingLogs}",
-                        color = Color(0xFF9CA3AF),
+                        color = ContentMutedColor,
                         fontSize = 12.sp,
                     )
                     DsText(
                         text = "Can step now: ${uiState.canStep}",
-                        color = Color(0xFF9CA3AF),
+                        color = ContentMutedColor,
                         fontSize = 12.sp,
                     )
                 }
@@ -160,7 +160,7 @@ internal fun DebugStepperFullscreenPanel(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(Color(0xFF1E2029))
+                                .background(OverlayCodeBg)
                                 .padding(12.dp),
                         ) {
                             DsText(
@@ -173,7 +173,7 @@ internal fun DebugStepperFullscreenPanel(
                 } else {
                     DsText(
                         text = "No log received yet.",
-                        color = Color(0xFF6B7280),
+                        color = DisabledColor,
                         fontSize = 12.sp,
                     )
                 }

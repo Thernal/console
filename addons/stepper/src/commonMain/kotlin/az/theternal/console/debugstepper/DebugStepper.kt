@@ -86,7 +86,7 @@ object DebugStepper : LogObserver {
 
         _state.update {
             it.copy(
-                currentStep = "Log -> ${event.tag}#${event.id}",
+                blockedLogId = event.id,
                 blockedTag = event.tag,
             )
         }
@@ -94,7 +94,7 @@ object DebugStepper : LogObserver {
             waiter.await()
         } finally {
             currentWaiter = null
-            _state.update { it.copy(currentStep = null, blockedTag = null) }
+            _state.update { it.copy(blockedLogId = null, blockedTag = null) }
         }
     }
 

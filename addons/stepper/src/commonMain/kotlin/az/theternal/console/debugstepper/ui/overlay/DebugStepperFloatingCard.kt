@@ -118,7 +118,7 @@ internal fun DebugStepperFloatingCard(
                     if (isExpanded) {
                         DsText(
                             text = uiState.statusText,
-                            color = Color(0xFF9CA3AF),
+                            color = ContentMutedColor,
                             fontSize = 10.sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -143,7 +143,7 @@ internal fun DebugStepperFloatingCard(
                             Icons.Outlined.KeyboardArrowDown
                         },
                         contentDescription = if (isExpanded) "Collapse" else "Expand",
-                        tint = Color(0xFF9CA3AF),
+                        tint = ContentMutedColor,
                         modifier = Modifier
                             .size(18.dp)
                             .clickable { isExpanded = !isExpanded },
@@ -159,13 +159,13 @@ internal fun DebugStepperFloatingCard(
                     Column {
                         DsDivider(
                             modifier = Modifier.padding(vertical = 6.dp),
-                            color = Color(0xFF2D3142),
+                            color = OverlayDividerColor,
                         )
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(Color(0xFF1E2029))
+                                .background(OverlayCodeBg)
                                 .clickable { onOpenFullscreen() }
                                 .padding(8.dp)
                                 .verticalScroll(rememberScrollState()),
