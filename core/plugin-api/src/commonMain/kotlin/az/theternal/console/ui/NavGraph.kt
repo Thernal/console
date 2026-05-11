@@ -1,4 +1,4 @@
-package az.theternal.console.ui.base
+package az.theternal.console.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector

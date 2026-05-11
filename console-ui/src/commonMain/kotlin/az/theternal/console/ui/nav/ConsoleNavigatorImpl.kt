@@ -1,0 +1,38 @@
+package az.theternal.console.ui.nav
+
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.navigation3.runtime.NavKey
+import az.theternal.console.ui.ConsoleNavigator
+import az.theternal.console.ui.ConsoleRoute
+
+internal class ConsoleNavigatorImpl(
+    private val consoleVisibleState: MutableState<Boolean>,
+    private val requestedTabTitleState: MutableState<String?>,
+) : ConsoleNavigator {
+
+    val backStack: SnapshotStateList<NavKey> =
+        mutableStateListOf(ConsoleRoute.Stub, ConsoleRoute.Main)
+
+    override fun push(key: NavKey) {
+        consoleVisibleState.value = true
+        backStack.add(key)
+    }
+
+    override fun pop() {
+        if (backStack.size > 2) backStack.removeLastOrNull() else close()
+    }
+
+    override fun openTab(tabTitle: String?) {
+        consoleVisibleState.value = true
+        requestedTabTitleState.value = tabTitle
+    }
+
+    fun close() {
+        consoleVisibleState.value = false
+        requestedTabTitleState.value = null
+        backStack.clear()
+        backStack.addAll(listOf(ConsoleRoute.Stub, ConsoleRoute.Main))
+    }
+}

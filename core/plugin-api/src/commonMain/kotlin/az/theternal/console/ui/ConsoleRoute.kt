@@ -1,4 +1,4 @@
-package az.theternal.console.ui.nav
+package az.theternal.console.ui
 
 import androidx.compose.runtime.Immutable
 import androidx.navigation3.runtime.NavKey

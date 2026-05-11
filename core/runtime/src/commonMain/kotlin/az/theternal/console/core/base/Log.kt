@@ -9,17 +9,20 @@ abstract class Log {
     val id: String = Uuid.random().toString()
     val timestamp: Long = Clock.System.now().toEpochMilliseconds()
     open val tag: String? = null
+    open val level: LogLevel? = null
     abstract val message: String
 
     companion object {
         operator fun invoke(
             message: String,
-            tag: String? = null,
-        ): Log = BasicLog(message, tag)
+            tag: String? = "NO TAG",
+            level: LogLevel? = null,
+        ): Log = BasicLog(message, tag, level)
     }
 
     private data class BasicLog(
         override val message: String,
         override val tag: String? = null,
+        override val level: LogLevel? = null,
     ) : Log()
 }

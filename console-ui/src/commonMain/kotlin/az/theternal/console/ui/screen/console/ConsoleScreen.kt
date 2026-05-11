@@ -12,6 +12,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,10 +26,22 @@ import az.theternal.console.ui.ds.DsTextStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ConsoleScreen(onClose: () -> Unit) {
+internal fun ConsoleScreen(
+    onClose: () -> Unit,
+    requestedTabTitle: String? = null,
+    onRequestConsumed: () -> Unit = {},
+) {
     val graphs = ConsoleNavigation.graphs
     var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
     val safeIndex = selectedIndex.coerceIn(0, (graphs.size - 1).coerceAtLeast(0))
+
+    LaunchedEffect(requestedTabTitle) {
+        if (requestedTabTitle != null) {
+            val idx = graphs.indexOfFirst { it.title == requestedTabTitle }
+            if (idx >= 0) selectedIndex = idx
+            onRequestConsumed()
+        }
+    }
 
     Scaffold(
         topBar = {

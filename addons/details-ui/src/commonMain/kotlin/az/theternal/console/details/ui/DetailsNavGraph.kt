@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import az.theternal.console.ui.base.NavGraph
+import az.theternal.console.ui.NavGraph
 
 internal object DetailsNavGraph : NavGraph {
     override val title = "Details"
