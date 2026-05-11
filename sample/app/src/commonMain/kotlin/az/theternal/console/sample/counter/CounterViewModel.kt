@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import az.theternal.console.core.Console
 import az.theternal.console.core.base.Log
+import az.theternal.console.core.base.LogLevel
 import az.theternal.console.details.ConsoleDetails
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +19,11 @@ class CounterViewModel : ViewModel() {
     fun increment() {
         viewModelScope.launch {
             val prev = _count.value
-            logAndUpdateDetails("Incremented", prev, _count.value)
+            logAndUpdateDetails(
+                action = "Incremented",
+                from = prev,
+                to = _count.value,
+            )
             _count.value++
         }
     }
@@ -26,7 +31,11 @@ class CounterViewModel : ViewModel() {
     fun decrement() {
         viewModelScope.launch {
             val prev = _count.value
-            logAndUpdateDetails("Decremented", prev, _count.value)
+            logAndUpdateDetails(
+                action = "Decremented",
+                from = prev,
+                to = _count.value,
+            )
             _count.value--
         }
     }
@@ -34,7 +43,13 @@ class CounterViewModel : ViewModel() {
     fun reset() {
         viewModelScope.launch {
             val prev = _count.value
-            logAndUpdateDetails("Reset", prev, 0)
+            logAndUpdateDetails(
+                action = "Reset",
+                from = prev,
+                to = 0,
+                logLevel = LogLevel.Error,
+                tag = "RESET",
+            )
             _count.value = 0
         }
     }
@@ -43,8 +58,16 @@ class CounterViewModel : ViewModel() {
         action: String,
         from: Int,
         to: Int,
+        logLevel: LogLevel = LogLevel.Success,
+        tag: String = "ACTION",
     ) {
-        Console.asyncNotify { Log("Counter $action: $from → $to") }
+        Console.asyncNotify {
+            Log(
+                message = "Counter $action: $from → $to",
+                level = logLevel,
+                tag = tag,
+            )
+        }
         ConsoleDetails.put("Counter" to to.toString())
         ConsoleDetails.put("Last Action" to action)
     }

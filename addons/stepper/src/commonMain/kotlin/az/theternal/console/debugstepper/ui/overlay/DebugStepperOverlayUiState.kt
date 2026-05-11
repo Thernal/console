@@ -16,7 +16,7 @@ internal data class DebugStepperOverlayUiState(
 )
 
 internal fun buildDebugStepperOverlayUiState(stepperState: DebugStepperState): DebugStepperOverlayUiState {
-    val currentLog = stepperState.events.lastOrNull()
+    val currentLog = stepperState.steppedEvents.lastOrNull()
     val displayTag = if (!stepperState.enabled) null else stepperState.blockedTag ?: currentLog?.tag
     val canStep = stepperState.blockedLogId != null
     val currentStepDisplay = stepperState.blockedLogId?.let { id ->
@@ -41,10 +41,10 @@ private fun resolveStatusText(
     state: DebugStepperState,
     canStep: Boolean,
 ): String = when {
-    !state.enabled -> "Stepper disabled"
-    state.paused && canStep -> "Blocked on current log"
-    state.paused && state.pendingLogs == 0 -> "No queued logs"
-    state.paused -> "Running to next log (${state.pendingLogs} queued)"
+    !state.enabled -> "Disabled"
+    state.paused && canStep -> "Paused"
+    state.paused && state.pendingLogs == 0 -> "Idle"
+    state.paused -> "Running · ${state.pendingLogs} queued"
     else -> "Running"
 }
 

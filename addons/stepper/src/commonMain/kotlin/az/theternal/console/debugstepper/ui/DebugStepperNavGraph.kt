@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import az.theternal.console.debugstepper.ui.screen.DebugStepperScreen
-import az.theternal.console.ui.base.NavGraph
+import az.theternal.console.ui.NavGraph
 
 object DebugStepperNavGraph : NavGraph {
     override val title: String = "Stepper"
