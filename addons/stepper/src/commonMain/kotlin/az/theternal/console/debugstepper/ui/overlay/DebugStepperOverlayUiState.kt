@@ -1,17 +1,23 @@
 package az.theternal.console.debugstepper.ui.overlay
 
-import androidx.compose.ui.graphics.Color
 import az.theternal.console.core.base.Log
 import az.theternal.console.debugstepper.DebugStepperState
 
 private const val LOG_ID_PREFIX_LENGTH = 8
+
+internal enum class StepperStatusTone {
+    Disabled,
+    Paused,
+    Idle,
+    Running,
+}
 
 internal data class DebugStepperOverlayUiState(
     val currentLog: Log?,
     val displayTag: String?,
     val canStep: Boolean,
     val statusText: String,
-    val statusColor: Color,
+    val statusTone: StepperStatusTone,
     val currentStepDisplay: String?,
 )
 
@@ -32,7 +38,7 @@ internal fun buildDebugStepperOverlayUiState(stepperState: DebugStepperState): D
         displayTag = displayTag,
         canStep = canStep,
         statusText = resolveStatusText(stepperState, canStep),
-        statusColor = resolveStatusColor(stepperState, canStep),
+        statusTone = resolveStatusTone(stepperState, canStep),
         currentStepDisplay = currentStepDisplay,
     )
 }
@@ -48,12 +54,12 @@ private fun resolveStatusText(
     else -> "Running"
 }
 
-private fun resolveStatusColor(
+private fun resolveStatusTone(
     state: DebugStepperState,
     canStep: Boolean,
-): Color = when {
-    !state.enabled -> DisabledColor
-    state.paused && canStep -> PausedColor
-    state.paused -> EmptyColor
-    else -> SuccessColor
+): StepperStatusTone = when {
+    !state.enabled -> StepperStatusTone.Disabled
+    state.paused && canStep -> StepperStatusTone.Paused
+    state.paused -> StepperStatusTone.Idle
+    else -> StepperStatusTone.Running
 }

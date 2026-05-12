@@ -1,11 +1,24 @@
 package az.theternal.console.debugstepper.ui.overlay
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import az.theternal.console.ui.designsystem.foundation.theme.Theme
 
-internal val OverlayBg = Color(0xFF13161C)
-internal val DisabledColor = Color(0xFF6B7280)
-internal val PausedColor = Color(0xFFFBBF24)
-internal val EmptyColor = Color(0xFF60A5FA)
-internal val SuccessColor = Color(0xFF22C55E)
-internal val ContentMutedColor = Color(0xFF9CA3AF)
-internal val OverlayDividerColor = Color(0xFF2D3142)
+@Composable
+internal fun overlayStatusColor(tone: StepperStatusTone): Color {
+    return when (tone) {
+        StepperStatusTone.Disabled -> Theme.colors.content03
+        StepperStatusTone.Paused -> Theme.colors.warning
+        StepperStatusTone.Idle -> Theme.colors.info
+        StepperStatusTone.Running -> Theme.colors.success
+    }
+}
+
+val overlayBackgroundColor: Color
+    @Composable get() = Theme.colors.background1
+
+val overlayMutedContentColor: Color
+    @Composable get() = Theme.colors.content04
+
+val overlayDividerColor: Color
+    @Composable get() = Theme.colors.border

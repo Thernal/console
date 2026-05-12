@@ -1,4 +1,4 @@
-package az.theternal.console.ui.designsystem.foundation
+package az.theternal.console.ui.designsystem.foundation.color
 
 import androidx.compose.ui.graphics.Color
 

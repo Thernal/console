@@ -12,9 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import az.theternal.console.core.Console
 import az.theternal.console.ui.LocalLogRenderer
-import az.theternal.console.ui.designsystem.DsTheme
-import az.theternal.console.ui.ds.DsText
-import az.theternal.console.ui.ds.DsTextStyle
+import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.ui.designsystem.components.core.DsText
 
 @Composable
 internal fun LogsScreen(onNavigateToLogDetail: (groupId: String, logId: String) -> Unit) {
@@ -23,7 +22,7 @@ internal fun LogsScreen(onNavigateToLogDetail: (groupId: String, logId: String) 
 
     if (logs.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            DsText("No logs yet", style = DsTextStyle.Body, color = DsTheme.colors.content3)
+            DsText("No logs yet", style = Theme.typography.body02, color = Theme.colors.content03)
         }
         return
     }

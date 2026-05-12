@@ -19,10 +19,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.ContentCopy
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,23 +26,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import az.theternal.console.core.base.Log
-import az.theternal.console.ui.designsystem.DsTheme
-import az.theternal.console.ui.ds.DsDivider
-import az.theternal.console.ui.ds.DsIcon
-import az.theternal.console.ui.ds.DsText
-import az.theternal.console.ui.ds.DsTextStyle
+import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.ui.designsystem.components.core.DsDivider
+import az.theternal.console.ui.designsystem.components.core.DsIcon
+import az.theternal.console.ui.designsystem.components.core.DsIconButton
+import az.theternal.console.ui.designsystem.components.core.DsScaffold
+import az.theternal.console.ui.designsystem.components.core.DsText
+import az.theternal.console.ui.designsystem.components.core.DsTopAppBar
 import az.theternal.console.ui.utils.LogTagBadge
 import az.theternal.console.ui.utils.formatLogTimestampFull
 import az.theternal.console.ui.utils.logAccentColor
 
-private val AccentBarWidth = 3.dp
+private val AccentBarWidth = Theme.dimens.dp3
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun DefaultLogDetail(
     log: Log,
@@ -55,29 +49,27 @@ internal fun DefaultLogDetail(
     val accentColor = log.logAccentColor()
     val clipboard = LocalClipboardManager.current
 
-    Scaffold(
+    DsScaffold(
         topBar = {
-            TopAppBar(
+            DsTopAppBar(
                 title = {
                     if (log.tag != null) {
                         LogTagBadge(tag = log.tag, color = accentColor)
                     } else {
-                        DsText("Log Detail", style = DsTextStyle.TitleMedium)
+                        DsText("Log Detail", style = Theme.typography.title01)
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    DsIconButton(onClick = onBack) {
                         DsIcon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            icon = Icons.AutoMirrored.Filled.ArrowBack,
                         )
                     }
                 },
                 actions = {
-                    IconButton(onClick = { clipboard.setText(AnnotatedString(log.message)) }) {
+                    DsIconButton(onClick = { clipboard.setText(AnnotatedString(log.message)) }) {
                         DsIcon(
-                            imageVector = Icons.Outlined.ContentCopy,
-                            contentDescription = "Copy",
+                            icon = Icons.Outlined.ContentCopy,
                         )
                     }
                 },
@@ -89,8 +81,8 @@ internal fun DefaultLogDetail(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
-                .padding(DsTheme.dimens.md),
-            verticalArrangement = Arrangement.spacedBy(DsTheme.dimens.md),
+                .padding(Theme.dimens.dp12),
+            verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp12),
         ) {
             MessageCard(log = log, accentColor = accentColor)
             MetaCard(log = log, accentColor = accentColor)
@@ -106,9 +98,9 @@ private fun MessageCard(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(DsTheme.rounding.lg)
-            .background(DsTheme.colors.background2)
-            .border(DsTheme.metrics.borderWidth, accentColor.copy(alpha = 0.3f), DsTheme.rounding.lg),
+            .clip(Theme.rounding.r12)
+            .background(Theme.colors.background2)
+            .border(Theme.metrics.borderWidth, accentColor.copy(alpha = 0.3f), Theme.rounding.r12),
     ) {
         Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
             Box(
@@ -118,14 +110,13 @@ private fun MessageCard(
                     .background(accentColor),
             )
             SelectionContainer(modifier = Modifier.weight(1f)) {
-                androidx.compose.material3.Text(
+                DsText(
                     text = log.message,
-                    modifier = Modifier.padding(DsTheme.dimens.md),
-                    style = TextStyle(
+                    modifier = Modifier.padding(Theme.dimens.dp12),
+                    style = Theme.typography.body02.copy(
                         fontFamily = FontFamily.Monospace,
-                        fontSize = 13.sp,
-                        lineHeight = 20.sp,
-                        color = DsTheme.colors.content1,
+                        lineHeight = Theme.typography.body01.lineHeight,
+                        color = Theme.colors.content01,
                     ),
                 )
             }
@@ -141,32 +132,32 @@ private fun MetaCard(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(DsTheme.rounding.lg)
-            .background(DsTheme.colors.background2)
-            .border(DsTheme.metrics.borderWidth, DsTheme.colors.border, DsTheme.rounding.lg),
+            .clip(Theme.rounding.r12)
+            .background(Theme.colors.background2)
+            .border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r12),
     ) {
         Column {
             MetaRow(label = "Tag") {
                 if (log.tag != null) {
                     LogTagBadge(tag = log.tag, color = accentColor)
                 } else {
-                    DsText("—", style = DsTextStyle.Body, color = DsTheme.colors.content3)
+                    DsText("—", style = Theme.typography.body02, color = Theme.colors.content03)
                 }
             }
             DsDivider()
             MetaRow(label = "Time") {
                 DsText(
                     text = formatLogTimestampFull(log.timestamp),
-                    style = DsTextStyle.Body,
-                    color = DsTheme.colors.content1,
+                    style = Theme.typography.body02,
+                    color = Theme.colors.content01,
                 )
             }
             DsDivider()
             MetaRow(label = "ID") {
                 DsText(
                     text = log.id,
-                    style = DsTextStyle.Body,
-                    color = DsTheme.colors.content3,
+                    style = Theme.typography.body02,
+                    color = Theme.colors.content03,
                 )
             }
         }
@@ -181,15 +172,15 @@ private fun MetaRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = DsTheme.dimens.md, vertical = DsTheme.dimens.sm),
+            .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(DsTheme.dimens.md),
+        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp12),
     ) {
         DsText(
             text = label,
-            style = DsTextStyle.LabelSmall,
-            color = DsTheme.colors.content3,
-            modifier = Modifier.width(40.dp),
+            style = Theme.typography.label02,
+            color = Theme.colors.content03,
+            modifier = Modifier.width(Theme.dimens.dp40),
         )
         content()
     }

@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -19,7 +19,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,20 +29,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
 import az.theternal.console.core.base.LogLevel
 import az.theternal.console.debugstepper.DebugStepper
 import az.theternal.console.ui.ConsoleRoute
 import az.theternal.console.ui.LocalConsoleNavigator
 import az.theternal.console.ui.LocalLogRenderer
-import az.theternal.console.ui.designsystem.DsTheme
-import az.theternal.console.ui.ds.DsDivider
-import az.theternal.console.ui.ds.DsIcon
-import az.theternal.console.ui.ds.DsText
-import az.theternal.console.ui.ds.DsTextStyle
+import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.ui.designsystem.components.core.DsDivider
+import az.theternal.console.ui.designsystem.components.core.DsIcon
+import az.theternal.console.ui.designsystem.components.core.DsSwitch
+import az.theternal.console.ui.designsystem.components.core.DsText
 
 private val autoResumeOptions = listOf(null, 3, 5, 10, 30)
+private val ScreenHorizontalPadding = Theme.dimens.dp12
+private val ScreenVerticalInset = Theme.dimens.dp6
+private val SectionVerticalPadding = Theme.dimens.dp10
+private val SectionSpacing = Theme.dimens.dp10
+private val InlineSpacing = Theme.dimens.dp6
+private val CompactInlineSpacing = Theme.dimens.dp4
+private val ChipHorizontalPadding = Theme.dimens.dp10
+private val ChipVerticalPadding = Theme.dimens.dp4
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -52,14 +57,17 @@ internal fun DebugStepperScreen() {
     val renderer = LocalLogRenderer.current
     val navigator = LocalConsoleNavigator.current
 
-    LazyColumn(Modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(vertical = ScreenVerticalInset),
+    ) {
         // ── Enable toggle ─────────────────────────────────────────────────────
         item {
             ToggleRow(
                 label = "Active",
                 checked = state.enabled,
                 onCheckedChange = { DebugStepper.setEnabled(it) },
-                modifier = Modifier.padding(horizontal = DsTheme.dimens.md, vertical = DsTheme.dimens.xs),
+                modifier = Modifier.padding(horizontal = ScreenHorizontalPadding, vertical = Theme.dimens.dp8),
             )
         }
 
@@ -73,7 +81,7 @@ internal fun DebugStepperScreen() {
                 label = "Pause",
                 checked = state.paused,
                 onCheckedChange = { DebugStepper.setPaused(it) },
-                modifier = Modifier.padding(horizontal = DsTheme.dimens.md, vertical = DsTheme.dimens.xs),
+                modifier = Modifier.padding(horizontal = ScreenHorizontalPadding, vertical = Theme.dimens.dp8),
             )
         }
 
@@ -87,7 +95,7 @@ internal fun DebugStepperScreen() {
                 label = "Pause on match",
                 checked = state.pauseOnMatch,
                 onCheckedChange = { DebugStepper.setPauseOnMatch(it) },
-                modifier = Modifier.padding(horizontal = DsTheme.dimens.md, vertical = DsTheme.dimens.xs),
+                modifier = Modifier.padding(horizontal = ScreenHorizontalPadding, vertical = Theme.dimens.dp8),
             )
         }
 
@@ -100,44 +108,46 @@ internal fun DebugStepperScreen() {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = DsTheme.dimens.md, vertical = DsTheme.dimens.sm),
-                    verticalArrangement = Arrangement.spacedBy(DsTheme.dimens.sm),
+                        .padding(horizontal = ScreenHorizontalPadding, vertical = SectionVerticalPadding),
+                    verticalArrangement = Arrangement.spacedBy(SectionSpacing),
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        DsText("Tags", style = DsTextStyle.LabelMedium)
+                        DsText("Tags", style = Theme.typography.label01)
                         if (state.pauseOnTags.isEmpty()) {
-                            DsText("all", style = DsTextStyle.LabelSmall, color = DsTheme.colors.content4)
+                            DsText("all", style = Theme.typography.label02, color = Theme.colors.content04)
                         }
                     }
 
                     if (state.pauseOnTags.isNotEmpty()) {
-                        FlowRow(horizontalArrangement = Arrangement.spacedBy(DsTheme.dimens.xs)) {
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing),
+                            verticalArrangement = Arrangement.spacedBy(CompactInlineSpacing),
+                        ) {
                             state.pauseOnTags.forEach { tag ->
                                 Row(
                                     modifier = Modifier
-                                        .padding(bottom = DsTheme.dimens.xs)
-                                        .clip(DsTheme.rounding.xs)
-                                        .background(DsTheme.colors.primary.copy(alpha = 0.15f))
+                                        .clip(Theme.rounding.r4)
+                                        .background(Theme.colors.primary01.copy(alpha = 0.15f))
                                         .padding(
-                                            start = DsTheme.dimens.xs,
-                                            end = DsTheme.dimens.xxs,
-                                            top = DsTheme.dimens.xxs,
-                                            bottom = DsTheme.dimens.xxs,
+                                            start = Theme.dimens.dp8,
+                                            end = Theme.dimens.dp4,
+                                            top = Theme.dimens.dp4,
+                                            bottom = Theme.dimens.dp4,
                                         ),
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(DsTheme.dimens.xxs),
+                                    horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing),
                                 ) {
-                                    DsText(tag, style = DsTextStyle.LabelSmall, color = DsTheme.colors.primary)
+                                    DsText(tag, style = Theme.typography.label02, color = Theme.colors.primary01)
                                     DsIcon(
-                                        imageVector = Icons.Outlined.Close,
-                                        contentDescription = "Remove",
-                                        tint = DsTheme.colors.primary,
+                                        icon = Icons.Outlined.Close,
+                                        size = Theme.metrics.iconXs,
+                                        tint = Theme.colors.primary01,
                                         modifier = Modifier
-                                            .size(DsTheme.metrics.iconXs)
+                                            .padding(Theme.dimens.dp2)
                                             .clickable { DebugStepper.removePauseTag(tag) },
                                     )
                                 }
@@ -148,33 +158,36 @@ internal fun DebugStepperScreen() {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(DsTheme.rounding.sm)
-                            .background(DsTheme.colors.background3)
-                            .padding(horizontal = DsTheme.dimens.sm, vertical = DsTheme.dimens.xs),
+                            .clip(Theme.rounding.r6)
+                            .background(Theme.colors.background3)
+                            .padding(horizontal = Theme.dimens.dp10, vertical = Theme.dimens.dp6),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(DsTheme.dimens.xs),
+                        horizontalArrangement = Arrangement.spacedBy(InlineSpacing),
                     ) {
                         BasicTextField(
                             value = tagInput,
                             onValueChange = { tagInput = it.uppercase() },
                             modifier = Modifier.weight(1f),
                             singleLine = true,
-                            textStyle = TextStyle(color = DsTheme.colors.content1, fontSize = 13.sp),
-                            cursorBrush = SolidColor(DsTheme.colors.primary),
+                            textStyle = Theme.typography.body02.copy(color = Theme.colors.content01),
+                            cursorBrush = SolidColor(Theme.colors.primary01),
                             decorationBox = { inner ->
                                 if (tagInput.isEmpty()) {
-                                    DsText("Tag name...", style = DsTextStyle.Body, color = DsTheme.colors.content4)
+                                    DsText(
+                                        "Tag name...",
+                                        style = Theme.typography.body02,
+                                        color = Theme.colors.content04,
+                                    )
                                 }
                                 inner()
                             },
                         )
                         if (tagInput.isNotBlank()) {
                             DsIcon(
-                                imageVector = Icons.Outlined.Add,
-                                contentDescription = "Add",
-                                tint = DsTheme.colors.primary,
+                                icon = Icons.Outlined.Add,
+                                size = Theme.metrics.iconSm,
+                                tint = Theme.colors.primary01,
                                 modifier = Modifier
-                                    .size(DsTheme.metrics.iconSm)
                                     .clickable {
                                         DebugStepper.addPauseTag(tagInput.trim())
                                         tagInput = ""
@@ -192,11 +205,11 @@ internal fun DebugStepperScreen() {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = DsTheme.dimens.md, vertical = DsTheme.dimens.sm),
-                    verticalArrangement = Arrangement.spacedBy(DsTheme.dimens.sm),
+                        .padding(horizontal = ScreenHorizontalPadding, vertical = SectionVerticalPadding),
+                    verticalArrangement = Arrangement.spacedBy(SectionSpacing),
                 ) {
-                    DsText("Level", style = DsTextStyle.LabelMedium)
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(DsTheme.dimens.xs)) {
+                    DsText("Level", style = Theme.typography.label01)
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing)) {
                         item {
                             SelectableChip(
                                 label = "All",
@@ -223,11 +236,11 @@ internal fun DebugStepperScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = DsTheme.dimens.md, vertical = DsTheme.dimens.sm),
-                verticalArrangement = Arrangement.spacedBy(DsTheme.dimens.sm),
+                    .padding(horizontal = ScreenHorizontalPadding, vertical = SectionVerticalPadding),
+                verticalArrangement = Arrangement.spacedBy(SectionSpacing),
             ) {
-                DsText("Auto-resume", style = DsTextStyle.LabelMedium)
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(DsTheme.dimens.xs)) {
+                DsText("Auto-resume", style = Theme.typography.label01)
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing)) {
                     items(autoResumeOptions) { seconds ->
                         SelectableChip(
                             label = if (seconds == null) "Off" else "${seconds}s",
@@ -248,25 +261,25 @@ internal fun DebugStepperScreen() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = DsTheme.dimens.md, vertical = DsTheme.dimens.sm),
+                    .padding(horizontal = ScreenHorizontalPadding, vertical = SectionVerticalPadding),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(DsTheme.dimens.xs),
+                    horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    DsText("Caught", style = DsTextStyle.LabelMedium)
+                    DsText("Caught", style = Theme.typography.label01)
                     DsText(
                         text = "${state.steppedEvents.size}",
-                        style = DsTextStyle.LabelSmall,
-                        color = DsTheme.colors.content3,
+                        style = Theme.typography.label02,
+                        color = Theme.colors.content03,
                     )
                 }
                 DsText(
                     text = "Clear",
-                    style = DsTextStyle.LabelSmall,
-                    color = DsTheme.colors.danger,
+                    style = Theme.typography.label02,
+                    color = Theme.colors.danger,
                     modifier = Modifier.clickable { DebugStepper.clearSteppedEvents() },
                 )
             }
@@ -287,17 +300,17 @@ private fun SelectableChip(
     selected: Boolean,
     onClick: () -> Unit,
 ) {
-    val bg = if (selected) DsTheme.colors.primary else DsTheme.colors.background3
-    val fg = if (selected) DsTheme.colors.primaryContent else DsTheme.colors.content3
+    val bg = if (selected) Theme.colors.primary01 else Theme.colors.background3
+    val fg = if (selected) Theme.colors.primaryContent else Theme.colors.content03
 
     Box(
         modifier = Modifier
-            .clip(DsTheme.rounding.xs)
+            .clip(Theme.rounding.r6)
             .background(bg)
             .clickable(onClick = onClick)
-            .padding(horizontal = DsTheme.dimens.sm, vertical = DsTheme.dimens.xxs),
+            .padding(horizontal = ChipHorizontalPadding, vertical = ChipVerticalPadding),
     ) {
-        DsText(label, style = DsTextStyle.LabelSmall, color = fg)
+        DsText(label, style = Theme.typography.label02, color = fg)
     }
 }
 
@@ -313,7 +326,7 @@ private fun ToggleRow(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        DsText(label, style = DsTextStyle.Body)
-        Switch(checked = checked, onCheckedChange = onCheckedChange)
+        DsText(label, style = Theme.typography.body02)
+        DsSwitch(checked = checked, onCheckedChange = onCheckedChange)
     }
 }

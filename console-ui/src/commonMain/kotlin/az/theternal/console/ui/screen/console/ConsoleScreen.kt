@@ -5,12 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,12 +13,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import az.theternal.console.ui.ConsoleNavigation
-import az.theternal.console.ui.designsystem.DsTheme
-import az.theternal.console.ui.ds.DsIcon
-import az.theternal.console.ui.ds.DsText
-import az.theternal.console.ui.ds.DsTextStyle
+import az.theternal.console.ui.designsystem.components.core.DsIconButton
+import az.theternal.console.ui.designsystem.components.core.DsNavigationBar
+import az.theternal.console.ui.designsystem.components.core.DsNavigationBarItem
+import az.theternal.console.ui.designsystem.components.core.DsScaffold
+import az.theternal.console.ui.designsystem.components.core.DsTopAppBar
+import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.ui.designsystem.components.core.DsIcon
+import az.theternal.console.ui.designsystem.components.core.DsText
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ConsoleScreen(
     onClose: () -> Unit,
@@ -43,33 +40,33 @@ internal fun ConsoleScreen(
         }
     }
 
-    Scaffold(
+    DsScaffold(
         topBar = {
-            TopAppBar(
-                title = { DsText("Console", style = DsTextStyle.TitleMedium) },
+            DsTopAppBar(
+                title = { DsText("Console", style = Theme.typography.title01) },
                 actions = {
-                    IconButton(onClick = onClose) {
-                        DsIcon(Icons.Default.Close, contentDescription = "Close")
+                    DsIconButton(onClick = onClose) {
+                        DsIcon(Icons.Default.Close)
                     }
                 },
             )
         },
-        bottomBar = {
-            if (graphs.size > 1) {
-                NavigationBar {
+        bottomBar = if (graphs.size > 1) {
+            {
+                DsNavigationBar {
                     graphs.forEachIndexed { index, graph ->
-                        NavigationBarItem(
+                        DsNavigationBarItem(
                             selected = index == safeIndex,
                             onClick = { selectedIndex = index },
-                            icon = { DsIcon(graph.icon, contentDescription = null) },
+                            icon = { DsIcon(graph.icon) },
                             label = {
                                 DsText(
                                     graph.title,
-                                    style = DsTextStyle.LabelMedium,
+                                    style = Theme.typography.label01,
                                     color = if (index == safeIndex) {
-                                        DsTheme.colors.primary
+                                        Theme.colors.primary01
                                     } else {
-                                        DsTheme.colors.content3
+                                        Theme.colors.content03
                                     },
                                 )
                             },
@@ -77,6 +74,8 @@ internal fun ConsoleScreen(
                     }
                 }
             }
+        } else {
+            null
         },
     ) { padding ->
         Box(

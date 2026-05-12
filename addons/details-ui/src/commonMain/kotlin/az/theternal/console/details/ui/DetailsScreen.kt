@@ -12,12 +12,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import az.theternal.console.details.ConsoleDetails
-import az.theternal.console.ui.designsystem.DsTheme
-import az.theternal.console.ui.ds.DsDivider
-import az.theternal.console.ui.ds.DsText
-import az.theternal.console.ui.ds.DsTextStyle
+import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.ui.designsystem.components.core.DsDivider
+import az.theternal.console.ui.designsystem.components.core.DsText
 
 @Composable
 internal fun DetailsScreen() {
@@ -25,7 +23,7 @@ internal fun DetailsScreen() {
 
     if (details.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            DsText("No details registered", style = DsTextStyle.Body)
+            DsText("No details registered", style = Theme.typography.body02)
         }
         return
     }
@@ -35,18 +33,18 @@ internal fun DetailsScreen() {
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    .padding(horizontal = Theme.dimens.dp16, vertical = Theme.dimens.dp12),
                 verticalAlignment = Alignment.Top,
             ) {
                 DsText(
                     text = key,
-                    style = DsTextStyle.LabelMedium,
-                    color = DsTheme.colors.primary,
+                    style = Theme.typography.label01,
+                    color = Theme.colors.primary01,
                     modifier = Modifier.weight(0.35f),
                 )
                 DsText(
                     text = value,
-                    style = DsTextStyle.Body,
+                    style = Theme.typography.body02,
                     modifier = Modifier.weight(0.65f),
                 )
             }

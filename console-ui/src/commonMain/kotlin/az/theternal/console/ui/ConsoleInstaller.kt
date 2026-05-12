@@ -13,7 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import az.theternal.console.core.Console
-import az.theternal.console.ui.designsystem.ConsoleTheme
+import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
 import az.theternal.console.ui.gesture.ConsoleTrigger
 import az.theternal.console.ui.gesture.Swipe
 import az.theternal.console.ui.nav.ConsoleNavigatorImpl
@@ -35,7 +35,8 @@ fun ConsoleInstaller(
 
     val consoleVisibleState = remember { mutableStateOf(false) }
     val requestedTabTitleState = remember { mutableStateOf<String?>(null) }
-    val navController = remember { ConsoleNavigatorImpl(consoleVisibleState, requestedTabTitleState) }
+    val navController =
+        remember { ConsoleNavigatorImpl(consoleVisibleState, requestedTabTitleState) }
 
     val consoleVisible by consoleVisibleState
     val requestedTabTitle by requestedTabTitleState
@@ -46,21 +47,25 @@ fun ConsoleInstaller(
         Modifier
     }
 
-    CompositionLocalProvider(
-        LocalConsoleNavigator provides navController,
-        LocalLogRenderer provides logRenderer,
-    ) {
-        Box(Modifier.fillMaxSize().then(gestureModifier)) {
-            content()
-
-            ConsoleOverlays.overlays.forEach { overlay -> overlay() }
-
-            AnimatedVisibility(
-                visible = consoleVisible,
-                enter = fadeIn(),
-                exit = fadeOut(),
+    ThemeProvider {
+        CompositionLocalProvider(
+            LocalConsoleNavigator provides navController,
+            LocalLogRenderer provides logRenderer,
+        ) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .then(gestureModifier),
             ) {
-                ConsoleTheme {
+                content()
+
+                ConsoleOverlays.overlays.forEach { overlay -> overlay() }
+
+                AnimatedVisibility(
+                    visible = consoleVisible,
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                ) {
                     Box(Modifier.fillMaxSize()) {
                         ConsoleNavHost(
                             navController = navController,

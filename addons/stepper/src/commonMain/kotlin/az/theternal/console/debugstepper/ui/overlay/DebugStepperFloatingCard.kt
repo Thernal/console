@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
@@ -27,9 +26,6 @@ import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.PowerSettingsNew
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.SkipNext
-import az.theternal.console.ui.ds.DsDivider
-import az.theternal.console.ui.ds.DsIcon
-import az.theternal.console.ui.ds.DsText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -42,19 +38,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import az.theternal.console.debugstepper.DebugStepper
 import az.theternal.console.debugstepper.DebugStepperState
 import az.theternal.console.debugstepper.ui.DebugStepperNavGraph
 import az.theternal.console.ui.ConsoleRoute
 import az.theternal.console.ui.LocalConsoleNavigator
 import az.theternal.console.ui.LocalLogRenderer
+import az.theternal.console.ui.designsystem.components.core.DsDivider
+import az.theternal.console.ui.designsystem.components.core.DsIcon
+import az.theternal.console.ui.designsystem.components.core.DsText
+import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import kotlin.math.roundToInt
-
-private val IconSize = 20.dp
-private val SmallIconSize = 18.dp
 
 @Composable
 internal fun DebugStepperFloatingCard(
@@ -68,6 +64,12 @@ internal fun DebugStepperFloatingCard(
     var offsetY by rememberSaveable { mutableFloatStateOf(0f) }
 
     val enabled = stepperState.enabled
+    val statusColor = overlayStatusColor(uiState.statusTone)
+    val iconSize = Theme.metrics.iconMd
+    val smallIconSize = Theme.dimens.dp18
+    val iconTint = Theme.colors.content01
+    val disabledTint = Theme.colors.content03
+    val mutedTint = overlayMutedContentColor
 
     BoxWithConstraints(
         modifier = Modifier
@@ -87,146 +89,150 @@ internal fun DebugStepperFloatingCard(
         ) {
             Column(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(OverlayBg)
+                    .clip(Theme.rounding.r12)
+                    .background(overlayBackgroundColor)
                     .border(
-                        width = 1.dp,
-                        color = uiState.statusColor.copy(alpha = 0.4f),
-                        shape = RoundedCornerShape(12.dp),
+                        width = Theme.metrics.borderWidth,
+                        color = statusColor.copy(alpha = 0.4f),
+                        shape = Theme.rounding.r12,
                     )
-                    .padding(horizontal = 10.dp, vertical = 8.dp)
-                    .then(if (enabled && isExpanded) Modifier.width(220.dp) else Modifier),
+                    .padding(horizontal = Theme.dimens.dp10, vertical = Theme.dimens.dp8)
+                    .then(if (enabled && isExpanded) Modifier.width(Theme.dimens.dp220) else Modifier),
             ) {
                 when {
-                    // ── Disabled: power + expand only ─────────────────────────
                     !enabled -> {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp6),
                         ) {
                             DsIcon(
-                                imageVector = Icons.Outlined.PowerSettingsNew,
-                                contentDescription = "Enable stepper",
-                                modifier = Modifier.size(IconSize).clickable { DebugStepper.setEnabled(true) },
-                                tint = DisabledColor,
+                                icon = Icons.Outlined.PowerSettingsNew,
+                                size = iconSize,
+                                modifier = Modifier.clickable { DebugStepper.setEnabled(true) },
+                                tint = disabledTint,
                             )
-                            ExpandIcon(isExpanded = isExpanded, onClick = { isExpanded = !isExpanded })
+                            ExpandIcon(
+                                isExpanded = isExpanded,
+                                size = smallIconSize,
+                                tint = mutedTint,
+                                onClick = { isExpanded = !isExpanded },
+                            )
                         }
                     }
 
-                    // ── Enabled + collapsed: icons only ───────────────────────
                     !isExpanded -> {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp6),
                         ) {
                             Box(
                                 modifier = Modifier
-                                    .size(8.dp)
+                                    .size(Theme.metrics.statusDotSize)
                                     .clip(CircleShape)
-                                    .background(uiState.statusColor),
+                                    .background(statusColor),
                             )
                             DsIcon(
-                                imageVector = Icons.Outlined.PowerSettingsNew,
-                                contentDescription = "Disable stepper",
-                                modifier = Modifier.size(IconSize).clickable { DebugStepper.setEnabled(false) },
-                                tint = Color.White,
+                                icon = Icons.Outlined.PowerSettingsNew,
+                                size = iconSize,
+                                modifier = Modifier.clickable { DebugStepper.setEnabled(false) },
+                                tint = iconTint,
                             )
                             DsIcon(
-                                imageVector = if (stepperState.paused) {
+                                icon = if (stepperState.paused) {
                                     Icons.Outlined.PlayArrow
                                 } else {
                                     Icons.Outlined.Pause
                                 },
-                                contentDescription = if (stepperState.paused) "Resume" else "Pause",
-                                modifier = Modifier
-                                    .size(IconSize)
-                                    .clickable { DebugStepper.setPaused(!stepperState.paused) },
-                                tint = Color.White,
+                                size = iconSize,
+                                modifier = Modifier.clickable { DebugStepper.setPaused(!stepperState.paused) },
+                                tint = iconTint,
                             )
                             DsIcon(
-                                imageVector = Icons.Outlined.SkipNext,
-                                contentDescription = "Step",
-                                modifier = Modifier.size(IconSize).clickable { DebugStepper.next() },
-                                tint = if (uiState.canStep) Color.White else DisabledColor,
+                                icon = Icons.Outlined.SkipNext,
+                                size = iconSize,
+                                modifier = Modifier.clickable { DebugStepper.next() },
+                                tint = if (uiState.canStep) iconTint else disabledTint,
                             )
                             DsIcon(
-                                imageVector = Icons.Outlined.Settings,
-                                contentDescription = "Stepper settings",
-                                tint = ContentMutedColor,
-                                modifier = Modifier
-                                    .size(SmallIconSize)
-                                    .clickable { navigator?.openTab(DebugStepperNavGraph.title) },
+                                icon = Icons.Outlined.Settings,
+                                size = smallIconSize,
+                                tint = mutedTint,
+                                modifier = Modifier.clickable { navigator?.openTab(DebugStepperNavGraph.title) },
                             )
-                            ExpandIcon(isExpanded = false, onClick = { isExpanded = true })
+                            ExpandIcon(
+                                isExpanded = false,
+                                size = smallIconSize,
+                                tint = mutedTint,
+                                onClick = { isExpanded = true },
+                            )
                         }
                     }
 
-                    // ── Enabled + expanded: full header + log content ─────────
                     else -> {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp6),
                         ) {
                             Box(
                                 modifier = Modifier
-                                    .size(8.dp)
+                                    .size(Theme.metrics.statusDotSize)
                                     .clip(CircleShape)
-                                    .background(uiState.statusColor),
+                                    .background(statusColor),
                             )
                             DsText(
                                 text = uiState.displayTag ?: "Stepper",
-                                color = Color.White,
-                                fontSize = 12.sp,
+                                color = iconTint,
+                                style = Theme.typography.body03,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = Modifier.weight(1f),
                             )
                             DsText(
                                 text = uiState.statusText,
-                                color = ContentMutedColor,
-                                fontSize = 10.sp,
+                                color = mutedTint,
+                                style = Theme.typography.label02,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                             )
                             DsIcon(
-                                imageVector = Icons.Outlined.PowerSettingsNew,
-                                contentDescription = "Disable stepper",
-                                modifier = Modifier.size(IconSize).clickable { DebugStepper.setEnabled(false) },
-                                tint = Color.White,
+                                icon = Icons.Outlined.PowerSettingsNew,
+                                size = iconSize,
+                                modifier = Modifier.clickable { DebugStepper.setEnabled(false) },
+                                tint = iconTint,
                             )
                             DsIcon(
-                                imageVector = if (stepperState.paused) {
+                                icon = if (stepperState.paused) {
                                     Icons.Outlined.PlayArrow
                                 } else {
                                     Icons.Outlined.Pause
                                 },
-                                contentDescription = if (stepperState.paused) "Resume" else "Pause",
-                                modifier = Modifier
-                                    .size(IconSize)
-                                    .clickable { DebugStepper.setPaused(!stepperState.paused) },
-                                tint = Color.White,
+                                size = iconSize,
+                                modifier = Modifier.clickable { DebugStepper.setPaused(!stepperState.paused) },
+                                tint = iconTint,
                             )
                             DsIcon(
-                                imageVector = Icons.Outlined.SkipNext,
-                                contentDescription = "Step",
-                                modifier = Modifier.size(IconSize).clickable { DebugStepper.next() },
-                                tint = if (uiState.canStep) Color.White else DisabledColor,
+                                icon = Icons.Outlined.SkipNext,
+                                size = iconSize,
+                                modifier = Modifier.clickable { DebugStepper.next() },
+                                tint = if (uiState.canStep) iconTint else disabledTint,
                             )
                             DsIcon(
-                                imageVector = Icons.Outlined.Settings,
-                                contentDescription = "Stepper settings",
-                                tint = ContentMutedColor,
-                                modifier = Modifier
-                                    .size(SmallIconSize)
-                                    .clickable { navigator?.openTab(DebugStepperNavGraph.title) },
+                                icon = Icons.Outlined.Settings,
+                                size = smallIconSize,
+                                tint = mutedTint,
+                                modifier = Modifier.clickable { navigator?.openTab(DebugStepperNavGraph.title) },
                             )
-                            ExpandIcon(isExpanded = true, onClick = { isExpanded = false })
+                            ExpandIcon(
+                                isExpanded = true,
+                                size = smallIconSize,
+                                tint = mutedTint,
+                                onClick = { isExpanded = false },
+                            )
                         }
 
                         DsDivider(
-                            modifier = Modifier.padding(vertical = 6.dp),
-                            color = OverlayDividerColor,
+                            modifier = Modifier.padding(vertical = Theme.dimens.dp6),
+                            color = overlayDividerColor,
                         )
                         if (uiState.currentLog != null) {
                             renderer.Item(
@@ -238,9 +244,9 @@ internal fun DebugStepperFloatingCard(
                         } else {
                             DsText(
                                 text = "Nothing caught yet.",
-                                color = ContentMutedColor,
-                                fontSize = 11.sp,
-                                modifier = Modifier.padding(vertical = 4.dp),
+                                color = mutedTint,
+                                style = Theme.typography.label01,
+                                modifier = Modifier.padding(vertical = Theme.dimens.dp4),
                             )
                         }
                     }
@@ -253,12 +259,18 @@ internal fun DebugStepperFloatingCard(
 @Composable
 private fun ExpandIcon(
     isExpanded: Boolean,
+    size: Dp,
+    tint: Color,
     onClick: () -> Unit,
 ) {
     DsIcon(
-        imageVector = if (isExpanded) Icons.Outlined.KeyboardArrowUp else Icons.Outlined.KeyboardArrowDown,
-        contentDescription = if (isExpanded) "Collapse" else "Expand",
-        tint = ContentMutedColor,
-        modifier = Modifier.size(SmallIconSize).clickable(onClick = onClick),
+        icon = if (isExpanded) {
+            Icons.Outlined.KeyboardArrowUp
+        } else {
+            Icons.Outlined.KeyboardArrowDown
+        },
+        size = size,
+        tint = tint,
+        modifier = Modifier.clickable(onClick = onClick),
     )
 }

@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
@@ -32,21 +31,17 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import az.theternal.console.core.base.Log
-import az.theternal.console.ui.designsystem.DsTheme
-import az.theternal.console.ui.ds.DsIcon
-import az.theternal.console.ui.ds.DsText
-import az.theternal.console.ui.ds.DsTextStyle
+import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.ui.designsystem.components.core.DsIcon
+import az.theternal.console.ui.designsystem.components.core.DsText
 import az.theternal.console.ui.utils.LogTagBadge
 import az.theternal.console.ui.utils.formatLogTimestamp
 import az.theternal.console.ui.utils.logAccentColor
 
-private val AccentBarWidth = 3.dp
+private val AccentBarWidth = Theme.dimens.dp3
 
 @Composable
 internal fun DefaultLogItem(
@@ -66,10 +61,10 @@ internal fun DefaultLogItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = DsTheme.dimens.md, vertical = DsTheme.dimens.xs)
-            .clip(DsTheme.rounding.lg)
-            .background(DsTheme.colors.background2)
-            .border(DsTheme.metrics.borderWidth, DsTheme.colors.border, DsTheme.rounding.lg)
+            .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp4)
+            .clip(Theme.rounding.r12)
+            .background(Theme.colors.background2)
+            .border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r12)
             .clickable(onClick = onClick)
             .animateContentSize(),
     ) {
@@ -83,8 +78,8 @@ internal fun DefaultLogItem(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(horizontal = DsTheme.dimens.md, vertical = DsTheme.dimens.sm),
-                verticalArrangement = Arrangement.spacedBy(DsTheme.dimens.sm),
+                    .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
+                verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -94,21 +89,21 @@ internal fun DefaultLogItem(
                     LogTagBadge(tag = log.tag, color = accentColor)
                     DsText(
                         text = formatLogTimestamp(log.timestamp),
-                        style = DsTextStyle.LabelSmall,
-                        color = DsTheme.colors.content4,
+                        style = Theme.typography.label02,
+                        color = Theme.colors.content04,
                     )
                 }
 
                 DsText(
                     text = lines.first(),
-                    style = DsTextStyle.Body,
-                    color = DsTheme.colors.content1,
+                    style = Theme.typography.body02,
+                    color = Theme.colors.content01,
                     maxLines = if (expanded) Int.MAX_VALUE else 2,
                     overflow = TextOverflow.Ellipsis,
                 )
 
                 if (isMultiline) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(DsTheme.dimens.xs)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4)) {
                         LogItemPill(
                             icon = Icons.Outlined.ExpandMore,
                             label = if (expanded) "Collapse" else "${lines.size - 1} more",
@@ -127,17 +122,15 @@ internal fun DefaultLogItem(
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clip(DsTheme.rounding.md)
-                                    .background(DsTheme.colors.background3)
-                                    .padding(DsTheme.dimens.sm),
+                                    .clip(Theme.rounding.r8)
+                                    .background(Theme.colors.background3)
+                                    .padding(Theme.dimens.dp8),
                             ) {
-                                androidx.compose.material3.Text(
+                                DsText(
                                     text = log.message,
-                                    style = TextStyle(
+                                    style = Theme.typography.label01.copy(
                                         fontFamily = FontFamily.Monospace,
-                                        fontSize = 11.sp,
-                                        lineHeight = 17.sp,
-                                        color = DsTheme.colors.content2,
+                                        color = Theme.colors.content02,
                                     ),
                                 )
                             }
@@ -158,19 +151,19 @@ private fun LogItemPill(
 ) {
     Row(
         modifier = Modifier
-            .clip(DsTheme.rounding.sm)
-            .background(DsTheme.colors.background3)
+            .clip(Theme.rounding.r6)
+            .background(Theme.colors.background3)
             .clickable(onClick = onClick)
-            .padding(horizontal = DsTheme.dimens.sm, vertical = DsTheme.dimens.xxs),
+            .padding(horizontal = Theme.dimens.dp8, vertical = Theme.dimens.dp2),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(DsTheme.dimens.xxs),
+        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp2),
     ) {
         DsIcon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = DsTheme.colors.content3,
-            modifier = Modifier.size(DsTheme.metrics.iconXs).then(iconModifier),
+            icon = icon,
+            size = Theme.metrics.iconXs,
+            tint = Theme.colors.content03,
+            modifier = iconModifier,
         )
-        DsText(text = label, style = DsTextStyle.LabelSmall, color = DsTheme.colors.content3)
+        DsText(text = label, style = Theme.typography.label02, color = Theme.colors.content03)
     }
 }

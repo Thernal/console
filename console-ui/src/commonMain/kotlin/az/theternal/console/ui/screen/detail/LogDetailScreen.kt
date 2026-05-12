@@ -10,9 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import az.theternal.console.core.Console
 import az.theternal.console.ui.LocalLogRenderer
-import az.theternal.console.ui.designsystem.DsTheme
-import az.theternal.console.ui.ds.DsText
-import az.theternal.console.ui.ds.DsTextStyle
+import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.ui.designsystem.components.core.DsText
 
 @Composable
 internal fun LogDetailScreen(
@@ -26,7 +25,7 @@ internal fun LogDetailScreen(
     if (log == null) {
         LaunchedEffect(Unit) { onBack() }
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            DsText("Log not found", style = DsTextStyle.Body, color = DsTheme.colors.content3)
+            DsText("Log not found", style = Theme.typography.body02, color = Theme.colors.content03)
         }
         return
     }

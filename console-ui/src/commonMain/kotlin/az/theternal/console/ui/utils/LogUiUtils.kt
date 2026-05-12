@@ -14,18 +14,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import az.theternal.console.core.base.Log
 import az.theternal.console.core.base.LogLevel
-import az.theternal.console.ui.designsystem.DsTheme
-import az.theternal.console.ui.ds.DsText
-import az.theternal.console.ui.ds.DsTextStyle
+import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.ui.designsystem.components.core.DsText
 import kotlin.math.abs
 
 @Composable
 internal fun Log.logAccentColor(): Color {
-    return with(DsTheme.colors) {
+    return with(Theme.colors) {
         level?.let {
             return@with when (it) {
-                LogLevel.Verbose -> content3
-                LogLevel.Debug -> primary
+                LogLevel.Verbose -> content03
+                LogLevel.Debug -> primary01
                 LogLevel.Info -> info
                 LogLevel.Success -> success
                 LogLevel.Warning -> warning
@@ -33,8 +32,8 @@ internal fun Log.logAccentColor(): Color {
                 LogLevel.Fatal -> fatal
             }
         }
-        val palette = listOf(primary, success, warning, info, danger)
-        val tag = this@logAccentColor.tag ?: return@with content3
+        val palette = listOf(primary01, success, warning, info, danger)
+        val tag = this@logAccentColor.tag ?: return@with content03
         palette[abs(tag.hashCode()) % palette.size]
     }
 }
@@ -46,20 +45,20 @@ internal fun LogTagBadge(
 ) {
     Row(
         modifier = Modifier
-            .clip(DsTheme.rounding.xs)
+            .clip(Theme.rounding.r4)
             .background(color.copy(alpha = 0.12f))
-            .padding(horizontal = DsTheme.dimens.xs, vertical = DsTheme.dimens.xxs),
+            .padding(horizontal = Theme.dimens.dp4, vertical = Theme.dimens.dp2),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(DsTheme.dimens.xxs),
+        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp2),
     ) {
         Box(
             modifier = Modifier
-                .size(DsTheme.metrics.statusDotSize)
+                .size(Theme.metrics.statusDotSize)
                 .clip(CircleShape)
                 .background(color),
         )
         if (tag != null) {
-            DsText(text = tag, style = DsTextStyle.LabelSmall, color = color)
+            DsText(text = tag, style = Theme.typography.label02, color = color)
         }
     }
 }

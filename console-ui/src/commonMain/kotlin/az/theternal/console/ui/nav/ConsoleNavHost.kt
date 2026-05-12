@@ -1,5 +1,10 @@
 package az.theternal.console.ui.nav
 
+import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -27,6 +32,34 @@ internal fun ConsoleNavHost(
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator(),
         ),
+        transitionSpec = {
+            ContentTransform(
+                targetContentEnter = EnterTransition.None,
+                initialContentExit = ExitTransition.None,
+            )
+        },
+        popTransitionSpec = {
+            ContentTransform(
+                targetContentEnter = EnterTransition.None,
+                initialContentExit = ExitTransition.None,
+            )
+        },
+        predictivePopTransitionSpec = {
+            val slideOut = slideOutHorizontally(
+                targetOffsetX = { fullWidth ->
+                    if (it != 0) {
+                        fullWidth / 3 + it / 2
+                    } else {
+                        fullWidth / 3
+                    }
+                },
+            )
+
+            ContentTransform(
+                targetContentEnter = EnterTransition.None,
+                initialContentExit = slideOut + fadeOut(),
+            )
+        },
         entryProvider = entryProvider {
             entry<ConsoleRoute.Stub> { }
             entry<ConsoleRoute.Main> {
