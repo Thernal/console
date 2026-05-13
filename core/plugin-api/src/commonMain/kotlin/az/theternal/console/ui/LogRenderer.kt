@@ -2,7 +2,7 @@ package az.theternal.console.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
-import az.theternal.console.core.base.Log
+import az.theternal.console.runtime.model.Log
 
 interface LogRenderer {
     @Composable fun Item(

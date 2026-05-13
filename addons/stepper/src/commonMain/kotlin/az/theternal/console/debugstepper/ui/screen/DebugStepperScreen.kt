@@ -29,7 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
-import az.theternal.console.core.base.LogLevel
+import az.theternal.console.runtime.model.LogLevel
 import az.theternal.console.debugstepper.DebugStepper
 import az.theternal.console.ui.ConsoleRoute
 import az.theternal.console.ui.LocalConsoleNavigator

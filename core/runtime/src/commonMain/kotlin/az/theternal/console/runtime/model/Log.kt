@@ -1,12 +1,13 @@
-package az.theternal.console.core.base
+package az.theternal.console.runtime.model
 
+import az.theternal.console.runtime.model.LogLevel
 import kotlin.time.Clock
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
 abstract class Log {
-    val id: String = Uuid.random().toString()
+    val id: String = Uuid.Companion.random().toString()
     val timestamp: Long = Clock.System.now().toEpochMilliseconds()
     open val tag: String? = null
     open val level: LogLevel? = null

@@ -1,8 +1,8 @@
-package az.theternal.console.core
+package az.theternal.console.runtime
 
-import az.theternal.console.core.base.Log
-import az.theternal.console.core.base.LogObserver
-import az.theternal.console.core.ConsoleLogObserver
+import az.theternal.console.runtime.observer.ConsoleLogObserver
+import az.theternal.console.runtime.model.Log
+import az.theternal.console.runtime.api.LogObserver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

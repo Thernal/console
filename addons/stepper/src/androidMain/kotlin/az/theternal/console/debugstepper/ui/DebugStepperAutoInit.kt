@@ -4,7 +4,7 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
-import az.theternal.console.core.Console
+import az.theternal.console.runtime.Console
 import az.theternal.console.debugstepper.DebugStepper
 import az.theternal.console.debugstepper.ui.overlay.DebugStepperOverlay
 import az.theternal.console.ui.ConsoleNavigation

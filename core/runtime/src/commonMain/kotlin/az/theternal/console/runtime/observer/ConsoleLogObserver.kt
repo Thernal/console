@@ -1,7 +1,7 @@
-package az.theternal.console.core
+package az.theternal.console.runtime.observer
 
-import az.theternal.console.core.base.Log
-import az.theternal.console.core.base.LogObserver
+import az.theternal.console.runtime.api.LogObserver
+import az.theternal.console.runtime.model.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

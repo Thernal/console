@@ -1,8 +1,8 @@
 package az.theternal.console.debugstepper
 
-import az.theternal.console.core.base.Log
-import az.theternal.console.core.base.LogLevel
-import az.theternal.console.core.base.LogObserver
+import az.theternal.console.runtime.model.Log
+import az.theternal.console.runtime.model.LogLevel
+import az.theternal.console.runtime.api.LogObserver
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

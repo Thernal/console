@@ -1,7 +1,7 @@
 package az.theternal.console.debugstepper
 
-import az.theternal.console.core.base.Log
-import az.theternal.console.core.base.LogLevel
+import az.theternal.console.runtime.model.Log
+import az.theternal.console.runtime.model.LogLevel
 
 data class DebugStepperState(
     val enabled: Boolean = false,

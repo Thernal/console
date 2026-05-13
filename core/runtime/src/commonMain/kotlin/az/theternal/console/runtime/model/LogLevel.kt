@@ -1,4 +1,4 @@
-package az.theternal.console.core.base
+package az.theternal.console.runtime.model
 
 enum class LogLevel {
     Verbose,

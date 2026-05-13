@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import az.theternal.console.core.Console
+import az.theternal.console.runtime.Console
 import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
 import az.theternal.console.ui.gesture.ConsoleTrigger
 import az.theternal.console.ui.gesture.Swipe

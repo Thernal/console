@@ -12,8 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import az.theternal.console.core.base.Log
-import az.theternal.console.core.base.LogLevel
+import az.theternal.console.runtime.model.Log
+import az.theternal.console.runtime.model.LogLevel
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import az.theternal.console.ui.designsystem.components.core.DsText
 import kotlin.math.abs
