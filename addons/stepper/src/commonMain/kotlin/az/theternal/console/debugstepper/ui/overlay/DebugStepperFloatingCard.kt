@@ -41,11 +41,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import az.theternal.console.debugstepper.DebugStepper
-import az.theternal.console.debugstepper.DebugStepperState
 import az.theternal.console.debugstepper.ui.DebugStepperNavGraph
-import az.theternal.console.ui.ConsoleRoute
-import az.theternal.console.ui.LocalConsoleNavigator
-import az.theternal.console.ui.LocalLogRenderer
+import az.theternal.console.ui.nav.ConsoleRoute
+import az.theternal.console.ui.nav.LocalConsoleNavigator
+import az.theternal.console.ui.renderer.LocalLogRenderer
 import az.theternal.console.ui.designsystem.components.core.DsDivider
 import az.theternal.console.ui.designsystem.components.core.DsIcon
 import az.theternal.console.ui.designsystem.components.core.DsText
@@ -53,17 +52,14 @@ import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import kotlin.math.roundToInt
 
 @Composable
-internal fun DebugStepperFloatingCard(
-    uiState: DebugStepperOverlayUiState,
-    stepperState: DebugStepperState,
-) {
+internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
     val navigator = LocalConsoleNavigator.current
     val renderer = LocalLogRenderer.current
     var isExpanded by rememberSaveable { mutableStateOf(false) }
     var offsetX by rememberSaveable { mutableFloatStateOf(0f) }
     var offsetY by rememberSaveable { mutableFloatStateOf(0f) }
 
-    val enabled = stepperState.enabled
+    val enabled = uiState.isEnabled
     val statusColor = overlayStatusColor(uiState.statusTone)
     val iconSize = Theme.metrics.iconMd
     val smallIconSize = Theme.dimens.dp18
@@ -108,7 +104,7 @@ internal fun DebugStepperFloatingCard(
                             DsIcon(
                                 icon = Icons.Outlined.PowerSettingsNew,
                                 size = iconSize,
-                                modifier = Modifier.clickable { DebugStepper.setEnabled(true) },
+                                modifier = Modifier.clickable { DebugStepper.updateConfig { copy(enabled = true) } },
                                 tint = disabledTint,
                             )
                             ExpandIcon(
@@ -134,17 +130,17 @@ internal fun DebugStepperFloatingCard(
                             DsIcon(
                                 icon = Icons.Outlined.PowerSettingsNew,
                                 size = iconSize,
-                                modifier = Modifier.clickable { DebugStepper.setEnabled(false) },
+                                modifier = Modifier.clickable { DebugStepper.updateConfig { copy(enabled = false) } },
                                 tint = iconTint,
                             )
                             DsIcon(
-                                icon = if (stepperState.paused) {
+                                icon = if (uiState.isPaused) {
                                     Icons.Outlined.PlayArrow
                                 } else {
                                     Icons.Outlined.Pause
                                 },
                                 size = iconSize,
-                                modifier = Modifier.clickable { DebugStepper.setPaused(!stepperState.paused) },
+                                modifier = Modifier.clickable { DebugStepper.updateConfig { copy(paused = !paused) } },
                                 tint = iconTint,
                             )
                             DsIcon(
@@ -157,7 +153,7 @@ internal fun DebugStepperFloatingCard(
                                 icon = Icons.Outlined.Settings,
                                 size = smallIconSize,
                                 tint = mutedTint,
-                                modifier = Modifier.clickable { navigator?.openTab(DebugStepperNavGraph.title) },
+                                modifier = Modifier.clickable { navigator.openTab(DebugStepperNavGraph) },
                             )
                             ExpandIcon(
                                 isExpanded = false,
@@ -197,17 +193,17 @@ internal fun DebugStepperFloatingCard(
                             DsIcon(
                                 icon = Icons.Outlined.PowerSettingsNew,
                                 size = iconSize,
-                                modifier = Modifier.clickable { DebugStepper.setEnabled(false) },
+                                modifier = Modifier.clickable { DebugStepper.updateConfig { copy(enabled = false) } },
                                 tint = iconTint,
                             )
                             DsIcon(
-                                icon = if (stepperState.paused) {
+                                icon = if (uiState.isPaused) {
                                     Icons.Outlined.PlayArrow
                                 } else {
                                     Icons.Outlined.Pause
                                 },
                                 size = iconSize,
-                                modifier = Modifier.clickable { DebugStepper.setPaused(!stepperState.paused) },
+                                modifier = Modifier.clickable { DebugStepper.updateConfig { copy(paused = !paused) } },
                                 tint = iconTint,
                             )
                             DsIcon(
@@ -220,7 +216,7 @@ internal fun DebugStepperFloatingCard(
                                 icon = Icons.Outlined.Settings,
                                 size = smallIconSize,
                                 tint = mutedTint,
-                                modifier = Modifier.clickable { navigator?.openTab(DebugStepperNavGraph.title) },
+                                modifier = Modifier.clickable { navigator.openTab(DebugStepperNavGraph) },
                             )
                             ExpandIcon(
                                 isExpanded = true,
@@ -238,7 +234,7 @@ internal fun DebugStepperFloatingCard(
                             renderer.Item(
                                 log = uiState.currentLog,
                                 onClick = {
-                                    navigator?.push(ConsoleRoute.LogDetail("", uiState.currentLog.id))
+                                    navigator.push(ConsoleRoute.LogDetail("", uiState.currentLog.id))
                                 },
                             )
                         } else {

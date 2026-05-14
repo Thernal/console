@@ -10,13 +10,11 @@ import az.theternal.console.debugstepper.DebugStepper
 
 @Composable
 internal fun DebugStepperOverlay() {
-    val stepperState by DebugStepper.state.collectAsState()
-    val uiState = buildDebugStepperOverlayUiState(stepperState)
+    val config by DebugStepper.config.collectAsState()
+    val state by DebugStepper.state.collectAsState()
+    val uiState = buildDebugStepperOverlayUiState(state, config)
 
     Box(Modifier.fillMaxSize()) {
-        DebugStepperFloatingCard(
-            uiState = uiState,
-            stepperState = stepperState,
-        )
+        DebugStepperFloatingCard(uiState = uiState)
     }
 }

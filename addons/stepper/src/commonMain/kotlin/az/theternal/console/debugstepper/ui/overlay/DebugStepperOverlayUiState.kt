@@ -1,7 +1,7 @@
 package az.theternal.console.debugstepper.ui.overlay
 
+import az.theternal.console.debugstepper.DebugStepper
 import az.theternal.console.runtime.model.Log
-import az.theternal.console.debugstepper.DebugStepperState
 
 private const val LOG_ID_PREFIX_LENGTH = 8
 
@@ -13,6 +13,8 @@ internal enum class StepperStatusTone {
 }
 
 internal data class DebugStepperOverlayUiState(
+    val isEnabled: Boolean,
+    val isPaused: Boolean,
     val currentLog: Log?,
     val displayTag: String?,
     val canStep: Boolean,
@@ -21,45 +23,53 @@ internal data class DebugStepperOverlayUiState(
     val currentStepDisplay: String?,
 )
 
-internal fun buildDebugStepperOverlayUiState(stepperState: DebugStepperState): DebugStepperOverlayUiState {
-    val currentLog = stepperState.steppedEvents.lastOrNull()
-    val displayTag = if (!stepperState.enabled) null else stepperState.blockedTag ?: currentLog?.tag
-    val canStep = stepperState.blockedLogId != null
-    val currentStepDisplay = stepperState.blockedLogId?.let { id ->
+internal fun buildDebugStepperOverlayUiState(
+    state: DebugStepper.State,
+    config: DebugStepper.Config,
+): DebugStepperOverlayUiState {
+    val currentLog = state.steppedEvents.lastOrNull()
+    val displayTag = if (!config.enabled) null else state.blockedTag ?: currentLog?.tag
+    val canStep = state.blockedLogId != null
+    val currentStepDisplay = state.blockedLogId?.let { id ->
         buildString {
             append("Log #")
             append(id.take(LOG_ID_PREFIX_LENGTH))
-            stepperState.blockedTag?.let { append(" [$it]") }
+            state.blockedTag?.let { append(" [$it]") }
         }
     }
 
     return DebugStepperOverlayUiState(
+        isEnabled = config.enabled,
+        isPaused = config.paused,
         currentLog = currentLog,
         displayTag = displayTag,
         canStep = canStep,
-        statusText = resolveStatusText(stepperState, canStep),
-        statusTone = resolveStatusTone(stepperState, canStep),
+        statusText = resolveStatusText(state, canStep, config.enabled, config.paused),
+        statusTone = resolveStatusTone(canStep, config.enabled, config.paused),
         currentStepDisplay = currentStepDisplay,
     )
 }
 
 private fun resolveStatusText(
-    state: DebugStepperState,
+    state: DebugStepper.State,
     canStep: Boolean,
+    isEnabled: Boolean,
+    isPaused: Boolean,
 ): String = when {
-    !state.enabled -> "Disabled"
-    state.paused && canStep -> "Paused"
-    state.paused && state.pendingLogs == 0 -> "Idle"
-    state.paused -> "Running · ${state.pendingLogs} queued"
+    !isEnabled -> "Disabled"
+    isPaused && canStep -> "Paused"
+    isPaused && state.pendingLogs == 0 -> "Idle"
+    isPaused -> "Running · ${state.pendingLogs} queued"
     else -> "Running"
 }
 
 private fun resolveStatusTone(
-    state: DebugStepperState,
     canStep: Boolean,
+    isEnabled: Boolean,
+    isPaused: Boolean,
 ): StepperStatusTone = when {
-    !state.enabled -> StepperStatusTone.Disabled
-    state.paused && canStep -> StepperStatusTone.Paused
-    state.paused -> StepperStatusTone.Idle
+    !isEnabled -> StepperStatusTone.Disabled
+    isPaused && canStep -> StepperStatusTone.Paused
+    isPaused -> StepperStatusTone.Idle
     else -> StepperStatusTone.Running
 }

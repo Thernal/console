@@ -11,15 +11,16 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import az.theternal.console.ui.ConsoleNavigation
-import az.theternal.console.ui.ConsoleRoute
+import az.theternal.console.ui.nav.ConsoleNavigation
+import az.theternal.console.ui.nav.ConsoleRoute
+import az.theternal.console.ui.nav.ConsoleTab
 import az.theternal.console.ui.screen.console.ConsoleScreen
 import az.theternal.console.ui.screen.logs.LogsNavGraph
 
 @Composable
 internal fun ConsoleNavHost(
     navController: ConsoleNavigatorImpl,
-    requestedTabTitle: String?,
+    requestedTab: ConsoleTab?,
     onRequestConsumed: () -> Unit,
 ) {
     remember { ConsoleNavigation.register(LogsNavGraph) }
@@ -65,7 +66,7 @@ internal fun ConsoleNavHost(
             entry<ConsoleRoute.Main> {
                 ConsoleScreen(
                     onClose = { navController.close() },
-                    requestedTabTitle = requestedTabTitle,
+                    requestedTab = requestedTab,
                     onRequestConsumed = onRequestConsumed,
                 )
             }

@@ -1,4 +1,4 @@
-package az.theternal.console.ui
+package az.theternal.console.ui.overlay
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable

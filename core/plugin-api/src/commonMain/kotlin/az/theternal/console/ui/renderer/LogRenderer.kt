@@ -1,16 +1,18 @@
-package az.theternal.console.ui
+package az.theternal.console.ui.renderer
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import az.theternal.console.runtime.model.Log
 
 interface LogRenderer {
-    @Composable fun Item(
+    @Composable
+    fun Item(
         log: Log,
         onClick: () -> Unit,
     )
 
-    @Composable fun Detail(
+    @Composable
+    fun Detail(
         log: Log,
         onBack: () -> Unit,
     )

@@ -1,0 +1,13 @@
+package az.theternal.console.ui.observer
+
+import kotlin.experimental.ExperimentalNativeApi
+import kotlin.native.EagerInitialization
+
+@EagerInitialization
+@OptIn(ExperimentalNativeApi::class, ExperimentalStdlibApi::class)
+@Suppress("unused")
+private val init = object {
+    init {
+        ConsoleLogObserver.register()
+    }
+}

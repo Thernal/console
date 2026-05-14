@@ -5,7 +5,6 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.core.runtime)
             implementation(projects.core.pluginApi)
             implementation(projects.uikit.components)
             implementation(libs.jetbrains.navigation3.ui)

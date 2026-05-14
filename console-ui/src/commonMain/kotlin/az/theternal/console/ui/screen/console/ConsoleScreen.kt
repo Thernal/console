@@ -12,7 +12,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import az.theternal.console.ui.ConsoleNavigation
+import az.theternal.console.ui.nav.ConsoleNavigation
+import az.theternal.console.ui.nav.ConsoleTab
 import az.theternal.console.ui.designsystem.components.core.DsIconButton
 import az.theternal.console.ui.designsystem.components.core.DsNavigationBar
 import az.theternal.console.ui.designsystem.components.core.DsNavigationBarItem
@@ -25,16 +26,16 @@ import az.theternal.console.ui.designsystem.components.core.DsText
 @Composable
 internal fun ConsoleScreen(
     onClose: () -> Unit,
-    requestedTabTitle: String? = null,
+    requestedTab: ConsoleTab? = null,
     onRequestConsumed: () -> Unit = {},
 ) {
-    val graphs = ConsoleNavigation.graphs
+    val graphs = ConsoleNavigation.tabs
     var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
     val safeIndex = selectedIndex.coerceIn(0, (graphs.size - 1).coerceAtLeast(0))
 
-    LaunchedEffect(requestedTabTitle) {
-        if (requestedTabTitle != null) {
-            val idx = graphs.indexOfFirst { it.title == requestedTabTitle }
+    LaunchedEffect(requestedTab) {
+        if (requestedTab != null) {
+            val idx = graphs.indexOf(requestedTab)
             if (idx >= 0) selectedIndex = idx
             onRequestConsumed()
         }

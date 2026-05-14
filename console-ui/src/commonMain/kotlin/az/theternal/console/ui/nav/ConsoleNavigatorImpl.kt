@@ -4,12 +4,13 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation3.runtime.NavKey
-import az.theternal.console.ui.ConsoleNavigator
-import az.theternal.console.ui.ConsoleRoute
+import az.theternal.console.ui.nav.ConsoleNavigator
+import az.theternal.console.ui.nav.ConsoleRoute
+import az.theternal.console.ui.nav.ConsoleTab
 
 internal class ConsoleNavigatorImpl(
     private val consoleVisibleState: MutableState<Boolean>,
-    private val requestedTabTitleState: MutableState<String?>,
+    private val requestedTabState: MutableState<ConsoleTab?>,
 ) : ConsoleNavigator {
 
     val backStack: SnapshotStateList<NavKey> =
@@ -24,14 +25,14 @@ internal class ConsoleNavigatorImpl(
         if (backStack.size > 2) backStack.removeLastOrNull() else close()
     }
 
-    override fun openTab(tabTitle: String?) {
+    override fun openTab(graph: ConsoleTab?) {
         consoleVisibleState.value = true
-        requestedTabTitleState.value = tabTitle
+        requestedTabState.value = graph
     }
 
     fun close() {
         consoleVisibleState.value = false
-        requestedTabTitleState.value = null
+        requestedTabState.value = null
         backStack.clear()
         backStack.addAll(listOf(ConsoleRoute.Stub, ConsoleRoute.Main))
     }

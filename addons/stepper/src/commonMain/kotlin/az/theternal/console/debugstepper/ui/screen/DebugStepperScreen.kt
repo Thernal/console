@@ -31,9 +31,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import az.theternal.console.runtime.model.LogLevel
 import az.theternal.console.debugstepper.DebugStepper
-import az.theternal.console.ui.ConsoleRoute
-import az.theternal.console.ui.LocalConsoleNavigator
-import az.theternal.console.ui.LocalLogRenderer
+import az.theternal.console.ui.nav.ConsoleRoute
+import az.theternal.console.ui.nav.LocalConsoleNavigator
+import az.theternal.console.ui.renderer.LocalLogRenderer
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import az.theternal.console.ui.designsystem.components.core.DsDivider
 import az.theternal.console.ui.designsystem.components.core.DsIcon
@@ -53,6 +53,7 @@ private val ChipVerticalPadding = Theme.dimens.dp4
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun DebugStepperScreen() {
+    val config by DebugStepper.config.collectAsState()
     val state by DebugStepper.state.collectAsState()
     val renderer = LocalLogRenderer.current
     val navigator = LocalConsoleNavigator.current
@@ -61,48 +62,44 @@ internal fun DebugStepperScreen() {
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(vertical = ScreenVerticalInset),
     ) {
-        // ── Enable toggle ─────────────────────────────────────────────────────
         item {
             ToggleRow(
                 label = "Active",
-                checked = state.enabled,
-                onCheckedChange = { DebugStepper.setEnabled(it) },
+                checked = config.enabled,
+                onCheckedChange = { DebugStepper.updateConfig { copy(enabled = it) } },
                 modifier = Modifier.padding(horizontal = ScreenHorizontalPadding, vertical = Theme.dimens.dp8),
             )
         }
 
-        if (!state.enabled) return@LazyColumn
+        if (!config.enabled) return@LazyColumn
 
         item { DsDivider() }
 
-        // ── Pause toggle ──────────────────────────────────────────────────────
         item {
             ToggleRow(
                 label = "Pause",
-                checked = state.paused,
-                onCheckedChange = { DebugStepper.setPaused(it) },
+                checked = config.paused,
+                onCheckedChange = { DebugStepper.updateConfig { copy(paused = it) } },
                 modifier = Modifier.padding(horizontal = ScreenHorizontalPadding, vertical = Theme.dimens.dp8),
             )
         }
 
-        if (!state.paused) return@LazyColumn
+        if (!config.paused) return@LazyColumn
 
         item { DsDivider() }
 
-        // ── Pause on match toggle ─────────────────────────────────────────────
         item {
             ToggleRow(
                 label = "Pause on match",
-                checked = state.pauseOnMatch,
-                onCheckedChange = { DebugStepper.setPauseOnMatch(it) },
+                checked = config.pauseOnMatch,
+                onCheckedChange = { DebugStepper.updateConfig { copy(pauseOnMatch = it) } },
                 modifier = Modifier.padding(horizontal = ScreenHorizontalPadding, vertical = Theme.dimens.dp8),
             )
         }
 
-        if (state.pauseOnMatch) {
+        if (config.pauseOnMatch) {
             item { DsDivider() }
 
-            // ── Tag filter ────────────────────────────────────────────────────
             item {
                 var tagInput by remember { mutableStateOf("") }
                 Column(
@@ -117,17 +114,17 @@ internal fun DebugStepperScreen() {
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         DsText("Tags", style = Theme.typography.label01)
-                        if (state.pauseOnTags.isEmpty()) {
+                        if (config.pauseOnTags.isEmpty()) {
                             DsText("all", style = Theme.typography.label02, color = Theme.colors.content04)
                         }
                     }
 
-                    if (state.pauseOnTags.isNotEmpty()) {
+                    if (config.pauseOnTags.isNotEmpty()) {
                         FlowRow(
                             horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing),
                             verticalArrangement = Arrangement.spacedBy(CompactInlineSpacing),
                         ) {
-                            state.pauseOnTags.forEach { tag ->
+                            config.pauseOnTags.forEach { tag ->
                                 Row(
                                     modifier = Modifier
                                         .clip(Theme.rounding.r4)
@@ -148,7 +145,9 @@ internal fun DebugStepperScreen() {
                                         tint = Theme.colors.primary01,
                                         modifier = Modifier
                                             .padding(Theme.dimens.dp2)
-                                            .clickable { DebugStepper.removePauseTag(tag) },
+                                            .clickable {
+                                                DebugStepper.updateConfig { copy(pauseOnTags = pauseOnTags - tag) }
+                                            },
                                     )
                                 }
                             }
@@ -189,7 +188,7 @@ internal fun DebugStepperScreen() {
                                 tint = Theme.colors.primary01,
                                 modifier = Modifier
                                     .clickable {
-                                        DebugStepper.addPauseTag(tagInput.trim())
+                                        DebugStepper.updateConfig { copy(pauseOnTags = pauseOnTags + tagInput.trim()) }
                                         tagInput = ""
                                     },
                             )
@@ -200,7 +199,6 @@ internal fun DebugStepperScreen() {
 
             item { DsDivider() }
 
-            // ── Level threshold ───────────────────────────────────────────────
             item {
                 Column(
                     modifier = Modifier
@@ -213,15 +211,15 @@ internal fun DebugStepperScreen() {
                         item {
                             SelectableChip(
                                 label = "All",
-                                selected = state.pauseOnLevelAtLeast == null,
-                                onClick = { DebugStepper.setPauseOnLevelAtLeast(null) },
+                                selected = config.pauseOnLevelAtLeast == null,
+                                onClick = { DebugStepper.updateConfig { copy(pauseOnLevelAtLeast = null) } },
                             )
                         }
                         items(enumValues<LogLevel>()) { level ->
                             SelectableChip(
                                 label = level.name,
-                                selected = state.pauseOnLevelAtLeast == level,
-                                onClick = { DebugStepper.setPauseOnLevelAtLeast(level) },
+                                selected = config.pauseOnLevelAtLeast == level,
+                                onClick = { DebugStepper.updateConfig { copy(pauseOnLevelAtLeast = level) } },
                             )
                         }
                     }
@@ -231,7 +229,6 @@ internal fun DebugStepperScreen() {
 
         item { DsDivider() }
 
-        // ── Auto-resume ───────────────────────────────────────────────────────
         item {
             Column(
                 modifier = Modifier
@@ -244,15 +241,14 @@ internal fun DebugStepperScreen() {
                     items(autoResumeOptions) { seconds ->
                         SelectableChip(
                             label = if (seconds == null) "Off" else "${seconds}s",
-                            selected = state.autoResumeSeconds == seconds,
-                            onClick = { DebugStepper.setAutoResumeSeconds(seconds) },
+                            selected = config.autoResumeSeconds == seconds,
+                            onClick = { DebugStepper.updateConfig { copy(autoResumeSeconds = seconds) } },
                         )
                     }
                 }
             }
         }
 
-        // ── Caught ────────────────────────────────────────────────────────────
         if (state.steppedEvents.isEmpty()) return@LazyColumn
 
         item { DsDivider() }
@@ -288,7 +284,7 @@ internal fun DebugStepperScreen() {
         items(state.steppedEvents.asReversed(), key = { it.id }) { log ->
             renderer.Item(
                 log = log,
-                onClick = { navigator?.push(ConsoleRoute.LogDetail("", log.id)) },
+                onClick = { navigator.push(ConsoleRoute.LogDetail("", log.id)) },
             )
         }
     }

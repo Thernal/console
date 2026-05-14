@@ -10,14 +10,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import az.theternal.console.runtime.Console
-import az.theternal.console.ui.LocalLogRenderer
+import az.theternal.console.ui.renderer.LocalLogRenderer
+import az.theternal.console.ui.observer.ConsoleLogObserver
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import az.theternal.console.ui.designsystem.components.core.DsText
 
 @Composable
 internal fun LogsScreen(onNavigateToLogDetail: (groupId: String, logId: String) -> Unit) {
-    val logs by Console.logObserver.logs.collectAsState()
+    val logs by ConsoleLogObserver.logs.collectAsState()
     val renderer = LocalLogRenderer.current
 
     if (logs.isEmpty()) {

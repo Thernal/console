@@ -16,17 +16,24 @@ import az.theternal.console.runtime.Console
 import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
 import az.theternal.console.ui.gesture.ConsoleTrigger
 import az.theternal.console.ui.gesture.Swipe
-import az.theternal.console.ui.nav.ConsoleNavigatorImpl
 import az.theternal.console.ui.nav.ConsoleNavHost
+import az.theternal.console.ui.nav.ConsoleNavigatorImpl
+import az.theternal.console.ui.nav.LocalConsoleNavigator
+import az.theternal.console.ui.nav.ConsoleTab
+import az.theternal.console.ui.overlay.ConsoleOverlays
+import az.theternal.console.ui.renderer.LocalLogRenderer
 
 @Composable
 fun ConsoleInstaller(
     enabled: Boolean = true,
     trigger: ConsoleTrigger = ConsoleTrigger.swipeSequence(Swipe.UP, Swipe.DOWN),
     logRenderer: LogRenderer = DefaultLogRenderer,
+    addons: List<ConsoleAddon> = emptyList(),
     content: @Composable () -> Unit,
 ) {
     SideEffect { Console.isEnabled = enabled }
+
+    remember(addons) { addons.forEach { it.install() } }
 
     if (!enabled) {
         content()
@@ -34,12 +41,12 @@ fun ConsoleInstaller(
     }
 
     val consoleVisibleState = remember { mutableStateOf(false) }
-    val requestedTabTitleState = remember { mutableStateOf<String?>(null) }
+    val requestedTabState = remember { mutableStateOf<ConsoleTab?>(null) }
     val navController =
-        remember { ConsoleNavigatorImpl(consoleVisibleState, requestedTabTitleState) }
+        remember { ConsoleNavigatorImpl(consoleVisibleState, requestedTabState) }
 
     val consoleVisible by consoleVisibleState
-    val requestedTabTitle by requestedTabTitleState
+    val requestedTab by requestedTabState
 
     val gestureModifier = if (!consoleVisible) {
         with(trigger) { Modifier.attach(onDetected = { consoleVisibleState.value = true }) }
@@ -69,8 +76,8 @@ fun ConsoleInstaller(
                     Box(Modifier.fillMaxSize()) {
                         ConsoleNavHost(
                             navController = navController,
-                            requestedTabTitle = requestedTabTitle,
-                            onRequestConsumed = { requestedTabTitleState.value = null },
+                            requestedTab = requestedTab,
+                            onRequestConsumed = { requestedTabState.value = null },
                         )
                     }
                 }

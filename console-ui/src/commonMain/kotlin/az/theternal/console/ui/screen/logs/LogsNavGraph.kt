@@ -6,12 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import az.theternal.console.ui.ConsoleRoute
-import az.theternal.console.ui.LocalConsoleNavigator
-import az.theternal.console.ui.NavGraph
+import az.theternal.console.ui.nav.ConsoleRoute
+import az.theternal.console.ui.nav.ConsoleTab
+import az.theternal.console.ui.nav.LocalConsoleNavigator
 import az.theternal.console.ui.screen.detail.LogDetailScreen
 
-internal object LogsNavGraph : NavGraph {
+internal object LogsNavGraph : ConsoleTab {
     override val title = "Logs"
     override val icon: ImageVector = Icons.Default.Menu
     override val order = 0
@@ -21,7 +21,7 @@ internal object LogsNavGraph : NavGraph {
         val nav = LocalConsoleNavigator.current
         LogsScreen(
             onNavigateToLogDetail = { groupId, logId ->
-                nav?.push(ConsoleRoute.LogDetail(groupId, logId))
+                nav.push(ConsoleRoute.LogDetail(groupId, logId))
             },
         )
     }
@@ -31,7 +31,7 @@ internal object LogsNavGraph : NavGraph {
             val nav = LocalConsoleNavigator.current
             LogDetailScreen(
                 logId = route.logId,
-                onBack = { nav?.pop() },
+                onBack = { nav.pop() },
             )
         }
     }
