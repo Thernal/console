@@ -34,11 +34,13 @@ androidx-compose = "1.8.0"
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 
 # Compose
-compose-ui         = { module = "org.jetbrains.compose.ui:ui",                                          version.ref = "compose-multiplatform" }
-compose-runtime    = { module = "org.jetbrains.compose.runtime:runtime",                                version.ref = "compose-multiplatform" }
-compose-foundation = { module = "org.jetbrains.compose.foundation:foundation",                          version.ref = "compose-multiplatform" }
-compose-material3  = { module = "org.jetbrains.compose.material3:material3",                            version.ref = "compose-material3" }
-compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "compose-material-icons" }
+compose-ui                      = { module = "org.jetbrains.compose.ui:ui",                                          version.ref = "compose-multiplatform" }
+compose-runtime                 = { module = "org.jetbrains.compose.runtime:runtime",                                version.ref = "compose-multiplatform" }
+compose-foundation              = { module = "org.jetbrains.compose.foundation:foundation",                          version.ref = "compose-multiplatform" }
+compose-material3               = { module = "org.jetbrains.compose.material3:material3",                            version.ref = "compose-material3" }
+compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended",              version.ref = "compose-material-icons" }
+compose-ui-tooling-preview      = { module = "org.jetbrains.compose.ui:ui-tooling-preview",                         version.ref = "compose-multiplatform" }
+compose-ui-tooling              = { module = "org.jetbrains.compose.ui:ui-tooling",                                    version.ref = "compose-multiplatform" }
 
 # Navigation
 jetbrains-navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "cmp-navigation3" }

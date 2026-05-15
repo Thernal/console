@@ -4,6 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 
+internal val overlayBackgroundColor = Color(0xFF13161C)
+internal val overlayMutedContentColor = Color(0xFF6B7280)
+internal val overlayDividerColor = Color(0xFF2A2D36)
+
 @Composable
 internal fun overlayStatusColor(tone: StepperStatusTone): Color {
     return when (tone) {
@@ -13,12 +17,3 @@ internal fun overlayStatusColor(tone: StepperStatusTone): Color {
         StepperStatusTone.Running -> Theme.colors.success
     }
 }
-
-val overlayBackgroundColor: Color
-    @Composable get() = Theme.colors.background1
-
-val overlayMutedContentColor: Color
-    @Composable get() = Theme.colors.content04
-
-val overlayDividerColor: Color
-    @Composable get() = Theme.colors.border

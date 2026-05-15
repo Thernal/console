@@ -28,6 +28,9 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import az.theternal.console.runtime.model.Log
+import az.theternal.console.runtime.model.LogLevel
+import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
+import az.theternal.console.ui.designsystem.foundation.theme.DsPreview
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import az.theternal.console.ui.designsystem.components.core.DsDivider
 import az.theternal.console.ui.designsystem.components.core.DsIcon
@@ -39,7 +42,7 @@ import az.theternal.console.ui.utils.LogTagBadge
 import az.theternal.console.ui.utils.formatLogTimestampFull
 import az.theternal.console.ui.utils.logAccentColor
 
-private val AccentBarWidth = Theme.dimens.dp3
+private val accentBarWidth = Theme.dimens.dp3
 
 @Composable
 internal fun DefaultLogDetail(
@@ -56,20 +59,28 @@ internal fun DefaultLogDetail(
                     if (log.tag != null) {
                         LogTagBadge(tag = log.tag, color = accentColor)
                     } else {
-                        DsText("Log Detail", style = Theme.typography.title01)
+                        DsText(
+                            text = "Log Detail",
+                            style = Theme.typography.title01,
+                            color = Theme.colors.content01,
+                        )
                     }
                 },
                 navigationIcon = {
                     DsIconButton(onClick = onBack) {
                         DsIcon(
                             icon = Icons.AutoMirrored.Filled.ArrowBack,
+                            tint = Theme.colors.content02,
                         )
                     }
                 },
                 actions = {
-                    DsIconButton(onClick = { clipboard.setText(AnnotatedString(log.message)) }) {
+                    DsIconButton(
+                        onClick = { clipboard.setText(AnnotatedString(log.message)) },
+                    ) {
                         DsIcon(
                             icon = Icons.Outlined.ContentCopy,
+                            tint = Theme.colors.content02,
                         )
                     }
                 },
@@ -81,7 +92,10 @@ internal fun DefaultLogDetail(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
-                .padding(Theme.dimens.dp12),
+                .padding(
+                    horizontal = Theme.dimens.dp12,
+                    vertical = Theme.dimens.dp16,
+                ),
             verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp12),
         ) {
             MessageCard(log = log, accentColor = accentColor)
@@ -100,24 +114,31 @@ private fun MessageCard(
             .fillMaxWidth()
             .clip(Theme.rounding.r12)
             .background(Theme.colors.background2)
-            .border(Theme.metrics.borderWidth, accentColor.copy(alpha = 0.3f), Theme.rounding.r12),
+            .border(Theme.metrics.borderWidth, accentColor.copy(alpha = 0.35f), Theme.rounding.r12),
     ) {
-        Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
+        ) {
             Box(
                 modifier = Modifier
-                    .width(AccentBarWidth)
+                    .width(accentBarWidth)
                     .fillMaxHeight()
                     .background(accentColor),
             )
             SelectionContainer(modifier = Modifier.weight(1f)) {
                 DsText(
                     text = log.message,
-                    modifier = Modifier.padding(Theme.dimens.dp12),
+                    modifier = Modifier.padding(
+                        horizontal = Theme.dimens.dp12,
+                        vertical = Theme.dimens.dp12,
+                    ),
                     style = Theme.typography.body02.copy(
                         fontFamily = FontFamily.Monospace,
                         lineHeight = Theme.typography.body01.lineHeight,
-                        color = Theme.colors.content01,
                     ),
+                    color = Theme.colors.content01,
                 )
             }
         }
@@ -141,9 +162,25 @@ private fun MetaCard(
                 if (log.tag != null) {
                     LogTagBadge(tag = log.tag, color = accentColor)
                 } else {
-                    DsText("—", style = Theme.typography.body02, color = Theme.colors.content03)
+                    DsText(
+                        text = "—",
+                        style = Theme.typography.body02,
+                        color = Theme.colors.content04,
+                    )
                 }
             }
+
+            log.level?.let { level ->
+                DsDivider()
+                MetaRow(label = "Level") {
+                    DsText(
+                        text = level.name,
+                        style = Theme.typography.body02,
+                        color = accentColor,
+                    )
+                }
+            }
+
             DsDivider()
             MetaRow(label = "Time") {
                 DsText(
@@ -152,11 +189,14 @@ private fun MetaCard(
                     color = Theme.colors.content01,
                 )
             }
+
             DsDivider()
             MetaRow(label = "ID") {
                 DsText(
                     text = log.id,
-                    style = Theme.typography.body02,
+                    style = Theme.typography.label01.copy(
+                        fontFamily = FontFamily.Monospace,
+                    ),
                     color = Theme.colors.content03,
                 )
             }
@@ -172,16 +212,36 @@ private fun MetaRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
+            .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp10),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp12),
+        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp16),
     ) {
         DsText(
             text = label,
             style = Theme.typography.label02,
-            color = Theme.colors.content03,
+            color = Theme.colors.content04,
             modifier = Modifier.width(Theme.dimens.dp40),
         )
-        content()
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterEnd,
+        ) {
+            content()
+        }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDefaultLogDetail() {
+    ThemeProvider {
+        DefaultLogDetail(
+            log = Log(
+                message = "Response received\nBody: {\"status\":\"ok\",\"userId\":42}",
+                tag = "API",
+                level = LogLevel.Info,
+            ),
+            onBack = {},
+        )
     }
 }

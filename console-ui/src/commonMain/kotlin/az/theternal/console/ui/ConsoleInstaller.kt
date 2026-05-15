@@ -22,6 +22,7 @@ import az.theternal.console.ui.nav.LocalConsoleNavigator
 import az.theternal.console.ui.nav.ConsoleTab
 import az.theternal.console.ui.overlay.ConsoleOverlays
 import az.theternal.console.ui.renderer.LocalLogRenderer
+import az.theternal.console.ui.renderer.LogRenderer
 
 @Composable
 fun ConsoleInstaller(

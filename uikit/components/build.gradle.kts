@@ -12,5 +12,8 @@ kotlin {
             implementation(libs.compose.material3)
             implementation(libs.compose.material.icons.extended)
         }
+        androidMain.dependencies {
+            api(libs.compose.ui.tooling)
+        }
     }
 }

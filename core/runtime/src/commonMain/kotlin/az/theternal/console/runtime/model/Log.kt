@@ -4,12 +4,17 @@ import kotlin.time.Clock
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-sealed interface Log {
+interface Log {
     val id: String
     val timestamp: Long
     val tag: String?
     val level: LogLevel?
     val message: String
+
+    fun copyWith(
+        message: String = this.message,
+        tag: String? = this.tag,
+    ): Log
 
     @OptIn(ExperimentalUuidApi::class)
     data class Basic(
@@ -18,7 +23,12 @@ sealed interface Log {
         override val level: LogLevel? = null,
         override val id: String = Uuid.random().toString(),
         override val timestamp: Long = Clock.System.now().toEpochMilliseconds(),
-    ) : Log
+    ) : Log {
+        override fun copyWith(
+            message: String,
+            tag: String?,
+        ): Log = copy(message = message, tag = tag)
+    }
 
     companion object {
         operator fun invoke(
@@ -28,14 +38,3 @@ sealed interface Log {
         ): Log = Basic(message, tag, level)
     }
 }
-
-fun Log.copyWith(
-    message: String = this.message,
-    tag: String? = this.tag,
-): Log = Log.Basic(
-    id = this.id,
-    timestamp = this.timestamp,
-    level = this.level,
-    message = message,
-    tag = tag,
-)

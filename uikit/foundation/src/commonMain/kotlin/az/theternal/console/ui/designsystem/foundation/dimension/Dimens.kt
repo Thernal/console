@@ -19,6 +19,7 @@ object Dimens {
     val dp20 = 20.dp
     val dp24 = 24.dp
     val dp32 = 32.dp
+    val dp36 = 36.dp
     val dp40 = 40.dp
     val dp44 = 44.dp
     val dp48 = 48.dp

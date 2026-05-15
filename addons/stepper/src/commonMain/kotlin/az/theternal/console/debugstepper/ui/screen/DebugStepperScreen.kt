@@ -1,7 +1,9 @@
 package az.theternal.console.debugstepper.ui.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,11 +14,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.Composable
@@ -25,12 +29,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
+import az.theternal.console.ui.designsystem.foundation.theme.DsPreview
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import az.theternal.console.runtime.model.LogLevel
 import az.theternal.console.debugstepper.DebugStepper
+import az.theternal.console.debugstepper.ui.SteppedEventsRoute
 import az.theternal.console.ui.nav.ConsoleRoute
 import az.theternal.console.ui.nav.LocalConsoleNavigator
 import az.theternal.console.ui.renderer.LocalLogRenderer
@@ -41,14 +48,6 @@ import az.theternal.console.ui.designsystem.components.core.DsSwitch
 import az.theternal.console.ui.designsystem.components.core.DsText
 
 private val autoResumeOptions = listOf(null, 3, 5, 10, 30)
-private val ScreenHorizontalPadding = Theme.dimens.dp12
-private val ScreenVerticalInset = Theme.dimens.dp6
-private val SectionVerticalPadding = Theme.dimens.dp10
-private val SectionSpacing = Theme.dimens.dp10
-private val InlineSpacing = Theme.dimens.dp6
-private val CompactInlineSpacing = Theme.dimens.dp4
-private val ChipHorizontalPadding = Theme.dimens.dp10
-private val ChipVerticalPadding = Theme.dimens.dp4
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -60,14 +59,15 @@ internal fun DebugStepperScreen() {
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(vertical = ScreenVerticalInset),
+        contentPadding = PaddingValues(bottom = Theme.dimens.dp16),
     ) {
+        // Active toggle
         item {
-            ToggleRow(
+            SettingsToggleRow(
                 label = "Active",
+                description = "Enable or disable the debug stepper",
                 checked = config.enabled,
                 onCheckedChange = { DebugStepper.updateConfig { copy(enabled = it) } },
-                modifier = Modifier.padding(horizontal = ScreenHorizontalPadding, vertical = Theme.dimens.dp8),
             )
         }
 
@@ -75,12 +75,13 @@ internal fun DebugStepperScreen() {
 
         item { DsDivider() }
 
+        // Pause toggle
         item {
-            ToggleRow(
+            SettingsToggleRow(
                 label = "Pause",
+                description = "Hold logs until you step through them",
                 checked = config.paused,
                 onCheckedChange = { DebugStepper.updateConfig { copy(paused = it) } },
-                modifier = Modifier.padding(horizontal = ScreenHorizontalPadding, vertical = Theme.dimens.dp8),
             )
         }
 
@@ -88,126 +89,64 @@ internal fun DebugStepperScreen() {
 
         item { DsDivider() }
 
+        // Pause-on-match toggle
         item {
-            ToggleRow(
+            SettingsToggleRow(
                 label = "Pause on match",
+                description = "Pause only when a log matches the filter",
                 checked = config.pauseOnMatch,
                 onCheckedChange = { DebugStepper.updateConfig { copy(pauseOnMatch = it) } },
-                modifier = Modifier.padding(horizontal = ScreenHorizontalPadding, vertical = Theme.dimens.dp8),
             )
         }
 
         if (config.pauseOnMatch) {
             item { DsDivider() }
 
+            // Tag filter
             item {
                 var tagInput by remember { mutableStateOf("") }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = ScreenHorizontalPadding, vertical = SectionVerticalPadding),
-                    verticalArrangement = Arrangement.spacedBy(SectionSpacing),
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        DsText("Tags", style = Theme.typography.label01)
-                        if (config.pauseOnTags.isEmpty()) {
-                            DsText("all", style = Theme.typography.label02, color = Theme.colors.content04)
-                        }
-                    }
-
-                    if (config.pauseOnTags.isNotEmpty()) {
+                SettingsSection(title = "Tags") {
+                    if (config.pauseOnTags.isEmpty()) {
+                        DsText(
+                            text = "Matching all tags",
+                            style = Theme.typography.body03,
+                            color = Theme.colors.content04,
+                        )
+                    } else {
                         FlowRow(
-                            horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing),
-                            verticalArrangement = Arrangement.spacedBy(CompactInlineSpacing),
+                            horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
+                            verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
                         ) {
                             config.pauseOnTags.forEach { tag ->
-                                Row(
-                                    modifier = Modifier
-                                        .clip(Theme.rounding.r4)
-                                        .background(Theme.colors.primary01.copy(alpha = 0.15f))
-                                        .padding(
-                                            start = Theme.dimens.dp8,
-                                            end = Theme.dimens.dp4,
-                                            top = Theme.dimens.dp4,
-                                            bottom = Theme.dimens.dp4,
-                                        ),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing),
-                                ) {
-                                    DsText(tag, style = Theme.typography.label02, color = Theme.colors.primary01)
-                                    DsIcon(
-                                        icon = Icons.Outlined.Close,
-                                        size = Theme.metrics.iconXs,
-                                        tint = Theme.colors.primary01,
-                                        modifier = Modifier
-                                            .padding(Theme.dimens.dp2)
-                                            .clickable {
-                                                DebugStepper.updateConfig { copy(pauseOnTags = pauseOnTags - tag) }
-                                            },
-                                    )
-                                }
+                                TagChip(
+                                    tag = tag,
+                                    onRemove = {
+                                        DebugStepper.updateConfig { copy(pauseOnTags = pauseOnTags - tag) }
+                                    },
+                                )
                             }
                         }
                     }
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(Theme.rounding.r6)
-                            .background(Theme.colors.background3)
-                            .padding(horizontal = Theme.dimens.dp10, vertical = Theme.dimens.dp6),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(InlineSpacing),
-                    ) {
-                        BasicTextField(
-                            value = tagInput,
-                            onValueChange = { tagInput = it.uppercase() },
-                            modifier = Modifier.weight(1f),
-                            singleLine = true,
-                            textStyle = Theme.typography.body02.copy(color = Theme.colors.content01),
-                            cursorBrush = SolidColor(Theme.colors.primary01),
-                            decorationBox = { inner ->
-                                if (tagInput.isEmpty()) {
-                                    DsText(
-                                        "Tag name...",
-                                        style = Theme.typography.body02,
-                                        color = Theme.colors.content04,
-                                    )
-                                }
-                                inner()
-                            },
-                        )
-                        if (tagInput.isNotBlank()) {
-                            DsIcon(
-                                icon = Icons.Outlined.Add,
-                                size = Theme.metrics.iconSm,
-                                tint = Theme.colors.primary01,
-                                modifier = Modifier
-                                    .clickable {
-                                        DebugStepper.updateConfig { copy(pauseOnTags = pauseOnTags + tagInput.trim()) }
-                                        tagInput = ""
-                                    },
-                            )
-                        }
-                    }
+                    TagInputField(
+                        value = tagInput,
+                        onValueChange = { tagInput = it.uppercase() },
+                        onAdd = {
+                            DebugStepper.updateConfig { copy(pauseOnTags = pauseOnTags + tagInput.trim()) }
+                            tagInput = ""
+                        },
+                    )
                 }
             }
 
             item { DsDivider() }
 
+            // Level filter
             item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = ScreenHorizontalPadding, vertical = SectionVerticalPadding),
-                    verticalArrangement = Arrangement.spacedBy(SectionSpacing),
-                ) {
-                    DsText("Level", style = Theme.typography.label01)
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing)) {
+                SettingsSection(title = "Level") {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
+                    ) {
                         item {
                             SelectableChip(
                                 label = "All",
@@ -229,15 +168,12 @@ internal fun DebugStepperScreen() {
 
         item { DsDivider() }
 
+        // Auto-resume
         item {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = ScreenHorizontalPadding, vertical = SectionVerticalPadding),
-                verticalArrangement = Arrangement.spacedBy(SectionSpacing),
-            ) {
-                DsText("Auto-resume", style = Theme.typography.label01)
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing)) {
+            SettingsSection(title = "Auto-resume") {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
+                ) {
                     items(autoResumeOptions) { seconds ->
                         SelectableChip(
                             label = if (seconds == null) "Off" else "${seconds}s",
@@ -253,39 +189,272 @@ internal fun DebugStepperScreen() {
 
         item { DsDivider() }
 
+        // Caught events header
         item {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = ScreenHorizontalPadding, vertical = SectionVerticalPadding),
+                    .padding(
+                        horizontal = Theme.dimens.dp16,
+                        vertical = Theme.dimens.dp10,
+                    ),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(CompactInlineSpacing),
+                    horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp6),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    DsText("Caught", style = Theme.typography.label01)
                     DsText(
-                        text = "${state.steppedEvents.size}",
-                        style = Theme.typography.label02,
-                        color = Theme.colors.content03,
+                        text = "Caught",
+                        style = Theme.typography.title02,
+                        color = Theme.colors.content01,
                     )
+                    Box(
+                        modifier = Modifier
+                            .clip(Theme.rounding.r4)
+                            .background(Theme.colors.background3)
+                            .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp2),
+                    ) {
+                        DsText(
+                            text = "${state.steppedEvents.size}",
+                            style = Theme.typography.label02,
+                            color = Theme.colors.content02,
+                        )
+                    }
                 }
+                val interactionSource = remember { MutableInteractionSource() }
                 DsText(
                     text = "Clear",
-                    style = Theme.typography.label02,
+                    style = Theme.typography.label01,
                     color = Theme.colors.danger,
-                    modifier = Modifier.clickable { DebugStepper.clearSteppedEvents() },
+                    modifier = Modifier.clickable(
+                        interactionSource = interactionSource,
+                        indication = null,
+                        onClick = { DebugStepper.clearSteppedEvents() },
+                    ),
                 )
             }
         }
 
-        items(state.steppedEvents.asReversed(), key = { it.id }) { log ->
-            renderer.Item(
-                log = log,
-                onClick = { navigator.push(ConsoleRoute.LogDetail("", log.id)) },
+        val preview = state.steppedEvents.takeLast(CAUGHT_PREVIEW_COUNT).asReversed()
+
+        items(
+            items = preview,
+            key = { it.id },
+            contentType = { "log_item" },
+        ) { log ->
+            Box(modifier = Modifier.padding(vertical = Theme.dimens.dp3)) {
+                renderer.Item(
+                    log = log,
+                    onClick = { navigator.push(ConsoleRoute.LogDetail("", log.id)) },
+                )
+            }
+        }
+
+        if (state.steppedEvents.size > CAUGHT_PREVIEW_COUNT) {
+            item {
+                val interactionSource = remember { MutableInteractionSource() }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(
+                            interactionSource = interactionSource,
+                            indication = null,
+                            onClick = { navigator.push(SteppedEventsRoute) },
+                        )
+                        .padding(
+                            horizontal = Theme.dimens.dp16,
+                            vertical = Theme.dimens.dp12,
+                        ),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    DsText(
+                        text = "See all ${state.steppedEvents.size} events",
+                        style = Theme.typography.label01,
+                        color = Theme.colors.primary01,
+                    )
+                    DsIcon(
+                        icon = Icons.AutoMirrored.Outlined.ArrowForward,
+                        size = Theme.metrics.iconSm,
+                        tint = Theme.colors.primary01,
+                    )
+                }
+            }
+        }
+    }
+}
+
+private const val CAUGHT_PREVIEW_COUNT = 3
+
+@Composable
+private fun SettingsSection(
+    title: String,
+    content: @Composable () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                horizontal = Theme.dimens.dp16,
+                vertical = Theme.dimens.dp12,
+            ),
+        verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp10),
+    ) {
+        DsText(
+            text = title,
+            style = Theme.typography.title02,
+            color = Theme.colors.content02,
+        )
+        content()
+    }
+}
+
+@Composable
+private fun SettingsToggleRow(
+    label: String,
+    description: String?,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = Theme.dimens.dp16, vertical = Theme.dimens.dp12),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = Theme.dimens.dp16),
+            verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp2),
+        ) {
+            DsText(
+                text = label,
+                style = Theme.typography.body01,
+                color = Theme.colors.content01,
             )
+            if (description != null) {
+                DsText(
+                    text = description,
+                    style = Theme.typography.body03,
+                    color = Theme.colors.content04,
+                )
+            }
+        }
+        DsSwitch(checked = checked, onCheckedChange = onCheckedChange)
+    }
+}
+
+@Composable
+private fun TagChip(
+    tag: String,
+    onRemove: () -> Unit,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    Row(
+        modifier = Modifier
+            .clip(Theme.rounding.r6)
+            .background(Theme.colors.primary01.copy(alpha = 0.12f))
+            .border(
+                width = Theme.metrics.borderWidth,
+                color = Theme.colors.primary01.copy(alpha = 0.25f),
+                shape = Theme.rounding.r6,
+            )
+            .padding(
+                start = Theme.dimens.dp8,
+                end = Theme.dimens.dp4,
+                top = Theme.dimens.dp6,
+                bottom = Theme.dimens.dp6,
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4),
+    ) {
+        DsText(
+            text = tag,
+            style = Theme.typography.label01,
+            color = Theme.colors.primary01,
+        )
+        Box(
+            modifier = Modifier
+                .size(Theme.dimens.dp16)
+                .clip(Theme.rounding.r4)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = onRemove,
+                ),
+            contentAlignment = Alignment.Center,
+        ) {
+            DsIcon(
+                icon = Icons.Outlined.Close,
+                size = Theme.metrics.iconXs,
+                tint = Theme.colors.primary01,
+            )
+        }
+    }
+}
+
+@Composable
+private fun TagInputField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    onAdd: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(Theme.rounding.r8)
+            .background(Theme.colors.background3)
+            .border(
+                width = Theme.metrics.borderWidth,
+                color = Theme.colors.border,
+                shape = Theme.rounding.r8,
+            )
+            .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
+    ) {
+        BasicTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier.weight(1f),
+            singleLine = true,
+            textStyle = Theme.typography.body02.copy(color = Theme.colors.content01),
+            cursorBrush = SolidColor(Theme.colors.primary01),
+            decorationBox = { inner ->
+                if (value.isEmpty()) {
+                    DsText(
+                        text = "Add tag…",
+                        style = Theme.typography.body02,
+                        color = Theme.colors.content04,
+                    )
+                }
+                inner()
+            },
+        )
+        if (value.isNotBlank()) {
+            val interactionSource = remember { MutableInteractionSource() }
+            Box(
+                modifier = Modifier
+                    .size(Theme.dimens.dp24)
+                    .clip(Theme.rounding.r6)
+                    .background(Theme.colors.primary01)
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = null,
+                        onClick = onAdd,
+                    ),
+                contentAlignment = Alignment.Center,
+            ) {
+                DsIcon(
+                    icon = Icons.Outlined.Add,
+                    size = Theme.metrics.iconSm,
+                    tint = Theme.colors.primaryContent,
+                )
+            }
         }
     }
 }
@@ -296,6 +465,7 @@ private fun SelectableChip(
     selected: Boolean,
     onClick: () -> Unit,
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
     val bg = if (selected) Theme.colors.primary01 else Theme.colors.background3
     val fg = if (selected) Theme.colors.primaryContent else Theme.colors.content03
 
@@ -303,26 +473,62 @@ private fun SelectableChip(
         modifier = Modifier
             .clip(Theme.rounding.r6)
             .background(bg)
-            .clickable(onClick = onClick)
-            .padding(horizontal = ChipHorizontalPadding, vertical = ChipVerticalPadding),
+            .then(
+                if (!selected) {
+                    Modifier.border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r6)
+                } else {
+                    Modifier
+                },
+            )
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onClick,
+            )
+            .padding(horizontal = Theme.dimens.dp10, vertical = Theme.dimens.dp8),
     ) {
-        DsText(label, style = Theme.typography.label02, color = fg)
+        DsText(
+            text = label,
+            style = Theme.typography.label01,
+            color = fg,
+        )
     }
 }
 
+@DsPreview
 @Composable
-private fun ToggleRow(
-    label: String,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        DsText(label, style = Theme.typography.body02)
-        DsSwitch(checked = checked, onCheckedChange = onCheckedChange)
+private fun PreviewSettingsToggleRow() {
+    ThemeProvider {
+        SettingsToggleRow(
+            label = "Active",
+            description = "Enable or disable the debug stepper",
+            checked = true,
+            onCheckedChange = {},
+        )
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewSelectableChips() {
+    ThemeProvider {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
+            modifier = Modifier.padding(Theme.dimens.dp16),
+        ) {
+            SelectableChip(label = "All", selected = true, onClick = {})
+            SelectableChip(label = "Info", selected = false, onClick = {})
+            SelectableChip(label = "Error", selected = false, onClick = {})
+        }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewTagChip() {
+    ThemeProvider {
+        Row(modifier = Modifier.padding(Theme.dimens.dp16)) {
+            TagChip(tag = "NETWORK", onRemove = {})
+        }
     }
 }

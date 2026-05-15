@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import az.theternal.console.runtime.model.Log
 import az.theternal.console.ui.renderer.DefaultLogDetail
 import az.theternal.console.ui.renderer.DefaultLogItem
+import az.theternal.console.ui.renderer.LogRenderer
 
 internal object DefaultLogRenderer : LogRenderer {
     @Composable

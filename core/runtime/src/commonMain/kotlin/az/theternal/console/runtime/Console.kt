@@ -3,7 +3,7 @@ package az.theternal.console.runtime
 import az.theternal.console.runtime.api.ConsoleScope
 import az.theternal.console.runtime.api.LogObserver
 import az.theternal.console.runtime.model.Log
-import az.theternal.console.runtime.sanitizer.LogSanitizer
+import az.theternal.console.runtime.sanitizer.LogProcessor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -17,7 +17,7 @@ import kotlin.concurrent.Volatile
 class Console : ConsoleScope {
 
     private val observers = MutableStateFlow<List<LogObserver>>(emptyList())
-    private val sanitizers = MutableStateFlow<List<LogSanitizer>>(emptyList())
+    private val processors = MutableStateFlow<List<LogProcessor>>(emptyList())
     private val asyncScope = CoroutineScope(SupervisorJob() + Dispatchers.Default.limitedParallelism(1))
     private val processMutex = Mutex()
 
@@ -38,8 +38,8 @@ class Console : ConsoleScope {
         observers.update { current -> current.filterNot { it === observer } }
     }
 
-    override fun setSanitizers(sanitizers: List<LogSanitizer>) {
-        this.sanitizers.value = sanitizers
+    override fun setProcessors(processors: List<LogProcessor>) {
+        this.processors.value = processors
     }
 
     override fun notify(event: () -> Log) {
@@ -57,12 +57,12 @@ class Console : ConsoleScope {
     }
 
     private suspend fun processEvent(event: Log) {
-        val sanitizedEvent = sanitizers.value.fold(event) { current, sanitizer ->
-            runCatching { sanitizer.sanitize(current) }.getOrDefault(current)
+        val processed = processors.value.fold(event) { current, processor ->
+            runCatching { processor.process(current) }.getOrDefault(current)
         }
         val snapshot = observers.value
         snapshot.forEach { observer ->
-            runCatching { observer.emit(sanitizedEvent) }
+            runCatching { observer.emit(processed) }
         }
     }
 
@@ -81,8 +81,8 @@ class Console : ConsoleScope {
         override fun removeObserver(observer: LogObserver) {
             default.removeObserver(observer)
         }
-        override fun setSanitizers(sanitizers: List<LogSanitizer>) {
-            default.setSanitizers(sanitizers)
+        override fun setProcessors(processors: List<LogProcessor>) {
+            default.setProcessors(processors)
         }
         override fun notify(event: () -> Log) {
             default.notify(event)

@@ -3,7 +3,9 @@ package az.theternal.console.ui.nav
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -35,14 +37,14 @@ internal fun ConsoleNavHost(
         ),
         transitionSpec = {
             ContentTransform(
-                targetContentEnter = EnterTransition.None,
+                targetContentEnter = slideInHorizontally { it / 2 } + fadeIn(),
                 initialContentExit = ExitTransition.None,
             )
         },
         popTransitionSpec = {
             ContentTransform(
                 targetContentEnter = EnterTransition.None,
-                initialContentExit = ExitTransition.None,
+                initialContentExit = slideOutHorizontally { it / 2 } + fadeOut(),
             )
         },
         predictivePopTransitionSpec = {

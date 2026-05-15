@@ -7,7 +7,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import az.theternal.console.debugstepper.ui.screen.DebugStepperScreen
+import az.theternal.console.debugstepper.ui.screen.SteppedEventsScreen
 import az.theternal.console.ui.nav.ConsoleTab
+
+data object SteppedEventsRoute : NavKey
 
 object DebugStepperNavGraph : ConsoleTab {
     override val title: String = "Stepper"
@@ -18,5 +21,7 @@ object DebugStepperNavGraph : ConsoleTab {
         DebugStepperScreen()
     }
 
-    override fun EntryProviderScope<NavKey>.routes() {}
+    override fun EntryProviderScope<NavKey>.routes() {
+        addEntryProvider(SteppedEventsRoute::class) { SteppedEventsScreen() }
+    }
 }

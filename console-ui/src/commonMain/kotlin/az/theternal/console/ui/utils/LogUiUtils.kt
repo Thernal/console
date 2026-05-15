@@ -19,7 +19,7 @@ import az.theternal.console.ui.designsystem.components.core.DsText
 import kotlin.math.abs
 
 @Composable
-internal fun Log.logAccentColor(): Color {
+fun Log.logAccentColor(): Color {
     return with(Theme.colors) {
         level?.let {
             return@with when (it) {
@@ -47,9 +47,9 @@ internal fun LogTagBadge(
         modifier = Modifier
             .clip(Theme.rounding.r4)
             .background(color.copy(alpha = 0.12f))
-            .padding(horizontal = Theme.dimens.dp4, vertical = Theme.dimens.dp2),
+            .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp3),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp2),
+        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4),
     ) {
         Box(
             modifier = Modifier

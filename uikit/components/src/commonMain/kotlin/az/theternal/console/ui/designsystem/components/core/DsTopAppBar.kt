@@ -46,17 +46,21 @@ fun DsTopAppBar(
                 .padding(horizontal = Theme.dimens.dp4),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(
-                modifier = Modifier.width(Theme.metrics.minTouchTarget),
-                contentAlignment = Alignment.Center,
-            ) {
-                navigationIcon?.invoke()
+            if (navigationIcon != null) {
+                Box(
+                    modifier = Modifier.width(Theme.metrics.minTouchTarget),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    navigationIcon.invoke()
+                }
             }
 
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = Theme.dimens.dp4),
+                    .padding(
+                        start = if (navigationIcon != null) Theme.dimens.dp4 else Theme.dimens.dp12,
+                    ),
                 contentAlignment = Alignment.CenterStart,
             ) {
                 CompositionLocalProvider(LocalDsTextStyle provides titleTextStyle) {

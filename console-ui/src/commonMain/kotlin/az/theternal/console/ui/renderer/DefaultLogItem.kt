@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,7 +34,10 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
+import az.theternal.console.ui.designsystem.foundation.theme.DsPreview
 import az.theternal.console.runtime.model.Log
+import az.theternal.console.runtime.model.LogLevel
+import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import az.theternal.console.ui.designsystem.components.core.DsIcon
 import az.theternal.console.ui.designsystem.components.core.DsText
@@ -41,7 +45,7 @@ import az.theternal.console.ui.utils.LogTagBadge
 import az.theternal.console.ui.utils.formatLogTimestamp
 import az.theternal.console.ui.utils.logAccentColor
 
-private val AccentBarWidth = Theme.dimens.dp3
+private val accentBarWidth = Theme.dimens.dp3
 
 @Composable
 internal fun DefaultLogItem(
@@ -57,30 +61,42 @@ internal fun DefaultLogItem(
         targetValue = if (expanded) 180f else 0f,
         label = "chevron",
     )
+    val interactionSource = remember { MutableInteractionSource() }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp4)
+            .padding(horizontal = Theme.dimens.dp12)
             .clip(Theme.rounding.r12)
             .background(Theme.colors.background2)
             .border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r12)
-            .clickable(onClick = onClick)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onClick,
+            )
             .animateContentSize(),
     ) {
-        Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
+        ) {
+            // Accent bar
             Box(
                 modifier = Modifier
-                    .width(AccentBarWidth)
+                    .width(accentBarWidth)
                     .fillMaxHeight()
                     .background(accentColor),
             )
+
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
-                verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
+                    .padding(horizontal = Theme.dimens.dp10, vertical = Theme.dimens.dp10),
+                verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp6),
             ) {
+                // Header row: tag badge + timestamp
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -89,11 +105,12 @@ internal fun DefaultLogItem(
                     LogTagBadge(tag = log.tag, color = accentColor)
                     DsText(
                         text = formatLogTimestamp(log.timestamp),
-                        style = Theme.typography.label02,
+                        style = Theme.typography.label01,
                         color = Theme.colors.content04,
                     )
                 }
 
+                // First line of message — always visible
                 DsText(
                     text = lines.first(),
                     style = Theme.typography.body02,
@@ -102,11 +119,20 @@ internal fun DefaultLogItem(
                     overflow = TextOverflow.Ellipsis,
                 )
 
+                // Multi-line controls
                 if (isMultiline) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4)) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
                         LogItemPill(
                             icon = Icons.Outlined.ExpandMore,
-                            label = if (expanded) "Collapse" else "${lines.size - 1} more",
+                            label = if (expanded) {
+                                "Collapse"
+                            } else {
+                                val extra = lines.size - 1
+                                "$extra more line${if (extra > 1) "s" else ""}"
+                            },
                             iconModifier = Modifier.rotate(chevronAngle),
                             onClick = { expanded = !expanded },
                         )
@@ -124,14 +150,20 @@ internal fun DefaultLogItem(
                                     .fillMaxWidth()
                                     .clip(Theme.rounding.r8)
                                     .background(Theme.colors.background3)
-                                    .padding(Theme.dimens.dp8),
+                                    .border(
+                                        width = Theme.metrics.borderWidth,
+                                        color = Theme.colors.border,
+                                        shape = Theme.rounding.r8,
+                                    )
+                                    .padding(Theme.dimens.dp10),
                             ) {
                                 DsText(
                                     text = log.message,
-                                    style = Theme.typography.label01.copy(
+                                    style = Theme.typography.body03.copy(
                                         fontFamily = FontFamily.Monospace,
-                                        color = Theme.colors.content02,
+                                        lineHeight = Theme.typography.body02.lineHeight,
                                     ),
+                                    color = Theme.colors.content02,
                                 )
                             }
                         }
@@ -142,6 +174,34 @@ internal fun DefaultLogItem(
     }
 }
 
+@DsPreview
+@Composable
+private fun PreviewDefaultLogItemSingle() {
+    ThemeProvider {
+        DefaultLogItem(
+            log = Log("Request completed successfully", tag = "HTTP", level = LogLevel.Success),
+            onClick = {},
+        )
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDefaultLogItemMultiline() {
+    ThemeProvider {
+        DefaultLogItem(
+            log = Log(
+                message = "Exception in thread \"main\"\n" +
+                    "java.lang.NullPointerException\n" +
+                    "\tat com.example.Foo.bar(Foo.kt:42)",
+                tag = "CRASH",
+                level = LogLevel.Fatal,
+            ),
+            onClick = {},
+        )
+    }
+}
+
 @Composable
 private fun LogItemPill(
     icon: ImageVector,
@@ -149,14 +209,20 @@ private fun LogItemPill(
     onClick: () -> Unit,
     iconModifier: Modifier = Modifier,
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+
     Row(
         modifier = Modifier
             .clip(Theme.rounding.r6)
             .background(Theme.colors.background3)
-            .clickable(onClick = onClick)
-            .padding(horizontal = Theme.dimens.dp8, vertical = Theme.dimens.dp2),
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onClick,
+            )
+            .padding(horizontal = Theme.dimens.dp8, vertical = Theme.dimens.dp3),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp2),
+        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp3),
     ) {
         DsIcon(
             icon = icon,
@@ -164,6 +230,10 @@ private fun LogItemPill(
             tint = Theme.colors.content03,
             modifier = iconModifier,
         )
-        DsText(text = label, style = Theme.typography.label02, color = Theme.colors.content03)
+        DsText(
+            text = label,
+            style = Theme.typography.label02,
+            color = Theme.colors.content03,
+        )
     }
 }
