@@ -1,43 +1,20 @@
-package az.theternal.console.ui.designsystem.components.core
+package az.theternal.console.ui.designsystem.components.core.navigationbar.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import az.theternal.console.ui.designsystem.components.core.LocalDsContentColor
+import az.theternal.console.ui.designsystem.components.core.LocalDsTextStyle
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
-
-@Composable
-fun DsNavigationBar(
-    modifier: Modifier = Modifier,
-    containerColor: Color = Theme.colors.background2,
-    content: @Composable RowScope.() -> Unit,
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(containerColor)
-            .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal))
-            .padding(vertical = Theme.dimens.dp4),
-        content = content,
-    )
-}
 
 @Composable
 fun RowScope.DsNavigationBarItem(

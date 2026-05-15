@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import az.theternal.console.ui.nav.ConsoleNavigation
 import az.theternal.console.ui.nav.ConsoleTab
 import az.theternal.console.ui.designsystem.components.core.DsIconButton
-import az.theternal.console.ui.designsystem.components.core.DsNavigationBar
-import az.theternal.console.ui.designsystem.components.core.DsNavigationBarItem
+import az.theternal.console.ui.designsystem.components.core.navigationbar.DsNavigationBar
+import az.theternal.console.ui.designsystem.components.core.navigationbar.components.DsNavigationBarItem
 import az.theternal.console.ui.designsystem.components.core.DsScaffold
 import az.theternal.console.ui.designsystem.components.core.DsTopAppBar
 import az.theternal.console.ui.designsystem.foundation.theme.Theme

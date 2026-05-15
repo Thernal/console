@@ -1,4 +1,4 @@
-package az.theternal.console.ui.renderer
+package az.theternal.console.ui.renderer.defaultlogitem
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
@@ -29,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
@@ -39,8 +38,8 @@ import az.theternal.console.runtime.model.Log
 import az.theternal.console.runtime.model.LogLevel
 import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
-import az.theternal.console.ui.designsystem.components.core.DsIcon
 import az.theternal.console.ui.designsystem.components.core.DsText
+import az.theternal.console.ui.renderer.defaultlogitem.components.LogItemPill
 import az.theternal.console.ui.utils.LogTagBadge
 import az.theternal.console.ui.utils.formatLogTimestamp
 import az.theternal.console.ui.utils.logAccentColor
@@ -198,42 +197,6 @@ private fun PreviewDefaultLogItemMultiline() {
                 level = LogLevel.Fatal,
             ),
             onClick = {},
-        )
-    }
-}
-
-@Composable
-private fun LogItemPill(
-    icon: ImageVector,
-    label: String,
-    onClick: () -> Unit,
-    iconModifier: Modifier = Modifier,
-) {
-    val interactionSource = remember { MutableInteractionSource() }
-
-    Row(
-        modifier = Modifier
-            .clip(Theme.rounding.r6)
-            .background(Theme.colors.background3)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = onClick,
-            )
-            .padding(horizontal = Theme.dimens.dp8, vertical = Theme.dimens.dp3),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp3),
-    ) {
-        DsIcon(
-            icon = icon,
-            size = Theme.metrics.iconXs,
-            tint = Theme.colors.content03,
-            modifier = iconModifier,
-        )
-        DsText(
-            text = label,
-            style = Theme.typography.label02,
-            color = Theme.colors.content03,
         )
     }
 }

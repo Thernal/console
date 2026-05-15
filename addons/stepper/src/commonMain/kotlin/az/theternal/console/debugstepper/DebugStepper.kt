@@ -42,7 +42,7 @@ object DebugStepper : LogObserver, ConsoleAddon {
             }
             current.copy(steppedEvents = trimmedEvents)
         }
-        if (!normalized.enabled) releaseCurrentWaiter()
+        if (!normalized.enabled || !normalized.paused) releaseCurrentWaiter()
     }
 
     fun updateConfig(block: Config.() -> Config) {
