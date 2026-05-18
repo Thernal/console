@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 rootProject.name = "Console"
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -73,7 +74,8 @@ include(":sample:ios")
 include(":sample:jvm")
 
 include(":console-runtime")
-include(":console-ui")
+include(":console-api")
+include(":console-compose")
 include(":designsystem:foundation")
 include(":designsystem:components")
 

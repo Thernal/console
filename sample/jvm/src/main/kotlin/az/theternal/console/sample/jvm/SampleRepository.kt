@@ -1,7 +1,7 @@
 package az.theternal.console.sample.jvm
 
-import az.theternal.console.Console
-import az.theternal.console.Log
+import az.theternal.console.runtime.Console
+import az.theternal.console.runtime.Log
 
 class SampleRepository {
     fun jvmLog() {
