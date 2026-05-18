@@ -72,8 +72,6 @@ include(":sample:android")
 include(":sample:ios")
 include(":sample:jvm")
 
-include(":console-ui")
-
 // Auto-discover modules under core/, uikit/, addons/
 listOf("core", "uikit", "addons").forEach { group ->
     settingsDir.resolve(group).walkTopDown()
