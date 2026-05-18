@@ -13,7 +13,7 @@ import androidx.compose.material.icons.outlined.SkipNext
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import az.theternal.console.debugstepper.DebugStepper
+import az.theternal.console.debugstepper.api.DebugStepper
 import az.theternal.console.debugstepper.ui.overlay.overlayBackgroundColor
 import az.theternal.console.debugstepper.ui.overlay.overlayMutedContentColor
 import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
@@ -37,7 +37,7 @@ internal fun OverlayIconControls(
             DsIcon(
                 icon = Icons.Outlined.PowerSettingsNew,
                 size = Theme.metrics.iconMd,
-                tint = if (isEnabled) Theme.colors.content01 else overlayMutedContentColor,
+                color = if (isEnabled) Theme.colors.content01 else overlayMutedContentColor,
             )
         }
 
@@ -48,7 +48,7 @@ internal fun OverlayIconControls(
                 DsIcon(
                     icon = if (isPaused) Icons.Outlined.PlayArrow else Icons.Outlined.Pause,
                     size = Theme.metrics.iconMd,
-                    tint = Theme.colors.content01,
+                    color = Theme.colors.content01,
                 )
             }
 
@@ -59,7 +59,7 @@ internal fun OverlayIconControls(
                 DsIcon(
                     icon = Icons.Outlined.SkipNext,
                     size = Theme.metrics.iconMd,
-                    tint = if (canStep) Theme.colors.content01 else overlayMutedContentColor,
+                    color = if (canStep) Theme.colors.content01 else overlayMutedContentColor,
                 )
             }
         }

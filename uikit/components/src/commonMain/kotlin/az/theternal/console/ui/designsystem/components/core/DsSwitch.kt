@@ -18,7 +18,10 @@ fun DsSwitch(
         checked = checked,
         onCheckedChange = onCheckedChange,
         enabled = enabled,
-        modifier = modifier.size(width = Theme.dimens.dp44, height = Theme.dimens.dp24),
+        modifier = modifier.size(
+            width = Theme.dimens.dp44,
+            height = Theme.dimens.dp24,
+        ),
         colors = SwitchDefaults.colors(
             checkedThumbColor = Theme.colors.primaryContent,
             checkedTrackColor = Theme.colors.primary01,

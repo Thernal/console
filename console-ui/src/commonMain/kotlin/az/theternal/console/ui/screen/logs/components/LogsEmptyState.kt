@@ -26,7 +26,7 @@ internal fun LogsEmptyState() {
             DsIcon(
                 icon = Icons.Outlined.List,
                 size = Theme.dimens.dp32,
-                tint = Theme.colors.content04,
+                color = Theme.colors.content04,
             )
             DsText(
                 text = "No logs yet",

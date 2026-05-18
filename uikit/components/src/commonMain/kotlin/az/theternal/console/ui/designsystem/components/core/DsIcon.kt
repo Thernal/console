@@ -13,20 +13,21 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
+import az.theternal.console.ui.designsystem.foundation.theme.LocalDsContentColor
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 
 @Composable
 fun DsIcon(
     icon: ImageVector,
     modifier: Modifier = Modifier,
-    tint: Color = LocalDsContentColor.current,
+    color: Color = LocalDsContentColor.current,
     size: Dp = Theme.metrics.iconMd,
 ) {
-    val colorFilter = remember(tint) {
-        if (tint == Color.Unspecified) {
+    val colorFilter = remember(color) {
+        if (color == Color.Unspecified) {
             null
         } else {
-            ColorFilter.tint(tint)
+            ColorFilter.tint(color)
         }
     }
 

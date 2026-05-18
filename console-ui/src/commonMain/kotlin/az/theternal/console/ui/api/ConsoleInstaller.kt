@@ -1,4 +1,4 @@
-package az.theternal.console.ui
+package az.theternal.console.ui.api
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -12,10 +12,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import az.theternal.console.runtime.Console
+import az.theternal.console.runtime.api.Console
+import az.theternal.console.ui.api.gesture.ConsoleTrigger
+import az.theternal.console.ui.api.gesture.Swipe
 import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
-import az.theternal.console.ui.gesture.ConsoleTrigger
-import az.theternal.console.ui.gesture.Swipe
 import az.theternal.console.ui.nav.ConsoleNavHost
 import az.theternal.console.ui.nav.ConsoleNavigatorImpl
 import az.theternal.console.ui.nav.LocalConsoleNavigator
@@ -29,12 +29,9 @@ fun ConsoleInstaller(
     enabled: Boolean = true,
     trigger: ConsoleTrigger = ConsoleTrigger.swipeSequence(Swipe.UP, Swipe.DOWN),
     logRenderer: LogRenderer = DefaultLogRenderer,
-    addons: List<ConsoleAddon> = emptyList(),
     content: @Composable () -> Unit,
 ) {
     SideEffect { Console.isEnabled = enabled }
-
-    remember(addons) { addons.forEach { it.install() } }
 
     if (!enabled) {
         content()

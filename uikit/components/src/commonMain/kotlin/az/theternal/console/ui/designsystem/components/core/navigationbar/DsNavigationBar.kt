@@ -25,7 +25,11 @@ fun DsNavigationBar(
         modifier = modifier
             .fillMaxWidth()
             .background(containerColor)
-            .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal))
+            .windowInsetsPadding(
+                insets = WindowInsets.safeDrawing.only(
+                    sides = WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal,
+                ),
+            )
             .padding(vertical = Theme.dimens.dp4),
         content = content,
     )

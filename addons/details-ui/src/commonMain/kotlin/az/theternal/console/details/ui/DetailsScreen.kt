@@ -1,7 +1,5 @@
 package az.theternal.console.details.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,9 +12,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import az.theternal.console.details.ConsoleDetails
+import az.theternal.console.details.api.ConsoleDetails
 import az.theternal.console.details.ui.components.DetailRow
+import az.theternal.console.ui.designsystem.components.core.DsCard
 import az.theternal.console.ui.designsystem.components.core.DsDivider
 import az.theternal.console.ui.designsystem.components.core.DsText
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
@@ -40,15 +38,12 @@ internal fun DetailsScreen() {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp16),
+            .padding(
+                horizontal = Theme.metrics.screenPaddingHorizontal,
+                vertical = Theme.metrics.screenPaddingVertical,
+            ),
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(Theme.rounding.r12)
-                .background(Theme.colors.background2)
-                .border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r12),
-        ) {
+        DsCard(modifier = Modifier.fillMaxWidth()) {
             Column {
                 details.entries.forEachIndexed { index, (key, value) ->
                     if (index > 0) DsDivider()

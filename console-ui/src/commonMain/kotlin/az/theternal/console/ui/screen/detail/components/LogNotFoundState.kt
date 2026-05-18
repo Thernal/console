@@ -26,7 +26,7 @@ internal fun LogNotFoundState() {
             DsIcon(
                 icon = Icons.Outlined.SearchOff,
                 size = Theme.dimens.dp32,
-                tint = Theme.colors.content04,
+                color = Theme.colors.content04,
             )
             DsText(
                 text = "Log not found",

@@ -2,7 +2,6 @@ package az.theternal.console.debugstepper.ui.screen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
 import az.theternal.console.ui.designsystem.foundation.theme.DsPreview
 import az.theternal.console.ui.designsystem.components.core.DsText
+import az.theternal.console.ui.designsystem.components.modifier.pressable
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 
 @Composable
@@ -38,10 +38,8 @@ internal fun SelectableChip(
                     Modifier
                 },
             )
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = onClick,
+            .pressable(
+                onPress = onClick,
             )
             .padding(horizontal = Theme.dimens.dp10, vertical = Theme.dimens.dp8),
     ) {

@@ -1,6 +1,6 @@
 package az.theternal.console.ui.observer
 
-import az.theternal.console.runtime.Console
+import az.theternal.console.runtime.api.Console
 import az.theternal.console.runtime.api.LogObserver
 import az.theternal.console.runtime.model.Log
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +21,7 @@ internal object ConsoleLogObserver : LogObserver {
         if (!configSnapshot.enabled) return
         val maxLogCount = configSnapshot.maxLogCount
 
+        // Ring buffer: drop the oldest entry when the cap is reached.
         _logs.update { current ->
             when {
                 maxLogCount <= 0 -> emptyList()

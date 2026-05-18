@@ -1,16 +1,14 @@
 package az.theternal.console.ui.renderer.defaultlogdetail.components.metacard
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import az.theternal.console.runtime.model.Log
+import az.theternal.console.runtime.model.LogLevel
+import az.theternal.console.ui.designsystem.components.core.DsCard
 import az.theternal.console.ui.designsystem.components.core.DsDivider
 import az.theternal.console.ui.designsystem.components.core.DsText
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
@@ -23,13 +21,7 @@ internal fun MetaCard(
     log: Log,
     accentColor: Color,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(Theme.rounding.r12)
-            .background(Theme.colors.background2)
-            .border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r12),
-    ) {
+    DsCard(modifier = Modifier.fillMaxWidth()) {
         Column {
             MetaRow(label = "Tag") {
                 if (log.tag != null) {
@@ -43,11 +35,11 @@ internal fun MetaCard(
                 }
             }
 
-            log.level?.let { level ->
+            if (log.level != LogLevel.None) {
                 DsDivider()
                 MetaRow(label = "Level") {
                     DsText(
-                        text = level.name,
+                        text = log.level.name,
                         style = Theme.typography.body02,
                         color = accentColor,
                     )

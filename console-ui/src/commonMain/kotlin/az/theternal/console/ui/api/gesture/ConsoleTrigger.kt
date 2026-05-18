@@ -1,6 +1,7 @@
-package az.theternal.console.ui.gesture
+package az.theternal.console.ui.api.gesture
 
 import androidx.compose.ui.Modifier
+import az.theternal.console.ui.gesture.swipeSequenceDetector
 
 /**
  * Defines how the console is triggered via a [Modifier]-based gesture.
@@ -18,6 +19,7 @@ fun interface ConsoleTrigger {
     fun Modifier.attach(onDetected: () -> Unit): Modifier
 
     companion object {
+        // threshold is in pixels
         fun swipeSequence(
             vararg swipes: Swipe,
             threshold: Float = 50f,

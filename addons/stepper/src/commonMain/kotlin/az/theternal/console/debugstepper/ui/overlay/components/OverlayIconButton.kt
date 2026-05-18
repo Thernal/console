@@ -1,6 +1,5 @@
 package az.theternal.console.debugstepper.ui.overlay.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -9,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import az.theternal.console.ui.designsystem.components.modifier.pressable
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 
 @Composable
@@ -22,11 +22,9 @@ internal fun OverlayIconButton(
         modifier = Modifier
             .size(Theme.dimens.dp32)
             .clip(Theme.rounding.r8)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
+            .pressable(
                 enabled = enabled,
-                onClick = onClick,
+                onPress = onClick,
             ),
         contentAlignment = Alignment.Center,
     ) {

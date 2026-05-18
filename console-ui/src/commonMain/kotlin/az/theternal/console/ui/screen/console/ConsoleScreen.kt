@@ -20,12 +20,12 @@ import az.theternal.console.ui.nav.ConsoleNavigation
 import az.theternal.console.ui.nav.ConsoleTab
 import az.theternal.console.ui.designsystem.components.core.DsIconButton
 import az.theternal.console.ui.designsystem.components.core.navigationbar.DsNavigationBar
-import az.theternal.console.ui.designsystem.components.core.navigationbar.components.DsNavigationBarItem
 import az.theternal.console.ui.designsystem.components.core.DsScaffold
-import az.theternal.console.ui.designsystem.components.core.DsTopAppBar
+import az.theternal.console.ui.designsystem.components.core.DsAppBar
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import az.theternal.console.ui.designsystem.components.core.DsIcon
 import az.theternal.console.ui.designsystem.components.core.DsText
+import az.theternal.console.ui.designsystem.components.core.navigationbar.DsNavigationBarItem
 
 @Composable
 internal fun ConsoleScreen(
@@ -47,19 +47,19 @@ internal fun ConsoleScreen(
 
     DsScaffold(
         topBar = {
-            DsTopAppBar(
-                title = {
+            DsAppBar(
+                leading = {
                     DsText(
                         text = "Console",
                         style = Theme.typography.title01,
                         color = Theme.colors.content01,
                     )
                 },
-                actions = {
+                trailing = {
                     DsIconButton(onClick = onClose) {
                         DsIcon(
                             icon = Icons.Default.Close,
-                            tint = Theme.colors.content02,
+                            color = Theme.colors.content02,
                         )
                     }
                 },

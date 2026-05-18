@@ -22,7 +22,7 @@ internal fun LogDetailScreen(
     log?.let { currentLog ->
         renderer.Detail(log = currentLog, onBack = onBack)
     } ?: run {
-        LaunchedEffect(Unit) { onBack() }
+        LaunchedEffect(onBack) { onBack() }
         LogNotFoundState()
     }
 }

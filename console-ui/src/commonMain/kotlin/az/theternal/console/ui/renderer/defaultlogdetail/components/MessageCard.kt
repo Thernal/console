@@ -1,10 +1,8 @@
 package az.theternal.console.ui.renderer.defaultlogdetail.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,26 +11,22 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.foundation.background
 import az.theternal.console.runtime.model.Log
+import az.theternal.console.ui.designsystem.components.core.DsCard
 import az.theternal.console.ui.designsystem.components.core.DsText
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
-
-private val accentBarWidth = Theme.dimens.dp3
 
 @Composable
 internal fun MessageCard(
     log: Log,
     accentColor: Color,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(Theme.rounding.r12)
-            .background(Theme.colors.background2)
-            .border(Theme.metrics.borderWidth, accentColor.copy(alpha = 0.35f), Theme.rounding.r12),
+    DsCard(
+        modifier = Modifier.fillMaxWidth(),
+        borderColor = accentColor.copy(alpha = Theme.opacity.S35),
     ) {
         Row(
             modifier = Modifier
@@ -41,7 +35,7 @@ internal fun MessageCard(
         ) {
             Box(
                 modifier = Modifier
-                    .width(accentBarWidth)
+                    .width(Theme.dimens.dp3)
                     .fillMaxHeight()
                     .background(accentColor),
             )

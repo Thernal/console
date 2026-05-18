@@ -2,6 +2,8 @@ package az.theternal.console.ui.designsystem.components.core
 
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
+import az.theternal.console.ui.designsystem.foundation.theme.LocalDsContentColor
+import az.theternal.console.ui.designsystem.foundation.theme.LocalDsTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color

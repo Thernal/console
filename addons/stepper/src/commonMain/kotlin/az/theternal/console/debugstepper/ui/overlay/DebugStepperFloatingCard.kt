@@ -30,9 +30,7 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -42,7 +40,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
 import az.theternal.console.debugstepper.ui.DebugStepperNavGraph
 import az.theternal.console.debugstepper.ui.overlay.components.OverlayIconButton
 import az.theternal.console.debugstepper.ui.overlay.components.OverlayIconControls
@@ -61,9 +58,7 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
     val navigator = LocalConsoleNavigator.current
     val renderer = LocalLogRenderer.current
     var isExpanded by rememberSaveable { mutableStateOf(false) }
-    var offsetX by rememberSaveable { mutableFloatStateOf(0f) }
-    var offsetY by rememberSaveable { mutableFloatStateOf(0f) }
-    var cardSize by remember { mutableStateOf(IntSize.Zero) }
+    val drag = rememberDragOffset()
 
     LaunchedEffect(uiState.isEnabled) {
         if (!uiState.isEnabled) isExpanded = false
@@ -83,7 +78,7 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
         Column(
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+                .offset { IntOffset(drag.offsetX.roundToInt(), drag.offsetY.roundToInt()) }
                 .widthIn(max = maxWidth)
                 .clip(Theme.rounding.r12)
                 .background(overlayBackgroundColor)
@@ -93,27 +88,12 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                     shape = Theme.rounding.r12,
                 )
                 .onSizeChanged { newSize ->
-                    cardSize = newSize
-                    offsetX = offsetX.coerceIn(
-                        minimumValue = -(maxWidthPx - newSize.width).coerceAtLeast(0f),
-                        maximumValue = 0f,
-                    )
-                    offsetY = offsetY.coerceIn(
-                        minimumValue = 0f,
-                        maximumValue = (maxHeightPx - newSize.height).coerceAtLeast(0f),
-                    )
+                    drag.onSizeChanged(newSize, maxWidthPx, maxHeightPx)
                 }
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         change.consume()
-                        offsetX = (offsetX + dragAmount.x).coerceIn(
-                            minimumValue = -(maxWidthPx - cardSize.width).coerceAtLeast(0f),
-                            maximumValue = 0f,
-                        )
-                        offsetY = (offsetY + dragAmount.y).coerceIn(
-                            minimumValue = 0f,
-                            maximumValue = (maxHeightPx - cardSize.height).coerceAtLeast(0f),
-                        )
+                        drag.onDrag(dragAmount, maxWidthPx, maxHeightPx)
                     }
                 },
         ) {
@@ -141,7 +121,7 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                         Box(
                             modifier = Modifier
                                 .clip(Theme.rounding.r4)
-                                .background(borderColor.copy(alpha = 0.15f))
+                                .background(borderColor.copy(alpha = Theme.opacity.S15))
                                 .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp2),
                         ) {
                             DsText(
@@ -163,7 +143,7 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                     DsIcon(
                         icon = Icons.Outlined.Settings,
                         size = Theme.metrics.iconSm,
-                        tint = overlayMutedContentColor,
+                        color = overlayMutedContentColor,
                     )
                 }
 
@@ -172,7 +152,7 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                         DsIcon(
                             icon = if (isExpanded) Icons.Outlined.KeyboardArrowDown else Icons.Outlined.KeyboardArrowUp,
                             size = Theme.metrics.iconMd,
-                            tint = overlayMutedContentColor,
+                            color = overlayMutedContentColor,
                         )
                     }
                 }

@@ -1,7 +1,6 @@
-package az.theternal.console.ui.designsystem.components.core
+package az.theternal.console.ui.designsystem.foundation.theme
 
 import androidx.compose.runtime.staticCompositionLocalOf
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
 
 val LocalDsContentColor = staticCompositionLocalOf {
     Theme.default.colors.content01

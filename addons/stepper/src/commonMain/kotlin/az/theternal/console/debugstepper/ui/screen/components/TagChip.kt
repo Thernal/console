@@ -2,7 +2,6 @@ package az.theternal.console.debugstepper.ui.screen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +19,7 @@ import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
 import az.theternal.console.ui.designsystem.foundation.theme.DsPreview
 import az.theternal.console.ui.designsystem.components.core.DsIcon
 import az.theternal.console.ui.designsystem.components.core.DsText
+import az.theternal.console.ui.designsystem.components.modifier.pressable
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 
 @Composable
@@ -55,17 +55,13 @@ internal fun TagChip(
             modifier = Modifier
                 .size(Theme.dimens.dp16)
                 .clip(Theme.rounding.r4)
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    onClick = onRemove,
-                ),
+                .pressable(onPress = onRemove),
             contentAlignment = Alignment.Center,
         ) {
             DsIcon(
                 icon = Icons.Outlined.Close,
                 size = Theme.metrics.iconXs,
-                tint = Theme.colors.primary01,
+                color = Theme.colors.primary01,
             )
         }
     }

@@ -20,8 +20,8 @@ fun DsDivider(
         drawLine(
             color = color,
             strokeWidth = thickness.toPx(),
-            start = Offset(0f, thickness.toPx() / 2),
-            end = Offset(size.width, thickness.toPx() / 2),
+            start = Offset(x = 0f, y = thickness.toPx() / 2),
+            end = Offset(x = size.width, y = thickness.toPx() / 2),
         )
     }
 }

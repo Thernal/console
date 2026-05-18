@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import az.theternal.console.debugstepper.DebugStepper
+import az.theternal.console.debugstepper.api.DebugStepper
 
 @Composable
 internal fun DebugStepperOverlay() {

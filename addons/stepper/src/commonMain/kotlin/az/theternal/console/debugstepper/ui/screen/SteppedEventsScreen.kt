@@ -18,11 +18,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import az.theternal.console.debugstepper.DebugStepper
+import az.theternal.console.debugstepper.api.DebugStepper
 import az.theternal.console.ui.designsystem.components.core.DsIcon
 import az.theternal.console.ui.designsystem.components.core.DsIconButton
 import az.theternal.console.ui.designsystem.components.core.DsText
-import az.theternal.console.ui.designsystem.components.core.DsTopAppBar
+import az.theternal.console.ui.designsystem.components.core.DsAppBar
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import az.theternal.console.ui.nav.ConsoleRoute
 import az.theternal.console.ui.nav.LocalConsoleNavigator
@@ -36,19 +36,19 @@ internal fun SteppedEventsScreen() {
     val events = remember(state.steppedEvents) { state.steppedEvents.asReversed() }
 
     Column(modifier = Modifier.fillMaxSize().background(Theme.colors.background1)) {
-        DsTopAppBar(
-            title = {
+        DsAppBar(
+            content = {
                 DsText(
                     text = "Caught (${state.steppedEvents.size})",
                     style = Theme.typography.title01,
                     color = Theme.colors.content01,
                 )
             },
-            navigationIcon = {
+            leading = {
                 DsIconButton(onClick = { navigator.pop() }) {
                     DsIcon(
                         icon = Icons.AutoMirrored.Filled.ArrowBack,
-                        tint = Theme.colors.content02,
+                        color = Theme.colors.content02,
                     )
                 }
             },
@@ -65,7 +65,7 @@ internal fun SteppedEventsScreen() {
                     DsIcon(
                         icon = Icons.Outlined.BugReport,
                         size = Theme.dimens.dp32,
-                        tint = Theme.colors.content04,
+                        color = Theme.colors.content04,
                     )
                     DsText(
                         text = "Nothing caught yet",

@@ -1,4 +1,4 @@
-package az.theternal.console.debugstepper
+package az.theternal.console.debugstepper.api
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
@@ -127,8 +127,8 @@ object DebugStepper : LogObserver, ConsoleAddon {
         if (!config.pauseOnMatch) return true
         if (config.pauseOnTags.isNotEmpty() && event.tag !in config.pauseOnTags) return false
         val minLevel = config.pauseOnLevelAtLeast ?: return true
-        val eventLevel = event.level ?: return false
-        return eventLevel.ordinal >= minLevel.ordinal
+        if (event.level == LogLevel.None) return false
+        return event.level.ordinal >= minLevel.ordinal
     }
 
     private fun releaseCurrentWaiter() {

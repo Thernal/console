@@ -3,7 +3,7 @@ package az.theternal.console.ui.designsystem.foundation.theme
 import androidx.compose.ui.graphics.Color
 import az.theternal.console.ui.designsystem.foundation.color.BrandColors
 
-class DefaultTheme : Theme() {
+class DefaultTheme : Theme {
     override val colors: ThemeColors = ThemeColors(
         content01 = BrandColors.neutral.s100,
         content02 = BrandColors.neutral.s200,

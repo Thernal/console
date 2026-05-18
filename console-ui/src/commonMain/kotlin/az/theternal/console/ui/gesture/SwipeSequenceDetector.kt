@@ -1,6 +1,7 @@
 package az.theternal.console.ui.gesture
 
 import androidx.compose.ui.Modifier
+import az.theternal.console.ui.api.gesture.Swipe
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.AwaitPointerEventScope
 import androidx.compose.ui.input.pointer.PointerEventPass

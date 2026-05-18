@@ -8,7 +8,7 @@ interface Log {
     val id: String
     val timestamp: Long
     val tag: String?
-    val level: LogLevel?
+    val level: LogLevel
     val message: String
 
     fun copyWith(
@@ -20,7 +20,7 @@ interface Log {
     data class Basic(
         override val message: String,
         override val tag: String? = null,
-        override val level: LogLevel? = null,
+        override val level: LogLevel = LogLevel.None,
         override val id: String = Uuid.random().toString(),
         override val timestamp: Long = Clock.System.now().toEpochMilliseconds(),
     ) : Log {
@@ -33,8 +33,8 @@ interface Log {
     companion object {
         operator fun invoke(
             message: String,
-            tag: String? = "NO TAG",
-            level: LogLevel? = null,
+            tag: String? = null,
+            level: LogLevel = LogLevel.None,
         ): Log = Basic(message, tag, level)
     }
 }

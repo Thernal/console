@@ -1,6 +1,6 @@
 package az.theternal.console.debugstepper.ui.overlay
 
-import az.theternal.console.debugstepper.DebugStepper
+import az.theternal.console.debugstepper.api.DebugStepper
 import az.theternal.console.runtime.model.Log
 
 private const val LOG_ID_PREFIX_LENGTH = 8

@@ -15,26 +15,33 @@ import androidx.compose.ui.graphics.Color
 import az.theternal.console.runtime.model.Log
 import az.theternal.console.runtime.model.LogLevel
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.ui.designsystem.foundation.theme.ThemeColors
 import az.theternal.console.ui.designsystem.components.core.DsText
 import kotlin.math.abs
 
+fun LogLevel.themeColor(colors: ThemeColors): Color {
+    return with(colors) {
+        when (this@themeColor) {
+            LogLevel.None -> content03
+            LogLevel.Verbose -> content03
+            LogLevel.Debug -> primary01
+            LogLevel.Info -> info
+            LogLevel.Success -> success
+            LogLevel.Warning -> warning
+            LogLevel.Error -> danger
+            LogLevel.Fatal -> fatal
+        }
+    }
+}
+
 @Composable
 fun Log.logAccentColor(): Color {
-    return with(Theme.colors) {
-        level?.let {
-            return@with when (it) {
-                LogLevel.Verbose -> content03
-                LogLevel.Debug -> primary01
-                LogLevel.Info -> info
-                LogLevel.Success -> success
-                LogLevel.Warning -> warning
-                LogLevel.Error -> danger
-                LogLevel.Fatal -> fatal
-            }
-        }
-        val palette = listOf(primary01, success, warning, info, danger)
-        val tag = this@logAccentColor.tag ?: return@with content03
-        palette[abs(tag.hashCode()) % palette.size]
+    val colors = Theme.colors
+    return if (level == LogLevel.None) {
+        val palette = listOf(colors.primary01, colors.success, colors.warning, colors.info, colors.danger)
+        tag?.let { palette[abs(it.hashCode()) % palette.size] } ?: colors.content03
+    } else {
+        level.themeColor(colors)
     }
 }
 
@@ -46,7 +53,7 @@ internal fun LogTagBadge(
     Row(
         modifier = Modifier
             .clip(Theme.rounding.r4)
-            .background(color.copy(alpha = 0.12f))
+            .background(color.copy(alpha = Theme.opacity.S12))
             .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp3),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4),

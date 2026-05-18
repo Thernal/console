@@ -4,8 +4,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,12 +37,11 @@ import az.theternal.console.runtime.model.LogLevel
 import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import az.theternal.console.ui.designsystem.components.core.DsText
+import az.theternal.console.ui.designsystem.components.modifier.pressable
 import az.theternal.console.ui.renderer.defaultlogitem.components.LogItemPill
 import az.theternal.console.ui.utils.LogTagBadge
 import az.theternal.console.ui.utils.formatLogTimestamp
 import az.theternal.console.ui.utils.logAccentColor
-
-private val accentBarWidth = Theme.dimens.dp3
 
 @Composable
 internal fun DefaultLogItem(
@@ -60,20 +57,17 @@ internal fun DefaultLogItem(
         targetValue = if (expanded) 180f else 0f,
         label = "chevron",
     )
-    val interactionSource = remember { MutableInteractionSource() }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .pressable(
+                onPress = onClick,
+            )
             .padding(horizontal = Theme.dimens.dp12)
             .clip(Theme.rounding.r12)
             .background(Theme.colors.background2)
             .border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r12)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = onClick,
-            )
             .animateContentSize(),
     ) {
         Row(
@@ -81,10 +75,9 @@ internal fun DefaultLogItem(
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min),
         ) {
-            // Accent bar
             Box(
                 modifier = Modifier
-                    .width(accentBarWidth)
+                    .width(Theme.dimens.dp3)
                     .fillMaxHeight()
                     .background(accentColor),
             )

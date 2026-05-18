@@ -13,6 +13,8 @@ data class Metrics(
     val dividerHeight: Dp = Dimens.dp0_5,
     val statusDotSize: Dp = Dimens.dp8,
     val minTouchTarget: Dp = Dimens.dp44,
+    val screenPaddingHorizontal: Dp = Dimens.dp12,
+    val screenPaddingVertical: Dp = Dimens.dp16,
 )
 
 val LocalMetrics = staticCompositionLocalOf { Metrics() }

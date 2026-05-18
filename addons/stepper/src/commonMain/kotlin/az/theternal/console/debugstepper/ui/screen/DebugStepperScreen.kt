@@ -1,8 +1,6 @@
 package az.theternal.console.debugstepper.ui.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -26,7 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import az.theternal.console.debugstepper.DebugStepper
+import az.theternal.console.debugstepper.api.DebugStepper
 import az.theternal.console.debugstepper.ui.SteppedEventsRoute
 import az.theternal.console.debugstepper.ui.screen.components.SelectableChip
 import az.theternal.console.debugstepper.ui.screen.components.SettingsSection
@@ -37,6 +35,7 @@ import az.theternal.console.runtime.model.LogLevel
 import az.theternal.console.ui.designsystem.components.core.DsDivider
 import az.theternal.console.ui.designsystem.components.core.DsIcon
 import az.theternal.console.ui.designsystem.components.core.DsText
+import az.theternal.console.ui.designsystem.components.modifier.pressable
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import az.theternal.console.ui.nav.ConsoleRoute
 import az.theternal.console.ui.nav.LocalConsoleNavigator
@@ -151,7 +150,7 @@ internal fun DebugStepperScreen() {
                                 onClick = { DebugStepper.updateConfig { copy(pauseOnLevelAtLeast = null) } },
                             )
                         }
-                        items(enumValues<LogLevel>()) { level ->
+                        items(LogLevel.entries.filter { it != LogLevel.None }) { level ->
                             SelectableChip(
                                 label = level.name,
                                 selected = config.pauseOnLevelAtLeast == level,
@@ -220,15 +219,12 @@ internal fun DebugStepperScreen() {
                         )
                     }
                 }
-                val interactionSource = remember { MutableInteractionSource() }
                 DsText(
                     text = "Clear",
                     style = Theme.typography.label01,
                     color = Theme.colors.danger,
-                    modifier = Modifier.clickable(
-                        interactionSource = interactionSource,
-                        indication = null,
-                        onClick = { DebugStepper.clearSteppedEvents() },
+                    modifier = Modifier.pressable(
+                        onPress = { DebugStepper.clearSteppedEvents() },
                     ),
                 )
             }
@@ -251,14 +247,11 @@ internal fun DebugStepperScreen() {
 
         if (state.steppedEvents.size > CAUGHT_PREVIEW_COUNT) {
             item {
-                val interactionSource = remember { MutableInteractionSource() }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable(
-                            interactionSource = interactionSource,
-                            indication = null,
-                            onClick = { navigator.push(SteppedEventsRoute) },
+                        .pressable(
+                            onPress = { navigator.push(SteppedEventsRoute) },
                         )
                         .padding(
                             horizontal = Theme.dimens.dp16,
@@ -275,7 +268,7 @@ internal fun DebugStepperScreen() {
                     DsIcon(
                         icon = Icons.AutoMirrored.Outlined.ArrowForward,
                         size = Theme.metrics.iconSm,
-                        tint = Theme.colors.primary01,
+                        color = Theme.colors.primary01,
                     )
                 }
             }

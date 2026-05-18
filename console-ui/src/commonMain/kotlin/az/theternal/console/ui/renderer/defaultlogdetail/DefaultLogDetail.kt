@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,7 +22,7 @@ import az.theternal.console.ui.designsystem.components.core.DsIcon
 import az.theternal.console.ui.designsystem.components.core.DsIconButton
 import az.theternal.console.ui.designsystem.components.core.DsScaffold
 import az.theternal.console.ui.designsystem.components.core.DsText
-import az.theternal.console.ui.designsystem.components.core.DsTopAppBar
+import az.theternal.console.ui.designsystem.components.core.DsAppBar
 import az.theternal.console.ui.renderer.defaultlogdetail.components.MessageCard
 import az.theternal.console.ui.renderer.defaultlogdetail.components.metacard.MetaCard
 import az.theternal.console.ui.utils.LogTagBadge
@@ -38,8 +38,15 @@ internal fun DefaultLogDetail(
 
     DsScaffold(
         topBar = {
-            DsTopAppBar(
-                title = {
+            DsAppBar(
+                leading = {
+                    DsIconButton(onClick = onBack) {
+                        DsIcon(
+                            icon = Icons.AutoMirrored.Filled.ArrowBackIos,
+                            color = Theme.colors.content02,
+                        )
+                    }
+
                     if (log.tag != null) {
                         LogTagBadge(tag = log.tag, color = accentColor)
                     } else {
@@ -50,21 +57,13 @@ internal fun DefaultLogDetail(
                         )
                     }
                 },
-                navigationIcon = {
-                    DsIconButton(onClick = onBack) {
-                        DsIcon(
-                            icon = Icons.AutoMirrored.Filled.ArrowBack,
-                            tint = Theme.colors.content02,
-                        )
-                    }
-                },
-                actions = {
+                trailing = {
                     DsIconButton(
                         onClick = { clipboard.setText(AnnotatedString(log.message)) },
                     ) {
                         DsIcon(
                             icon = Icons.Outlined.ContentCopy,
-                            tint = Theme.colors.content02,
+                            color = Theme.colors.content02,
                         )
                     }
                 },

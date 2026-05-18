@@ -1,14 +1,15 @@
 package az.theternal.console.ui.designsystem.foundation.theme
 
 import androidx.compose.runtime.Composable
+import az.theternal.console.ui.designsystem.foundation.color.Opacity
 import az.theternal.console.ui.designsystem.foundation.dimension.Dimens
 import az.theternal.console.ui.designsystem.foundation.dimension.LocalMetrics
 import az.theternal.console.ui.designsystem.foundation.dimension.Metrics
 import az.theternal.console.ui.designsystem.foundation.shape.Rounding
 import az.theternal.console.ui.designsystem.foundation.typography.Typography
 
-sealed class Theme {
-    abstract val colors: ThemeColors
+sealed interface Theme {
+    val colors: ThemeColors
 
     companion object {
         val default = DefaultTheme()
@@ -24,5 +25,6 @@ sealed class Theme {
         val typography = Typography
         val dimens = Dimens
         val rounding = Rounding
+        val opacity = Opacity
     }
 }

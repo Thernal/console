@@ -2,7 +2,7 @@ package az.theternal.console.ui
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
-import az.theternal.console.runtime.Console
+import az.theternal.console.runtime.api.Console
 import az.theternal.console.runtime.api.ConsoleScope
 import az.theternal.console.ui.nav.ConsoleNavGraph
 import az.theternal.console.ui.nav.ConsoleNavigation

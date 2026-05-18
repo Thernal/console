@@ -1,4 +1,4 @@
-package az.theternal.console.ui.designsystem.components.core.navigationbar.components
+package az.theternal.console.ui.designsystem.components.core.navigationbar
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -12,8 +12,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
-import az.theternal.console.ui.designsystem.components.core.LocalDsContentColor
-import az.theternal.console.ui.designsystem.components.core.LocalDsTextStyle
+import az.theternal.console.ui.designsystem.foundation.indication.PressableIndication
+import az.theternal.console.ui.designsystem.foundation.theme.LocalDsContentColor
+import az.theternal.console.ui.designsystem.foundation.theme.LocalDsTextStyle
 import az.theternal.console.ui.designsystem.foundation.theme.Theme
 
 @Composable
@@ -40,20 +41,20 @@ fun RowScope.DsNavigationBarItem(
                 enabled = enabled,
                 role = Role.Tab,
                 interactionSource = interactionSource,
-                indication = null,
+                indication = PressableIndication(),
                 onClick = onClick,
             )
             .padding(vertical = Theme.dimens.dp4),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp2),
+        verticalArrangement = Arrangement.spacedBy(
+            space = Theme.dimens.dp2,
+        ),
     ) {
-        CompositionLocalProvider(LocalDsContentColor provides contentColor) {
-            icon()
-        }
         CompositionLocalProvider(
             LocalDsContentColor provides contentColor,
             LocalDsTextStyle provides Theme.typography.label01,
         ) {
+            icon()
             label()
         }
     }
