@@ -2,9 +2,9 @@ package az.theternal.console.sample.counter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import az.theternal.console.runtime.api.Console
-import az.theternal.console.runtime.model.Log
-import az.theternal.console.runtime.model.LogLevel
+import az.theternal.console.api.Console
+import az.theternal.console.model.Log
+import az.theternal.console.model.LogLevel
 import az.theternal.console.details.api.ConsoleDetails
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

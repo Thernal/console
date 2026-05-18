@@ -72,13 +72,16 @@ include(":sample:android")
 include(":sample:ios")
 include(":sample:jvm")
 
-// Auto-discover modules under core/, uikit/, addons/
-listOf("core", "uikit", "addons").forEach { group ->
-    settingsDir.resolve(group).walkTopDown()
-        .filter { it.resolve("build.gradle.kts").exists() }
-        .forEach { dir ->
-            val path = ":$group:" + dir.relativeTo(settingsDir.resolve(group))
-                .path.replace(File.separator, ":")
-            include(path)
-        }
-}
+include(":console-runtime")
+include(":console-ui")
+include(":designsystem:foundation")
+include(":designsystem:components")
+
+// Auto-discover addon modules
+settingsDir.resolve("addons").walkTopDown()
+    .filter { it.resolve("build.gradle.kts").exists() }
+    .forEach { dir ->
+        val path = ":addons:" + dir.relativeTo(settingsDir.resolve("addons"))
+            .path.replace(File.separator, ":")
+        include(path)
+    }

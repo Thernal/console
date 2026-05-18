@@ -8,10 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import az.theternal.console.uikit.components.core.DsText
-import az.theternal.console.uikit.components.provider.ThemeProvider
-import az.theternal.console.uikit.foundation.theme.DsPreview
-import az.theternal.console.uikit.foundation.theme.Theme
+import az.theternal.console.designsystem.components.core.DsText
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
+import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
 internal fun DetailRow(

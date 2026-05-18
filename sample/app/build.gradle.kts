@@ -5,8 +5,8 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.core.ui)
-            implementation(projects.core.runtime)
+            implementation(projects.consoleUi)
+            implementation(projects.consoleRuntime)
             implementation(projects.addons.detailsUi)
             implementation(projects.addons.stepper)
             implementation(libs.compose.material3)

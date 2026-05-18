@@ -8,5 +8,5 @@ java {
 }
 
 dependencies {
-    implementation(projects.core.runtime)
+    implementation(projects.consoleRuntime)
 }

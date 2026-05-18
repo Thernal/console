@@ -1,6 +1,6 @@
 package az.theternal.console.details.ui
 
-import az.theternal.console.runtime.api.ConsoleScope
+import az.theternal.console.api.ConsoleScope
 import az.theternal.console.addon.api.ConsoleAddon
 import az.theternal.console.addon.api.nav.ConsoleNavGraph
 import az.theternal.console.details.ui.DetailsNavGraph

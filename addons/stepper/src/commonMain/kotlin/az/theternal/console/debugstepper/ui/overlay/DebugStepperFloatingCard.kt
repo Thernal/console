@@ -47,10 +47,10 @@ import az.theternal.console.addon.api.nav.ConsoleRoute
 import az.theternal.console.addon.api.nav.LocalConsoleNavigator
 import az.theternal.console.addon.api.renderer.LocalLogRenderer
 import az.theternal.console.ui.utils.logAccentColor
-import az.theternal.console.uikit.components.core.DsDivider
-import az.theternal.console.uikit.components.core.DsIcon
-import az.theternal.console.uikit.components.core.DsText
-import az.theternal.console.uikit.foundation.theme.Theme
+import az.theternal.console.designsystem.components.core.DsDivider
+import az.theternal.console.designsystem.components.core.DsIcon
+import az.theternal.console.designsystem.components.core.DsText
+import az.theternal.console.designsystem.foundation.theme.Theme
 import kotlin.math.roundToInt
 
 @Composable
