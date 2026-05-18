@@ -20,22 +20,22 @@ object Typography {
     val label01 = TextStyle(
         fontSize = 11.sp,
         lineHeight = 16.sp,
-        fontWeight = FontWeight.Companion.Medium,
+        fontWeight = FontWeight.Medium,
     )
     val label02 = TextStyle(
         fontSize = 10.sp,
         lineHeight = 14.sp,
-        fontWeight = FontWeight.Companion.Medium,
+        fontWeight = FontWeight.Medium,
         letterSpacing = 0.1.sp,
     )
     val title01 = TextStyle(
         fontSize = 15.sp,
         lineHeight = 20.sp,
-        fontWeight = FontWeight.Companion.SemiBold,
+        fontWeight = FontWeight.SemiBold,
     )
     val title02 = TextStyle(
         fontSize = 13.sp,
         lineHeight = 18.sp,
-        fontWeight = FontWeight.Companion.SemiBold,
+        fontWeight = FontWeight.SemiBold,
     )
 }

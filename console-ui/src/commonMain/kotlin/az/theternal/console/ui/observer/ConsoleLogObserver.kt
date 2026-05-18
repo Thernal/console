@@ -1,8 +1,8 @@
 package az.theternal.console.ui.observer
 
-import az.theternal.console.api.Console
-import az.theternal.console.api.LogObserver
-import az.theternal.console.model.Log
+import az.theternal.console.Console
+import az.theternal.console.LogObserver
+import az.theternal.console.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import az.theternal.console.debugstepper.ui.DebugStepperNavGraph
 import az.theternal.console.debugstepper.ui.overlay.DebugStepperOverlay
-import az.theternal.console.api.ConsoleScope
-import az.theternal.console.api.LogObserver
-import az.theternal.console.model.Log
-import az.theternal.console.model.LogLevel
+import az.theternal.console.ConsoleScope
+import az.theternal.console.LogObserver
+import az.theternal.console.Log
+import az.theternal.console.LogLevel
 import az.theternal.console.addon.api.ConsoleAddon
 import az.theternal.console.addon.api.nav.ConsoleNavGraph
 import kotlinx.coroutines.CompletableDeferred

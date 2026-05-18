@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import az.theternal.console.addon.api.nav.ConsoleNavGraph
 import az.theternal.console.addon.api.nav.ConsoleNavigation
 import az.theternal.console.addon.api.overlay.ConsoleOverlays
-import az.theternal.console.api.Console
-import az.theternal.console.api.ConsoleScope
+import az.theternal.console.Console
+import az.theternal.console.ConsoleScope
 
 interface ConsoleAddon {
     fun onInstall(console: ConsoleScope)

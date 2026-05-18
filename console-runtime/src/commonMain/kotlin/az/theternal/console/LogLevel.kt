@@ -1,4 +1,4 @@
-package az.theternal.console.model
+package az.theternal.console
 
 enum class LogLevel {
     None,

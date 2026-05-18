@@ -31,7 +31,7 @@ import az.theternal.console.debugstepper.ui.screen.components.SettingsSection
 import az.theternal.console.debugstepper.ui.screen.components.SettingsToggleRow
 import az.theternal.console.debugstepper.ui.screen.components.TagChip
 import az.theternal.console.debugstepper.ui.screen.components.TagInputField
-import az.theternal.console.model.LogLevel
+import az.theternal.console.LogLevel
 import az.theternal.console.designsystem.components.modifier.pressable
 import az.theternal.console.addon.api.nav.ConsoleRoute
 import az.theternal.console.addon.api.nav.LocalConsoleNavigator

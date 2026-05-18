@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
-import az.theternal.console.model.Log
-import az.theternal.console.model.LogLevel
+import az.theternal.console.Log
+import az.theternal.console.LogLevel
 import az.theternal.console.ui.renderer.defaultlogdetail.components.metacard.components.MetaRow
 import az.theternal.console.ui.utils.LogTagBadge
 import az.theternal.console.ui.utils.formatLogTimestampFull

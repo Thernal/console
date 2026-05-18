@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.foundation.background
-import az.theternal.console.model.Log
+import az.theternal.console.Log
 import az.theternal.console.designsystem.components.core.DsCard
 import az.theternal.console.designsystem.components.core.DsText
 import az.theternal.console.designsystem.foundation.theme.Theme

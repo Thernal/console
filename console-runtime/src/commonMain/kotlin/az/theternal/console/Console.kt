@@ -1,7 +1,5 @@
-package az.theternal.console.api
+package az.theternal.console
 
-import az.theternal.console.sanitizer.LogProcessor
-import az.theternal.console.model.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

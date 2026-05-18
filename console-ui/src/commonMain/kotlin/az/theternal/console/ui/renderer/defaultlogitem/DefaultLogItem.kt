@@ -31,8 +31,8 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
-import az.theternal.console.model.Log
-import az.theternal.console.model.LogLevel
+import az.theternal.console.Log
+import az.theternal.console.LogLevel
 import az.theternal.console.designsystem.components.modifier.pressable
 import az.theternal.console.ui.renderer.defaultlogitem.components.LogItemPill
 import az.theternal.console.ui.utils.LogTagBadge

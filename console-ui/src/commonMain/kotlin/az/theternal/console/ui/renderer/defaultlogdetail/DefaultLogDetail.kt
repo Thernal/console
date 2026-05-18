@@ -13,8 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
-import az.theternal.console.model.Log
-import az.theternal.console.model.LogLevel
+import az.theternal.console.Log
+import az.theternal.console.LogLevel
 import az.theternal.console.ui.renderer.defaultlogdetail.components.MessageCard
 import az.theternal.console.ui.renderer.defaultlogdetail.components.metacard.MetaCard
 import az.theternal.console.ui.utils.LogTagBadge

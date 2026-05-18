@@ -1,7 +1,4 @@
-package az.theternal.console.api
-
-import az.theternal.console.model.Log
-import az.theternal.console.sanitizer.LogProcessor
+package az.theternal.console
 
 interface ConsoleScope {
     var isEnabled: Boolean
