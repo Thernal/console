@@ -1,7 +1,6 @@
 package az.theternal.console.details.ui
 
-import az.theternal.console.details.ui.api.ConsoleDetailsAddon
-import az.theternal.console.ui.autoinit.ConsoleAutoInitProvider
+import az.theternal.console.addon.api.autoinit.ConsoleAutoInitProvider
 
 internal class ConsoleDetailsAutoInit : ConsoleAutoInitProvider() {
     override fun init() {

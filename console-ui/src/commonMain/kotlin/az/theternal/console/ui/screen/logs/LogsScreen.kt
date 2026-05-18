@@ -10,10 +10,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
 import az.theternal.console.ui.observer.ConsoleLogObserver
-import az.theternal.console.ui.renderer.LocalLogRenderer
+import az.theternal.console.addon.api.renderer.LocalLogRenderer
 import az.theternal.console.ui.screen.logs.components.LogsEmptyState
+import az.theternal.console.uikit.foundation.theme.Theme
 
 @Composable
 internal fun LogsScreen(onNavigateToLogDetail: (groupId: String, logId: String) -> Unit) {

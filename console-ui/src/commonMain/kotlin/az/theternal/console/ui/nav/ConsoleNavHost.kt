@@ -1,21 +1,21 @@
 package az.theternal.console.ui.nav
 
-import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import az.theternal.console.ui.nav.ConsoleNavigation
-import az.theternal.console.ui.nav.ConsoleRoute
-import az.theternal.console.ui.nav.ConsoleTab
+import az.theternal.console.addon.api.nav.ConsoleNavigation
+import az.theternal.console.addon.api.nav.ConsoleRoute
+import az.theternal.console.addon.api.nav.ConsoleTab
 import az.theternal.console.ui.screen.console.ConsoleScreen
 import az.theternal.console.ui.screen.logs.LogsNavGraph
 
@@ -36,19 +36,13 @@ internal fun ConsoleNavHost(
             rememberViewModelStoreNavEntryDecorator(),
         ),
         transitionSpec = {
-            ContentTransform(
-                targetContentEnter = slideInHorizontally { it / 2 } + fadeIn(),
-                initialContentExit = ExitTransition.None,
-            )
+            slideInHorizontally { it / 2 } + fadeIn() togetherWith ExitTransition.None
         },
         popTransitionSpec = {
-            ContentTransform(
-                targetContentEnter = EnterTransition.None,
-                initialContentExit = slideOutHorizontally { it / 2 } + fadeOut(),
-            )
+            EnterTransition.None togetherWith slideOutHorizontally { it / 2 } + fadeOut()
         },
         predictivePopTransitionSpec = {
-            val slideOut = slideOutHorizontally(
+            EnterTransition.None togetherWith fadeOut() + slideOutHorizontally(
                 targetOffsetX = { fullWidth ->
                     if (it != 0) {
                         fullWidth / 3 + it / 2
@@ -56,11 +50,6 @@ internal fun ConsoleNavHost(
                         fullWidth / 3
                     }
                 },
-            )
-
-            ContentTransform(
-                targetContentEnter = EnterTransition.None,
-                initialContentExit = slideOut + fadeOut(),
             )
         },
         entryProvider = entryProvider {

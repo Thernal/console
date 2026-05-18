@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import az.theternal.console.ui.nav.ConsoleRoute
-import az.theternal.console.ui.nav.ConsoleTab
-import az.theternal.console.ui.nav.LocalConsoleNavigator
+import az.theternal.console.addon.api.nav.ConsoleRoute
+import az.theternal.console.addon.api.nav.ConsoleTab
+import az.theternal.console.addon.api.nav.LocalConsoleNavigator
 import az.theternal.console.ui.screen.detail.LogDetailScreen
 
 internal object LogsNavGraph : ConsoleTab {

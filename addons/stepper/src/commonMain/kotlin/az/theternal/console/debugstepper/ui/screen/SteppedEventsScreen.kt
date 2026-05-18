@@ -19,14 +19,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import az.theternal.console.debugstepper.api.DebugStepper
-import az.theternal.console.ui.designsystem.components.core.DsIcon
-import az.theternal.console.ui.designsystem.components.core.DsIconButton
-import az.theternal.console.ui.designsystem.components.core.DsText
-import az.theternal.console.ui.designsystem.components.core.DsAppBar
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
-import az.theternal.console.ui.nav.ConsoleRoute
-import az.theternal.console.ui.nav.LocalConsoleNavigator
-import az.theternal.console.ui.renderer.LocalLogRenderer
+import az.theternal.console.addon.api.nav.ConsoleRoute
+import az.theternal.console.addon.api.nav.LocalConsoleNavigator
+import az.theternal.console.addon.api.renderer.LocalLogRenderer
+import az.theternal.console.uikit.components.core.DsAppBar
+import az.theternal.console.uikit.components.core.DsIcon
+import az.theternal.console.uikit.components.core.DsIconButton
+import az.theternal.console.uikit.components.core.DsText
+import az.theternal.console.uikit.foundation.theme.Theme
 
 @Composable
 internal fun SteppedEventsScreen() {

@@ -7,7 +7,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import az.theternal.console.ui.observer.ConsoleLogObserver
-import az.theternal.console.ui.renderer.LocalLogRenderer
+import az.theternal.console.addon.api.renderer.LocalLogRenderer
 import az.theternal.console.ui.screen.detail.components.LogNotFoundState
 
 @Composable

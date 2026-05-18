@@ -32,14 +32,14 @@ import az.theternal.console.debugstepper.ui.screen.components.SettingsToggleRow
 import az.theternal.console.debugstepper.ui.screen.components.TagChip
 import az.theternal.console.debugstepper.ui.screen.components.TagInputField
 import az.theternal.console.runtime.model.LogLevel
-import az.theternal.console.ui.designsystem.components.core.DsDivider
-import az.theternal.console.ui.designsystem.components.core.DsIcon
-import az.theternal.console.ui.designsystem.components.core.DsText
-import az.theternal.console.ui.designsystem.components.modifier.pressable
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
-import az.theternal.console.ui.nav.ConsoleRoute
-import az.theternal.console.ui.nav.LocalConsoleNavigator
-import az.theternal.console.ui.renderer.LocalLogRenderer
+import az.theternal.console.uikit.components.modifier.pressable
+import az.theternal.console.addon.api.nav.ConsoleRoute
+import az.theternal.console.addon.api.nav.LocalConsoleNavigator
+import az.theternal.console.addon.api.renderer.LocalLogRenderer
+import az.theternal.console.uikit.components.core.DsDivider
+import az.theternal.console.uikit.components.core.DsIcon
+import az.theternal.console.uikit.components.core.DsText
+import az.theternal.console.uikit.foundation.theme.Theme
 
 private val autoResumeOptions = listOf(null, 3, 5, 10, 30)
 

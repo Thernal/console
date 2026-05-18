@@ -4,9 +4,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation3.runtime.NavKey
-import az.theternal.console.ui.nav.ConsoleNavigator
-import az.theternal.console.ui.nav.ConsoleRoute
-import az.theternal.console.ui.nav.ConsoleTab
+import az.theternal.console.addon.api.nav.ConsoleNavigator
+import az.theternal.console.addon.api.nav.ConsoleRoute
+import az.theternal.console.addon.api.nav.ConsoleTab
 
 internal class ConsoleNavigatorImpl(
     private val consoleVisibleState: MutableState<Boolean>,

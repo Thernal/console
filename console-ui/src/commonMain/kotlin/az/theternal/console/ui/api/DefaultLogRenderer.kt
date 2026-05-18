@@ -1,10 +1,10 @@
 package az.theternal.console.ui.api
 
 import androidx.compose.runtime.Composable
+import az.theternal.console.addon.api.renderer.LogRenderer
 import az.theternal.console.runtime.model.Log
 import az.theternal.console.ui.renderer.defaultlogdetail.DefaultLogDetail
 import az.theternal.console.ui.renderer.defaultlogitem.DefaultLogItem
-import az.theternal.console.ui.renderer.LogRenderer
 
 val DefaultLogRenderer: LogRenderer = defaultLogRenderer()
 

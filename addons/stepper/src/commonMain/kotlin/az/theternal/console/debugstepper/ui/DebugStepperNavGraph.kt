@@ -8,7 +8,7 @@ import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import az.theternal.console.debugstepper.ui.screen.DebugStepperScreen
 import az.theternal.console.debugstepper.ui.screen.SteppedEventsScreen
-import az.theternal.console.ui.nav.ConsoleTab
+import az.theternal.console.addon.api.nav.ConsoleTab
 
 data object SteppedEventsRoute : NavKey
 

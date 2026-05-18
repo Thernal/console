@@ -14,9 +14,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import az.theternal.console.runtime.model.Log
 import az.theternal.console.runtime.model.LogLevel
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
-import az.theternal.console.ui.designsystem.foundation.theme.ThemeColors
-import az.theternal.console.ui.designsystem.components.core.DsText
+import az.theternal.console.uikit.components.core.DsText
+import az.theternal.console.uikit.foundation.theme.Theme
+import az.theternal.console.uikit.foundation.theme.ThemeColors
 import kotlin.math.abs
 
 fun LogLevel.themeColor(colors: ThemeColors): Color {
@@ -65,7 +65,11 @@ internal fun LogTagBadge(
                 .background(color),
         )
         if (tag != null) {
-            DsText(text = tag, style = Theme.typography.label02, color = color)
+            DsText(
+                text = tag,
+                style = Theme.typography.label02,
+                color = color,
+            )
         }
     }
 }

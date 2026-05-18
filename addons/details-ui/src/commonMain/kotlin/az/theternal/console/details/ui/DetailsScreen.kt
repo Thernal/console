@@ -14,10 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import az.theternal.console.details.api.ConsoleDetails
 import az.theternal.console.details.ui.components.DetailRow
-import az.theternal.console.ui.designsystem.components.core.DsCard
-import az.theternal.console.ui.designsystem.components.core.DsDivider
-import az.theternal.console.ui.designsystem.components.core.DsText
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.uikit.components.core.DsCard
+import az.theternal.console.uikit.components.core.DsDivider
+import az.theternal.console.uikit.components.core.DsText
+import az.theternal.console.uikit.foundation.theme.Theme
 
 @Composable
 internal fun DetailsScreen() {

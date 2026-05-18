@@ -12,17 +12,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import az.theternal.console.addon.api.nav.ConsoleTab
+import az.theternal.console.addon.api.nav.LocalConsoleNavigator
+import az.theternal.console.addon.api.overlay.ConsoleOverlays
+import az.theternal.console.addon.api.renderer.LocalLogRenderer
+import az.theternal.console.addon.api.renderer.LogRenderer
 import az.theternal.console.runtime.api.Console
 import az.theternal.console.ui.api.gesture.ConsoleTrigger
 import az.theternal.console.ui.api.gesture.Swipe
-import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
 import az.theternal.console.ui.nav.ConsoleNavHost
 import az.theternal.console.ui.nav.ConsoleNavigatorImpl
-import az.theternal.console.ui.nav.LocalConsoleNavigator
-import az.theternal.console.ui.nav.ConsoleTab
-import az.theternal.console.ui.overlay.ConsoleOverlays
-import az.theternal.console.ui.renderer.LocalLogRenderer
-import az.theternal.console.ui.renderer.LogRenderer
+import az.theternal.console.uikit.components.provider.ThemeProvider
 
 @Composable
 fun ConsoleInstaller(

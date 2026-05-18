@@ -16,16 +16,16 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import az.theternal.console.ui.nav.ConsoleNavigation
-import az.theternal.console.ui.nav.ConsoleTab
-import az.theternal.console.ui.designsystem.components.core.DsIconButton
-import az.theternal.console.ui.designsystem.components.core.navigationbar.DsNavigationBar
-import az.theternal.console.ui.designsystem.components.core.DsScaffold
-import az.theternal.console.ui.designsystem.components.core.DsAppBar
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
-import az.theternal.console.ui.designsystem.components.core.DsIcon
-import az.theternal.console.ui.designsystem.components.core.DsText
-import az.theternal.console.ui.designsystem.components.core.navigationbar.DsNavigationBarItem
+import az.theternal.console.addon.api.nav.ConsoleNavigation
+import az.theternal.console.addon.api.nav.ConsoleTab
+import az.theternal.console.uikit.components.core.DsAppBar
+import az.theternal.console.uikit.components.core.DsIcon
+import az.theternal.console.uikit.components.core.DsIconButton
+import az.theternal.console.uikit.components.core.DsScaffold
+import az.theternal.console.uikit.components.core.DsText
+import az.theternal.console.uikit.components.core.navigationbar.DsNavigationBar
+import az.theternal.console.uikit.components.core.navigationbar.DsNavigationBarItem
+import az.theternal.console.uikit.foundation.theme.Theme
 
 @Composable
 internal fun ConsoleScreen(

@@ -43,14 +43,14 @@ import androidx.compose.ui.unit.IntOffset
 import az.theternal.console.debugstepper.ui.DebugStepperNavGraph
 import az.theternal.console.debugstepper.ui.overlay.components.OverlayIconButton
 import az.theternal.console.debugstepper.ui.overlay.components.OverlayIconControls
-import az.theternal.console.ui.designsystem.components.core.DsDivider
-import az.theternal.console.ui.designsystem.components.core.DsIcon
-import az.theternal.console.ui.designsystem.components.core.DsText
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
-import az.theternal.console.ui.nav.ConsoleRoute
-import az.theternal.console.ui.nav.LocalConsoleNavigator
-import az.theternal.console.ui.renderer.LocalLogRenderer
+import az.theternal.console.addon.api.nav.ConsoleRoute
+import az.theternal.console.addon.api.nav.LocalConsoleNavigator
+import az.theternal.console.addon.api.renderer.LocalLogRenderer
 import az.theternal.console.ui.utils.logAccentColor
+import az.theternal.console.uikit.components.core.DsDivider
+import az.theternal.console.uikit.components.core.DsIcon
+import az.theternal.console.uikit.components.core.DsText
+import az.theternal.console.uikit.foundation.theme.Theme
 import kotlin.math.roundToInt
 
 @Composable

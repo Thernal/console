@@ -2,7 +2,7 @@ package az.theternal.console.debugstepper.ui.overlay
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.uikit.foundation.theme.Theme
 
 internal val overlayBackgroundColor = Color(0xFF13161C)
 internal val overlayMutedContentColor = Color(0xFF6B7280)

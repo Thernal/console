@@ -12,7 +12,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.concurrent.Volatile
 
-class Console : ConsoleScope {
+class Console private constructor() : ConsoleScope {
 
     private val observers = MutableStateFlow<List<LogObserver>>(emptyList())
     private val processors = MutableStateFlow<List<LogProcessor>>(emptyList())

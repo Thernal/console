@@ -8,8 +8,8 @@ import az.theternal.console.runtime.api.ConsoleScope
 import az.theternal.console.runtime.api.LogObserver
 import az.theternal.console.runtime.model.Log
 import az.theternal.console.runtime.model.LogLevel
-import az.theternal.console.ui.ConsoleAddon
-import az.theternal.console.ui.nav.ConsoleNavGraph
+import az.theternal.console.addon.api.ConsoleAddon
+import az.theternal.console.addon.api.nav.ConsoleNavGraph
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

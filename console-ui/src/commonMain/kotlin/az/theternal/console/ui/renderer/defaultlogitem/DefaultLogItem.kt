@@ -31,17 +31,17 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
-import az.theternal.console.ui.designsystem.foundation.theme.DsPreview
 import az.theternal.console.runtime.model.Log
 import az.theternal.console.runtime.model.LogLevel
-import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
-import az.theternal.console.ui.designsystem.components.core.DsText
-import az.theternal.console.ui.designsystem.components.modifier.pressable
+import az.theternal.console.uikit.components.modifier.pressable
 import az.theternal.console.ui.renderer.defaultlogitem.components.LogItemPill
 import az.theternal.console.ui.utils.LogTagBadge
 import az.theternal.console.ui.utils.formatLogTimestamp
 import az.theternal.console.ui.utils.logAccentColor
+import az.theternal.console.uikit.components.core.DsText
+import az.theternal.console.uikit.components.provider.ThemeProvider
+import az.theternal.console.uikit.foundation.theme.DsPreview
+import az.theternal.console.uikit.foundation.theme.Theme
 
 @Composable
 internal fun DefaultLogItem(

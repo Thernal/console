@@ -9,10 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import az.theternal.console.ui.designsystem.components.core.DsIcon
-import az.theternal.console.ui.designsystem.components.core.DsText
-import az.theternal.console.ui.designsystem.components.modifier.pressable
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.uikit.components.modifier.pressable
+import az.theternal.console.uikit.components.core.DsIcon
+import az.theternal.console.uikit.components.core.DsText
+import az.theternal.console.uikit.foundation.theme.Theme
 
 @Composable
 internal fun LogItemPill(

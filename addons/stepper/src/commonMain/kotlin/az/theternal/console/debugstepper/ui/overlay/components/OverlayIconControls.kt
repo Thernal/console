@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import az.theternal.console.debugstepper.api.DebugStepper
 import az.theternal.console.debugstepper.ui.overlay.overlayBackgroundColor
 import az.theternal.console.debugstepper.ui.overlay.overlayMutedContentColor
-import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
-import az.theternal.console.ui.designsystem.foundation.theme.DsPreview
-import az.theternal.console.ui.designsystem.components.core.DsIcon
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
+import az.theternal.console.uikit.components.core.DsIcon
+import az.theternal.console.uikit.components.provider.ThemeProvider
+import az.theternal.console.uikit.foundation.theme.DsPreview
+import az.theternal.console.uikit.foundation.theme.Theme
 
 @Composable
 internal fun OverlayIconControls(

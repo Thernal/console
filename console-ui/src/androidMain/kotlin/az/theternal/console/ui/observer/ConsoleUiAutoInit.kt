@@ -1,6 +1,6 @@
 package az.theternal.console.ui.observer
 
-import az.theternal.console.ui.autoinit.ConsoleAutoInitProvider
+import az.theternal.console.addon.api.autoinit.ConsoleAutoInitProvider
 
 internal class ConsoleUiAutoInit : ConsoleAutoInitProvider() {
     override fun init() {

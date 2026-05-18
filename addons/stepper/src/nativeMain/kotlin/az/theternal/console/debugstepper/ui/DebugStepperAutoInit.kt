@@ -1,7 +1,7 @@
 package az.theternal.console.debugstepper.ui
 
 import az.theternal.console.debugstepper.api.DebugStepper
-import az.theternal.console.ui.autoinit.consoleAddonInit
+import az.theternal.console.addon.api.autoinit.consoleAddonInit
 import kotlin.experimental.ExperimentalNativeApi
 import kotlin.native.EagerInitialization
 

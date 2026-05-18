@@ -15,18 +15,18 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import az.theternal.console.runtime.model.Log
 import az.theternal.console.runtime.model.LogLevel
-import az.theternal.console.ui.designsystem.components.provider.ThemeProvider
-import az.theternal.console.ui.designsystem.foundation.theme.DsPreview
-import az.theternal.console.ui.designsystem.foundation.theme.Theme
-import az.theternal.console.ui.designsystem.components.core.DsIcon
-import az.theternal.console.ui.designsystem.components.core.DsIconButton
-import az.theternal.console.ui.designsystem.components.core.DsScaffold
-import az.theternal.console.ui.designsystem.components.core.DsText
-import az.theternal.console.ui.designsystem.components.core.DsAppBar
 import az.theternal.console.ui.renderer.defaultlogdetail.components.MessageCard
 import az.theternal.console.ui.renderer.defaultlogdetail.components.metacard.MetaCard
 import az.theternal.console.ui.utils.LogTagBadge
 import az.theternal.console.ui.utils.logAccentColor
+import az.theternal.console.uikit.components.core.DsAppBar
+import az.theternal.console.uikit.components.core.DsIcon
+import az.theternal.console.uikit.components.core.DsIconButton
+import az.theternal.console.uikit.components.core.DsScaffold
+import az.theternal.console.uikit.components.core.DsText
+import az.theternal.console.uikit.components.provider.ThemeProvider
+import az.theternal.console.uikit.foundation.theme.DsPreview
+import az.theternal.console.uikit.foundation.theme.Theme
 
 @Composable
 internal fun DefaultLogDetail(
