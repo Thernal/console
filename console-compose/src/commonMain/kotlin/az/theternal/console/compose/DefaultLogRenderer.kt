@@ -14,7 +14,7 @@ val DefaultLogRenderer: LogRenderer = defaultLogRenderer()
  *
  * Example — custom detail, default item:
  * ```
- * ConsoleInstaller(logRenderer = defaultLogRenderer(detail = { log, onBack -> MyDetail(log, onBack) }))
+ * ConsoleProvider(logRenderer = defaultLogRenderer(detail = { log, onBack -> MyDetail(log, onBack) }))
  * ```
  */
 fun defaultLogRenderer(

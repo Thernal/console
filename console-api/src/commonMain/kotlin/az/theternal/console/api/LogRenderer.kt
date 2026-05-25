@@ -19,5 +19,5 @@ interface LogRenderer {
 }
 
 val LocalLogRenderer = compositionLocalOf<LogRenderer> {
-    error("No LogRenderer provided — make sure ConsoleInstaller() is in the composition tree")
+    error("No LogRenderer provided — make sure ConsoleProvider() is in the composition tree")
 }

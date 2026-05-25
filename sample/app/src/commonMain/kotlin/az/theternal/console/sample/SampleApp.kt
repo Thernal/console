@@ -2,11 +2,11 @@ package az.theternal.console.sample
 
 import androidx.compose.runtime.Composable
 import az.theternal.console.sample.counter.CounterScreen
-import az.theternal.console.compose.ConsoleInstaller
+import az.theternal.console.compose.ConsoleProvider
 
 @Composable
 fun SampleApp() {
-    ConsoleInstaller {
+    ConsoleProvider {
         CounterScreen()
     }
 }

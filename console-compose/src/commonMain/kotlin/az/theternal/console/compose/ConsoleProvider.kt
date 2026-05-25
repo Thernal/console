@@ -25,7 +25,7 @@ import az.theternal.console.compose.navigation.ConsoleNavigatorImpl
 import az.theternal.console.designsystem.components.provider.ThemeProvider
 
 @Composable
-fun ConsoleInstaller(
+fun ConsoleProvider(
     enabled: Boolean = true,
     trigger: ConsoleTrigger = ConsoleTrigger.swipeSequence(Swipe.UP, Swipe.DOWN),
     logRenderer: LogRenderer = DefaultLogRenderer,
