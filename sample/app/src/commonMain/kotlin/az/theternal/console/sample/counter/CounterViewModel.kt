@@ -40,6 +40,24 @@ class CounterViewModel : ViewModel() {
         }
     }
 
+    fun logMultiline() {
+        viewModelScope.launch {
+            Console.asyncNotify {
+                Log(
+                    message = "POST /api/v2/session\n" +
+                        "Status: 200 OK\n" +
+                        "Body: {\n" +
+                        "  \"userId\": 42,\n" +
+                        "  \"token\": \"eyJhbGciOiJIUzI1NiJ9...\",\n" +
+                        "  \"expiresIn\": 3600\n" +
+                        "}",
+                    level = LogLevel.Info,
+                    tag = "HTTP",
+                )
+            }
+        }
+    }
+
     fun reset() {
         viewModelScope.launch {
             val prev = _count.value

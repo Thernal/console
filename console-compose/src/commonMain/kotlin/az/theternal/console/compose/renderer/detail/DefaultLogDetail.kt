@@ -10,15 +10,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.platform.LocalClipboard
+import az.theternal.console.compose.util.toTextClipEntry
+import kotlinx.coroutines.launch
 import az.theternal.console.runtime.Log
 import az.theternal.console.runtime.LogLevel
 import az.theternal.console.compose.renderer.detail.components.MessageCard
 import az.theternal.console.compose.renderer.detail.components.metacard.MetaCard
-import az.theternal.console.api.LogTagBadge
-import az.theternal.console.api.logAccentColor
+import az.theternal.console.compose.util.logAccentColor
 import az.theternal.console.designsystem.components.core.DsAppBar
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsIconButton
@@ -34,7 +35,8 @@ internal fun DefaultLogDetail(
     onBack: () -> Unit,
 ) {
     val accentColor = log.logAccentColor()
-    val clipboard = LocalClipboardManager.current
+    val clipboard = LocalClipboard.current
+    val scope = rememberCoroutineScope()
 
     DsScaffold(
         topBar = {
@@ -47,19 +49,15 @@ internal fun DefaultLogDetail(
                         )
                     }
 
-                    if (log.tag != null) {
-                        LogTagBadge(tag = log.tag, color = accentColor)
-                    } else {
-                        DsText(
-                            text = "Log Detail",
-                            style = Theme.typography.title01,
-                            color = Theme.colors.content01,
-                        )
-                    }
+                    DsText(
+                        text = "Log Detail",
+                        style = Theme.typography.title01,
+                        color = Theme.colors.content01,
+                    )
                 },
                 trailing = {
                     DsIconButton(
-                        onClick = { clipboard.setText(AnnotatedString(log.message)) },
+                        onClick = { scope.launch { clipboard.setClipEntry(log.message.toTextClipEntry()) } },
                     ) {
                         DsIcon(
                             icon = Icons.Outlined.ContentCopy,

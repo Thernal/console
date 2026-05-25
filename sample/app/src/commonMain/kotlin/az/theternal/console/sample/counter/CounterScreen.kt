@@ -47,6 +47,10 @@ fun CounterScreen(vm: CounterViewModel = viewModel { CounterViewModel() }) {
         OutlinedButton(onClick = vm::reset) {
             Text("Reset")
         }
+        Spacer(Modifier.height(8.dp))
+        OutlinedButton(onClick = vm::logMultiline) {
+            Text("Log multiline")
+        }
         Spacer(Modifier.height(48.dp))
         Text(
             text = "Swipe up then down to open console",

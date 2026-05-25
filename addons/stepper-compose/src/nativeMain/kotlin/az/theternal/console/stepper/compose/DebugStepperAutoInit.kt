@@ -1,6 +1,7 @@
 package az.theternal.console.stepper.compose
 
 import az.theternal.console.api.autoinit.consoleAddonInit
+import az.theternal.console.stepper.compose.addon.DebugStepperAddon
 import kotlin.experimental.ExperimentalNativeApi
 import kotlin.native.EagerInitialization
 

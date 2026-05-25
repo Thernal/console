@@ -7,6 +7,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.addons.stepperApi)
             implementation(projects.consoleApi)
+            implementation(projects.consoleCompose)
             implementation(projects.designsystem.components)
             implementation(libs.jetbrains.navigation3.ui)
             implementation(libs.jetbrains.lifecycle.viewmodel.nav3)

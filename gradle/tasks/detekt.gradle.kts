@@ -393,6 +393,12 @@ tasks.register("detektAnnotate") {
 
                     if (Regex("""fun\s+component\d+\s*\(""").containsMatchIn(lines[i])) continue
                     if (Regex("""fun\s+(get|set)\s*\(""").containsMatchIn(lines[i])) continue
+                    val expressionBody = lines[i]
+                        .substringAfterLast("=")
+                        .replace(Regex("""//.*"""), "")
+                        .trim()
+                    if (Regex("""^[A-Za-z_][A-Za-z0-9_]*$""").matches(expressionBody)) continue
+                    if (expressionBody == "null") continue
 
                     lines[i] = stripDetektTodoFromLine(lines[i], detektTodoRegex) +
                         " $marker [ExpressionBodyNotAllowed: Use block body { return ... } instead of expression body = ...]"

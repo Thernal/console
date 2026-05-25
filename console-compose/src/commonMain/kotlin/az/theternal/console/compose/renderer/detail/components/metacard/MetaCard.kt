@@ -8,9 +8,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import az.theternal.console.runtime.Log
 import az.theternal.console.runtime.LogLevel
-import az.theternal.console.compose.renderer.detail.components.metacard.components.MetaRow
-import az.theternal.console.api.LogTagBadge
-import az.theternal.console.compose.renderer.formatLogTimestampFull
+import az.theternal.console.compose.components.LogTagBadge
+import az.theternal.console.compose.util.formatLogTimestampFull
 import az.theternal.console.designsystem.components.core.DsCard
 import az.theternal.console.designsystem.components.core.DsDivider
 import az.theternal.console.designsystem.components.core.DsText

@@ -8,28 +8,27 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import az.theternal.console.api.ConsoleNavigation
-import az.theternal.console.api.ConsoleRoute
-import az.theternal.console.api.ConsoleTab
-import az.theternal.console.compose.screen.console.ConsoleScreen
-import az.theternal.console.compose.screen.logs.LogsNavGraph
+import az.theternal.console.api.addon.ConsoleNavigation
+import az.theternal.console.api.navigation.ConsoleNavigator
+import az.theternal.console.api.navigation.ConsoleRoute
+import az.theternal.console.api.addon.ConsoleTab
+import az.theternal.console.compose.view.console.ConsoleView
 
 @Composable
 internal fun ConsoleNavHost(
-    navController: ConsoleNavigatorImpl,
+    navController: ConsoleNavigator,
+    backStack: SnapshotStateList<NavKey>,
     requestedTab: ConsoleTab?,
     onRequestConsumed: () -> Unit,
 ) {
-    remember { ConsoleNavigation.register(LogsNavGraph) }
-    val graphs = ConsoleNavigation.graphs
-
     NavDisplay(
-        backStack = navController.backStack,
+        backStack = backStack,
         onBack = { navController.pop() },
         entryDecorators = listOf(
             rememberSaveableStateHolderNavEntryDecorator(),
@@ -52,16 +51,18 @@ internal fun ConsoleNavHost(
                 },
             )
         },
+
         entryProvider = entryProvider {
             entry<ConsoleRoute.Stub> { }
             entry<ConsoleRoute.Main> {
-                ConsoleScreen(
+                ConsoleView(
                     onClose = { navController.close() },
                     requestedTab = requestedTab,
                     onRequestConsumed = onRequestConsumed,
                 )
             }
-            graphs.forEach { graph ->
+
+            ConsoleNavigation.graphs.forEach { graph ->
                 with(graph) { routes() }
             }
         },

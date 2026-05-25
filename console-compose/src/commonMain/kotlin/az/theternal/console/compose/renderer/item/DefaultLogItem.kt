@@ -22,22 +22,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.platform.LocalClipboard
+import az.theternal.console.compose.util.toTextClipEntry
+import kotlinx.coroutines.launch
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import az.theternal.console.runtime.Log
 import az.theternal.console.runtime.LogLevel
 import az.theternal.console.designsystem.components.modifier.pressable
 import az.theternal.console.compose.renderer.item.components.LogItemPill
-import az.theternal.console.api.LogTagBadge
-import az.theternal.console.compose.renderer.formatLogTimestamp
-import az.theternal.console.api.logAccentColor
+import az.theternal.console.compose.components.LogTagBadge
+import az.theternal.console.compose.util.formatLogTimestamp
+import az.theternal.console.compose.util.logAccentColor
 import az.theternal.console.designsystem.components.core.DsText
 import az.theternal.console.designsystem.components.provider.ThemeProvider
 import az.theternal.console.designsystem.foundation.theme.DsPreview
@@ -49,7 +51,8 @@ internal fun DefaultLogItem(
     onClick: () -> Unit,
 ) {
     val accentColor = log.logAccentColor()
-    val clipboard = LocalClipboardManager.current
+    val clipboard = LocalClipboard.current
+    val scope = rememberCoroutineScope()
     val lines = remember(log.message) { log.message.lines() }
     val isMultiline = lines.size > 1
     var expanded by remember { mutableStateOf(false) }
@@ -64,7 +67,6 @@ internal fun DefaultLogItem(
             .pressable(
                 onPress = onClick,
             )
-            .padding(horizontal = Theme.dimens.dp12)
             .clip(Theme.rounding.r12)
             .background(Theme.colors.background2)
             .border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r12)
@@ -131,7 +133,7 @@ internal fun DefaultLogItem(
                         LogItemPill(
                             icon = Icons.Outlined.ContentCopy,
                             label = "Copy",
-                            onClick = { clipboard.setText(AnnotatedString(log.message)) },
+                            onClick = { scope.launch { clipboard.setClipEntry(log.message.toTextClipEntry()) } },
                         )
                     }
 

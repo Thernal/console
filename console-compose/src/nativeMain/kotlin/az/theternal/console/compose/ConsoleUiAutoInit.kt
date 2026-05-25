@@ -1,6 +1,6 @@
 package az.theternal.console.compose
 
-import az.theternal.console.compose.navigation.ConsoleLogObserver
+import az.theternal.console.compose.addon.ConsoleUiAddon
 import kotlin.experimental.ExperimentalNativeApi
 import kotlin.native.EagerInitialization
 
@@ -9,6 +9,6 @@ import kotlin.native.EagerInitialization
 @Suppress("unused")
 private val init = object {
     init {
-        ConsoleLogObserver.register()
+        ConsoleUiAddon.install()
     }
 }

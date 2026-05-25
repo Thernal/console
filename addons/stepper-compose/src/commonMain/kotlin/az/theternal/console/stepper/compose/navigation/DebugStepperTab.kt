@@ -1,0 +1,18 @@
+package az.theternal.console.stepper.compose.navigation
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.BugReport
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
+import az.theternal.console.api.addon.ConsoleTab
+import az.theternal.console.stepper.compose.view.settings.DebugStepperView
+
+internal object DebugStepperTab : ConsoleTab {
+    override val title: String = "Stepper"
+    override val icon: ImageVector = Icons.Outlined.BugReport
+
+    @Composable
+    override fun Content() {
+        DebugStepperView()
+    }
+}
