@@ -39,3 +39,16 @@ fun Log.logAccentColor(): Color {
         level.themeColor(colors)
     }
 }
+
+@Composable
+fun tagAccentColor(tag: String): Color {
+    val colors = Theme.colors
+    val palette = listOf(
+        colors.primary01,
+        colors.success,
+        colors.warning,
+        colors.info,
+        colors.danger,
+    )
+    return palette[abs(tag.hashCode()) % palette.size]
+}

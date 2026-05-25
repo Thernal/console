@@ -20,7 +20,7 @@ internal fun OverlayIconButton(
     val interactionSource = remember { MutableInteractionSource() }
     Box(
         modifier = Modifier
-            .size(Theme.dimens.dp32)
+            .size(Theme.dimens.dp40)
             .clip(Theme.rounding.r8)
             .pressable(
                 enabled = enabled,

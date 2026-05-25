@@ -1,5 +1,6 @@
 package az.theternal.console.compose.renderer.detail.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -10,10 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.foundation.background
+import az.theternal.console.compose.util.LocalSearchQuery
+import az.theternal.console.compose.util.buildHighlightedText
 import az.theternal.console.runtime.Log
 import az.theternal.console.designsystem.components.core.DsCard
 import az.theternal.console.designsystem.components.core.DsText
@@ -24,6 +27,13 @@ internal fun MessageCard(
     log: Log,
     accentColor: Color,
 ) {
+    val query = LocalSearchQuery.current
+    val warningBg = Theme.colors.warning
+    val warningFg = Theme.colors.warningContent
+    val highlightedMessage = remember(log.message, query) {
+        buildHighlightedText(log.message, query, warningBg, warningFg)
+    }
+
     DsCard(
         modifier = Modifier.fillMaxWidth(),
         borderColor = accentColor.copy(alpha = Theme.opacity.S35),
@@ -41,7 +51,7 @@ internal fun MessageCard(
             )
             SelectionContainer(modifier = Modifier.weight(1f)) {
                 DsText(
-                    text = log.message,
+                    text = highlightedMessage,
                     modifier = Modifier.padding(
                         horizontal = Theme.dimens.dp12,
                         vertical = Theme.dimens.dp12,

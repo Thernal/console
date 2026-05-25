@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,16 +27,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import az.theternal.console.stepper.DebugStepper
 import az.theternal.console.stepper.compose.navigation.SteppedEventsRoute
-import az.theternal.console.stepper.compose.view.settings.components.SelectableChip
 import az.theternal.console.stepper.compose.view.settings.components.SettingsSection
 import az.theternal.console.stepper.compose.view.settings.components.SettingsToggleRow
-import az.theternal.console.stepper.compose.view.settings.components.TagChip
 import az.theternal.console.stepper.compose.view.settings.components.TagInputField
 import az.theternal.console.runtime.LogLevel
 import az.theternal.console.designsystem.components.modifier.pressable
 import az.theternal.console.api.navigation.ConsoleRoute
 import az.theternal.console.api.navigation.LocalConsoleNavigator
 import az.theternal.console.api.ui.LocalLogRenderer
+import az.theternal.console.designsystem.components.core.DsChip
 import az.theternal.console.designsystem.components.core.DsDivider
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsText
@@ -102,6 +102,14 @@ internal fun DebugStepperView() {
             item {
                 var tagInput by remember { mutableStateOf("") }
                 SettingsSection(title = "Tags") {
+                    TagInputField(
+                        value = tagInput,
+                        onValueChange = { tagInput = it.uppercase() },
+                        onAdd = {
+                            DebugStepper.updateConfig { copy(pauseOnTags = pauseOnTags + tagInput.trim()) }
+                            tagInput = ""
+                        },
+                    )
                     if (config.pauseOnTags.isEmpty()) {
                         DsText(
                             text = "Matching all tags",
@@ -114,24 +122,25 @@ internal fun DebugStepperView() {
                             verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
                         ) {
                             config.pauseOnTags.forEach { tag ->
-                                TagChip(
-                                    tag = tag,
-                                    onRemove = {
+                                DsChip(
+                                    label = tag,
+                                    color = Theme.colors.primary01,
+                                    selected = true,
+                                    modifier = Modifier.pressable(onPress = {
                                         DebugStepper.updateConfig { copy(pauseOnTags = pauseOnTags - tag) }
+                                    }),
+                                    trailing = {
+                                        DsIcon(
+                                            icon = Icons.Outlined.Close,
+                                            size = Theme.metrics.iconXs,
+                                            color = Theme.colors.primary01,
+                                            modifier = Modifier.padding(start = Theme.dimens.dp4),
+                                        )
                                     },
                                 )
                             }
                         }
                     }
-
-                    TagInputField(
-                        value = tagInput,
-                        onValueChange = { tagInput = it.uppercase() },
-                        onAdd = {
-                            DebugStepper.updateConfig { copy(pauseOnTags = pauseOnTags + tagInput.trim()) }
-                            tagInput = ""
-                        },
-                    )
                 }
             }
 
@@ -144,17 +153,27 @@ internal fun DebugStepperView() {
                         horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
                     ) {
                         item {
-                            SelectableChip(
+                            DsChip(
                                 label = "All",
+                                color = Theme.colors.primary01,
                                 selected = config.pauseOnLevelAtLeast == null,
-                                onClick = { DebugStepper.updateConfig { copy(pauseOnLevelAtLeast = null) } },
+                                modifier = Modifier.pressable(
+                                    onPress = {
+                                        DebugStepper.updateConfig { copy(pauseOnLevelAtLeast = null) }
+                                    },
+                                ),
                             )
                         }
                         items(LogLevel.entries.filter { it != LogLevel.None }) { level ->
-                            SelectableChip(
+                            DsChip(
                                 label = level.name,
+                                color = Theme.colors.primary01,
                                 selected = config.pauseOnLevelAtLeast == level,
-                                onClick = { DebugStepper.updateConfig { copy(pauseOnLevelAtLeast = level) } },
+                                modifier = Modifier.pressable(
+                                    onPress = {
+                                        DebugStepper.updateConfig { copy(pauseOnLevelAtLeast = level) }
+                                    },
+                                ),
                             )
                         }
                     }
@@ -171,10 +190,14 @@ internal fun DebugStepperView() {
                     horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
                 ) {
                     items(autoResumeOptions) { seconds ->
-                        SelectableChip(
+                        DsChip(
                             label = if (seconds == null) "Off" else "${seconds}s",
                             selected = config.autoResumeSeconds == seconds,
-                            onClick = { DebugStepper.updateConfig { copy(autoResumeSeconds = seconds) } },
+                            modifier = Modifier.pressable(
+                                onPress = {
+                                    DebugStepper.updateConfig { copy(autoResumeSeconds = seconds) }
+                                },
+                            ),
                         )
                     }
                 }
@@ -210,7 +233,7 @@ internal fun DebugStepperView() {
                         modifier = Modifier
                             .clip(Theme.rounding.r4)
                             .background(Theme.colors.background3)
-                            .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp2),
+                            .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp4),
                     ) {
                         DsText(
                             text = "${state.steppedEvents.size}",

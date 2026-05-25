@@ -99,11 +99,11 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
         ) {
             Row(
                 modifier = Modifier.padding(
-                    horizontal = Theme.dimens.dp8,
-                    vertical = Theme.dimens.dp8,
+                    horizontal = Theme.dimens.dp4,
+                    vertical = Theme.dimens.dp3,
                 ),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
+                horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4),
             ) {
                 if (uiState.isEnabled) {
                     if (isExpanded) {
@@ -113,7 +113,9 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                             color = Theme.colors.content03,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = Theme.dimens.dp8),
                         )
                     }
 
@@ -121,8 +123,9 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                         Box(
                             modifier = Modifier
                                 .clip(Theme.rounding.r4)
+                                .padding(start = Theme.dimens.dp8)
                                 .background(borderColor.copy(alpha = Theme.opacity.S15))
-                                .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp2),
+                                .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp4),
                         ) {
                             DsText(
                                 text = "${uiState.caughtCount}",

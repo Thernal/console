@@ -1,7 +1,5 @@
 package az.theternal.console.compose.renderer.item
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -14,30 +12,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ContentCopy
-import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.platform.LocalClipboard
-import az.theternal.console.compose.util.toTextClipEntry
-import kotlinx.coroutines.launch
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import az.theternal.console.runtime.Log
 import az.theternal.console.runtime.LogLevel
 import az.theternal.console.designsystem.components.modifier.pressable
-import az.theternal.console.compose.renderer.item.components.LogItemPill
 import az.theternal.console.compose.components.LogTagBadge
+import az.theternal.console.compose.util.LocalSearchQuery
+import az.theternal.console.compose.util.buildHighlightedText
 import az.theternal.console.compose.util.formatLogTimestamp
 import az.theternal.console.compose.util.logAccentColor
 import az.theternal.console.designsystem.components.core.DsText
@@ -51,26 +37,20 @@ internal fun DefaultLogItem(
     onClick: () -> Unit,
 ) {
     val accentColor = log.logAccentColor()
-    val clipboard = LocalClipboard.current
-    val scope = rememberCoroutineScope()
-    val lines = remember(log.message) { log.message.lines() }
-    val isMultiline = lines.size > 1
-    var expanded by remember { mutableStateOf(false) }
-    val chevronAngle by animateFloatAsState(
-        targetValue = if (expanded) 180f else 0f,
-        label = "chevron",
-    )
+    val query = LocalSearchQuery.current
+    val warningBg = Theme.colors.warning
+    val warningFg = Theme.colors.warningContent
+    val highlightedMessage = remember(log.message, query) {
+        buildHighlightedText(log.message, query, warningBg, warningFg)
+    }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .pressable(
-                onPress = onClick,
-            )
+            .pressable(onPress = onClick)
             .clip(Theme.rounding.r12)
             .background(Theme.colors.background2)
-            .border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r12)
-            .animateContentSize(),
+            .border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r12),
     ) {
         Row(
             modifier = Modifier
@@ -87,10 +67,9 @@ internal fun DefaultLogItem(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(horizontal = Theme.dimens.dp10, vertical = Theme.dimens.dp10),
+                    .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp12),
                 verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp6),
             ) {
-                // Header row: tag badge + timestamp
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -104,65 +83,13 @@ internal fun DefaultLogItem(
                     )
                 }
 
-                // First line of message — always visible
                 DsText(
-                    text = lines.first(),
+                    text = highlightedMessage,
                     style = Theme.typography.body02,
                     color = Theme.colors.content01,
-                    maxLines = if (expanded) Int.MAX_VALUE else 2,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
-
-                // Multi-line controls
-                if (isMultiline) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        LogItemPill(
-                            icon = Icons.Outlined.ExpandMore,
-                            label = if (expanded) {
-                                "Collapse"
-                            } else {
-                                val extra = lines.size - 1
-                                "$extra more line${if (extra > 1) "s" else ""}"
-                            },
-                            iconModifier = Modifier.rotate(chevronAngle),
-                            onClick = { expanded = !expanded },
-                        )
-                        LogItemPill(
-                            icon = Icons.Outlined.ContentCopy,
-                            label = "Copy",
-                            onClick = { scope.launch { clipboard.setClipEntry(log.message.toTextClipEntry()) } },
-                        )
-                    }
-
-                    if (expanded) {
-                        SelectionContainer {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clip(Theme.rounding.r8)
-                                    .background(Theme.colors.background3)
-                                    .border(
-                                        width = Theme.metrics.borderWidth,
-                                        color = Theme.colors.border,
-                                        shape = Theme.rounding.r8,
-                                    )
-                                    .padding(Theme.dimens.dp10),
-                            ) {
-                                DsText(
-                                    text = log.message,
-                                    style = Theme.typography.body03.copy(
-                                        fontFamily = FontFamily.Monospace,
-                                        lineHeight = Theme.typography.body02.lineHeight,
-                                    ),
-                                    color = Theme.colors.content02,
-                                )
-                            }
-                        }
-                    }
-                }
             }
         }
     }

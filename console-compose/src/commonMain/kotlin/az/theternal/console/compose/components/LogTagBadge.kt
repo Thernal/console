@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -21,23 +20,19 @@ fun LogTagBadge(
     color: Color,
 ) {
     Row(
-        modifier = Modifier
-            .clip(Theme.rounding.r4)
-            .background(color.copy(alpha = Theme.opacity.S12))
-            .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp3),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4),
     ) {
         Box(
             modifier = Modifier
-                .size(Theme.metrics.statusDotSize)
+                .size(Theme.dimens.dp6)
                 .clip(CircleShape)
                 .background(color),
         )
         if (tag != null) {
             DsText(
                 text = tag,
-                style = Theme.typography.label02,
+                style = Theme.typography.label01,
                 color = color,
             )
         }
