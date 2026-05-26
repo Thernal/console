@@ -13,6 +13,13 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Search
+import az.theternal.console.designsystem.components.core.DsIcon
+import az.theternal.console.designsystem.components.core.DsText
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -33,4 +40,25 @@ fun DsNavigationBar(
             .padding(vertical = Theme.dimens.dp4),
         content = content,
     )
+}
+
+@DsPreview
+@Composable
+private fun PreviewDsNavigationBar() {
+    ThemeProvider {
+        DsNavigationBar {
+            DsNavigationBarItem(
+                selected = true,
+                onClick = {},
+                icon = { DsIcon(icon = Icons.Outlined.List) },
+                label = { DsText(text = "Logs") },
+            )
+            DsNavigationBarItem(
+                selected = false,
+                onClick = {},
+                icon = { DsIcon(icon = Icons.Outlined.Search) },
+                label = { DsText(text = "Search") },
+            )
+        }
+    }
 }

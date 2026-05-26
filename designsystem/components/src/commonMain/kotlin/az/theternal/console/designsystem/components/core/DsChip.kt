@@ -2,6 +2,7 @@ package az.theternal.console.designsystem.components.core
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import az.theternal.console.designsystem.components.modifier.applyIf
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -51,5 +54,16 @@ fun DsChip(
         )
 
         trailing()
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDsChip() {
+    ThemeProvider {
+        Row(horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8)) {
+            DsChip(label = "All", selected = true)
+            DsChip(label = "Error", selected = false)
+        }
     }
 }

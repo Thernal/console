@@ -2,6 +2,8 @@ package az.theternal.console.compose.view.logs.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
@@ -44,4 +46,28 @@ internal fun LogsSearchBar(
             }
         },
     )
+}
+
+@DsPreview
+@Composable
+private fun PreviewLogsSearchBarEmpty() {
+    ThemeProvider {
+        LogsSearchBar(
+            query = "",
+            onQueryChange = {},
+            modifier = Modifier.padding(Theme.dimens.dp16),
+        )
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewLogsSearchBarFilled() {
+    ThemeProvider {
+        LogsSearchBar(
+            query = "NullPointerException",
+            onQueryChange = {},
+            modifier = Modifier.padding(Theme.dimens.dp16),
+        )
+    }
 }

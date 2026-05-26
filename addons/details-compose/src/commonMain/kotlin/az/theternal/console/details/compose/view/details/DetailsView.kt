@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import az.theternal.console.details.ConsoleDetails
 import az.theternal.console.details.compose.view.details.components.DetailRow
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.components.core.DsCard
 import az.theternal.console.designsystem.components.core.DsDivider
 import az.theternal.console.designsystem.components.core.DsText
@@ -51,5 +53,13 @@ internal fun DetailsView() {
                 }
             }
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDetailsView() {
+    ThemeProvider {
+        DetailsView()
     }
 }

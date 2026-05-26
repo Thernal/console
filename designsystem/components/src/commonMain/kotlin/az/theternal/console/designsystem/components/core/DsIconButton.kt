@@ -9,7 +9,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import az.theternal.console.designsystem.components.modifier.pressable
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.LocalDsContentColor
 import az.theternal.console.designsystem.foundation.theme.Theme
 
@@ -39,6 +43,16 @@ fun DsIconButton(
             contentAlignment = Alignment.Center,
         ) {
             content()
+        }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDsIconButton() {
+    ThemeProvider {
+        DsIconButton(onClick = {}) {
+            DsIcon(icon = Icons.Default.Close)
         }
     }
 }

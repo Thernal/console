@@ -17,6 +17,10 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.LocalDsContentColor
 import az.theternal.console.designsystem.foundation.theme.Theme
 
@@ -62,5 +66,22 @@ fun DsAppBar(
                 content = trailing,
             )
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDsAppBar() {
+    ThemeProvider {
+        DsAppBar(
+            leading = {
+                DsText(text = "Console", style = Theme.typography.title01)
+            },
+            trailing = {
+                DsIconButton(onClick = {}) {
+                    DsIcon(icon = Icons.Default.Close)
+                }
+            },
+        )
     }
 }

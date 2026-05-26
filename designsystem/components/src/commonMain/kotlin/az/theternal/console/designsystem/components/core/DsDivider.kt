@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -23,5 +25,13 @@ fun DsDivider(
             start = Offset(x = 0f, y = thickness.toPx() / 2),
             end = Offset(x = size.width, y = thickness.toPx() / 2),
         )
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDsDivider() {
+    ThemeProvider {
+        DsDivider()
     }
 }

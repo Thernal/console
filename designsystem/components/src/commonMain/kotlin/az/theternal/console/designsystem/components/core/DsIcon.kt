@@ -13,6 +13,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.List
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.LocalDsContentColor
 import az.theternal.console.designsystem.foundation.theme.Theme
 
@@ -40,4 +44,12 @@ fun DsIcon(
             )
             .size(size),
     )
+}
+
+@DsPreview
+@Composable
+private fun PreviewDsIcon() {
+    ThemeProvider {
+        DsIcon(icon = Icons.Outlined.List)
+    }
 }

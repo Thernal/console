@@ -12,6 +12,8 @@ import androidx.compose.ui.draw.clip
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsTextField
 import az.theternal.console.designsystem.components.modifier.pressable
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -43,4 +45,28 @@ internal fun TagInputField(
             }
         },
     )
+}
+
+@DsPreview
+@Composable
+private fun PreviewTagInputFieldEmpty() {
+    ThemeProvider {
+        TagInputField(
+            value = "",
+            onValueChange = {},
+            onAdd = {},
+        )
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewTagInputFieldFilled() {
+    ThemeProvider {
+        TagInputField(
+            value = "network",
+            onValueChange = {},
+            onAdd = {},
+        )
+    }
 }

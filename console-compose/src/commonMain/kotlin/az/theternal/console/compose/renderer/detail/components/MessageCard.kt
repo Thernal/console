@@ -18,7 +18,10 @@ import androidx.compose.ui.text.font.FontFamily
 import az.theternal.console.compose.util.LocalSearchQuery
 import az.theternal.console.compose.util.buildHighlightedText
 import az.theternal.console.runtime.Log
+import az.theternal.console.runtime.LogLevel
 import az.theternal.console.designsystem.components.core.DsCard
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.components.core.DsText
 import az.theternal.console.designsystem.foundation.theme.Theme
 
@@ -64,5 +67,16 @@ internal fun MessageCard(
                 )
             }
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewMessageCard() {
+    ThemeProvider {
+        MessageCard(
+            log = Log("GET /api/users -> 200 OK", tag = "HTTP", level = LogLevel.Success),
+            accentColor = Theme.colors.success,
+        )
     }
 }

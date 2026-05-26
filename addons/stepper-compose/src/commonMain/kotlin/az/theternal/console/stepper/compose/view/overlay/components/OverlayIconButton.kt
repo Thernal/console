@@ -8,7 +8,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
+import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.modifier.pressable
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -29,5 +34,18 @@ internal fun OverlayIconButton(
         contentAlignment = Alignment.Center,
     ) {
         content()
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewOverlayIconButton() {
+    ThemeProvider {
+        OverlayIconButton(onClick = {}) {
+            DsIcon(
+                icon = Icons.Outlined.Add,
+                size = Theme.metrics.iconMd,
+            )
+        }
     }
 }

@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import az.theternal.console.designsystem.components.core.DsText
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -35,6 +37,20 @@ internal fun MetaRow(
             contentAlignment = Alignment.CenterEnd,
         ) {
             content()
+        }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewMetaRow() {
+    ThemeProvider {
+        MetaRow(label = "Tag") {
+            DsText(
+                text = "HTTP",
+                style = Theme.typography.body02,
+                color = Theme.colors.content01,
+            )
         }
     }
 }

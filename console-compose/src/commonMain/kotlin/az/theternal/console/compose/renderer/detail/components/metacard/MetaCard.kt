@@ -8,6 +8,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import az.theternal.console.runtime.Log
 import az.theternal.console.runtime.LogLevel
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.compose.components.LogTagBadge
 import az.theternal.console.compose.util.formatLogTimestampFull
 import az.theternal.console.designsystem.components.core.DsCard
@@ -65,5 +67,16 @@ internal fun MetaCard(
                 )
             }
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewMetaCard() {
+    ThemeProvider {
+        MetaCard(
+            log = Log("Request completed", tag = "HTTP", level = LogLevel.Success),
+            accentColor = Theme.colors.success,
+        )
     }
 }

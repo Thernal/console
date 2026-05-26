@@ -12,7 +12,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Search
+import az.theternal.console.designsystem.components.core.DsIcon
+import az.theternal.console.designsystem.components.core.DsText
+import az.theternal.console.designsystem.components.provider.ThemeProvider
 import az.theternal.console.designsystem.foundation.indication.PressableIndication
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.LocalDsContentColor
 import az.theternal.console.designsystem.foundation.theme.LocalDsTextStyle
 import az.theternal.console.designsystem.foundation.theme.Theme
@@ -56,6 +63,27 @@ fun RowScope.DsNavigationBarItem(
         ) {
             icon()
             label()
+        }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDsNavigationBarItem() {
+    ThemeProvider {
+        DsNavigationBar {
+            DsNavigationBarItem(
+                selected = true,
+                onClick = {},
+                icon = { DsIcon(icon = Icons.Outlined.List) },
+                label = { DsText(text = "Selected") },
+            )
+            DsNavigationBarItem(
+                selected = false,
+                onClick = {},
+                icon = { DsIcon(icon = Icons.Outlined.Search) },
+                label = { DsText(text = "Unselected") },
+            )
         }
     }
 }

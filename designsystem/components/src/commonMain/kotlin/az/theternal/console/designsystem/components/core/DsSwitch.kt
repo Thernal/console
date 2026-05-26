@@ -1,10 +1,15 @@
 package az.theternal.console.designsystem.components.core
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -41,4 +46,18 @@ fun DsSwitch(
             disabledUncheckedIconColor = Theme.colors.content04,
         ),
     )
+}
+
+@DsPreview
+@Composable
+private fun PreviewDsSwitch() {
+    ThemeProvider {
+        Column(
+            modifier = Modifier.padding(Theme.dimens.dp16),
+            verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
+        ) {
+            DsSwitch(checked = true, onCheckedChange = {})
+            DsSwitch(checked = false, onCheckedChange = {})
+        }
+    }
 }

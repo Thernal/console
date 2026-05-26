@@ -1,5 +1,7 @@
 package az.theternal.console.designsystem.components.core
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.runtime.Composable
@@ -9,8 +11,11 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.LocalDsContentColor
 import az.theternal.console.designsystem.foundation.theme.LocalDsTextStyle
+import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
 fun DsText(
@@ -62,4 +67,16 @@ fun DsText(
         minLines = minLines,
         autoSize = autoSize,
     )
+}
+
+@DsPreview
+@Composable
+private fun PreviewDsText() {
+    ThemeProvider {
+        Column(verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp4)) {
+            DsText(text = "Title text", style = Theme.typography.title01)
+            DsText(text = "Body text", style = Theme.typography.body02)
+            DsText(text = "Label text", style = Theme.typography.label01)
+        }
+    }
 }

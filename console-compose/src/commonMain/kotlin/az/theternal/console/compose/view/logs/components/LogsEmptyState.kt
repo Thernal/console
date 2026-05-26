@@ -11,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsText
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -39,5 +41,13 @@ internal fun LogsEmptyState() {
                 color = Theme.colors.content04,
             )
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewLogsEmptyState() {
+    ThemeProvider {
+        LogsEmptyState()
     }
 }

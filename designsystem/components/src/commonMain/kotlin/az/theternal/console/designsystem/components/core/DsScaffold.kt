@@ -9,13 +9,16 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
+import az.theternal.console.designsystem.components.provider.ThemeProvider
 import az.theternal.console.designsystem.foundation.dimension.Dimens
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -79,6 +82,27 @@ fun DsScaffold(
             ) {
                 bottomBar()
             }
+        }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDsScaffold() {
+    ThemeProvider {
+        DsScaffold(
+            topBar = {
+                DsAppBar(
+                    leading = {
+                        DsText(text = "Console", style = Theme.typography.title01)
+                    },
+                )
+            },
+        ) { padding ->
+            DsText(
+                text = "Content",
+                modifier = Modifier.padding(padding).padding(Theme.dimens.dp16),
+            )
         }
     }
 }
