@@ -15,9 +15,23 @@ android {
         versionName = "1.0"
     }
 
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") { dimension = "environment" }
+        create("prod") { dimension = "environment" }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+// Prod flavor swaps full console implementations for their noop counterparts.
+configurations.matching { it.name.startsWith("prod") }.configureEach {
+    resolutionStrategy.dependencySubstitution {
+        substitute(project(":console-compose")).using(project(":console-compose-noop"))
+        substitute(project(":addons:details-api")).using(project(":addons:details-api-noop"))
     }
 }
 

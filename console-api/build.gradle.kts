@@ -7,7 +7,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.consoleRuntime)
             implementation(projects.designsystem.components)
-            implementation(libs.compose.ui)
+            api(libs.compose.ui)
             implementation(libs.compose.foundation)
             implementation(libs.jetbrains.navigation3.ui)
         }

@@ -1,11 +1,9 @@
 package az.theternal.console.compose.trigger
 
-import androidx.compose.ui.Modifier
+import az.theternal.console.api.trigger.ConsoleTrigger
 
 /**
- * Defines how the console is triggered via a [Modifier]-based gesture.
- *
- * Built-in factory: [ConsoleTrigger.swipeSequence]
+ * Built-in swipe-sequence trigger for the Console overlay.
  *
  * Custom example — double-tap anywhere:
  *   val myTrigger = ConsoleTrigger { onDetected ->
@@ -14,20 +12,13 @@ import androidx.compose.ui.Modifier
  *       }
  *   }
  */
-fun interface ConsoleTrigger {
-    fun Modifier.attach(onDetected: () -> Unit): Modifier
-
-    companion object {
-        // threshold is in pixels
-        fun swipeSequence(
-            vararg swipes: Swipe,
-            threshold: Float = 50f,
-        ): ConsoleTrigger = ConsoleTrigger { onDetected ->
-            swipeSequenceDetector(
-                sequence = swipes.toList(),
-                threshold = threshold,
-                onDetected = onDetected,
-            )
-        }
-    }
+fun ConsoleTrigger.Companion.swipeSequence(
+    vararg swipes: Swipe,
+    threshold: Float = 50f,
+): ConsoleTrigger = ConsoleTrigger { onDetected ->
+    swipeSequenceDetector(
+        sequence = swipes.toList(),
+        threshold = threshold,
+        onDetected = onDetected,
+    )
 }

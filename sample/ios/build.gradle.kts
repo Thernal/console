@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
+val env = providers.gradleProperty("env").orElse("dev")
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose.multiplatform)
@@ -27,6 +29,15 @@ kotlin {
             dependencies {
                 api(projects.sample.app)
             }
+        }
+    }
+}
+
+if (env.get() != "dev") {
+    configurations.configureEach {
+        resolutionStrategy.dependencySubstitution {
+            substitute(project(":console-compose")).using(project(":console-compose-noop"))
+            substitute(project(":addons:details-api")).using(project(":addons:details-api-noop"))
         }
     }
 }

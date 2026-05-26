@@ -5,7 +5,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(projects.addons.stepperApi)
+            api(projects.consoleRuntime)
             implementation(projects.consoleApi)
             implementation(projects.consoleCompose)
             implementation(projects.designsystem.components)

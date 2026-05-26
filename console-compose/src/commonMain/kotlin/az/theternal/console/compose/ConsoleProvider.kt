@@ -22,8 +22,9 @@ import az.theternal.console.api.ui.LocalLogRenderer
 import az.theternal.console.api.ui.LogRenderer
 import az.theternal.console.runtime.Console
 import az.theternal.console.compose.renderer.DefaultLogRenderer
-import az.theternal.console.compose.trigger.ConsoleTrigger
+import az.theternal.console.api.trigger.ConsoleTrigger
 import az.theternal.console.compose.trigger.Swipe
+import az.theternal.console.compose.trigger.swipeSequence
 import az.theternal.console.compose.navigation.ConsoleNavHost
 import az.theternal.console.compose.navigation.ConsoleNavigatorImpl
 import az.theternal.console.designsystem.components.modifier.applyIf
