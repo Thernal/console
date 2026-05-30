@@ -1,4 +1,4 @@
-package az.theternal.console.compose.renderer.detail.components.metacard
+package az.theternal.console.compose.view.defaultdetail.components.metacard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

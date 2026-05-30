@@ -21,7 +21,7 @@ import az.theternal.console.api.addon.ConsoleOverlays
 import az.theternal.console.api.ui.LocalLogRenderer
 import az.theternal.console.api.ui.LogRenderer
 import az.theternal.console.runtime.Console
-import az.theternal.console.compose.renderer.DefaultLogRenderer
+import az.theternal.console.compose.components.DefaultLogRenderer
 import az.theternal.console.api.trigger.ConsoleTrigger
 import az.theternal.console.compose.trigger.Swipe
 import az.theternal.console.compose.trigger.swipeSequence

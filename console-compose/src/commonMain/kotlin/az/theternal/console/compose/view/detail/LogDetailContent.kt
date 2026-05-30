@@ -2,7 +2,7 @@ package az.theternal.console.compose.view.detail
 
 import androidx.compose.runtime.Composable
 import az.theternal.console.api.ui.LogRenderer
-import az.theternal.console.compose.renderer.defaultLogRenderer
+import az.theternal.console.compose.components.defaultLogRenderer
 import az.theternal.console.compose.view.detail.components.LogNotFoundState
 import az.theternal.console.designsystem.components.provider.ThemeProvider
 import az.theternal.console.designsystem.foundation.theme.DsPreview

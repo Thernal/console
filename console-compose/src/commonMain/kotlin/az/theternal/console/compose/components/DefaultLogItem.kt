@@ -1,4 +1,4 @@
-package az.theternal.console.compose.renderer.item
+package az.theternal.console.compose.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import az.theternal.console.runtime.Log
 import az.theternal.console.runtime.LogLevel
 import az.theternal.console.designsystem.components.modifier.pressable
-import az.theternal.console.compose.components.LogTagBadge
 import az.theternal.console.compose.util.LocalSearchQuery
 import az.theternal.console.compose.util.buildHighlightedText
 import az.theternal.console.compose.util.formatLogTimestamp

@@ -1,4 +1,4 @@
-package az.theternal.console.compose.renderer.detail
+package az.theternal.console.compose.view.defaultdetail.model
 
 import androidx.lifecycle.ViewModel
 import az.theternal.console.compose.core.IntentHandler

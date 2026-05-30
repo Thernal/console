@@ -1,10 +1,9 @@
-package az.theternal.console.compose.renderer
+package az.theternal.console.compose.components
 
 import androidx.compose.runtime.Composable
 import az.theternal.console.api.ui.LogRenderer
 import az.theternal.console.runtime.Log
-import az.theternal.console.compose.renderer.detail.DefaultLogDetail
-import az.theternal.console.compose.renderer.item.DefaultLogItem
+import az.theternal.console.compose.view.defaultdetail.DefaultLogDetailView
 
 val DefaultLogRenderer: LogRenderer = defaultLogRenderer()
 
@@ -31,5 +30,5 @@ fun defaultLogRenderer(
     override fun Detail(
         log: Log,
         onBack: () -> Unit,
-    ) = detail?.invoke(log, onBack) ?: DefaultLogDetail(log, onBack)
+    ) = detail?.invoke(log, onBack) ?: DefaultLogDetailView(log, onBack)
 }

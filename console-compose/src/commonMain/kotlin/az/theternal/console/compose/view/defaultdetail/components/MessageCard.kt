@@ -1,4 +1,4 @@
-package az.theternal.console.compose.renderer.detail.components
+package az.theternal.console.compose.view.defaultdetail.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

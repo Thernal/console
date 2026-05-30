@@ -1,10 +1,9 @@
-package az.theternal.console.compose.renderer.detail
+package az.theternal.console.compose.view.defaultdetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.Modifier
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -14,42 +13,37 @@ import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.viewmodel.compose.viewModel
 import az.theternal.console.compose.core.select
 import az.theternal.console.compose.util.LocalSearchQuery
-import az.theternal.console.compose.util.toTextClipEntry
-import az.theternal.console.runtime.Log
-import az.theternal.console.runtime.LogLevel
-import az.theternal.console.compose.renderer.detail.components.MessageCard
-import az.theternal.console.compose.renderer.detail.components.metacard.MetaCard
 import az.theternal.console.compose.util.logAccentColor
+import az.theternal.console.compose.view.defaultdetail.components.MessageCard
+import az.theternal.console.compose.view.defaultdetail.components.metacard.MetaCard
+import az.theternal.console.compose.view.defaultdetail.model.DefaultLogDetailIntent
+import az.theternal.console.compose.view.defaultdetail.model.DefaultLogDetailState
 import az.theternal.console.designsystem.components.core.DsAppBar
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsIconButton
-import az.theternal.console.designsystem.components.core.DsTextField
 import az.theternal.console.designsystem.components.core.DsScaffold
 import az.theternal.console.designsystem.components.core.DsText
+import az.theternal.console.designsystem.components.core.DsTextField
 import az.theternal.console.designsystem.components.provider.ThemeProvider
 import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
+import az.theternal.console.runtime.Log
+import az.theternal.console.runtime.LogLevel
 
 @Composable
-internal fun DefaultLogDetail(
+internal fun DefaultLogDetailContent(
     log: Log,
     onBack: () -> Unit,
+    state: DefaultLogDetailState,
+    onDispatch: (DefaultLogDetailIntent) -> Unit,
 ) {
-    val viewModel = viewModel { DefaultLogDetailViewModel() }
     val accentColor = log.logAccentColor()
-    val clipboard = LocalClipboard.current
 
-    LaunchedEffect(viewModel.state.copyTrigger.value) {
-        if (viewModel.state.copyTrigger.value > 0) clipboard.setClipEntry(log.message.toTextClipEntry())
-    }
-
-    CompositionLocalProvider(LocalSearchQuery provides viewModel.state.detailQuery.select { it.text }) {
+    CompositionLocalProvider(LocalSearchQuery provides state.detailQuery.select { it.text }) {
         DsScaffold(
             topBar = {
                 DsAppBar(
@@ -68,7 +62,7 @@ internal fun DefaultLogDetail(
                     },
                     trailing = {
                         DsIconButton(
-                            onClick = { viewModel.dispatch(DefaultLogDetailIntent.CopyMessage) },
+                            onClick = { onDispatch(DefaultLogDetailIntent.CopyMessage) },
                         ) {
                             DsIcon(
                                 icon = Icons.Outlined.ContentCopy,
@@ -93,8 +87,8 @@ internal fun DefaultLogDetail(
                 MetaCard(log = log, accentColor = accentColor)
 
                 DsTextField(
-                    value = viewModel.state.detailQuery.value,
-                    onValueChange = { viewModel.dispatch(DefaultLogDetailIntent.SetQuery(it)) },
+                    value = state.detailQuery.value,
+                    onValueChange = { onDispatch(DefaultLogDetailIntent.SetQuery(it)) },
                     hint = "Search in message…",
                     prefix = {
                         DsIcon(
@@ -105,9 +99,9 @@ internal fun DefaultLogDetail(
                         )
                     },
                     suffix = {
-                        if (viewModel.state.detailQuery.value.text.isNotEmpty()) {
+                        if (state.detailQuery.value.text.isNotEmpty()) {
                             DsIconButton(
-                                onClick = { viewModel.dispatch(DefaultLogDetailIntent.SetQuery(TextFieldValue())) },
+                                onClick = { onDispatch(DefaultLogDetailIntent.SetQuery(TextFieldValue())) },
                                 contentColor = Theme.colors.content04,
                             ) {
                                 DsIcon(
@@ -127,15 +121,17 @@ internal fun DefaultLogDetail(
 
 @DsPreview
 @Composable
-private fun PreviewDefaultLogDetail() {
+private fun PreviewDefaultLogDetailContent() {
     ThemeProvider {
-        DefaultLogDetail(
+        DefaultLogDetailContent(
             log = Log(
                 message = "Response received\nBody: {\"status\":\"ok\",\"userId\":42}",
                 tag = "API",
                 level = LogLevel.Info,
             ),
             onBack = {},
+            state = DefaultLogDetailState(),
+            onDispatch = {},
         )
     }
 }
