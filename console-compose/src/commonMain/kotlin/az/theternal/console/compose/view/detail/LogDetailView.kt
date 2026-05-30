@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import az.theternal.console.api.navigation.LocalConsoleNavigator
 import az.theternal.console.api.ui.LocalLogRenderer
+import az.theternal.console.compose.view.detail.model.LogDetailViewModel
 
 @Composable
 internal fun LogDetailView(logId: String) {

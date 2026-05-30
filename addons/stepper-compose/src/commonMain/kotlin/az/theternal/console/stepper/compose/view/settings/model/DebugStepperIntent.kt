@@ -1,4 +1,4 @@
-package az.theternal.console.stepper.compose.view.settings
+package az.theternal.console.stepper.compose.view.settings.model
 
 import androidx.compose.ui.text.input.TextFieldValue
 import az.theternal.console.compose.core.Intent

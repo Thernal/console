@@ -1,4 +1,4 @@
-package az.theternal.console.details.compose.view.details
+package az.theternal.console.details.compose.view.details.model
 
 import androidx.compose.runtime.Stable
 import az.theternal.console.compose.core.ViewState

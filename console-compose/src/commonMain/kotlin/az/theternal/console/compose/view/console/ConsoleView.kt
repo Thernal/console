@@ -6,6 +6,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import az.theternal.console.api.addon.ConsoleNavigation
 import az.theternal.console.api.addon.ConsoleTab
 import az.theternal.console.api.navigation.LocalConsoleNavigator
+import az.theternal.console.compose.view.console.model.ConsoleIntent
+import az.theternal.console.compose.view.console.model.ConsoleViewModel
 
 @Composable
 internal fun ConsoleView(

@@ -6,7 +6,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import az.theternal.console.designsystem.components.core.DsDivider
+import az.theternal.console.compose.core.preview
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
+import az.theternal.console.stepper.DebugStepper
+import az.theternal.console.stepper.compose.view.settings.model.DebugStepperIntent
+import az.theternal.console.stepper.compose.view.settings.model.DebugStepperSettingsState
 import az.theternal.console.stepper.compose.view.settings.components.StepperActiveSection
 import az.theternal.console.stepper.compose.view.settings.components.StepperAutoResumeSection
 import az.theternal.console.stepper.compose.view.settings.components.StepperCaughtSection
@@ -56,5 +62,26 @@ internal fun DebugStepperContent(
 
         item { DsDivider() }
         item { StepperCaughtSection(stepperState = state.stepperState, dispatch = dispatch) }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDebugStepperContentDisabled() {
+    ThemeProvider {
+        DebugStepperContent(
+            state = DebugStepperSettingsState(),
+            dispatch = {},
+        )
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDebugStepperContentEnabled() {
+    val state = DebugStepperSettingsState()
+    state.config.preview(DebugStepper.Config(enabled = true, paused = true, pauseOnMatch = true))
+    ThemeProvider {
+        DebugStepperContent(state = state, dispatch = {})
     }
 }

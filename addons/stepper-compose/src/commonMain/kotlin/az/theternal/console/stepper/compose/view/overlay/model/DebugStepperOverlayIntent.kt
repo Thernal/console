@@ -1,4 +1,4 @@
-package az.theternal.console.stepper.compose.view.overlay
+package az.theternal.console.stepper.compose.view.overlay.model
 
 import az.theternal.console.compose.core.Intent
 

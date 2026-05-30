@@ -38,12 +38,17 @@ import androidx.compose.ui.unit.IntOffset
 import az.theternal.console.api.navigation.ConsoleRoute
 import az.theternal.console.api.navigation.LocalConsoleNavigator
 import az.theternal.console.api.ui.LocalLogRenderer
+import az.theternal.console.compose.core.preview
 import az.theternal.console.compose.util.logAccentColor
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.components.core.DsDivider
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsText
 import az.theternal.console.designsystem.foundation.theme.Theme
 import az.theternal.console.stepper.compose.navigation.DebugStepperTab
+import az.theternal.console.stepper.compose.view.overlay.model.DebugStepperOverlayIntent
+import az.theternal.console.stepper.compose.view.overlay.model.DebugStepperOverlayState
 import az.theternal.console.stepper.compose.view.overlay.components.OverlayIconButton
 import az.theternal.console.stepper.compose.view.overlay.components.OverlayIconControls
 import kotlin.math.roundToInt
@@ -165,5 +170,26 @@ internal fun DebugStepperOverlayContent(
                 }
             }
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDebugStepperOverlayContentDisabled() {
+    ThemeProvider {
+        DebugStepperOverlayContent(state = DebugStepperOverlayState(), dispatch = {})
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDebugStepperOverlayContentEnabled() {
+    val state = DebugStepperOverlayState()
+    state.isEnabled.preview(true)
+    state.isPaused.preview(true)
+    state.caughtCount.preview(3)
+    state.isExpanded.preview(true)
+    ThemeProvider {
+        DebugStepperOverlayContent(state = state, dispatch = {})
     }
 }

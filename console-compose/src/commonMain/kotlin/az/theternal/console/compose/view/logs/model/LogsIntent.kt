@@ -1,4 +1,4 @@
-package az.theternal.console.compose.view.logs
+package az.theternal.console.compose.view.logs.model
 
 import androidx.compose.ui.text.input.TextFieldValue
 import az.theternal.console.compose.core.Intent

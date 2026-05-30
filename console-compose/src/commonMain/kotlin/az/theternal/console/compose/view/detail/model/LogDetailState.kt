@@ -1,4 +1,4 @@
-package az.theternal.console.compose.view.detail
+package az.theternal.console.compose.view.detail.model
 
 import az.theternal.console.compose.core.ViewState
 import az.theternal.console.runtime.Log

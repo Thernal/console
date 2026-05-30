@@ -13,10 +13,14 @@ import az.theternal.console.compose.core.ViewState
 import az.theternal.console.designsystem.components.core.DsChip
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsText
+import az.theternal.console.compose.core.preview
 import az.theternal.console.designsystem.components.modifier.pressable
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 import az.theternal.console.stepper.DebugStepper
-import az.theternal.console.stepper.compose.view.settings.DebugStepperIntent
+import az.theternal.console.stepper.compose.view.settings.model.DebugStepperIntent
+import az.theternal.console.stepper.compose.view.settings.model.DebugStepperSettingsState
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -62,5 +66,31 @@ internal fun StepperTagsSection(
                 }
             }
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewStepperTagsSectionEmpty() {
+    ThemeProvider {
+        StepperTagsSection(
+            config = DebugStepperSettingsState().config,
+            tagInput = DebugStepperSettingsState().tagInput,
+            dispatch = {},
+        )
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewStepperTagsSectionFilled() {
+    ThemeProvider {
+        StepperTagsSection(
+            config = DebugStepperSettingsState().config.preview(
+                DebugStepper.Config(pauseOnTags = setOf("HTTP", "Auth", "Cache")),
+            ),
+            tagInput = DebugStepperSettingsState().tagInput,
+            dispatch = {},
+        )
     }
 }

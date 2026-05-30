@@ -1,4 +1,4 @@
-package az.theternal.console.compose.view.console
+package az.theternal.console.compose.view.console.model
 
 import androidx.lifecycle.ViewModel
 import az.theternal.console.api.addon.ConsoleNavigation

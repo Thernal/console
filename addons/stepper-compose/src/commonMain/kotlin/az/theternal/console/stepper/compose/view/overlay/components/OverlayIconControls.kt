@@ -13,8 +13,8 @@ import androidx.compose.material.icons.outlined.SkipNext
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import az.theternal.console.stepper.compose.view.overlay.DebugStepperOverlayIntent
-import az.theternal.console.stepper.compose.view.overlay.DebugStepperOverlayState
+import az.theternal.console.stepper.compose.view.overlay.model.DebugStepperOverlayIntent
+import az.theternal.console.stepper.compose.view.overlay.model.DebugStepperOverlayState
 import az.theternal.console.stepper.compose.view.overlay.overlayBackgroundColor
 import az.theternal.console.stepper.compose.view.overlay.overlayMutedContentColor
 import az.theternal.console.designsystem.components.core.DsIcon

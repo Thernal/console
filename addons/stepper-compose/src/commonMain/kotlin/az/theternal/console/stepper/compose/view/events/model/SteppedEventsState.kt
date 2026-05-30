@@ -1,4 +1,4 @@
-package az.theternal.console.stepper.compose.view.events
+package az.theternal.console.stepper.compose.view.events.model
 
 import az.theternal.console.compose.core.ViewState
 import az.theternal.console.runtime.Log

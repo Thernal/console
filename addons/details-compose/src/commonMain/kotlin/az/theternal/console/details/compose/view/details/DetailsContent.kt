@@ -10,6 +10,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import az.theternal.console.compose.core.preview
+import az.theternal.console.details.compose.view.details.model.DetailsState
 import az.theternal.console.designsystem.components.core.DsCard
 import az.theternal.console.designsystem.components.core.DsDivider
 import az.theternal.console.designsystem.components.core.DsText
@@ -54,8 +56,25 @@ internal fun DetailsContent(state: DetailsState) {
 
 @DsPreview
 @Composable
-private fun PreviewDetailsContent() {
+private fun PreviewDetailsContentEmpty() {
     ThemeProvider {
         DetailsContent(state = DetailsState())
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewDetailsContentFilled() {
+    val state = DetailsState()
+    state.details.preview(
+        mapOf(
+            "User ID" to "usr-abc-123",
+            "Environment" to "production",
+            "App Version" to "2.4.1",
+            "Build" to "1047",
+        ),
+    )
+    ThemeProvider {
+        DetailsContent(state = state)
     }
 }

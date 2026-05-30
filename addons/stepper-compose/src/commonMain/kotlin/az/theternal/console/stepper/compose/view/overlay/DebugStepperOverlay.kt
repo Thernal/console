@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import az.theternal.console.stepper.compose.view.overlay.model.DebugStepperOverlayViewModel
 
 @Composable
 internal fun DebugStepperOverlay() {

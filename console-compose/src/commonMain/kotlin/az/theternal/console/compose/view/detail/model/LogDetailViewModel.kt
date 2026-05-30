@@ -1,4 +1,4 @@
-package az.theternal.console.compose.view.detail
+package az.theternal.console.compose.view.detail.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

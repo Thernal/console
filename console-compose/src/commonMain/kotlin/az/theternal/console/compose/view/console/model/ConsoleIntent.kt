@@ -1,4 +1,4 @@
-package az.theternal.console.compose.view.console
+package az.theternal.console.compose.view.console.model
 
 import az.theternal.console.api.addon.ConsoleTab
 import az.theternal.console.compose.core.Intent

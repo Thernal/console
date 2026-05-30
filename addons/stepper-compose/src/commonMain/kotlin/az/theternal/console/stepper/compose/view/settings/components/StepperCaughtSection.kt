@@ -14,16 +14,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import az.theternal.console.api.navigation.ConsoleRoute
+import az.theternal.console.compose.core.preview
 import az.theternal.console.api.navigation.LocalConsoleNavigator
 import az.theternal.console.api.ui.LocalLogRenderer
 import az.theternal.console.compose.core.ViewState
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsText
 import az.theternal.console.designsystem.components.modifier.pressable
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
+import az.theternal.console.runtime.Log
+import az.theternal.console.runtime.LogLevel
 import az.theternal.console.stepper.DebugStepper
 import az.theternal.console.stepper.compose.navigation.SteppedEventsRoute
-import az.theternal.console.stepper.compose.view.settings.DebugStepperIntent
+import az.theternal.console.stepper.compose.view.settings.model.DebugStepperIntent
+import az.theternal.console.stepper.compose.view.settings.model.DebugStepperSettingsState
 
 private const val CAUGHT_PREVIEW_COUNT = 3
 
@@ -105,5 +111,25 @@ internal fun StepperCaughtSection(
                 )
             }
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewStepperCaughtSection() {
+    ThemeProvider {
+        StepperCaughtSection(
+            stepperState = DebugStepperSettingsState().stepperState.preview(
+                DebugStepper.State(
+                    steppedEvents = listOf(
+                        Log(message = "Network request completed in 342ms", tag = "HTTP", level = LogLevel.Info),
+                        Log(message = "Cache miss for key: user_profile", tag = "Cache", level = LogLevel.Debug),
+                        Log(message = "Auth token expired", tag = "Auth", level = LogLevel.Warning),
+                        Log(message = "Failed to decode response", tag = "JSON", level = LogLevel.Error),
+                    ),
+                ),
+            ),
+            dispatch = {},
+        )
     }
 }

@@ -8,9 +8,12 @@ import androidx.compose.ui.Modifier
 import az.theternal.console.compose.core.ViewState
 import az.theternal.console.designsystem.components.core.DsChip
 import az.theternal.console.designsystem.components.modifier.pressable
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 import az.theternal.console.stepper.DebugStepper
-import az.theternal.console.stepper.compose.view.settings.DebugStepperIntent
+import az.theternal.console.stepper.compose.view.settings.model.DebugStepperIntent
+import az.theternal.console.stepper.compose.view.settings.model.DebugStepperSettingsState
 
 private val autoResumeOptions = listOf(null, 3, 5, 10, 30)
 
@@ -31,5 +34,13 @@ internal fun StepperAutoResumeSection(
                 )
             }
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewStepperAutoResumeSection() {
+    ThemeProvider {
+        StepperAutoResumeSection(config = DebugStepperSettingsState().config, dispatch = {})
     }
 }

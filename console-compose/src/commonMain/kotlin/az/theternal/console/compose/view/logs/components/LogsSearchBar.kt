@@ -9,11 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import az.theternal.console.compose.core.select
-import az.theternal.console.compose.view.logs.LogsIntent
-import az.theternal.console.compose.view.logs.LogsState
+import az.theternal.console.compose.view.logs.model.LogsIntent
+import az.theternal.console.compose.view.logs.model.LogsState
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsIconButton
 import az.theternal.console.designsystem.components.core.DsTextField
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -51,4 +53,12 @@ internal fun LogsSearchBar(
             }
         },
     )
+}
+
+@DsPreview
+@Composable
+private fun PreviewLogsSearchBar() {
+    ThemeProvider {
+        LogsSearchBar(state = LogsState(), dispatch = {})
+    }
 }

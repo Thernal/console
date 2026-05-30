@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import az.theternal.console.api.navigation.ConsoleRoute
+import az.theternal.console.stepper.compose.view.events.model.SteppedEventsViewModel
 import az.theternal.console.api.navigation.LocalConsoleNavigator
 import az.theternal.console.api.ui.LocalLogRenderer
 import az.theternal.console.designsystem.components.core.DsAppBar

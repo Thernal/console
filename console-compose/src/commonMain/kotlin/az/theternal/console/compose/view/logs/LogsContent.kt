@@ -12,7 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import az.theternal.console.api.ui.LogRenderer
+import az.theternal.console.compose.core.preview
 import az.theternal.console.compose.core.select
+import az.theternal.console.compose.renderer.defaultLogRenderer
+import az.theternal.console.compose.view.logs.model.LogsIntent
+import az.theternal.console.compose.view.logs.model.LogsState
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
+import az.theternal.console.runtime.LogLevel
 import az.theternal.console.compose.util.LocalSearchQuery
 import az.theternal.console.compose.view.logs.components.LogsEmptyState
 import az.theternal.console.compose.view.logs.components.LogsLevelFilter
@@ -88,5 +95,41 @@ internal fun LogsContent(
                 }
             }
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewLogsContentEmpty() {
+    ThemeProvider {
+        LogsContent(
+            state = LogsState(),
+            renderer = defaultLogRenderer(),
+            onLogClick = {},
+            dispatch = {},
+        )
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewLogsContentFilled() {
+    val state = LogsState()
+    state.hasAnyLogs.preview(true)
+    state.logs.preview(
+        listOf(
+            Log(message = "User authenticated successfully", tag = "Auth", level = LogLevel.Info),
+            Log(message = "Network request failed: 503", tag = "API", level = LogLevel.Error),
+            Log(message = "Cache miss for key: user_profile", tag = "Cache", level = LogLevel.Debug),
+        ),
+    )
+    state.tags.preview(listOf("Auth", "API", "Cache"))
+    ThemeProvider {
+        LogsContent(
+            state = state,
+            renderer = defaultLogRenderer(),
+            onLogClick = {},
+            dispatch = {},
+        )
     }
 }

@@ -1,4 +1,4 @@
-package az.theternal.console.stepper.compose.view.events
+package az.theternal.console.stepper.compose.view.events.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

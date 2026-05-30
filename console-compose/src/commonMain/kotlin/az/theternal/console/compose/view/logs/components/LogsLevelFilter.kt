@@ -8,10 +8,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import az.theternal.console.compose.util.themeColor
-import az.theternal.console.compose.view.logs.LogsIntent
-import az.theternal.console.compose.view.logs.LogsState
+import az.theternal.console.compose.view.logs.model.LogsIntent
+import az.theternal.console.compose.view.logs.model.LogsState
 import az.theternal.console.designsystem.components.core.DsChip
 import az.theternal.console.designsystem.components.modifier.pressable
+import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -43,5 +45,13 @@ internal fun LogsLevelFilter(
                 modifier = Modifier.pressable(onPress = { dispatch(LogsIntent.ToggleLevel(level)) }),
             )
         }
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewLogsLevelFilter() {
+    ThemeProvider {
+        LogsLevelFilter(state = LogsState(), dispatch = {})
     }
 }

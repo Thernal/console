@@ -18,6 +18,16 @@ interface LogRenderer {
     )
 }
 
-val LocalLogRenderer = compositionLocalOf<LogRenderer> {
-    error("No LogRenderer provided — make sure ConsoleProvider() is in the composition tree")
+val LocalLogRenderer = compositionLocalOf<LogRenderer> { NoOpLogRenderer }
+
+object NoOpLogRenderer : LogRenderer {
+    @Composable override fun Item(
+        log: Log,
+        onClick: () -> Unit,
+    ) = Unit
+
+    @Composable override fun Detail(
+        log: Log,
+        onBack: () -> Unit,
+    ) = Unit
 }

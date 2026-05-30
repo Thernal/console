@@ -1,7 +1,11 @@
-package az.theternal.console.stepper.compose.view.overlay
+package az.theternal.console.stepper.compose.view.overlay.model
 
 import az.theternal.console.compose.core.ViewState
 import az.theternal.console.stepper.DebugStepper
+import az.theternal.console.stepper.compose.view.overlay.resolveCurrentStepDisplay
+import az.theternal.console.stepper.compose.view.overlay.resolveDisplayTag
+import az.theternal.console.stepper.compose.view.overlay.resolveStatusText
+import az.theternal.console.stepper.compose.view.overlay.resolveStatusTone
 
 class DebugStepperOverlayState : ViewState() {
     val isEnabled = field(DebugStepper.config.value.enabled)

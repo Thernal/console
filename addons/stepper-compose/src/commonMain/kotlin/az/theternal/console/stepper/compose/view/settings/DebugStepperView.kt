@@ -2,6 +2,7 @@ package az.theternal.console.stepper.compose.view.settings
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import az.theternal.console.stepper.compose.view.settings.model.DebugStepperViewModel
 
 @Composable
 internal fun DebugStepperView() {

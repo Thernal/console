@@ -1,10 +1,14 @@
-package az.theternal.console.stepper.compose.view.overlay
+package az.theternal.console.stepper.compose.view.overlay.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import az.theternal.console.compose.core.IntentHandler
 import az.theternal.console.compose.core.StateHolder
 import az.theternal.console.stepper.DebugStepper
+import az.theternal.console.stepper.compose.view.overlay.resolveCurrentStepDisplay
+import az.theternal.console.stepper.compose.view.overlay.resolveDisplayTag
+import az.theternal.console.stepper.compose.view.overlay.resolveStatusText
+import az.theternal.console.stepper.compose.view.overlay.resolveStatusTone
 import kotlinx.coroutines.launch
 
 class DebugStepperOverlayViewModel : ViewModel(), StateHolder, IntentHandler<DebugStepperOverlayIntent> {
