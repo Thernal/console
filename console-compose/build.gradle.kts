@@ -12,6 +12,7 @@ kotlin {
             implementation(libs.compose.material.icons.extended)
             implementation(libs.jetbrains.navigation3.ui)
             implementation(libs.jetbrains.lifecycle.viewmodel.nav3)
+            implementation(libs.jetbrains.lifecycle.viewmodel.compose)
         }
     }
 }

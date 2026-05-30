@@ -10,22 +10,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import az.theternal.console.api.addon.ConsoleTab
+import az.theternal.console.compose.view.console.components.ConsoleNavigationBar
 import az.theternal.console.designsystem.components.core.DsAppBar
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsIconButton
 import az.theternal.console.designsystem.components.core.DsScaffold
 import az.theternal.console.designsystem.components.core.DsText
-import az.theternal.console.designsystem.components.core.navigationbar.DsNavigationBar
-import az.theternal.console.designsystem.components.core.navigationbar.DsNavigationBarItem
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
 internal fun ConsoleContent(
     tabs: List<ConsoleTab>,
-    selectedIndex: Int,
-    onTabSelect: (Int) -> Unit,
+    selectedIndex: State<Int>,
+    dispatch: (ConsoleIntent) -> Unit,
     onClose: () -> Unit,
 ) {
     DsScaffold(
@@ -50,33 +50,18 @@ internal fun ConsoleContent(
         },
         bottomBar = if (tabs.size > 1) {
             {
-                DsNavigationBar {
-                    tabs.forEachIndexed { index, tab ->
-                        DsNavigationBarItem(
-                            selected = index == selectedIndex,
-                            onClick = { onTabSelect(index) },
-                            icon = {
-                                DsIcon(
-                                    icon = tab.icon,
-                                    size = Theme.metrics.iconMd,
-                                )
-                            },
-                            label = {
-                                DsText(
-                                    text = tab.title,
-                                    style = Theme.typography.label01,
-                                )
-                            },
-                        )
-                    }
-                }
+                ConsoleNavigationBar(
+                    tabs = tabs,
+                    selectedIndex = selectedIndex,
+                    dispatch = dispatch,
+                )
             }
         } else {
             null
         },
     ) { padding ->
         AnimatedContent(
-            targetState = selectedIndex,
+            targetState = selectedIndex.value,
             transitionSpec = { fadeIn() togetherWith fadeOut() },
             label = "console_tab",
         ) { index ->

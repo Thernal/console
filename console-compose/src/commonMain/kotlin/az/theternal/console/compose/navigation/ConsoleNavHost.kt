@@ -56,7 +56,6 @@ internal fun ConsoleNavHost(
             entry<ConsoleRoute.Stub> { }
             entry<ConsoleRoute.Main> {
                 ConsoleView(
-                    onClose = { navController.close() },
                     requestedTab = requestedTab,
                     onRequestConsumed = onRequestConsumed,
                 )

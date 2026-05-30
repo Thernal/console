@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.outlined.List
 import az.theternal.console.designsystem.components.provider.ThemeProvider
 import az.theternal.console.designsystem.foundation.theme.DsPreview
@@ -50,6 +51,6 @@ fun DsIcon(
 @Composable
 private fun PreviewDsIcon() {
     ThemeProvider {
-        DsIcon(icon = Icons.Outlined.List)
+        DsIcon(icon = Icons.AutoMirrored.Outlined.List)
     }
 }

@@ -10,9 +10,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import az.theternal.console.api.ui.LogRenderer
+import az.theternal.console.compose.core.select
 import az.theternal.console.compose.util.LocalSearchQuery
 import az.theternal.console.compose.view.logs.components.LogsEmptyState
 import az.theternal.console.compose.view.logs.components.LogsLevelFilter
@@ -21,33 +21,20 @@ import az.theternal.console.compose.view.logs.components.LogsTagFilter
 import az.theternal.console.designsystem.components.core.collapsible.DsCollapsible
 import az.theternal.console.designsystem.foundation.theme.Theme
 import az.theternal.console.runtime.Log
-import az.theternal.console.runtime.LogLevel
 
 @Composable
 internal fun LogsContent(
-    logs: List<Log>,
-    hasAnyLogs: Boolean,
-    allTags: List<String>,
-    selectedTags: Set<String>,
-    onTagToggle: (String) -> Unit,
-    onTagSelectAll: () -> Unit,
-    allLevels: List<LogLevel>,
-    selectedLevels: Set<LogLevel>,
-    onLevelToggle: (LogLevel) -> Unit,
-    onLevelSelectAll: () -> Unit,
-    searchQuery: String,
-    onSearchQueryChange: (String) -> Unit,
-    onLogClick: (Log) -> Unit,
+    state: LogsState,
     renderer: LogRenderer,
+    onLogClick: (Log) -> Unit,
+    dispatch: (LogsIntent) -> Unit,
 ) {
-    if (!hasAnyLogs) {
+    if (!state.hasAnyLogs.value) {
         LogsEmptyState()
         return
     }
 
-    val reversedLogs = remember(logs) { logs.asReversed() }
-
-    CompositionLocalProvider(LocalSearchQuery provides searchQuery) {
+    CompositionLocalProvider(LocalSearchQuery provides state.searchQuery.select { it.text }) {
         DsCollapsible(
             modifier = Modifier.fillMaxSize(),
             header = {
@@ -63,22 +50,18 @@ internal fun LogsContent(
                     verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp6),
                 ) {
                     LogsLevelFilter(
-                        availableLevels = allLevels,
-                        selectedLevels = selectedLevels,
-                        onLevelToggle = onLevelToggle,
-                        onSelectAll = onLevelSelectAll,
+                        state = state,
+                        dispatch = dispatch,
                     )
-                    if (allTags.isNotEmpty()) {
-                        LogsTagFilter(
-                            tags = allTags,
-                            selectedTags = selectedTags,
-                            onTagToggle = onTagToggle,
-                            onSelectAll = onTagSelectAll,
-                        )
-                    }
+
+                    LogsTagFilter(
+                        state = state,
+                        dispatch = dispatch,
+                    )
+
                     LogsSearchBar(
-                        query = searchQuery,
-                        onQueryChange = onSearchQueryChange,
+                        state = state,
+                        dispatch = dispatch,
                     )
                 }
             },
@@ -94,7 +77,7 @@ internal fun LogsContent(
                 verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
             ) {
                 items(
-                    items = reversedLogs,
+                    items = state.logs.value,
                     key = { it.id },
                     contentType = { "log_item" },
                 ) { log ->

@@ -1,0 +1,20 @@
+package az.theternal.console.stepper.compose.view.events
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import az.theternal.console.compose.core.StateHolder
+import az.theternal.console.stepper.DebugStepper
+import kotlinx.coroutines.launch
+
+class SteppedEventsViewModel : ViewModel(), StateHolder {
+    override val state = SteppedEventsState()
+
+    init {
+        viewModelScope.launch {
+            DebugStepper.state.collect { stepperState ->
+                state.count.update { stepperState.steppedEvents.size }
+                state.events.update { stepperState.steppedEvents.asReversed() }
+            }
+        }
+    }
+}

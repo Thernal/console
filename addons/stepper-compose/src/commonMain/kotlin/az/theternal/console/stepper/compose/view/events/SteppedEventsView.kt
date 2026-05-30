@@ -13,12 +13,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import az.theternal.console.stepper.DebugStepper
+import androidx.lifecycle.viewmodel.compose.viewModel
 import az.theternal.console.api.navigation.ConsoleRoute
 import az.theternal.console.api.navigation.LocalConsoleNavigator
 import az.theternal.console.api.ui.LocalLogRenderer
@@ -30,16 +27,15 @@ import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
 internal fun SteppedEventsView() {
+    val viewModel = viewModel { SteppedEventsViewModel() }
     val navigator = LocalConsoleNavigator.current
     val renderer = LocalLogRenderer.current
-    val state by DebugStepper.state.collectAsState()
-    val events = remember(state.steppedEvents) { state.steppedEvents.asReversed() }
 
     Column(modifier = Modifier.fillMaxSize().background(Theme.colors.background1)) {
         DsAppBar(
             content = {
                 DsText(
-                    text = "Caught (${state.steppedEvents.size})",
+                    text = "Caught (${viewModel.state.count.value})",
                     style = Theme.typography.title01,
                     color = Theme.colors.content01,
                 )
@@ -54,14 +50,9 @@ internal fun SteppedEventsView() {
             },
         )
 
-        if (events.isEmpty()) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
+        if (viewModel.state.events.value.isEmpty()) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     DsIcon(
                         icon = Icons.Outlined.BugReport,
                         size = Theme.dimens.dp32,
@@ -84,12 +75,10 @@ internal fun SteppedEventsView() {
                     start = Theme.dimens.dp12,
                     end = Theme.dimens.dp12,
                 ),
-                verticalArrangement = Arrangement.spacedBy(
-                    space = Theme.dimens.dp8,
-                ),
+                verticalArrangement = Arrangement.spacedBy(space = Theme.dimens.dp8),
             ) {
                 items(
-                    items = events,
+                    items = viewModel.state.events.value,
                     key = { it.id },
                     contentType = { "log_item" },
                 ) { log ->

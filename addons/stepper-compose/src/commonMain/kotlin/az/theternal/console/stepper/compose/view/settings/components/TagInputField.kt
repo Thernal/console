@@ -9,17 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.input.TextFieldValue
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsTextField
 import az.theternal.console.designsystem.components.modifier.pressable
 import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.extensions.from
 import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
 internal fun TagInputField(
-    value: String,
-    onValueChange: (String) -> Unit,
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     onAdd: () -> Unit,
 ) {
     DsTextField(
@@ -27,7 +29,7 @@ internal fun TagInputField(
         onValueChange = onValueChange,
         hint = "Add tag…",
         suffix = {
-            if (value.isNotBlank()) {
+            if (value.text.isNotBlank()) {
                 Box(
                     modifier = Modifier
                         .size(Theme.dimens.dp32)
@@ -52,7 +54,7 @@ internal fun TagInputField(
 private fun PreviewTagInputFieldEmpty() {
     ThemeProvider {
         TagInputField(
-            value = "",
+            value = TextFieldValue(),
             onValueChange = {},
             onAdd = {},
         )
@@ -64,7 +66,7 @@ private fun PreviewTagInputFieldEmpty() {
 private fun PreviewTagInputFieldFilled() {
     ThemeProvider {
         TagInputField(
-            value = "network",
+            value = TextFieldValue.from("network"),
             onValueChange = {},
             onAdd = {},
         )

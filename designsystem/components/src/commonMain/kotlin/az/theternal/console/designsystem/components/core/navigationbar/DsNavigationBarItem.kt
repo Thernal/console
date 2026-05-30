@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Search
 import az.theternal.console.designsystem.components.core.DsIcon
@@ -75,7 +76,7 @@ private fun PreviewDsNavigationBarItem() {
             DsNavigationBarItem(
                 selected = true,
                 onClick = {},
-                icon = { DsIcon(icon = Icons.Outlined.List) },
+                icon = { DsIcon(icon = Icons.AutoMirrored.Outlined.List) },
                 label = { DsText(text = "Selected") },
             )
             DsNavigationBarItem(

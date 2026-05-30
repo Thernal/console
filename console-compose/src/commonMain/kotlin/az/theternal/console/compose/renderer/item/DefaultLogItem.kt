@@ -37,12 +37,6 @@ internal fun DefaultLogItem(
     onClick: () -> Unit,
 ) {
     val accentColor = log.logAccentColor()
-    val query = LocalSearchQuery.current
-    val warningBg = Theme.colors.warning
-    val warningFg = Theme.colors.warningContent
-    val highlightedMessage = remember(log.message, query) {
-        buildHighlightedText(log.message, query, warningBg, warningFg)
-    }
 
     Box(
         modifier = Modifier
@@ -83,8 +77,14 @@ internal fun DefaultLogItem(
                     )
                 }
 
+                val query = LocalSearchQuery.current
+                val warningBg = Theme.colors.warning
+                val warningFg = Theme.colors.warningContent
+
                 DsText(
-                    text = highlightedMessage,
+                    text = remember(log.message, query.value) {
+                        buildHighlightedText(log.message, query.value, warningBg, warningFg)
+                    },
                     style = Theme.typography.body02,
                     color = Theme.colors.content01,
                     maxLines = 2,

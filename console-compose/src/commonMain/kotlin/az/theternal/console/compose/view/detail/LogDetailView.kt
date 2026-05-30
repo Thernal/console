@@ -1,23 +1,18 @@
 package az.theternal.console.compose.view.detail
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import az.theternal.console.api.navigation.LocalConsoleNavigator
-import az.theternal.console.compose.ConsoleLogObserver
 import az.theternal.console.api.ui.LocalLogRenderer
 
 @Composable
 internal fun LogDetailView(logId: String) {
+    val viewModel = viewModel(key = logId) { LogDetailViewModel(logId) }
     val navigator = LocalConsoleNavigator.current
-    val logs by ConsoleLogObserver.logs.collectAsState()
-    val log by remember(logId) { derivedStateOf { logs.find { it.id == logId } } }
     val renderer = LocalLogRenderer.current
 
     LogDetailContent(
-        log = log,
+        log = viewModel.state.log.value,
         onBack = navigator::pop,
         renderer = renderer,
     )

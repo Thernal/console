@@ -1,13 +1,16 @@
 package az.theternal.console.compose.view.logs.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import az.theternal.console.designsystem.components.provider.ThemeProvider
-import az.theternal.console.designsystem.foundation.theme.DsPreview
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
+import az.theternal.console.compose.core.select
+import az.theternal.console.compose.view.logs.LogsIntent
+import az.theternal.console.compose.view.logs.LogsState
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsIconButton
 import az.theternal.console.designsystem.components.core.DsTextField
@@ -15,13 +18,13 @@ import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
 internal fun LogsSearchBar(
-    query: String,
-    onQueryChange: (String) -> Unit,
+    state: LogsState,
+    dispatch: (LogsIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     DsTextField(
-        value = query,
-        onValueChange = onQueryChange,
+        value = state.searchQuery.value,
+        onValueChange = { dispatch(LogsIntent.SetQuery(it)) },
         modifier = modifier,
         hint = "Search logs…",
         prefix = {
@@ -33,9 +36,11 @@ internal fun LogsSearchBar(
             )
         },
         suffix = {
-            if (query.isNotEmpty()) {
+            AnimatedVisibility(
+                visible = state.searchQuery.select { it.text.isNotEmpty() }.value,
+            ) {
                 DsIconButton(
-                    onClick = { onQueryChange("") },
+                    onClick = { dispatch(LogsIntent.SetQuery(TextFieldValue())) },
                     contentColor = Theme.colors.content04,
                 ) {
                     DsIcon(
@@ -46,28 +51,4 @@ internal fun LogsSearchBar(
             }
         },
     )
-}
-
-@DsPreview
-@Composable
-private fun PreviewLogsSearchBarEmpty() {
-    ThemeProvider {
-        LogsSearchBar(
-            query = "",
-            onQueryChange = {},
-            modifier = Modifier.padding(Theme.dimens.dp16),
-        )
-    }
-}
-
-@DsPreview
-@Composable
-private fun PreviewLogsSearchBarFilled() {
-    ThemeProvider {
-        LogsSearchBar(
-            query = "NullPointerException",
-            onQueryChange = {},
-            modifier = Modifier.padding(Theme.dimens.dp16),
-        )
-    }
 }

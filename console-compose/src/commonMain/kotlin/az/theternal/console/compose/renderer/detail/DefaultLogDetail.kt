@@ -14,15 +14,13 @@ import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import az.theternal.console.compose.core.select
 import az.theternal.console.compose.util.LocalSearchQuery
 import az.theternal.console.compose.util.toTextClipEntry
-import kotlinx.coroutines.launch
 import az.theternal.console.runtime.Log
 import az.theternal.console.runtime.LogLevel
 import az.theternal.console.compose.renderer.detail.components.MessageCard
@@ -43,12 +41,15 @@ internal fun DefaultLogDetail(
     log: Log,
     onBack: () -> Unit,
 ) {
+    val viewModel = viewModel { DefaultLogDetailViewModel() }
     val accentColor = log.logAccentColor()
     val clipboard = LocalClipboard.current
-    val scope = rememberCoroutineScope()
-    var detailQuery by remember { mutableStateOf("") }
 
-    CompositionLocalProvider(LocalSearchQuery provides detailQuery) {
+    LaunchedEffect(viewModel.state.copyTrigger.value) {
+        if (viewModel.state.copyTrigger.value > 0) clipboard.setClipEntry(log.message.toTextClipEntry())
+    }
+
+    CompositionLocalProvider(LocalSearchQuery provides viewModel.state.detailQuery.select { it.text }) {
         DsScaffold(
             topBar = {
                 DsAppBar(
@@ -59,7 +60,6 @@ internal fun DefaultLogDetail(
                                 color = Theme.colors.content02,
                             )
                         }
-
                         DsText(
                             text = "Log Detail",
                             style = Theme.typography.title01,
@@ -68,7 +68,7 @@ internal fun DefaultLogDetail(
                     },
                     trailing = {
                         DsIconButton(
-                            onClick = { scope.launch { clipboard.setClipEntry(log.message.toTextClipEntry()) } },
+                            onClick = { viewModel.dispatch(DefaultLogDetailIntent.CopyMessage) },
                         ) {
                             DsIcon(
                                 icon = Icons.Outlined.ContentCopy,
@@ -93,8 +93,8 @@ internal fun DefaultLogDetail(
                 MetaCard(log = log, accentColor = accentColor)
 
                 DsTextField(
-                    value = detailQuery,
-                    onValueChange = { detailQuery = it },
+                    value = viewModel.state.detailQuery.value,
+                    onValueChange = { viewModel.dispatch(DefaultLogDetailIntent.SetQuery(it)) },
                     hint = "Search in message…",
                     prefix = {
                         DsIcon(
@@ -105,9 +105,9 @@ internal fun DefaultLogDetail(
                         )
                     },
                     suffix = {
-                        if (detailQuery.isNotEmpty()) {
+                        if (viewModel.state.detailQuery.value.text.isNotEmpty()) {
                             DsIconButton(
-                                onClick = { detailQuery = "" },
+                                onClick = { viewModel.dispatch(DefaultLogDetailIntent.SetQuery(TextFieldValue())) },
                                 contentColor = Theme.colors.content04,
                             ) {
                                 DsIcon(

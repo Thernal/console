@@ -1,45 +1,46 @@
 package az.theternal.console.compose.view.logs.components
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import az.theternal.console.compose.util.themeColor
+import az.theternal.console.compose.view.logs.LogsIntent
+import az.theternal.console.compose.view.logs.LogsState
 import az.theternal.console.designsystem.components.core.DsChip
 import az.theternal.console.designsystem.components.modifier.pressable
 import az.theternal.console.designsystem.foundation.theme.Theme
-import az.theternal.console.runtime.LogLevel
 
 @Composable
 internal fun LogsLevelFilter(
-    availableLevels: List<LogLevel>,
-    selectedLevels: Set<LogLevel>,
-    onLevelToggle: (LogLevel) -> Unit,
-    onSelectAll: () -> Unit,
-    modifier: Modifier = Modifier,
+    state: LogsState,
+    dispatch: (LogsIntent) -> Unit,
 ) {
-    val allSelected = selectedLevels.isEmpty()
+    val selectedLevels by state.selectedLevels
+    val allLevels by state.allLevels
 
-    Row(
-        modifier = modifier.horizontalScroll(rememberScrollState()),
+    LazyRow(
         horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp6),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        DsChip(
-            label = "All Levels",
-            color = Theme.colors.content02,
-            selected = allSelected,
-            modifier = Modifier.pressable(onPress = onSelectAll),
-        )
-        availableLevels.forEach { level ->
+        item {
+            DsChip(
+                label = "All Levels",
+                color = Theme.colors.content02,
+                selected = selectedLevels.isEmpty(),
+                modifier = Modifier.pressable(onPress = { dispatch(LogsIntent.SelectAllLevels) }),
+            )
+        }
+
+        items(items = allLevels, key = { it.name }) { level ->
             DsChip(
                 label = level.name,
                 color = level.themeColor(Theme.colors),
                 selected = level in selectedLevels,
-                modifier = Modifier.pressable(onPress = { onLevelToggle(level) }),
+                modifier = Modifier.pressable(onPress = { dispatch(LogsIntent.ToggleLevel(level)) }),
             )
         }
     }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,19 +17,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.input.TextFieldValue
 import az.theternal.console.designsystem.components.provider.ThemeProvider
+import az.theternal.console.designsystem.foundation.extensions.from
 import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
 fun DsTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
     hint: String = "",
     singleLine: Boolean = true,
-    prefix: (@Composable () -> Unit)? = null,
-    suffix: (@Composable () -> Unit)? = null,
+    prefix: (@Composable RowScope.() -> Unit)? = null,
+    suffix: (@Composable RowScope.() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
@@ -50,7 +53,7 @@ fun DsTextField(
                     .padding(horizontal = Theme.dimens.dp12),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                prefix?.invoke()
+                prefix?.invoke(this)
 
                 Box(
                     modifier = Modifier
@@ -58,7 +61,7 @@ fun DsTextField(
                         .padding(vertical = Theme.dimens.dp12),
                     contentAlignment = Alignment.CenterStart,
                 ) {
-                    if (value.isEmpty()) {
+                    if (value.text.isEmpty()) {
                         DsText(
                             text = hint,
                             style = Theme.typography.body02,
@@ -68,7 +71,7 @@ fun DsTextField(
                     innerTextField()
                 }
 
-                suffix?.invoke()
+                suffix?.invoke(this)
             }
         },
     )
@@ -82,8 +85,15 @@ private fun PreviewDsTextField() {
             modifier = Modifier.padding(Theme.dimens.dp16),
             verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
         ) {
-            DsTextField(value = "", onValueChange = {}, hint = "Search…")
-            DsTextField(value = "Some input text", onValueChange = {})
+            DsTextField(
+                value = TextFieldValue(""),
+                onValueChange = {},
+                hint = "Search…",
+            )
+            DsTextField(
+                value = TextFieldValue.from("some input text"),
+                onValueChange = {},
+            )
         }
     }
 }

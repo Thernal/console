@@ -28,11 +28,6 @@ import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,9 +35,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
-import az.theternal.console.stepper.compose.navigation.DebugStepperTab
-import az.theternal.console.stepper.compose.view.overlay.components.OverlayIconButton
-import az.theternal.console.stepper.compose.view.overlay.components.OverlayIconControls
 import az.theternal.console.api.navigation.ConsoleRoute
 import az.theternal.console.api.navigation.LocalConsoleNavigator
 import az.theternal.console.api.ui.LocalLogRenderer
@@ -51,21 +43,22 @@ import az.theternal.console.designsystem.components.core.DsDivider
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsText
 import az.theternal.console.designsystem.foundation.theme.Theme
+import az.theternal.console.stepper.compose.navigation.DebugStepperTab
+import az.theternal.console.stepper.compose.view.overlay.components.OverlayIconButton
+import az.theternal.console.stepper.compose.view.overlay.components.OverlayIconControls
 import kotlin.math.roundToInt
 
 @Composable
-internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
+internal fun DebugStepperOverlayContent(
+    state: DebugStepperOverlayState,
+    dispatch: (DebugStepperOverlayIntent) -> Unit,
+) {
     val navigator = LocalConsoleNavigator.current
     val renderer = LocalLogRenderer.current
-    var isExpanded by rememberSaveable { mutableStateOf(false) }
     val drag = rememberDragOffset()
 
-    LaunchedEffect(uiState.isEnabled) {
-        if (!uiState.isEnabled) isExpanded = false
-    }
-
-    val statusColor = overlayStatusColor(uiState.statusTone)
-    val borderColor = uiState.currentLog?.logAccentColor() ?: statusColor
+    val statusColor = overlayStatusColor(state.statusTone.value)
+    val borderColor = state.currentLog.value?.logAccentColor() ?: statusColor
 
     BoxWithConstraints(
         modifier = Modifier
@@ -82,14 +75,8 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                 .widthIn(max = maxWidth)
                 .clip(Theme.rounding.r12)
                 .background(overlayBackgroundColor)
-                .border(
-                    width = Theme.dimens.dp2,
-                    color = borderColor,
-                    shape = Theme.rounding.r12,
-                )
-                .onSizeChanged { newSize ->
-                    drag.onSizeChanged(newSize, maxWidthPx, maxHeightPx)
-                }
+                .border(width = Theme.dimens.dp2, color = borderColor, shape = Theme.rounding.r12)
+                .onSizeChanged { newSize -> drag.onSizeChanged(newSize, maxWidthPx, maxHeightPx) }
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         change.consume()
@@ -98,28 +85,23 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                 },
         ) {
             Row(
-                modifier = Modifier.padding(
-                    horizontal = Theme.dimens.dp4,
-                    vertical = Theme.dimens.dp3,
-                ),
+                modifier = Modifier.padding(horizontal = Theme.dimens.dp4, vertical = Theme.dimens.dp3),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4),
             ) {
-                if (uiState.isEnabled) {
-                    if (isExpanded) {
+                if (state.isEnabled.value) {
+                    if (state.isExpanded.value) {
                         DsText(
-                            text = uiState.statusText,
+                            text = state.statusText.value,
                             style = Theme.typography.body02,
                             color = Theme.colors.content03,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = Theme.dimens.dp8),
+                            modifier = Modifier.weight(1f).padding(start = Theme.dimens.dp8),
                         )
                     }
 
-                    if (uiState.caughtCount > 0) {
+                    if (state.caughtCount.value > 0) {
                         Box(
                             modifier = Modifier
                                 .clip(Theme.rounding.r4)
@@ -128,7 +110,7 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                                 .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp4),
                         ) {
                             DsText(
-                                text = "${uiState.caughtCount}",
+                                text = "${state.caughtCount.value}",
                                 style = Theme.typography.label01,
                                 color = borderColor,
                             )
@@ -137,9 +119,8 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                 }
 
                 OverlayIconControls(
-                    isEnabled = uiState.isEnabled,
-                    isPaused = uiState.isPaused,
-                    canStep = uiState.canStep,
+                    state = state,
+                    dispatch = dispatch,
                 )
 
                 OverlayIconButton(onClick = { navigator.openTab(DebugStepperTab) }) {
@@ -150,10 +131,16 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
                     )
                 }
 
-                if (uiState.isEnabled) {
-                    OverlayIconButton(onClick = { isExpanded = !isExpanded }) {
+                if (state.isEnabled.value) {
+                    OverlayIconButton(
+                        onClick = { dispatch(DebugStepperOverlayIntent.ToggleExpanded) },
+                    ) {
                         DsIcon(
-                            icon = if (isExpanded) Icons.Outlined.KeyboardArrowDown else Icons.Outlined.KeyboardArrowUp,
+                            icon = if (state.isExpanded.value) {
+                                Icons.Outlined.KeyboardArrowDown
+                            } else {
+                                Icons.Outlined.KeyboardArrowUp
+                            },
                             size = Theme.metrics.iconMd,
                             color = overlayMutedContentColor,
                         )
@@ -162,22 +149,16 @@ internal fun DebugStepperFloatingCard(uiState: DebugStepperOverlayUiState) {
             }
 
             AnimatedVisibility(
-                visible = isExpanded && uiState.currentLog != null,
+                visible = state.isExpanded.value && state.currentLog.value != null,
                 enter = expandVertically(tween(200), expandFrom = Alignment.Top) + fadeIn(tween(150)),
                 exit = shrinkVertically(tween(150), shrinkTowards = Alignment.Top) + fadeOut(tween(100)),
             ) {
-                uiState.currentLog?.let { currentLog ->
-                    Column(
-                        modifier = Modifier.padding(
-                            horizontal = Theme.dimens.dp12,
-                        ),
-                    ) {
+                state.currentLog.value?.let { log ->
+                    Column(modifier = Modifier.padding(horizontal = Theme.dimens.dp12)) {
                         DsDivider(color = overlayDividerColor)
                         renderer.Item(
-                            log = currentLog,
-                            onClick = {
-                                navigator.push(ConsoleRoute.LogDetail("", currentLog.id))
-                            },
+                            log = log,
+                            onClick = { navigator.push(ConsoleRoute.LogDetail("", log.id)) },
                         )
                         Spacer(Modifier.height(Theme.dimens.dp8))
                     }

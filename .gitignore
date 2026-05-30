@@ -36,3 +36,6 @@ out/
 
 # Detekt reports (generated — not committed)
 !.misc/detekt/detekt-report-delta.xml
+
+# Graphify
+graphify-out/
