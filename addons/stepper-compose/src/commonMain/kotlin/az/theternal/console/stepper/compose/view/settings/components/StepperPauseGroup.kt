@@ -53,8 +53,9 @@ private fun StepperPauseSection(
 @DsPreview
 @Composable
 private fun PreviewStepperPauseGroup() {
-    val state = StepperSettingsState()
-    state.enabled.preview(true)
+    val state = StepperSettingsState().preview {
+        state.enabled.set(true)
+    }
     ThemeProvider {
         StepperPauseGroup(
             state = state,

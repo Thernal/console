@@ -41,15 +41,16 @@ class LogsViewModel : ViewModel(), StateHolder, IntentHandler<LogsIntent> {
     }
 
     private fun filterLogs() {
-        state.logs.update {
+        val tags = state.selectedTags.value
+        val levels = state.selectedLevels.value
+        val query = state.searchQuery.value.text
+        state.logs.set(
             rawLogs.filter { log ->
-                val matchesTag = state.selectedTags.value.isEmpty() || log.tag in state.selectedTags.value
-                val matchesLevel = state.selectedLevels.value.isEmpty() || log.level in state.selectedLevels.value
-                val matchesSearch = state.searchQuery.value.text.isBlank() ||
-                    log.message.contains(state.searchQuery.value.text, ignoreCase = true)
-                matchesTag && matchesLevel && matchesSearch
-            }.reversed()
-        }
+                (tags.isEmpty() || log.tag in tags) &&
+                    (levels.isEmpty() || log.level in levels) &&
+                    (query.isBlank() || log.message.contains(query, ignoreCase = true))
+            }.reversed(),
+        )
     }
 
     private fun toggleTag(tag: String) {

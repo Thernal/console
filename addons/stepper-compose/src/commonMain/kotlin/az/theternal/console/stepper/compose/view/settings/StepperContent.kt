@@ -66,11 +66,12 @@ private fun PreviewStepperContentDisabled() {
 @DsPreview
 @Composable
 private fun PreviewStepperContentEnabled() {
-    val state = StepperSettingsState()
-    state.enabled.preview(true)
-    state.paused.preview(true)
-    state.isStepperActive.preview(true)
-    state.pauseOnMatch.preview(true)
+    val state = StepperSettingsState().preview {
+        state.enabled.set(true)
+        state.paused.set(true)
+        state.isStepperActive.set(true)
+        state.pauseOnMatch.set(true)
+    }
     ThemeProvider {
         StepperContent(
             state = state,

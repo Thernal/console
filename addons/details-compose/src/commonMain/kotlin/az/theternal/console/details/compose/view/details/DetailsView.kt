@@ -9,6 +9,6 @@ internal fun DetailsView() {
     val viewModel = viewModel { DetailsViewModel() }
 
     DetailsContent(
-        details = viewModel.state.details,
+        state = viewModel.state,
     )
 }

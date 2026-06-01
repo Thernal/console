@@ -7,5 +7,4 @@ import az.theternal.console.runtime.Log
 @Stable
 class SteppedEventsState : ViewState() {
     val events = field(emptyList<Log>())
-    val count = field(0)
 }

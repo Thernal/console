@@ -96,16 +96,17 @@ private fun PreviewLogsContentEmpty() {
 @DsPreview
 @Composable
 private fun PreviewLogsContentFilled() {
-    val state = LogsState()
-    state.hasAnyLogs.preview(true)
-    state.logs.preview(
-        listOf(
-            Log(message = "User authenticated successfully", tag = "Auth", level = LogLevel.Info),
-            Log(message = "Network request failed: 503", tag = "API", level = LogLevel.Error),
-            Log(message = "Cache miss for key: user_profile", tag = "Cache", level = LogLevel.Debug),
-        ),
-    )
-    state.tags.preview(listOf("Auth", "API", "Cache"))
+    val state = LogsState().preview {
+        state.hasAnyLogs.set(true)
+        state.logs.set(
+            listOf(
+                Log(message = "User authenticated successfully", tag = "Auth", level = LogLevel.Info),
+                Log(message = "Network request failed: 503", tag = "API", level = LogLevel.Error),
+                Log(message = "Cache miss for key: user_profile", tag = "Cache", level = LogLevel.Debug),
+            ),
+        )
+        state.tags.set(listOf("Auth", "API", "Cache"))
+    }
     ThemeProvider {
         LogsContent(
             state = state,

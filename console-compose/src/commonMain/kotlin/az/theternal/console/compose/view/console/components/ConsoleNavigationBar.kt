@@ -1,8 +1,8 @@
 package az.theternal.console.compose.view.console.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.outlined.BugReport
-import androidx.compose.material.icons.outlined.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -64,7 +64,7 @@ private fun PreviewConsoleNavigationBar() {
     ThemeProvider {
         ConsoleNavigationBar(
             tabs = listOf(
-                previewTab("Logs", Icons.Outlined.List),
+                previewTab("Logs", Icons.AutoMirrored.Outlined.List),
                 previewTab("Stepper", Icons.Outlined.BugReport),
             ),
             selectedIndex = remember { mutableStateOf(0) },

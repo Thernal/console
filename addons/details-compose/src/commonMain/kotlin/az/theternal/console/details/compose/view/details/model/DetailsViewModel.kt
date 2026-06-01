@@ -11,7 +11,7 @@ class DetailsViewModel : ViewModel(), StateHolder {
 
     init {
         viewModelScope.launch {
-            ConsoleDetails.flow.collect { state.details.update { it } }
+            ConsoleDetails.flow.collect { state.details.set(it) }
         }
     }
 }

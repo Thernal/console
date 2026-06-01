@@ -37,7 +37,7 @@ internal fun SteppedEventsContent(state: SteppedEventsState) {
 
     Column(modifier = Modifier.fillMaxSize().background(Theme.colors.background1)) {
         DsAppBar(
-            content = { SteppedEventsTitle(count = state.count) },
+            content = { SteppedEventsTitle(events = state.events) },
             leading = {
                 DsIconButton(onClick = { navigator.pop() }) {
                     DsIcon(
@@ -52,9 +52,9 @@ internal fun SteppedEventsContent(state: SteppedEventsState) {
 }
 
 @Composable
-private fun SteppedEventsTitle(count: State<Int>) {
+private fun SteppedEventsTitle(events: State<List<Log>>) {
     DsText(
-        text = "Caught (${count.value})",
+        text = "Caught (${events.value.size})",
         style = Theme.typography.title01,
         color = Theme.colors.content01,
     )
@@ -120,27 +120,15 @@ private fun PreviewSteppedEventsContentEmpty() {
 @DsPreview
 @Composable
 private fun PreviewSteppedEventsContentFilled() {
-    val state = SteppedEventsState()
-    state.count.preview(3)
-    state.events.preview(
-        listOf(
-            Log(
-                message = "Network request completed",
-                tag = "HTTP",
-                level = LogLevel.Info,
+    val state = SteppedEventsState().preview {
+        state.events.set(
+            listOf(
+                Log(message = "Network request completed", tag = "HTTP", level = LogLevel.Info),
+                Log(message = "Cache miss for key: user_profile", tag = "Cache", level = LogLevel.Debug),
+                Log(message = "Auth token expired", tag = "Auth", level = LogLevel.Warning),
             ),
-            Log(
-                message = "Cache miss for key: user_profile",
-                tag = "Cache",
-                level = LogLevel.Debug,
-            ),
-            Log(
-                message = "Auth token expired",
-                tag = "Auth",
-                level = LogLevel.Warning,
-            ),
-        ),
-    )
+        )
+    }
     ThemeProvider {
         SteppedEventsContent(state = state)
     }

@@ -1,5 +1,6 @@
 package az.theternal.console.stepper.compose.view.settings.model
 
+import androidx.compose.runtime.snapshots.Snapshot
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,22 +13,9 @@ class StepperViewModel : ViewModel(), StateHolder, IntentHandler<StepperIntent> 
     val state = StepperSettingsState()
 
     init {
-        viewModelScope.launch {
-            Stepper.config.collect { config ->
-                state.enabled.update { config.enabled }
-                state.paused.update { config.paused }
-                state.pauseOnMatch.update { config.pauseOnMatch }
-                state.pauseOnTags.update { config.pauseOnTags }
-                state.pauseOnLevelAtLeast.update { config.pauseOnLevelAtLeast }
-                state.autoResumeSeconds.update { config.autoResumeSeconds }
-                state.isStepperActive.update { config.enabled && config.paused }
-            }
-        }
-        viewModelScope.launch {
-            Stepper.state.collect { stepperState ->
-                state.steppedEvents.update { stepperState.steppedEvents }
-            }
-        }
+        syncFromConfig()
+        viewModelScope.launch { Stepper.config.collect { syncFromConfig() } }
+        viewModelScope.launch { Stepper.state.collect { state.steppedEvents.set(it.steppedEvents) } }
     }
 
     override val handler = Handler { intent ->
@@ -47,7 +35,7 @@ class StepperViewModel : ViewModel(), StateHolder, IntentHandler<StepperIntent> 
                 val trimmed = state.tagInput.value.text.trim()
                 if (trimmed.isNotEmpty()) {
                     Stepper.updateConfig { copy(pauseOnTags = pauseOnTags + trimmed) }
-                    state.tagInput.update { TextFieldValue() }
+                    state.tagInput.set(TextFieldValue())
                 }
             }
 
@@ -61,6 +49,19 @@ class StepperViewModel : ViewModel(), StateHolder, IntentHandler<StepperIntent> 
                 Stepper.updateConfig { copy(autoResumeSeconds = intent.seconds) }
 
             StepperIntent.ClearSteppedEvents -> Stepper.clearSteppedEvents()
+        }
+    }
+
+    private fun syncFromConfig() {
+        val config = Stepper.config.value
+        Snapshot.withMutableSnapshot {
+            state.enabled.set(config.enabled)
+            state.paused.set(config.paused)
+            state.pauseOnMatch.set(config.pauseOnMatch)
+            state.pauseOnTags.set(config.pauseOnTags)
+            state.pauseOnLevelAtLeast.set(config.pauseOnLevelAtLeast)
+            state.autoResumeSeconds.set(config.autoResumeSeconds)
+            state.isStepperActive.set(config.enabled && config.paused)
         }
     }
 }

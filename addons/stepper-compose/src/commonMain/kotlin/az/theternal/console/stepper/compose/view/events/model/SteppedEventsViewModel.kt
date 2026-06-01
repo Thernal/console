@@ -11,10 +11,7 @@ class SteppedEventsViewModel : ViewModel(), StateHolder {
 
     init {
         viewModelScope.launch {
-            Stepper.state.collect { stepperState ->
-                state.count.update { stepperState.steppedEvents.size }
-                state.events.update { stepperState.steppedEvents.asReversed() }
-            }
+            Stepper.state.collect { state.events.set(it.steppedEvents.asReversed()) }
         }
     }
 }

@@ -218,11 +218,12 @@ private fun PreviewStepperOverlayContentDisabled() {
 @DsPreview
 @Composable
 private fun PreviewStepperOverlayContentEnabled() {
-    val state = StepperOverlayState()
-    state.isEnabled.preview(true)
-    state.isPaused.preview(true)
-    state.caughtCount.preview(3)
-    state.isExpanded.preview(true)
+    val state = StepperOverlayState().preview {
+        state.isEnabled.set(true)
+        state.isPaused.set(true)
+        state.caughtCount.set(3)
+        state.isExpanded.set(true)
+    }
     ThemeProvider {
         StepperOverlayContent(
             state = state,

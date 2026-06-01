@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.BugReport
-import androidx.compose.material.icons.outlined.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -99,7 +99,7 @@ private fun previewTab(
 private fun PreviewConsoleContentSingleTab() {
     ThemeProvider {
         ConsoleContent(
-            tabs = listOf(previewTab("Logs", Icons.Outlined.List)),
+            tabs = listOf(previewTab("Logs", Icons.AutoMirrored.Outlined.List)),
             selectedIndex = remember { mutableStateOf(0) },
             dispatch = {},
             onClose = {},
@@ -113,7 +113,7 @@ private fun PreviewConsoleContentMultipleTabs() {
     ThemeProvider {
         ConsoleContent(
             tabs = listOf(
-                previewTab("Logs", Icons.Outlined.List),
+                previewTab("Logs", Icons.AutoMirrored.Outlined.List),
                 previewTab("Stepper", Icons.Outlined.BugReport),
             ),
             selectedIndex = remember { mutableStateOf(0) },

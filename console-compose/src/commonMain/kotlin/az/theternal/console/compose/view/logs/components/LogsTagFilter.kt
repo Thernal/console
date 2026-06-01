@@ -62,9 +62,10 @@ internal fun LogsTagFilter(
 @Composable
 private fun PreviewLogsTagFilter() {
     ThemeProvider {
-        val state = LogsState()
-        state.tags.preview(listOf("API", "Auth", "Network"))
-        state.selectedTags.preview(setOf("API"))
+        val state = LogsState().preview {
+            state.tags.set(listOf("API", "Auth", "Network"))
+            state.selectedTags.set(setOf("API"))
+        }
         LogsTagFilter(
             state = state,
             dispatch = {},

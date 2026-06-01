@@ -79,9 +79,10 @@ private fun StepperPauseOnMatchSection(
 @DsPreview
 @Composable
 private fun PreviewStepperPausedGroup() {
-    val state = StepperSettingsState()
-    state.isStepperActive.preview(true)
-    state.pauseOnMatch.preview(true)
+    val state = StepperSettingsState().preview {
+        state.isStepperActive.set(true)
+        state.pauseOnMatch.set(true)
+    }
     ThemeProvider {
         StepperPausedGroup(
             state = state,

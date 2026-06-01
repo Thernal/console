@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +26,7 @@ internal fun LogsEmptyState() {
             verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
         ) {
             DsIcon(
-                icon = Icons.Outlined.List,
+                icon = Icons.AutoMirrored.Outlined.List,
                 size = Theme.dimens.dp32,
                 color = Theme.colors.content04,
             )
