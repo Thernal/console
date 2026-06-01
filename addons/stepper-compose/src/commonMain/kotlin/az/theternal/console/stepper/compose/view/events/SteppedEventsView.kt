@@ -1,94 +1,11 @@
 package az.theternal.console.stepper.compose.view.events
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import az.theternal.console.api.navigation.ConsoleRoute
 import az.theternal.console.stepper.compose.view.events.model.SteppedEventsViewModel
-import az.theternal.console.api.navigation.LocalConsoleNavigator
-import az.theternal.console.api.ui.LocalLogRenderer
-import az.theternal.console.designsystem.components.core.DsAppBar
-import az.theternal.console.designsystem.components.core.DsIcon
-import az.theternal.console.designsystem.components.core.DsIconButton
-import az.theternal.console.designsystem.components.core.DsText
-import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
 internal fun SteppedEventsView() {
     val viewModel = viewModel { SteppedEventsViewModel() }
-    val navigator = LocalConsoleNavigator.current
-    val renderer = LocalLogRenderer.current
-
-    Column(modifier = Modifier.fillMaxSize().background(Theme.colors.background1)) {
-        DsAppBar(
-            content = {
-                DsText(
-                    text = "Caught (${viewModel.state.count.value})",
-                    style = Theme.typography.title01,
-                    color = Theme.colors.content01,
-                )
-            },
-            leading = {
-                DsIconButton(onClick = { navigator.pop() }) {
-                    DsIcon(
-                        icon = Icons.AutoMirrored.Filled.ArrowBack,
-                        color = Theme.colors.content02,
-                    )
-                }
-            },
-        )
-
-        if (viewModel.state.events.value.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    DsIcon(
-                        icon = Icons.Outlined.BugReport,
-                        size = Theme.dimens.dp32,
-                        color = Theme.colors.content04,
-                    )
-                    DsText(
-                        text = "Nothing caught yet",
-                        style = Theme.typography.body02,
-                        color = Theme.colors.content03,
-                        modifier = Modifier.padding(top = Theme.dimens.dp8),
-                    )
-                }
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(
-                    top = Theme.dimens.dp8,
-                    bottom = Theme.dimens.dp16,
-                    start = Theme.dimens.dp12,
-                    end = Theme.dimens.dp12,
-                ),
-                verticalArrangement = Arrangement.spacedBy(space = Theme.dimens.dp8),
-            ) {
-                items(
-                    items = viewModel.state.events.value,
-                    key = { it.id },
-                    contentType = { "log_item" },
-                ) { log ->
-                    renderer.Item(
-                        log = log,
-                        onClick = { navigator.push(ConsoleRoute.LogDetail("", log.id)) },
-                    )
-                }
-            }
-        }
-    }
+    SteppedEventsContent(state = viewModel.state)
 }

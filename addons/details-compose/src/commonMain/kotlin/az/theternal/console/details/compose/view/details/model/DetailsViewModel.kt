@@ -7,7 +7,7 @@ import az.theternal.console.details.ConsoleDetails
 import kotlinx.coroutines.launch
 
 class DetailsViewModel : ViewModel(), StateHolder {
-    override val state = DetailsState()
+    val state = DetailsState()
 
     init {
         viewModelScope.launch {

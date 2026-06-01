@@ -1,4 +1,4 @@
-package az.theternal.console.stepper.compose.view.overlay
+package az.theternal.console.stepper.compose.view.overlay.model
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable

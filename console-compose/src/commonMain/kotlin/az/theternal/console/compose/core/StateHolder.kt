@@ -3,8 +3,6 @@ package az.theternal.console.compose.core
 import kotlin.reflect.KProperty
 
 interface StateHolder {
-    val state: ViewState
-
     fun <T> ViewState.StateField<T>.update(producer: T.() -> T) {
         mutableState.value = mutableState.value.producer()
     }

@@ -7,5 +7,8 @@ import az.theternal.console.details.compose.view.details.model.DetailsViewModel
 @Composable
 internal fun DetailsView() {
     val viewModel = viewModel { DetailsViewModel() }
-    DetailsContent(state = viewModel.state)
+
+    DetailsContent(
+        details = viewModel.state.details,
+    )
 }

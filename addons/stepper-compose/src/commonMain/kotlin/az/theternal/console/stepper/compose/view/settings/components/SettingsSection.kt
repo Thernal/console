@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import az.theternal.console.designsystem.components.core.DsText
-import az.theternal.console.designsystem.components.provider.ThemeProvider
-import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -31,19 +29,5 @@ internal fun SettingsSection(
             color = Theme.colors.content02,
         )
         content()
-    }
-}
-
-@DsPreview
-@Composable
-private fun PreviewSettingsSection() {
-    ThemeProvider {
-        SettingsSection(title = "Behavior") {
-            DsText(
-                text = "Section content goes here",
-                style = Theme.typography.body02,
-                color = Theme.colors.content02,
-            )
-        }
     }
 }

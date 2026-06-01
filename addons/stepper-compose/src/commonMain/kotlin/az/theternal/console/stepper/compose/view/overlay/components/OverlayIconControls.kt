@@ -1,86 +1,77 @@
 package az.theternal.console.stepper.compose.view.overlay.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Pause
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.PowerSettingsNew
 import androidx.compose.material.icons.outlined.SkipNext
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import az.theternal.console.stepper.compose.view.overlay.model.DebugStepperOverlayIntent
-import az.theternal.console.stepper.compose.view.overlay.model.DebugStepperOverlayState
-import az.theternal.console.stepper.compose.view.overlay.overlayBackgroundColor
-import az.theternal.console.stepper.compose.view.overlay.overlayMutedContentColor
 import az.theternal.console.designsystem.components.core.DsIcon
-import az.theternal.console.designsystem.components.provider.ThemeProvider
-import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
+import az.theternal.console.stepper.compose.view.overlay.model.StepperOverlayIntent
 
 @Composable
 internal fun OverlayIconControls(
-    state: DebugStepperOverlayState,
-    dispatch: (DebugStepperOverlayIntent) -> Unit,
+    isEnabled: State<Boolean>,
+    isPaused: State<Boolean>,
+    canStep: State<Boolean>,
+    dispatch: (StepperOverlayIntent) -> Unit,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        OverlayIconButton(
-            onClick = { dispatch(DebugStepperOverlayIntent.ToggleEnabled) },
-        ) {
+        OverlayIconButton(onClick = { dispatch(StepperOverlayIntent.ToggleEnabled) }) {
             DsIcon(
                 icon = Icons.Outlined.PowerSettingsNew,
                 size = Theme.metrics.iconMd,
-                color = if (state.isEnabled.value) Theme.colors.content01 else overlayMutedContentColor,
+                color = if (isEnabled.value) Theme.colors.content01 else Theme.colors.content04,
             )
         }
-
-        if (state.isEnabled.value) {
-            OverlayIconButton(
-                onClick = { dispatch(DebugStepperOverlayIntent.TogglePaused) },
-            ) {
-                DsIcon(
-                    icon = if (state.isPaused.value) Icons.Outlined.PlayArrow else Icons.Outlined.Pause,
-                    size = Theme.metrics.iconMd,
-                    color = Theme.colors.content01,
-                )
-            }
-
-            OverlayIconButton(
-                enabled = state.canStep.value,
-                onClick = { dispatch(DebugStepperOverlayIntent.StepNext) },
-            ) {
-                DsIcon(
-                    icon = Icons.Outlined.SkipNext,
-                    size = Theme.metrics.iconMd,
-                    color = if (state.canStep.value) Theme.colors.content01 else overlayMutedContentColor,
-                )
-            }
-        }
+        OverlayActiveControls(
+            isEnabled = isEnabled,
+            isPaused = isPaused,
+            canStep = canStep,
+            dispatch = dispatch,
+        )
     }
 }
 
-@DsPreview
 @Composable
-private fun PreviewOverlayControls() {
-    ThemeProvider {
-        Column(
-            modifier = Modifier
-                .background(overlayBackgroundColor)
-                .padding(Theme.dimens.dp8),
-            verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
-        ) {
-            val state = DebugStepperOverlayState()
-            OverlayIconControls(
-                state = state,
-                dispatch = {},
-            )
-        }
+private fun OverlayActiveControls(
+    isEnabled: State<Boolean>,
+    isPaused: State<Boolean>,
+    canStep: State<Boolean>,
+    dispatch: (StepperOverlayIntent) -> Unit,
+) {
+    if (!isEnabled.value) return
+    OverlayIconButton(onClick = { dispatch(StepperOverlayIntent.TogglePaused) }) {
+        DsIcon(
+            icon = if (isPaused.value) Icons.Outlined.PlayArrow else Icons.Outlined.Pause,
+            size = Theme.metrics.iconMd,
+            color = Theme.colors.content01,
+        )
+    }
+    OverlayStepButton(canStep = canStep, dispatch = dispatch)
+}
+
+@Composable
+private fun OverlayStepButton(
+    canStep: State<Boolean>,
+    dispatch: (StepperOverlayIntent) -> Unit,
+) {
+    OverlayIconButton(
+        enabled = canStep.value,
+        onClick = { dispatch(StepperOverlayIntent.StepNext) },
+    ) {
+        DsIcon(
+            icon = Icons.Outlined.SkipNext,
+            size = Theme.metrics.iconMd,
+            color = if (canStep.value) Theme.colors.content01 else Theme.colors.content04,
+        )
     }
 }

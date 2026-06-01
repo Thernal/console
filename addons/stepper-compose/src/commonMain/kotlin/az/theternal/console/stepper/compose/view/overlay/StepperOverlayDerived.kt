@@ -1,6 +1,6 @@
 package az.theternal.console.stepper.compose.view.overlay
 
-import az.theternal.console.stepper.DebugStepper
+import az.theternal.console.stepper.Stepper
 
 private const val LOG_ID_PREFIX_LENGTH = 8
 
@@ -12,14 +12,14 @@ enum class StepperStatusTone {
 }
 
 internal fun resolveDisplayTag(
-    state: DebugStepper.State,
-    config: DebugStepper.Config,
+    state: Stepper.State,
+    config: Stepper.Config,
 ): String? {
     val currentLog = state.steppedEvents.lastOrNull()
     return if (!config.enabled) null else state.blockedTag ?: currentLog?.tag
 }
 
-internal fun resolveCurrentStepDisplay(state: DebugStepper.State): String? {
+internal fun resolveCurrentStepDisplay(state: Stepper.State): String? {
     return state.blockedLogId?.let { id ->
         buildString {
             append("Log #")
@@ -30,7 +30,7 @@ internal fun resolveCurrentStepDisplay(state: DebugStepper.State): String? {
 }
 
 fun resolveStatusText(
-    state: DebugStepper.State,
+    state: Stepper.State,
     canStep: Boolean,
     isEnabled: Boolean,
     isPaused: Boolean,

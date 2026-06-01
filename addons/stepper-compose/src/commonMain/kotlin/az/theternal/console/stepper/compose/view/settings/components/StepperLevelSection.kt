@@ -4,53 +4,67 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import az.theternal.console.compose.core.ViewState
+import az.theternal.console.compose.core.select
 import az.theternal.console.designsystem.components.core.DsChip
 import az.theternal.console.designsystem.components.modifier.pressable
 import az.theternal.console.designsystem.components.provider.ThemeProvider
 import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 import az.theternal.console.runtime.LogLevel
-import az.theternal.console.stepper.DebugStepper
-import az.theternal.console.stepper.compose.view.settings.model.DebugStepperIntent
-import az.theternal.console.stepper.compose.view.settings.model.DebugStepperSettingsState
+import az.theternal.console.stepper.compose.view.settings.model.StepperIntent
 
 @Composable
 internal fun StepperLevelSection(
-    config: ViewState.StateField<DebugStepper.Config>,
-    dispatch: (DebugStepperIntent) -> Unit,
+    selectedLevel: State<LogLevel?>,
+    dispatch: (StepperIntent) -> Unit,
 ) {
     SettingsSection(title = "Level") {
         LazyRow(horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8)) {
             item {
-                DsChip(
+                LevelChip(
                     label = "All",
-                    color = Theme.colors.primary01,
-                    selected = config.value.pauseOnLevelAtLeast == null,
-                    modifier = Modifier.pressable(onPress = {
-                        dispatch(DebugStepperIntent.SetPauseOnLevelAtLeast(null))
-                    }),
+                    isSelected = selectedLevel.select { it == null },
+                    onPress = { dispatch(StepperIntent.SetPauseOnLevelAtLeast(null)) },
                 )
             }
-            items(LogLevel.entries.filter { it != LogLevel.None }) { level ->
-                DsChip(
+            items(items = LogLevel.entries.filter { it != LogLevel.None }) { level ->
+                LevelChip(
                     label = level.name,
-                    color = Theme.colors.primary01,
-                    selected = config.value.pauseOnLevelAtLeast == level,
-                    modifier = Modifier.pressable(onPress = {
-                        dispatch(DebugStepperIntent.SetPauseOnLevelAtLeast(level))
-                    }),
+                    isSelected = selectedLevel.select { it == level },
+                    onPress = { dispatch(StepperIntent.SetPauseOnLevelAtLeast(level)) },
                 )
             }
         }
     }
 }
 
+@Composable
+private fun LevelChip(
+    label: String,
+    isSelected: State<Boolean>,
+    onPress: () -> Unit,
+) {
+    DsChip(
+        label = label,
+        color = Theme.colors.primary01,
+        selected = isSelected.value,
+        modifier = Modifier.pressable(
+            onPress = onPress,
+        ),
+    )
+}
+
 @DsPreview
 @Composable
 private fun PreviewStepperLevelSection() {
     ThemeProvider {
-        StepperLevelSection(config = DebugStepperSettingsState().config, dispatch = {})
+        StepperLevelSection(
+            selectedLevel = remember { mutableStateOf(null) },
+            dispatch = {},
+        )
     }
 }

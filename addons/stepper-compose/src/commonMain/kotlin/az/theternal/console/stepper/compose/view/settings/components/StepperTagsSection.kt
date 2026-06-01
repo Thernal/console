@@ -1,41 +1,47 @@
 package az.theternal.console.stepper.compose.view.settings.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Close
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
-import az.theternal.console.compose.core.ViewState
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.input.TextFieldValue
 import az.theternal.console.designsystem.components.core.DsChip
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsText
-import az.theternal.console.compose.core.preview
+import az.theternal.console.designsystem.components.core.DsTextField
 import az.theternal.console.designsystem.components.modifier.pressable
 import az.theternal.console.designsystem.components.provider.ThemeProvider
 import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
-import az.theternal.console.stepper.DebugStepper
-import az.theternal.console.stepper.compose.view.settings.model.DebugStepperIntent
-import az.theternal.console.stepper.compose.view.settings.model.DebugStepperSettingsState
+import az.theternal.console.stepper.compose.view.settings.model.StepperIntent
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun StepperTagsSection(
-    config: ViewState.StateField<DebugStepper.Config>,
-    tagInput: ViewState.StateField<TextFieldValue>,
-    dispatch: (DebugStepperIntent) -> Unit,
+    pauseOnTags: State<Set<String>>,
+    tagInput: State<TextFieldValue>,
+    dispatch: (StepperIntent) -> Unit,
 ) {
     SettingsSection(title = "Tags") {
         TagInputField(
             value = tagInput.value,
-            onValueChange = { dispatch(DebugStepperIntent.SetTagInput(it)) },
-            onAdd = { dispatch(DebugStepperIntent.AddTag) },
+            onValueChange = { dispatch(StepperIntent.SetTagInput(it)) },
+            onAdd = { dispatch(StepperIntent.AddTag) },
         )
-        if (config.value.pauseOnTags.isEmpty()) {
+        if (pauseOnTags.value.isEmpty()) {
             DsText(
                 text = "Matching all tags",
                 style = Theme.typography.body03,
@@ -46,14 +52,14 @@ internal fun StepperTagsSection(
                 horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
                 verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
             ) {
-                config.value.pauseOnTags.forEach { tag ->
+                pauseOnTags.value.forEach { tag ->
                     DsChip(
                         label = tag,
                         color = Theme.colors.primary01,
                         selected = true,
-                        modifier = Modifier.pressable(onPress = {
-                            dispatch(DebugStepperIntent.RemovePauseTag(tag))
-                        }),
+                        modifier = Modifier.pressable(
+                            onPress = { dispatch(StepperIntent.RemovePauseTag(tag)) },
+                        ),
                         trailing = {
                             DsIcon(
                                 icon = Icons.Outlined.Close,
@@ -69,13 +75,44 @@ internal fun StepperTagsSection(
     }
 }
 
+@Composable
+private fun TagInputField(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    onAdd: () -> Unit,
+) {
+    DsTextField(
+        value = value,
+        onValueChange = onValueChange,
+        hint = "Add tag…",
+        suffix = {
+            if (value.text.isNotBlank()) {
+                Box(
+                    modifier = Modifier
+                        .size(Theme.dimens.dp32)
+                        .clip(Theme.rounding.r8)
+                        .background(Theme.colors.primary01)
+                        .pressable(onPress = onAdd),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    DsIcon(
+                        icon = Icons.Outlined.Add,
+                        size = Theme.metrics.iconSm,
+                        color = Theme.colors.primaryContent,
+                    )
+                }
+            }
+        },
+    )
+}
+
 @DsPreview
 @Composable
 private fun PreviewStepperTagsSectionEmpty() {
     ThemeProvider {
         StepperTagsSection(
-            config = DebugStepperSettingsState().config,
-            tagInput = DebugStepperSettingsState().tagInput,
+            pauseOnTags = remember { mutableStateOf(emptySet()) },
+            tagInput = remember { mutableStateOf(TextFieldValue()) },
             dispatch = {},
         )
     }
@@ -86,10 +123,8 @@ private fun PreviewStepperTagsSectionEmpty() {
 private fun PreviewStepperTagsSectionFilled() {
     ThemeProvider {
         StepperTagsSection(
-            config = DebugStepperSettingsState().config.preview(
-                DebugStepper.Config(pauseOnTags = setOf("HTTP", "Auth", "Cache")),
-            ),
-            tagInput = DebugStepperSettingsState().tagInput,
+            pauseOnTags = remember { mutableStateOf(setOf("HTTP", "Auth", "Cache")) },
+            tagInput = remember { mutableStateOf(TextFieldValue()) },
             dispatch = {},
         )
     }

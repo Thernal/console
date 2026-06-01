@@ -4,40 +4,31 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import az.theternal.console.compose.core.IntentHandler
 import az.theternal.console.compose.core.StateHolder
-import az.theternal.console.stepper.DebugStepper
+import az.theternal.console.stepper.Stepper
 import az.theternal.console.stepper.compose.view.overlay.resolveCurrentStepDisplay
 import az.theternal.console.stepper.compose.view.overlay.resolveDisplayTag
 import az.theternal.console.stepper.compose.view.overlay.resolveStatusText
 import az.theternal.console.stepper.compose.view.overlay.resolveStatusTone
 import kotlinx.coroutines.launch
 
-class DebugStepperOverlayViewModel : ViewModel(), StateHolder, IntentHandler<DebugStepperOverlayIntent> {
-    override val state = DebugStepperOverlayState()
+class StepperOverlayViewModel : ViewModel(), StateHolder, IntentHandler<StepperOverlayIntent> {
+    val state = StepperOverlayState()
 
     init {
-        viewModelScope.launch {
-            DebugStepper.config.collect { config ->
-                state.isEnabled.update { config.enabled }
-                state.isPaused.update { config.paused }
-                if (!config.enabled) state.isExpanded.update { false }
-                syncDerived()
-            }
-        }
-        viewModelScope.launch {
-            DebugStepper.state.collect { syncDerived() }
-        }
+        viewModelScope.launch { Stepper.config.collect { syncDerived() } }
+        viewModelScope.launch { Stepper.state.collect { syncDerived() } }
     }
 
     override val handler = Handler { intent ->
         when (intent) {
-            DebugStepperOverlayIntent.ToggleEnabled -> DebugStepper.updateConfig { copy(enabled = !enabled) }
+            StepperOverlayIntent.ToggleEnabled -> Stepper.updateConfig { copy(enabled = !enabled) }
 
-            DebugStepperOverlayIntent.TogglePaused -> DebugStepper.updateConfig { copy(paused = !paused) }
+            StepperOverlayIntent.TogglePaused -> Stepper.updateConfig { copy(paused = !paused) }
 
-            DebugStepperOverlayIntent.StepNext -> DebugStepper.next()
+            StepperOverlayIntent.StepNext -> Stepper.next()
 
-            DebugStepperOverlayIntent.ToggleExpanded -> {
-                if (DebugStepper.config.value.enabled) {
+            StepperOverlayIntent.ToggleExpanded -> {
+                if (Stepper.config.value.enabled) {
                     state.isExpanded.update { !this }
                 }
             }
@@ -45,9 +36,10 @@ class DebugStepperOverlayViewModel : ViewModel(), StateHolder, IntentHandler<Deb
     }
 
     private fun syncDerived() {
-        val config = DebugStepper.config.value
-        val stepperState = DebugStepper.state.value
+        val config = Stepper.config.value
+        val stepperState = Stepper.state.value
         val canStep = stepperState.blockedLogId != null
+        if (!config.enabled) state.isExpanded.update { false }
         state.isEnabled.update { config.enabled }
         state.isPaused.update { config.paused }
         state.currentLog.update { stepperState.steppedEvents.lastOrNull() }

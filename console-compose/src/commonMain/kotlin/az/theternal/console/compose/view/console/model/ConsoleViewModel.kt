@@ -6,7 +6,7 @@ import az.theternal.console.compose.core.IntentHandler
 import az.theternal.console.compose.core.StateHolder
 
 class ConsoleViewModel : ViewModel(), StateHolder, IntentHandler<ConsoleIntent> {
-    override val state = ConsoleState()
+    val state = ConsoleState()
 
     override val handler = Handler { intent ->
         when (intent) {

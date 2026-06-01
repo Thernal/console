@@ -1,42 +1,37 @@
 package az.theternal.console.sample.counter
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import az.theternal.console.runtime.Console
 import az.theternal.console.runtime.Log
 import az.theternal.console.runtime.LogLevel
 import az.theternal.console.details.ConsoleDetails
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class CounterViewModel : ViewModel() {
 
-    private val _count = MutableStateFlow(0)
-    val count: StateFlow<Int> = _count.asStateFlow()
+    private val _count = mutableIntStateOf(0)
+    val count: State<Int> = _count
 
     fun increment() {
         viewModelScope.launch {
-            val prev = _count.value
             logAndUpdateDetails(
                 action = "Incremented",
-                from = prev,
-                to = _count.value,
+                from = count.value,
+                to = ++_count.value,
             )
-            _count.value++
         }
     }
 
     fun decrement() {
         viewModelScope.launch {
-            val prev = _count.value
             logAndUpdateDetails(
                 action = "Decremented",
-                from = prev,
-                to = _count.value,
+                from = count.value,
+                to = --_count.value,
             )
-            _count.value--
         }
     }
 
@@ -60,10 +55,9 @@ class CounterViewModel : ViewModel() {
 
     fun reset() {
         viewModelScope.launch {
-            val prev = _count.value
             logAndUpdateDetails(
                 action = "Reset",
-                from = prev,
+                from = count.value,
                 to = 0,
                 logLevel = LogLevel.Error,
                 tag = "RESET",

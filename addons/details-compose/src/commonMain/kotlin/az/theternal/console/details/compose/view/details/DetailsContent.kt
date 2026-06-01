@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.State
 import az.theternal.console.compose.core.preview
 import az.theternal.console.details.compose.view.details.model.DetailsState
 import az.theternal.console.designsystem.components.core.DsCard
@@ -21,8 +22,8 @@ import az.theternal.console.designsystem.foundation.theme.Theme
 import az.theternal.console.details.compose.view.details.components.DetailRow
 
 @Composable
-internal fun DetailsContent(state: DetailsState) {
-    if (state.details.value.isEmpty()) {
+internal fun DetailsContent(details: State<Map<String, String>>) {
+    if (details.value.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             DsText(
                 text = "No details registered",
@@ -44,7 +45,7 @@ internal fun DetailsContent(state: DetailsState) {
     ) {
         DsCard(modifier = Modifier.fillMaxWidth()) {
             Column {
-                val entries: List<Map.Entry<String, String>> = state.details.value.entries.toList()
+                val entries: List<Map.Entry<String, String>> = details.value.entries.toList()
                 entries.forEachIndexed { index, entry ->
                     if (index > 0) DsDivider()
                     DetailRow(label = entry.key, value = entry.value)
@@ -58,7 +59,7 @@ internal fun DetailsContent(state: DetailsState) {
 @Composable
 private fun PreviewDetailsContentEmpty() {
     ThemeProvider {
-        DetailsContent(state = DetailsState())
+        DetailsContent(details = DetailsState().details)
     }
 }
 
@@ -75,6 +76,6 @@ private fun PreviewDetailsContentFilled() {
         ),
     )
     ThemeProvider {
-        DetailsContent(state = state)
+        DetailsContent(details = state.details)
     }
 }

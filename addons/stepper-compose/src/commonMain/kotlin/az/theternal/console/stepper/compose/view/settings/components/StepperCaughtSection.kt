@@ -10,14 +10,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import az.theternal.console.api.navigation.ConsoleRoute
-import az.theternal.console.compose.core.preview
 import az.theternal.console.api.navigation.LocalConsoleNavigator
 import az.theternal.console.api.ui.LocalLogRenderer
-import az.theternal.console.compose.core.ViewState
 import az.theternal.console.designsystem.components.core.DsIcon
 import az.theternal.console.designsystem.components.core.DsText
 import az.theternal.console.designsystem.components.modifier.pressable
@@ -26,22 +27,20 @@ import az.theternal.console.designsystem.foundation.theme.DsPreview
 import az.theternal.console.designsystem.foundation.theme.Theme
 import az.theternal.console.runtime.Log
 import az.theternal.console.runtime.LogLevel
-import az.theternal.console.stepper.DebugStepper
 import az.theternal.console.stepper.compose.navigation.SteppedEventsRoute
-import az.theternal.console.stepper.compose.view.settings.model.DebugStepperIntent
-import az.theternal.console.stepper.compose.view.settings.model.DebugStepperSettingsState
+import az.theternal.console.stepper.compose.view.settings.model.StepperIntent
 
 private const val CAUGHT_PREVIEW_COUNT = 3
 
 @Composable
 internal fun StepperCaughtSection(
-    stepperState: ViewState.StateField<DebugStepper.State>,
-    dispatch: (DebugStepperIntent) -> Unit,
+    events: State<List<Log>>,
+    dispatch: (StepperIntent) -> Unit,
 ) {
     val navigator = LocalConsoleNavigator.current
     val renderer = LocalLogRenderer.current
-    val events = stepperState.value.steppedEvents
-    val preview = events.takeLast(CAUGHT_PREVIEW_COUNT).asReversed()
+    val eventList = events.value
+    val previewEvents = eventList.takeLast(CAUGHT_PREVIEW_COUNT).asReversed()
 
     Column {
         Row(
@@ -67,7 +66,7 @@ internal fun StepperCaughtSection(
                         .padding(horizontal = Theme.dimens.dp6, vertical = Theme.dimens.dp4),
                 ) {
                     DsText(
-                        text = "${events.size}",
+                        text = "${eventList.size}",
                         style = Theme.typography.label02,
                         color = Theme.colors.content02,
                     )
@@ -77,12 +76,19 @@ internal fun StepperCaughtSection(
                 text = "Clear",
                 style = Theme.typography.label01,
                 color = Theme.colors.danger,
-                modifier = Modifier.pressable(onPress = { dispatch(DebugStepperIntent.ClearSteppedEvents) }),
+                modifier = Modifier.pressable(
+                    onPress = { dispatch(StepperIntent.ClearSteppedEvents) },
+                ),
             )
         }
 
-        preview.forEach { log ->
-            Box(modifier = Modifier.padding(vertical = Theme.dimens.dp3, horizontal = Theme.dimens.dp12)) {
+        previewEvents.forEach { log ->
+            Box(
+                modifier = Modifier.padding(
+                    vertical = Theme.dimens.dp3,
+                    horizontal = Theme.dimens.dp12,
+                ),
+            ) {
                 renderer.Item(
                     log = log,
                     onClick = { navigator.push(ConsoleRoute.LogDetail("", log.id)) },
@@ -90,17 +96,19 @@ internal fun StepperCaughtSection(
             }
         }
 
-        if (events.size > CAUGHT_PREVIEW_COUNT) {
+        if (eventList.size > CAUGHT_PREVIEW_COUNT) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .pressable(onPress = { navigator.push(SteppedEventsRoute) })
+                    .pressable(
+                        onPress = { navigator.push(SteppedEventsRoute) },
+                    )
                     .padding(horizontal = Theme.dimens.dp16, vertical = Theme.dimens.dp12),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 DsText(
-                    text = "See all ${events.size} events",
+                    text = "See all ${eventList.size} events",
                     style = Theme.typography.label01,
                     color = Theme.colors.primary01,
                 )
@@ -117,18 +125,35 @@ internal fun StepperCaughtSection(
 @DsPreview
 @Composable
 private fun PreviewStepperCaughtSection() {
-    ThemeProvider {
-        StepperCaughtSection(
-            stepperState = DebugStepperSettingsState().stepperState.preview(
-                DebugStepper.State(
-                    steppedEvents = listOf(
-                        Log(message = "Network request completed in 342ms", tag = "HTTP", level = LogLevel.Info),
-                        Log(message = "Cache miss for key: user_profile", tag = "Cache", level = LogLevel.Debug),
-                        Log(message = "Auth token expired", tag = "Auth", level = LogLevel.Warning),
-                        Log(message = "Failed to decode response", tag = "JSON", level = LogLevel.Error),
-                    ),
+    val events = remember {
+        mutableStateOf(
+            listOf(
+                Log(
+                    message = "Network request completed in 342ms",
+                    tag = "HTTP",
+                    level = LogLevel.Info,
+                ),
+                Log(
+                    message = "Cache miss for key: user_profile",
+                    tag = "Cache",
+                    level = LogLevel.Debug,
+                ),
+                Log(
+                    message = "Auth token expired",
+                    tag = "Auth",
+                    level = LogLevel.Warning,
+                ),
+                Log(
+                    message = "Failed to decode response",
+                    tag = "JSON",
+                    level = LogLevel.Error,
                 ),
             ),
+        )
+    }
+    ThemeProvider {
+        StepperCaughtSection(
+            events = events,
             dispatch = {},
         )
     }

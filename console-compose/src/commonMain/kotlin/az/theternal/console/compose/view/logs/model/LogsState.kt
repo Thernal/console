@@ -12,7 +12,6 @@ class LogsState : ViewState() {
     val searchQuery = field(TextFieldValue())
     val selectedTags = field(emptySet<String>())
     val selectedLevels = field(emptySet<LogLevel>())
-    val allLevels = field(LogLevel.entries.filter { it != LogLevel.None })
     val tags = field(emptyList<String>())
     val hasAnyLogs = field(false)
 }

@@ -21,7 +21,10 @@ internal fun DetailRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp10),
+            .padding(
+                horizontal = Theme.dimens.dp12,
+                vertical = Theme.dimens.dp10,
+            ),
         horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp16),
         verticalAlignment = Alignment.Top,
     ) {

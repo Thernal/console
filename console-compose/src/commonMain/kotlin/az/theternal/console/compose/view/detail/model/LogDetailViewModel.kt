@@ -7,7 +7,7 @@ import az.theternal.console.compose.core.StateHolder
 import kotlinx.coroutines.launch
 
 class LogDetailViewModel(private val logId: String) : ViewModel(), StateHolder {
-    override val state = LogDetailState()
+    val state = LogDetailState()
 
     init {
         viewModelScope.launch {

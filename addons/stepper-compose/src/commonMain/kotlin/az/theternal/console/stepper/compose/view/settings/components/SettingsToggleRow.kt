@@ -60,7 +60,7 @@ private fun PreviewSettingsToggleRow() {
     ThemeProvider {
         SettingsToggleRow(
             label = "Active",
-            description = "Enable or disable the debug stepper",
+            description = "Enable or disable the stepper",
             checked = true,
             onCheckedChange = {},
         )

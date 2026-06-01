@@ -7,7 +7,7 @@ import az.theternal.console.stepper.compose.view.events.SteppedEventsView
 
 data object SteppedEventsRoute : NavKey
 
-internal object DebugStepperNavGraph : ConsoleNavGraph {
+internal object StepperNavGraph : ConsoleNavGraph {
     override fun EntryProviderScope<NavKey>.routes() {
         entry<SteppedEventsRoute> {
             SteppedEventsView()

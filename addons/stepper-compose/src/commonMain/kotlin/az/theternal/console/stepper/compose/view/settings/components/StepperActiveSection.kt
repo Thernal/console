@@ -1,23 +1,23 @@
 package az.theternal.console.stepper.compose.view.settings.components
 
 import androidx.compose.runtime.Composable
-import az.theternal.console.compose.core.ViewState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import az.theternal.console.designsystem.components.provider.ThemeProvider
 import az.theternal.console.designsystem.foundation.theme.DsPreview
-import az.theternal.console.stepper.DebugStepper
-import az.theternal.console.stepper.compose.view.settings.model.DebugStepperIntent
-import az.theternal.console.stepper.compose.view.settings.model.DebugStepperSettingsState
+import az.theternal.console.stepper.compose.view.settings.model.StepperIntent
 
 @Composable
 internal fun StepperActiveSection(
-    config: ViewState.StateField<DebugStepper.Config>,
-    dispatch: (DebugStepperIntent) -> Unit,
+    checked: State<Boolean>,
+    dispatch: (StepperIntent) -> Unit,
 ) {
     SettingsToggleRow(
         label = "Active",
-        description = "Enable or disable the debug stepper",
-        checked = config.value.enabled,
-        onCheckedChange = { dispatch(DebugStepperIntent.SetEnabled(it)) },
+        description = "Enable or disable the stepper",
+        checked = checked.value,
+        onCheckedChange = { dispatch(StepperIntent.SetEnabled(it)) },
     )
 }
 
@@ -25,6 +25,9 @@ internal fun StepperActiveSection(
 @Composable
 private fun PreviewStepperActiveSection() {
     ThemeProvider {
-        StepperActiveSection(config = DebugStepperSettingsState().config, dispatch = {})
+        StepperActiveSection(
+            checked = remember { mutableStateOf(false) },
+            dispatch = {},
+        )
     }
 }

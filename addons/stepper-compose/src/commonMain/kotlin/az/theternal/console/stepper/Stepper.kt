@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlin.concurrent.Volatile
 
-object DebugStepper : LogObserver {
+object Stepper : LogObserver {
 
     private const val DEFAULT_MAX_STEPPED_EVENT_COUNT = 50
     private const val SECONDS_TO_MILLIS = 1_000L
@@ -55,7 +55,15 @@ object DebugStepper : LogObserver {
         try {
             awaitIfNeeded(event)
         } finally {
-            _state.update { it.copy(pendingLogs = (it.pendingLogs - 1).coerceAtLeast(0)) }
+            // Merge pendingLogs decrement with blockedLogId clear into one emission so that
+            // auto-resume (and manual next()) only triggers syncDerived() once, not twice.
+            _state.update { current ->
+                current.copy(
+                    pendingLogs = (current.pendingLogs - 1).coerceAtLeast(0),
+                    blockedLogId = if (current.blockedLogId == event.id) null else current.blockedLogId,
+                    blockedTag = if (current.blockedLogId == event.id) null else current.blockedTag,
+                )
+            }
         }
     }
 
@@ -93,7 +101,8 @@ object DebugStepper : LogObserver {
             }
         } finally {
             currentWaiter = null
-            _state.update { it.copy(blockedLogId = null, blockedTag = null) }
+            // blockedLogId / blockedTag are cleared in emit's finally to merge the two
+            // _state updates into one StateFlow emission.
         }
     }
 

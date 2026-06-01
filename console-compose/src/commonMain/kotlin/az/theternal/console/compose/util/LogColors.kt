@@ -23,9 +23,7 @@ fun LogLevel.themeColor(colors: ThemeColors): Color {
     }
 }
 
-@Composable
-fun Log.logAccentColor(): Color {
-    val colors = Theme.colors
+fun Log.logAccentColor(colors: ThemeColors): Color {
     return if (level == LogLevel.None) {
         val palette = listOf(
             colors.primary01,
@@ -38,6 +36,11 @@ fun Log.logAccentColor(): Color {
     } else {
         level.themeColor(colors)
     }
+}
+
+@Composable
+fun Log.logAccentColor(): Color {
+    return logAccentColor(Theme.colors)
 }
 
 @Composable

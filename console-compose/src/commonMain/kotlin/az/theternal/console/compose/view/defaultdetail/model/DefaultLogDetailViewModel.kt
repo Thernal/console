@@ -5,7 +5,7 @@ import az.theternal.console.compose.core.IntentHandler
 import az.theternal.console.compose.core.StateHolder
 
 class DefaultLogDetailViewModel : ViewModel(), StateHolder, IntentHandler<DefaultLogDetailIntent> {
-    override val state = DefaultLogDetailState()
+    val state = DefaultLogDetailState()
 
     override val handler = Handler { intent ->
         when (intent) {

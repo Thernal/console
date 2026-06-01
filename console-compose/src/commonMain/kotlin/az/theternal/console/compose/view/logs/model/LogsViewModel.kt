@@ -11,7 +11,7 @@ import az.theternal.console.runtime.LogLevel
 import kotlinx.coroutines.launch
 
 class LogsViewModel : ViewModel(), StateHolder, IntentHandler<LogsIntent> {
-    override val state = LogsState()
+    val state = LogsState()
 
     private var rawLogs: List<Log> = emptyList()
 
