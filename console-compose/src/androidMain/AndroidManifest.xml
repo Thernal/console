@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
         <provider
-            android:name="az.theternal.console.compose.ConsoleUiAutoInit"
+            android:name="io.thernal.console.compose.ConsoleUiAutoInit"
             android:authorities="${applicationId}.console-ui-init"
             android:exported="false" />
     </application>

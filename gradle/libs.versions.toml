@@ -77,6 +77,6 @@ android-application        = { id = "com.android.application",                  
 detekt                     = { id = "dev.detekt",                                   version.ref = "detekt" }
 
 # Conventions (resolved from build-logic)
-convention-lib     = { id = "az.theternal.console.lib",      version = "unspecified" }
-convention-lib-core = { id = "az.theternal.console.lib.core", version = "unspecified" }
-convention-lib-ui   = { id = "az.theternal.console.lib.ui",  version = "unspecified" }
+convention-lib     = { id = "io.thernal.console.lib",      version = "unspecified" }
+convention-lib-core = { id = "io.thernal.console.lib.core", version = "unspecified" }
+convention-lib-ui   = { id = "io.thernal.console.lib.ui",  version = "unspecified" }

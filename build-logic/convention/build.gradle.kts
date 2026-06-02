@@ -4,7 +4,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "az.theternal.console.buildlogic"
+group = "io.thernal.console.buildlogic"
 
 kotlin {
     jvmToolchain(17)
@@ -18,16 +18,16 @@ dependencies {
 gradlePlugin {
     plugins {
         register("libConvention") {
-            id = "az.theternal.console.lib"
-            implementationClass = "az.theternal.console.buildlogic.plugins.LibConventionPlugin"
+            id = "io.thernal.console.lib"
+            implementationClass = "io.thernal.console.buildlogic.plugins.LibConventionPlugin"
         }
         register("libCoreConvention") {
-            id = "az.theternal.console.lib.core"
-            implementationClass = "az.theternal.console.buildlogic.plugins.LibCoreConventionPlugin"
+            id = "io.thernal.console.lib.core"
+            implementationClass = "io.thernal.console.buildlogic.plugins.LibCoreConventionPlugin"
         }
         register("libUiConvention") {
-            id = "az.theternal.console.lib.ui"
-            implementationClass = "az.theternal.console.buildlogic.plugins.LibUiConventionPlugin"
+            id = "io.thernal.console.lib.ui"
+            implementationClass = "io.thernal.console.buildlogic.plugins.LibUiConventionPlugin"
         }
     }
 }

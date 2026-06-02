@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "az.theternal.console.sample"
+    namespace = "io.thernal.console.sample"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "az.theternal.console.sample"
+        applicationId = "io.thernal.console.sample"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
