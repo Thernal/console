@@ -44,6 +44,7 @@ dependencyResolutionManagement {
 }
 
 includeBuild("build-logic")
+includeBuild("console-settings-plugin")
 
 // ── Auto-configure git hooks ──────────────────────────────────────────────────
 // Runs on every Gradle sync. Sets core.hooksPath → .githooks in .git/config

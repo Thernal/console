@@ -1,4 +1,7 @@
 [versions]
+# Library
+console = "0.1.0"
+
 # Language
 kotlin = "2.3.21"
 jvm = "17"
@@ -6,6 +9,7 @@ jvm = "17"
 # Build / Tooling
 agp = "9.0.1"
 detekt = "2.0.0-alpha.3"
+vanniktech-publish = "0.33.0"
 
 # Android SDK
 android-compile-sdk = "36"
@@ -63,8 +67,9 @@ androidx-compose-foundation = { module = "androidx.compose.foundation:foundation
 detekt-ktlint-wrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
 
 # Build plugins (used inside build-logic)
-android-gradle-plugin  = { module = "com.android.tools.build:gradle",              version.ref = "agp" }
-kotlin-gradle-plugin   = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin",   version.ref = "kotlin" }
+android-gradle-plugin            = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+kotlin-gradle-plugin             = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+vanniktech-publish-gradle-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktech-publish" }
 
 
 [plugins]
@@ -76,7 +81,10 @@ compose-compiler           = { id = "org.jetbrains.kotlin.plugin.compose",      
 android-application        = { id = "com.android.application",                     version.ref = "agp" }
 detekt                     = { id = "dev.detekt",                                   version.ref = "detekt" }
 
+vanniktech-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-publish" }
+
 # Conventions (resolved from build-logic)
-convention-lib     = { id = "io.thernal.console.lib",      version = "unspecified" }
+convention-lib = { id = "io.thernal.console.lib", version = "unspecified" }
 convention-lib-core = { id = "io.thernal.console.lib.core", version = "unspecified" }
-convention-lib-ui   = { id = "io.thernal.console.lib.ui",  version = "unspecified" }
+convention-lib-ui = { id = "io.thernal.console.lib.ui", version = "unspecified" }
+convention-publish = { id = "io.thernal.console.publish", version = "unspecified" }

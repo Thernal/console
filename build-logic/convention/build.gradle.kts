@@ -13,6 +13,7 @@ kotlin {
 dependencies {
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.android.gradle.plugin)
+    compileOnly(libs.vanniktech.publish.gradle.plugin)
 }
 
 gradlePlugin {
@@ -28,6 +29,10 @@ gradlePlugin {
         register("libUiConvention") {
             id = "io.thernal.console.lib.ui"
             implementationClass = "io.thernal.console.buildlogic.plugins.LibUiConventionPlugin"
+        }
+        register("libPublishConvention") {
+            id = "io.thernal.console.publish"
+            implementationClass = "io.thernal.console.buildlogic.plugins.LibPublishConventionPlugin"
         }
     }
 }
