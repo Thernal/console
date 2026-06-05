@@ -3,7 +3,7 @@ package io.thernal.console.compose
 import androidx.compose.runtime.Composable
 import io.thernal.console.api.trigger.ConsoleTrigger
 import io.thernal.console.api.ui.LogRenderer
-import io.thernal.console.runtime.log.Log
+import io.thernal.console.api.ui.NoOpLogRenderer
 
 @Suppress("UnusedParameter")
 @Composable
@@ -14,16 +14,4 @@ fun ConsoleProvider(
     content: @Composable () -> Unit,
 ) {
     content()
-}
-
-private object NoOpLogRenderer : LogRenderer {
-    @Composable override fun Item(
-        log: Log,
-        onClick: () -> Unit,
-    ) = Unit
-
-    @Composable override fun Detail(
-        log: Log,
-        onBack: () -> Unit,
-    ) = Unit
 }
