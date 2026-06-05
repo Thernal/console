@@ -37,7 +37,7 @@ if (env.get() != "dev") {
     configurations.configureEach {
         resolutionStrategy.dependencySubstitution {
             substitute(project(":console-compose")).using(project(":console-compose-noop"))
-            substitute(project(":addons:details-api")).using(project(":addons:details-api-noop"))
+            substitute(project(":addons:details-api")).using(project(":addons:details-core-noop"))
         }
     }
 }

@@ -1,7 +1,7 @@
 package io.thernal.console.sample.jvm
 
-import io.thernal.console.runtime.Console
-import io.thernal.console.runtime.Log
+import io.thernal.console.runtime.console.Console
+import io.thernal.console.runtime.log.Log
 
 class SampleRepository {
     fun jvmLog() {

@@ -2,9 +2,13 @@ plugins {
     kotlin("jvm")
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_23
-    targetCompatibility = JavaVersion.VERSION_23
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {

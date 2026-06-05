@@ -31,7 +31,7 @@ android {
 configurations.matching { it.name.startsWith("prod") }.configureEach {
     resolutionStrategy.dependencySubstitution {
         substitute(project(":console-compose")).using(project(":console-compose-noop"))
-        substitute(project(":addons:details-api")).using(project(":addons:details-api-noop"))
+        substitute(project(":addons:details-core")).using(project(":addons:details-core-noop"))
     }
 }
 

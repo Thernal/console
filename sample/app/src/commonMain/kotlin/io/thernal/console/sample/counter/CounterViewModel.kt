@@ -1,27 +1,38 @@
 package io.thernal.console.sample.counter
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.thernal.console.runtime.Console
-import io.thernal.console.runtime.Log
-import io.thernal.console.runtime.LogLevel
 import io.thernal.console.details.ConsoleDetails
+import io.thernal.console.runtime.console.Console
+import io.thernal.console.runtime.log.Log
+import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.sample.network.FakeTodoRepository
 import kotlinx.coroutines.launch
 
 class CounterViewModel : ViewModel() {
 
+    private val repository = FakeTodoRepository()
+
     private val _count = mutableIntStateOf(0)
     val count: State<Int> = _count
+
+    private val _isRequestLoading = mutableStateOf(false)
+    val isRequestLoading: State<Boolean> = _isRequestLoading
+
+    private val _isPostRequestLoading = mutableStateOf(false)
+    val isPostRequestLoading: State<Boolean> = _isPostRequestLoading
 
     fun increment() {
         viewModelScope.launch {
             logAndUpdateDetails(
                 action = "Incremented",
                 from = count.value,
-                to = ++_count.value,
+                to = _count.value + 1,
             )
+            _count.value++
         }
     }
 
@@ -30,8 +41,9 @@ class CounterViewModel : ViewModel() {
             logAndUpdateDetails(
                 action = "Decremented",
                 from = count.value,
-                to = --_count.value,
+                to = _count.value - 1,
             )
+            _count.value--
         }
     }
 
@@ -64,6 +76,45 @@ class CounterViewModel : ViewModel() {
             )
             _count.value = 0
         }
+    }
+
+    fun fetchSampleTodo() {
+        if (isRequestLoading.value) return
+
+        viewModelScope.launch {
+            _isRequestLoading.value = true
+
+            try {
+                val response = repository.fetchTodo()
+
+                ConsoleDetails.put("Last Network Status" to response.statusCode.toString())
+                ConsoleDetails.put("Last Network Endpoint" to "/todos/1")
+            } finally {
+                _isRequestLoading.value = false
+            }
+        }
+    }
+
+    fun createSamplePost() {
+        if (isPostRequestLoading.value) return
+
+        viewModelScope.launch {
+            _isPostRequestLoading.value = true
+
+            try {
+                val response = repository.createPost()
+
+                ConsoleDetails.put("Last Network Status" to response.statusCode.toString())
+                ConsoleDetails.put("Last Network Endpoint" to "/posts")
+            } finally {
+                _isPostRequestLoading.value = false
+            }
+        }
+    }
+
+    override fun onCleared() {
+        repository.close()
+        super.onCleared()
     }
 
     private suspend fun logAndUpdateDetails(

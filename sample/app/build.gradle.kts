@@ -14,9 +14,18 @@ kotlin {
             implementation(projects.consoleCompose)
             implementation(projects.addons.detailsCompose)
             implementation(projects.addons.stepperCompose)
+            implementation(projects.addons.networkKtor)
+            implementation(projects.addons.networkCompose)
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.ktor.client.android)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+        jvmMain.dependencies {
+            implementation(libs.ktor.client.java)
         }
     }
 }
