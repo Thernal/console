@@ -14,7 +14,7 @@ sealed interface ConsoleRoute : NavKey {
 
     @Immutable
     data class LogDetail(
-        val groupId: String,
         val logId: String,
+        val groupId: String = "",
     ) : ConsoleRoute
 }

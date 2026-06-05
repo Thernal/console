@@ -3,7 +3,7 @@ package io.thernal.console.compose
 import androidx.compose.runtime.Composable
 import io.thernal.console.api.trigger.ConsoleTrigger
 import io.thernal.console.api.ui.LogRenderer
-import io.thernal.console.runtime.Log
+import io.thernal.console.runtime.log.Log
 
 @Suppress("UnusedParameter")
 @Composable

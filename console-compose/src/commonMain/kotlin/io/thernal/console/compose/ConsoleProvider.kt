@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -20,15 +21,18 @@ import io.thernal.console.api.navigation.LocalConsoleNavigator
 import io.thernal.console.api.addon.ConsoleOverlays
 import io.thernal.console.api.ui.LocalLogRenderer
 import io.thernal.console.api.ui.LogRenderer
-import io.thernal.console.runtime.Console
-import io.thernal.console.compose.components.DefaultLogRenderer
+import io.thernal.console.runtime.console.Console
+import io.thernal.console.compose.addon.DispatchLogRenderer
 import io.thernal.console.api.trigger.ConsoleTrigger
+import io.thernal.console.api.ui.LogRendererRegistry
+import io.thernal.console.compose.addon.BasicLogRenderer
 import io.thernal.console.compose.trigger.Swipe
 import io.thernal.console.compose.trigger.swipeSequence
 import io.thernal.console.compose.navigation.ConsoleNavHost
 import io.thernal.console.compose.navigation.ConsoleNavigatorImpl
 import io.thernal.console.designsystem.components.modifier.applyIf
 import io.thernal.console.designsystem.components.provider.ThemeProvider
+import io.thernal.console.runtime.log.BasicLog
 
 @Composable
 fun ConsoleProvider(
@@ -39,10 +43,14 @@ fun ConsoleProvider(
         Swipe.LEFT,
         Swipe.RIGHT,
     ),
-    logRenderer: LogRenderer = DefaultLogRenderer,
+    logRenderer: LogRenderer = BasicLogRenderer(),
     content: @Composable () -> Unit,
 ) {
     SideEffect { Console.isEnabled = enabled }
+
+    LaunchedEffect(logRenderer) {
+        LogRendererRegistry.register<BasicLog>(logRenderer)
+    }
 
     if (!enabled) {
         content()
@@ -57,7 +65,7 @@ fun ConsoleProvider(
     ThemeProvider {
         CompositionLocalProvider(
             LocalConsoleNavigator provides navigator,
-            LocalLogRenderer provides logRenderer,
+            LocalLogRenderer provides DispatchLogRenderer(),
         ) {
             Box(
                 Modifier

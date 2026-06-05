@@ -6,7 +6,7 @@ import io.thernal.console.api.addon.ConsoleTab
 import io.thernal.console.compose.ConsoleLogObserver
 import io.thernal.console.compose.navigation.LogsNavGraph
 import io.thernal.console.compose.navigation.LogsTab
-import io.thernal.console.runtime.ConsoleScope
+import io.thernal.console.runtime.console.ConsoleScope
 
 internal object ConsoleUiAddon : ConsoleAddon {
     override fun onInstall(console: ConsoleScope) {

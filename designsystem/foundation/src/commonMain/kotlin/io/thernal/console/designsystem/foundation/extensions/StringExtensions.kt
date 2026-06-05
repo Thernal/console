@@ -1,22 +1,26 @@
-package io.thernal.console.compose.util
+package io.thernal.console.designsystem.foundation.extensions
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 
-fun buildHighlightedText(
-    text: String,
+fun String.highlight(
     query: String,
     background: Color,
     color: Color,
 ): AnnotatedString {
-    if (query.isBlank()) return AnnotatedString(text)
+    val text = this
+
+    if (query.isBlank()) {
+        return AnnotatedString(text)
+    }
+
     return buildAnnotatedString {
         val lowerText = text.lowercase()
         val lowerQuery = query.lowercase()
         var cursor = 0
-        while (cursor <= text.length) {
+        while (cursor <= this.length) {
             val matchStart = lowerText.indexOf(lowerQuery, cursor)
             if (matchStart == -1) {
                 append(text.substring(cursor))

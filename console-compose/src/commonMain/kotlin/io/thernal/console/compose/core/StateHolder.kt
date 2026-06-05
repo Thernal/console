@@ -1,6 +1,7 @@
 package io.thernal.console.compose.core
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshots.Snapshot
 import androidx.compose.ui.platform.LocalInspectionMode
 import kotlin.reflect.KProperty
 
@@ -17,6 +18,10 @@ interface StateHolder {
         thisObj: Any?,
         property: KProperty<*>,
     ): T = value
+
+    fun snapshot(block: () -> Unit) {
+        Snapshot.withMutableSnapshot(block)
+    }
 }
 
 class PreviewStateHolder<S : ViewState> internal constructor(val state: S) {

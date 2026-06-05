@@ -1,4 +1,4 @@
-package io.thernal.console.compose.util
+package io.thernal.console.compose.common
 
 import android.content.ClipData
 import androidx.compose.ui.platform.ClipEntry

@@ -2,8 +2,8 @@ package io.thernal.console.api.addon
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
-import io.thernal.console.runtime.Console
-import io.thernal.console.runtime.ConsoleScope
+import io.thernal.console.runtime.console.Console
+import io.thernal.console.runtime.console.ConsoleScope
 
 interface ConsoleAddon {
     fun onInstall(console: ConsoleScope) {}
