@@ -3,6 +3,10 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.33.0"
 }
 
+dependencies {
+    implementation(gradleApi())
+}
+
 group = "io.github.thernal"
 version = "0.1.0"
 
