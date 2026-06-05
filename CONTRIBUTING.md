@@ -56,9 +56,14 @@ designsystem/
   foundation/           # Colors, typography, shapes, theme
   components/           # Reusable Ds* composables
 addons/                 # Optional feature modules
-  details-api/          # Addon contract
-  details-compose/      # Addon Compose implementation
+  details-core/         # Details addon state & API
+  details-core-noop/    # No-op stub for production
+  details-compose/      # Details addon Compose UI
   stepper-compose/      # Stepper addon
+  network-core/         # Network log type
+  network-okhttp/       # OkHttp interceptor
+  network-ktor/         # Ktor plugin
+  network-ui/           # Network log renderer
 sample/                 # Sample app (not published)
 ```
 
@@ -66,9 +71,9 @@ sample/                 # Sample app (not published)
 
 Addons are self-contained optional modules under `addons/`. Each addon typically consists of:
 
-- `addons/<name>-api/` — Pure Kotlin contracts (no Compose, no UI)
-- `addons/<name>-api-noop/` — No-op implementation for release builds
-- `addons/<name>-compose/` — Compose UI implementation
+- `addons/<name>-core/` — Pure Kotlin: `Log.Custom` subtype, state (no Compose, no UI)
+- `addons/<name>-core-noop/` — No-op stub for production builds
+- `addons/<name>-ui/` — Compose UI: `LogRenderer` + auto-init
 
 ### Steps
 
@@ -76,13 +81,13 @@ Addons are self-contained optional modules under `addons/`. Each addon typically
 
 ```
 addons/
-  my-addon-api/
+  my-addon-core/
     build.gradle.kts
     src/commonMain/kotlin/io/thernal/console/myaddon/
-  my-addon-api-noop/
+  my-addon-core-noop/
     build.gradle.kts
     src/commonMain/kotlin/io/thernal/console/myaddon/
-  my-addon-compose/
+  my-addon-ui/
     build.gradle.kts
     src/commonMain/kotlin/io/thernal/console/myaddon/compose/
 ```
@@ -91,7 +96,7 @@ Modules are auto-discovered — no need to edit `settings.gradle.kts`.
 
 **2. Use the correct convention plugins**
 
-For API / noop modules (no Compose):
+For `-core` / `-core-noop` modules (no Compose):
 ```kotlin
 plugins {
     alias(libs.plugins.convention.lib.core)
@@ -99,7 +104,7 @@ plugins {
 }
 ```
 
-For Compose modules:
+For `-ui` modules (Compose):
 ```kotlin
 plugins {
     alias(libs.plugins.convention.lib.ui)
@@ -114,9 +119,10 @@ Follow the pattern: `io.thernal.console.<addonname>[.compose]`
 **4. Implement `ConsoleAddon`**
 
 ```kotlin
-class MyAddon : ConsoleAddon {
-    override fun tab(): ConsoleTab = MyAddonTab()
-    override fun navGraph(): ConsoleNavGraph = MyAddonNavGraph()
+object MyAddon : ConsoleAddon {
+    override fun onInstall(console: ConsoleScope) {
+        LogRendererRegistry.register<MyLog>(MyLogRenderer)
+    }
 }
 ```
 
