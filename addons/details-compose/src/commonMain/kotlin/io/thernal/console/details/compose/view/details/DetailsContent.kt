@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import io.thernal.console.compose.core.preview
 import io.thernal.console.details.compose.view.details.components.DetailRow
 import io.thernal.console.details.compose.view.details.model.DetailsState
-import io.thernal.console.designsystem.components.core.DsCard
+import io.thernal.console.designsystem.components.core.DsContainer
 import io.thernal.console.designsystem.components.core.DsDivider
 import io.thernal.console.designsystem.components.core.DsText
 import io.thernal.console.designsystem.components.provider.ThemeProvider
@@ -33,12 +33,14 @@ internal fun DetailsContent(state: DetailsState) {
         }
         return
     }
-    DetailsFilled(details = state.details)
+
+    DetailsContainer(details = state.details)
 }
 
 @Composable
-private fun DetailsFilled(details: State<Map<String, String>>) {
+private fun DetailsContainer(details: State<Map<String, String>>) {
     val entries = details.value.entries.toList()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,10 +50,13 @@ private fun DetailsFilled(details: State<Map<String, String>>) {
                 vertical = Theme.metrics.screenPaddingVertical,
             ),
     ) {
-        DsCard(modifier = Modifier.fillMaxWidth()) {
+        DsContainer(modifier = Modifier.fillMaxWidth()) {
             Column {
                 entries.forEachIndexed { index, entry ->
-                    if (index > 0) DsDivider()
+                    if (index > 0) {
+                        DsDivider()
+                    }
+
                     DetailRow(label = entry.key, value = entry.value)
                 }
             }
