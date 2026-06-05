@@ -1,12 +1,11 @@
 package io.thernal.console.stepper.compose.view.settings.model
 
-import androidx.compose.runtime.snapshots.Snapshot
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.thernal.console.compose.core.IntentHandler
 import io.thernal.console.compose.core.StateHolder
-import io.thernal.console.stepper.Stepper
+import io.thernal.console.stepper.compose.Stepper
 import kotlinx.coroutines.launch
 
 class StepperViewModel : ViewModel(), StateHolder, IntentHandler<StepperIntent> {
@@ -18,10 +17,10 @@ class StepperViewModel : ViewModel(), StateHolder, IntentHandler<StepperIntent> 
         viewModelScope.launch { Stepper.state.collect { state.steppedEvents.set(it.steppedEvents) } }
     }
 
-    override val handler = Handler { intent ->
+    override val handler = onIntentUpdate { intent ->
         when (intent) {
             is StepperIntent.SetTagInput -> state.tagInput.update {
-                intent.value.copy(text = intent.value.text.uppercase())
+                intent.value.copy(text = intent.value.text)
             }
 
             is StepperIntent.SetEnabled -> Stepper.updateConfig { copy(enabled = intent.enabled) }
@@ -54,7 +53,7 @@ class StepperViewModel : ViewModel(), StateHolder, IntentHandler<StepperIntent> 
 
     private fun syncFromConfig() {
         val config = Stepper.config.value
-        Snapshot.withMutableSnapshot {
+        snapshot {
             state.enabled.set(config.enabled)
             state.paused.set(config.paused)
             state.pauseOnMatch.set(config.pauseOnMatch)

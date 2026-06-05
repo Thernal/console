@@ -2,9 +2,9 @@ package io.thernal.console.stepper.compose.addon
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
-import io.thernal.console.stepper.Stepper
+import io.thernal.console.stepper.compose.Stepper
 import io.thernal.console.stepper.compose.view.overlay.StepperOverlay
-import io.thernal.console.runtime.ConsoleScope
+import io.thernal.console.runtime.console.ConsoleScope
 import io.thernal.console.api.addon.ConsoleAddon
 import io.thernal.console.api.addon.ConsoleNavGraph
 import io.thernal.console.api.addon.ConsoleTab

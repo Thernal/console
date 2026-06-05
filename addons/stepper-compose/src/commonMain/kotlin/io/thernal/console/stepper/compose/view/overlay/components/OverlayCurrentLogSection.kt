@@ -1,6 +1,10 @@
 package io.thernal.console.stepper.compose.view.overlay.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -14,8 +18,9 @@ import io.thernal.console.api.navigation.ConsoleRoute
 import io.thernal.console.api.navigation.LocalConsoleNavigator
 import io.thernal.console.api.ui.LocalLogRenderer
 import io.thernal.console.designsystem.components.core.DsDivider
+import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.Log
+import io.thernal.console.runtime.log.Log
 
 @Composable
 internal fun OverlayCurrentLogSection(
@@ -26,6 +31,8 @@ internal fun OverlayCurrentLogSection(
 
     AnimatedVisibility(
         visible = visible.value,
+        enter = fadeIn() + expandVertically(),
+        exit = fadeOut() + shrinkOut(),
     ) {
         currentLog.value?.let { log ->
             OverlayCurrentLogContent(log = log)
@@ -41,7 +48,13 @@ private fun OverlayCurrentLogContent(log: Log) {
         DsDivider(color = Theme.colors.border)
         renderer.Item(
             log = log,
-            onClick = { navigator.push(ConsoleRoute.LogDetail("", log.id)) },
+            modifier = Modifier.pressable(
+                onPress = {
+                    navigator.push(
+                        key = ConsoleRoute.LogDetail(logId = log.id),
+                    )
+                },
+            ),
         )
         Spacer(Modifier.height(Theme.dimens.dp8))
     }

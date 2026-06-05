@@ -9,7 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import io.thernal.console.compose.core.select
-import io.thernal.console.designsystem.components.core.DsChip
+import io.thernal.console.designsystem.components.core.chip.DsChip
 import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview

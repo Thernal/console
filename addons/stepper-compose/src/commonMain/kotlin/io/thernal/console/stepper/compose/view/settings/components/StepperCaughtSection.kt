@@ -25,8 +25,8 @@ import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.Log
-import io.thernal.console.runtime.LogLevel
+import io.thernal.console.runtime.log.Log
+import io.thernal.console.runtime.log.LogLevel
 import io.thernal.console.stepper.compose.navigation.SteppedEventsRoute
 import io.thernal.console.stepper.compose.view.settings.model.StepperIntent
 
@@ -91,7 +91,13 @@ internal fun StepperCaughtSection(
             ) {
                 renderer.Item(
                     log = log,
-                    onClick = { navigator.push(ConsoleRoute.LogDetail("", log.id)) },
+                    modifier = Modifier.pressable(
+                        onPress = {
+                            navigator.push(
+                                key = ConsoleRoute.LogDetail(logId = log.id),
+                            )
+                        },
+                    ),
                 )
             }
         }

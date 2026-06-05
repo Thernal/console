@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.TextFieldValue
-import io.thernal.console.designsystem.components.core.DsChip
+import io.thernal.console.designsystem.components.core.chip.DsChip
 import io.thernal.console.designsystem.components.core.DsIcon
 import io.thernal.console.designsystem.components.core.DsText
 import io.thernal.console.designsystem.components.core.DsTextField

@@ -1,6 +1,6 @@
 package io.thernal.console.stepper.compose.view.overlay
 
-import io.thernal.console.stepper.Stepper
+import io.thernal.console.stepper.compose.Stepper
 
 private const val LOG_ID_PREFIX_LENGTH = 8
 

@@ -2,7 +2,7 @@ package io.thernal.console.stepper.compose.view.overlay.model
 
 import androidx.compose.runtime.Stable
 import io.thernal.console.compose.core.ViewState
-import io.thernal.console.runtime.Log
+import io.thernal.console.runtime.log.Log
 import io.thernal.console.stepper.compose.view.overlay.StepperStatusTone
 
 @Stable

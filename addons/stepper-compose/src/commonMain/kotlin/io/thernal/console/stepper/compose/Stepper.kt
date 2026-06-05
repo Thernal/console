@@ -1,8 +1,8 @@
-package io.thernal.console.stepper
+package io.thernal.console.stepper.compose
 
-import io.thernal.console.runtime.Log
-import io.thernal.console.runtime.LogLevel
-import io.thernal.console.runtime.LogObserver
+import io.thernal.console.runtime.console.LogObserver
+import io.thernal.console.runtime.log.Log
+import io.thernal.console.runtime.log.LogLevel
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

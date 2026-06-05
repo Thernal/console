@@ -35,13 +35,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import io.thernal.console.compose.util.themeColor
+import io.thernal.console.compose.common.themeColor
 import io.thernal.console.compose.core.preview
 import io.thernal.console.designsystem.components.core.DsIcon
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.LogLevel
+import io.thernal.console.runtime.log.LogLevel
 import io.thernal.console.stepper.compose.navigation.StepperTab
 import io.thernal.console.stepper.compose.view.overlay.components.OverlayCurrentLogSection
 import io.thernal.console.stepper.compose.view.overlay.components.OverlayEnabledSection

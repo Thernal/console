@@ -1,8 +1,8 @@
 package io.thernal.console.stepper.compose.view.overlay.model
 
-import io.thernal.console.compose.core.Intent
+import io.thernal.console.compose.core.ViewIntent
 
-sealed interface StepperOverlayIntent : Intent {
+sealed interface StepperOverlayIntent : ViewIntent {
     data object ToggleEnabled : StepperOverlayIntent
     data object TogglePaused : StepperOverlayIntent
     data object StepNext : StepperOverlayIntent

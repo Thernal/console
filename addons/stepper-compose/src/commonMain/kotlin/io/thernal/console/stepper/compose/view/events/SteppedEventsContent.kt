@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -24,11 +24,12 @@ import io.thernal.console.designsystem.components.core.DsAppBar
 import io.thernal.console.designsystem.components.core.DsIcon
 import io.thernal.console.designsystem.components.core.DsIconButton
 import io.thernal.console.designsystem.components.core.DsText
+import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.Log
-import io.thernal.console.runtime.LogLevel
+import io.thernal.console.runtime.log.Log
+import io.thernal.console.runtime.log.LogLevel
 import io.thernal.console.stepper.compose.view.events.model.SteppedEventsState
 
 @Composable
@@ -41,7 +42,7 @@ internal fun SteppedEventsContent(state: SteppedEventsState) {
             leading = {
                 DsIconButton(onClick = { navigator.pop() }) {
                     DsIcon(
-                        icon = Icons.AutoMirrored.Filled.ArrowBack,
+                        icon = Icons.AutoMirrored.Filled.ArrowBackIos,
                         color = Theme.colors.content02,
                     )
                 }
@@ -102,7 +103,13 @@ private fun SteppedEventsBody(events: State<List<Log>>) {
             ) { log ->
                 renderer.Item(
                     log = log,
-                    onClick = { navigator.push(ConsoleRoute.LogDetail("", log.id)) },
+                    modifier = Modifier.pressable(
+                        onPress = {
+                            navigator.push(
+                                key = ConsoleRoute.LogDetail(logId = log.id),
+                            )
+                        },
+                    ),
                 )
             }
         }

@@ -1,11 +1,10 @@
 package io.thernal.console.stepper.compose.view.overlay.model
 
-import androidx.compose.runtime.snapshots.Snapshot
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.thernal.console.compose.core.IntentHandler
 import io.thernal.console.compose.core.StateHolder
-import io.thernal.console.stepper.Stepper
+import io.thernal.console.stepper.compose.Stepper
 import io.thernal.console.stepper.compose.view.overlay.resolveCurrentStepDisplay
 import io.thernal.console.stepper.compose.view.overlay.resolveDisplayTag
 import io.thernal.console.stepper.compose.view.overlay.resolveStatusText
@@ -23,7 +22,7 @@ class StepperOverlayViewModel : ViewModel(), StateHolder, IntentHandler<StepperO
         }
     }
 
-    override val handler = Handler { intent ->
+    override val handler = onIntentUpdate { intent ->
         when (intent) {
             StepperOverlayIntent.ToggleEnabled -> Stepper.updateConfig { copy(enabled = !enabled) }
 
@@ -43,7 +42,8 @@ class StepperOverlayViewModel : ViewModel(), StateHolder, IntentHandler<StepperO
         val config = Stepper.config.value
         val stepperState = Stepper.state.value
         val canStep = stepperState.blockedLogId != null
-        Snapshot.withMutableSnapshot {
+
+        snapshot {
             if (!config.enabled) state.isExpanded.set(false)
             state.isEnabled.set(config.enabled)
             state.isPaused.set(config.paused)

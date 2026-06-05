@@ -1,10 +1,10 @@
 package io.thernal.console.stepper.compose.view.settings.model
 
 import androidx.compose.ui.text.input.TextFieldValue
-import io.thernal.console.compose.core.Intent
-import io.thernal.console.runtime.LogLevel
+import io.thernal.console.compose.core.ViewIntent
+import io.thernal.console.runtime.log.LogLevel
 
-sealed interface StepperIntent : Intent {
+sealed interface StepperIntent : ViewIntent {
     data class SetTagInput(val value: TextFieldValue) : StepperIntent
     data object AddTag : StepperIntent
     data class SetEnabled(val enabled: Boolean) : StepperIntent
