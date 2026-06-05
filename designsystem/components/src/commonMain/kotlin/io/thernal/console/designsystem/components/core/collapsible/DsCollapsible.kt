@@ -1,5 +1,6 @@
 package io.thernal.console.designsystem.components.core.collapsible
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -24,13 +25,16 @@ import io.thernal.console.designsystem.foundation.theme.Theme
 fun DsCollapsible(
     modifier: Modifier = Modifier,
     state: DsCollapsibleState = rememberDsCollapsibleState(),
+    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     header: @Composable () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state.topAppBarState)
 
     Column(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        verticalArrangement = verticalArrangement,
     ) {
         Box(
             modifier = Modifier

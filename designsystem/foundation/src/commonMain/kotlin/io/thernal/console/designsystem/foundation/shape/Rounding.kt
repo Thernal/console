@@ -8,6 +8,7 @@ object Rounding {
     val r6 = RoundedCornerShape(Dimens.dp6)
     val r8 = RoundedCornerShape(Dimens.dp8)
     val r12 = RoundedCornerShape(Dimens.dp12)
+    val r14 = RoundedCornerShape(Dimens.dp14)
     val r16 = RoundedCornerShape(Dimens.dp16)
     val r20 = RoundedCornerShape(Dimens.dp20)
 }

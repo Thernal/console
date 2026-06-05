@@ -1,4 +1,4 @@
-package io.thernal.console.designsystem.components.core
+package io.thernal.console.designsystem.components.core.chip
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import io.thernal.console.designsystem.components.core.DsText
 import io.thernal.console.designsystem.components.modifier.applyIf
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
@@ -19,12 +20,16 @@ import io.thernal.console.designsystem.foundation.theme.Theme
 fun DsChip(
     modifier: Modifier = Modifier,
     label: String,
-    selected: Boolean,
+    selected: Boolean = false,
     color: Color = Theme.colors.primary01,
+    size: DsChipSize = DsChipSize.Medium,
     leading: @Composable RowScope.() -> Unit = {},
     trailing: @Composable RowScope.() -> Unit = {},
 ) {
-    val shape = Theme.rounding.r12
+    val shape = when (size) {
+        DsChipSize.Small -> Theme.rounding.r8
+        DsChipSize.Medium -> Theme.rounding.r12
+    }
 
     Row(
         modifier = modifier
@@ -40,8 +45,7 @@ fun DsChip(
                 )
             }
             .padding(
-                horizontal = Theme.dimens.dp14,
-                vertical = Theme.dimens.dp8,
+                paddingValues = size.padding,
             ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
