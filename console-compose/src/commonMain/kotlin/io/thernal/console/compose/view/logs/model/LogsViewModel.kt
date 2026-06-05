@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import io.thernal.console.compose.ConsoleLogObserver
 import io.thernal.console.compose.core.IntentHandler
 import io.thernal.console.compose.core.StateHolder
-import io.thernal.console.runtime.Log
-import io.thernal.console.runtime.LogLevel
+import io.thernal.console.runtime.log.Log
+import io.thernal.console.runtime.log.LogLevel
 import kotlinx.coroutines.launch
 
 class LogsViewModel : ViewModel(), StateHolder, IntentHandler<LogsIntent> {
@@ -24,7 +24,7 @@ class LogsViewModel : ViewModel(), StateHolder, IntentHandler<LogsIntent> {
         }
     }
 
-    override val handler = Handler { intent ->
+    override val handler = onIntentUpdate { intent ->
         when (intent) {
             is LogsIntent.ToggleTag -> toggleTag(intent.tag)
             LogsIntent.SelectAllTags -> selectAllTags()

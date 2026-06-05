@@ -1,9 +1,9 @@
 package io.thernal.console.compose.view.console.model
 
 import io.thernal.console.api.addon.ConsoleTab
-import io.thernal.console.compose.core.Intent
+import io.thernal.console.compose.core.ViewIntent
 
-sealed interface ConsoleIntent : Intent {
+sealed interface ConsoleIntent : ViewIntent {
     data class SelectTab(val index: Int) : ConsoleIntent
     data class RequestTab(val tab: ConsoleTab?) : ConsoleIntent
 }

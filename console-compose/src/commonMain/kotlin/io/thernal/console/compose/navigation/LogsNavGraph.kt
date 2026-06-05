@@ -11,6 +11,7 @@ internal object LogsNavGraph : ConsoleNavGraph {
         entry<ConsoleRoute.LogDetail> { route ->
             LogDetailView(
                 logId = route.logId,
+                groupId = route.groupId,
             )
         }
     }

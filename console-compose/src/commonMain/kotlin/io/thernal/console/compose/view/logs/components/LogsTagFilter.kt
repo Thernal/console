@@ -8,10 +8,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.thernal.console.compose.core.preview
-import io.thernal.console.compose.util.tagAccentColor
+import io.thernal.console.compose.common.tagAccentColor
 import io.thernal.console.compose.view.logs.model.LogsIntent
 import io.thernal.console.compose.view.logs.model.LogsState
-import io.thernal.console.designsystem.components.core.DsChip
+import io.thernal.console.designsystem.components.core.chip.DsChip
 import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview

@@ -9,8 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import io.thernal.console.api.ui.LogRenderer
+import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.Log
+import io.thernal.console.runtime.log.Log
 
 @Composable
 fun ColumnScope.LogList(
@@ -35,7 +36,9 @@ fun ColumnScope.LogList(
         ) { log ->
             renderer.Item(
                 log = log,
-                onClick = { onLogClick(log) },
+                modifier = Modifier.pressable(
+                    onPress = { onLogClick(log) },
+                ),
             )
         }
     }

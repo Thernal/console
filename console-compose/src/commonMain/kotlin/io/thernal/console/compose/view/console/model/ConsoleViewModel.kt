@@ -8,7 +8,7 @@ import io.thernal.console.compose.core.StateHolder
 class ConsoleViewModel : ViewModel(), StateHolder, IntentHandler<ConsoleIntent> {
     val state = ConsoleState()
 
-    override val handler = Handler { intent ->
+    override val handler = onIntentUpdate { intent ->
         when (intent) {
             is ConsoleIntent.SelectTab -> selectTab(intent.index)
 

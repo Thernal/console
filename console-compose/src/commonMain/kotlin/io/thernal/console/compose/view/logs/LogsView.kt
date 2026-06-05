@@ -20,7 +20,7 @@ internal fun LogsView() {
         onLogClick = { log ->
             navigator.push(
                 key = ConsoleRoute.LogDetail(
-                    groupId = "",
+                    groupId = log.groupId ?: log.id,
                     logId = log.id,
                 ),
             )

@@ -9,15 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import io.thernal.console.api.ui.LogRenderer
+import io.thernal.console.compose.common.LocalSearchQuery
 import io.thernal.console.compose.core.preview
 import io.thernal.console.compose.core.select
-import io.thernal.console.compose.components.defaultLogRenderer
+import io.thernal.console.compose.addon.BasicLogRenderer
 import io.thernal.console.compose.view.logs.model.LogsIntent
 import io.thernal.console.compose.view.logs.model.LogsState
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
-import io.thernal.console.runtime.LogLevel
-import io.thernal.console.compose.util.LocalSearchQuery
+import io.thernal.console.runtime.log.LogLevel
 import io.thernal.console.compose.view.logs.components.LogList
 import io.thernal.console.compose.view.logs.components.LogsEmptyState
 import io.thernal.console.compose.view.logs.components.LogsLevelFilter
@@ -25,7 +25,7 @@ import io.thernal.console.compose.view.logs.components.LogsSearchBar
 import io.thernal.console.compose.view.logs.components.LogsTagFilter
 import io.thernal.console.designsystem.components.core.collapsible.DsCollapsible
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.Log
+import io.thernal.console.runtime.log.Log
 
 @Composable
 internal fun LogsContent(
@@ -86,7 +86,7 @@ private fun PreviewLogsContentEmpty() {
     ThemeProvider {
         LogsContent(
             state = LogsState(),
-            renderer = defaultLogRenderer(),
+            renderer = BasicLogRenderer(),
             onLogClick = {},
             dispatch = {},
         )
@@ -110,7 +110,7 @@ private fun PreviewLogsContentFilled() {
     ThemeProvider {
         LogsContent(
             state = state,
-            renderer = defaultLogRenderer(),
+            renderer = BasicLogRenderer(),
             onLogClick = {},
             dispatch = {},
         )

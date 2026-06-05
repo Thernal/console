@@ -10,34 +10,47 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
-import io.thernal.console.compose.util.LocalSearchQuery
-import io.thernal.console.compose.util.buildHighlightedText
-import io.thernal.console.runtime.Log
-import io.thernal.console.runtime.LogLevel
-import io.thernal.console.designsystem.components.core.DsCard
+import io.thernal.console.compose.common.highlight
+import io.thernal.console.runtime.log.Log
+import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.designsystem.components.core.DsContainer
+import io.thernal.console.designsystem.components.core.DsIcon
+import io.thernal.console.designsystem.components.core.DsIconButton
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.components.core.DsText
 import io.thernal.console.designsystem.foundation.theme.Theme
+import kotlinx.coroutines.delay
 
 @Composable
 internal fun MessageCard(
     log: Log,
     accentColor: Color,
+    onCopy: (() -> Unit)? = null,
 ) {
-    val query = LocalSearchQuery.current
-    val warningBg = Theme.colors.warning
-    val warningFg = Theme.colors.warningContent
-    val highlightedMessage = remember(log.message, query.value) {
-        buildHighlightedText(log.message, query.value, warningBg, warningFg)
+    var copied by remember { mutableStateOf(false) }
+
+    LaunchedEffect(copied) {
+        if (copied) {
+            delay(1500L)
+            copied = false
+        }
     }
 
-    DsCard(
+    DsContainer(
         modifier = Modifier.fillMaxWidth(),
         borderColor = accentColor.copy(alpha = Theme.opacity.S35),
     ) {
@@ -54,7 +67,7 @@ internal fun MessageCard(
             )
             SelectionContainer(modifier = Modifier.weight(1f)) {
                 DsText(
-                    text = highlightedMessage,
+                    text = log.message.highlight(),
                     modifier = Modifier.padding(
                         horizontal = Theme.dimens.dp12,
                         vertical = Theme.dimens.dp12,
@@ -65,6 +78,25 @@ internal fun MessageCard(
                     ),
                     color = Theme.colors.content01,
                 )
+            }
+            onCopy?.let { copyAction ->
+                Box(
+                    modifier = Modifier.fillMaxHeight(),
+                    contentAlignment = Alignment.TopCenter,
+                ) {
+                    DsIconButton(
+                        onClick = {
+                            copied = true
+                            copyAction()
+                        },
+                        contentColor = if (copied) Theme.colors.success else Theme.colors.content03,
+                    ) {
+                        DsIcon(
+                            icon = if (copied) Icons.Outlined.Check else Icons.Outlined.ContentCopy,
+                            size = Theme.metrics.iconSm,
+                        )
+                    }
+                }
             }
         }
     }

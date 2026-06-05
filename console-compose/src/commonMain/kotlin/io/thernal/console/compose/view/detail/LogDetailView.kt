@@ -7,13 +7,17 @@ import io.thernal.console.api.ui.LocalLogRenderer
 import io.thernal.console.compose.view.detail.model.LogDetailViewModel
 
 @Composable
-internal fun LogDetailView(logId: String) {
-    val viewModel = viewModel(key = logId) { LogDetailViewModel(logId) }
+internal fun LogDetailView(
+    logId: String,
+    groupId: String,
+) {
+    val viewModel = viewModel(key = "$groupId:$logId") { LogDetailViewModel(logId = logId, groupId = groupId) }
     val navigator = LocalConsoleNavigator.current
     val renderer = LocalLogRenderer.current
 
     LogDetailContent(
-        log = viewModel.state.log.value,
+        state = viewModel.state,
+        onDispatch = viewModel::dispatch,
         onBack = navigator::pop,
         renderer = renderer,
     )
