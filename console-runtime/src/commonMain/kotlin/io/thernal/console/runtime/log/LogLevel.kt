@@ -1,4 +1,4 @@
-package io.thernal.console.runtime
+package io.thernal.console.runtime.log
 
 enum class LogLevel {
     None,

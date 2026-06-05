@@ -1,4 +1,6 @@
-package io.thernal.console.runtime
+package io.thernal.console.runtime.console
+
+import io.thernal.console.runtime.log.Log
 
 interface ConsoleScope {
     var isEnabled: Boolean
