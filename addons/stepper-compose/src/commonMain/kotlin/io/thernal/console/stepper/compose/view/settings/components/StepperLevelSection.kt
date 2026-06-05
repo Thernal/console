@@ -15,7 +15,7 @@ import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.Theme
 import io.thernal.console.runtime.log.LogLevel
-import io.thernal.console.stepper.compose.view.settings.model.StepperIntent
+import io.thernal.console.stepper.compose.stepper.StepperIntent
 
 @Composable
 internal fun StepperLevelSection(
@@ -28,14 +28,14 @@ internal fun StepperLevelSection(
                 LevelChip(
                     label = "All",
                     isSelected = selectedLevel.select { it == null },
-                    onPress = { dispatch(StepperIntent.SetPauseOnLevelAtLeast(null)) },
+                    onPress = { dispatch(StepperIntent.SetPauseOnLevelAtLeast(level = null)) },
                 )
             }
             items(items = LogLevel.entries.filter { it != LogLevel.None }) { level ->
                 LevelChip(
                     label = level.name,
                     isSelected = selectedLevel.select { it == level },
-                    onPress = { dispatch(StepperIntent.SetPauseOnLevelAtLeast(level)) },
+                    onPress = { dispatch(StepperIntent.SetPauseOnLevelAtLeast(level = level)) },
                 )
             }
         }

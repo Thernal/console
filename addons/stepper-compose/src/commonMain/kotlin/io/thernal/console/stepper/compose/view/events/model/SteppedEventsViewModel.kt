@@ -3,7 +3,7 @@ package io.thernal.console.stepper.compose.view.events.model
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.thernal.console.compose.core.StateHolder
-import io.thernal.console.stepper.compose.Stepper
+import io.thernal.console.stepper.compose.stepper.Stepper
 import kotlinx.coroutines.launch
 
 class SteppedEventsViewModel : ViewModel(), StateHolder {
@@ -11,7 +11,7 @@ class SteppedEventsViewModel : ViewModel(), StateHolder {
 
     init {
         viewModelScope.launch {
-            Stepper.state.collect { state.events.set(it.steppedEvents.asReversed()) }
+            Stepper.state.collect { state.steppedEvents.set(it.steppedEvents) }
         }
     }
 }

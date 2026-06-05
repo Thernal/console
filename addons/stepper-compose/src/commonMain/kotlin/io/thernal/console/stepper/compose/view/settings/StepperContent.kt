@@ -13,13 +13,15 @@ import io.thernal.console.stepper.compose.view.settings.components.StepperActive
 import io.thernal.console.stepper.compose.view.settings.components.StepperCaughtGroup
 import io.thernal.console.stepper.compose.view.settings.components.StepperPauseGroup
 import io.thernal.console.stepper.compose.view.settings.components.StepperPausedGroup
-import io.thernal.console.stepper.compose.view.settings.model.StepperIntent
+import io.thernal.console.stepper.compose.stepper.StepperIntent
+import io.thernal.console.stepper.compose.view.settings.model.StepperSettingsIntent
 import io.thernal.console.stepper.compose.view.settings.model.StepperSettingsState
 
 @Composable
-internal fun StepperContent(
+internal fun StepperSettingsContent(
     state: StepperSettingsState,
-    dispatch: (StepperIntent) -> Unit,
+    dispatch: (StepperSettingsIntent) -> Unit,
+    onStepperDispatch: (StepperIntent) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -28,25 +30,26 @@ internal fun StepperContent(
         item {
             StepperActiveSection(
                 checked = state.enabled,
-                dispatch = dispatch,
+                dispatch = onStepperDispatch,
             )
         }
         item {
             StepperPauseGroup(
                 state = state,
-                dispatch = dispatch,
+                dispatch = onStepperDispatch,
             )
         }
         item {
             StepperPausedGroup(
                 state = state,
                 dispatch = dispatch,
+                onStepperDispatch = onStepperDispatch,
             )
         }
         item {
             StepperCaughtGroup(
                 state = state,
-                dispatch = dispatch,
+                dispatch = onStepperDispatch,
             )
         }
     }
@@ -54,28 +57,29 @@ internal fun StepperContent(
 
 @DsPreview
 @Composable
-private fun PreviewStepperContentDisabled() {
+private fun PreviewStepperSettingsContentDisabled() {
     ThemeProvider {
-        StepperContent(
+        StepperSettingsContent(
             state = StepperSettingsState(),
             dispatch = {},
+            onStepperDispatch = {},
         )
     }
 }
 
 @DsPreview
 @Composable
-private fun PreviewStepperContentEnabled() {
+private fun PreviewStepperSettingsContentEnabled() {
     val state = StepperSettingsState().preview {
         state.enabled.set(true)
         state.paused.set(true)
-        state.isStepperActive.set(true)
         state.pauseOnMatch.set(true)
     }
     ThemeProvider {
-        StepperContent(
+        StepperSettingsContent(
             state = state,
             dispatch = {},
+            onStepperDispatch = {},
         )
     }
 }

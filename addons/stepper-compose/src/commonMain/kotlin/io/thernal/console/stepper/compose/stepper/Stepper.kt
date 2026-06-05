@@ -1,5 +1,6 @@
-package io.thernal.console.stepper.compose
+package io.thernal.console.stepper.compose.stepper
 
+import io.thernal.console.compose.core.IntentHandler
 import io.thernal.console.runtime.console.LogObserver
 import io.thernal.console.runtime.log.Log
 import io.thernal.console.runtime.log.LogLevel
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlin.concurrent.Volatile
 
-object Stepper : LogObserver {
+object Stepper : LogObserver, IntentHandler<StepperIntent> {
 
     private const val DEFAULT_MAX_STEPPED_EVENT_COUNT = 50
     private const val SECONDS_TO_MILLIS = 1_000L
@@ -23,6 +24,22 @@ object Stepper : LogObserver {
 
     @Volatile
     private var currentWaiter: CompletableDeferred<Unit>? = null
+
+    override val handler = onIntentUpdate { action ->
+        when (action) {
+            is StepperIntent.SetEnabled -> updateConfig { copy(enabled = action.isEnabled) }
+            StepperIntent.ToggleEnabled -> updateConfig { copy(enabled = !enabled) }
+            is StepperIntent.SetPaused -> updateConfig { copy(paused = action.isPaused) }
+            StepperIntent.TogglePaused -> updateConfig { copy(paused = !paused) }
+            is StepperIntent.SetPauseOnMatch -> updateConfig { copy(pauseOnMatch = action.shouldPauseOnMatch) }
+            is StepperIntent.AddPauseTag -> addPauseTag(tag = action.tag)
+            is StepperIntent.RemovePauseTag -> updateConfig { copy(pauseOnTags = pauseOnTags - action.tag) }
+            is StepperIntent.SetPauseOnLevelAtLeast -> updateConfig { copy(pauseOnLevelAtLeast = action.level) }
+            is StepperIntent.SetAutoResumeSeconds -> updateConfig { copy(autoResumeSeconds = action.seconds) }
+            StepperIntent.ClearSteppedEvents -> clearSteppedEvents()
+            StepperIntent.Next -> next()
+        }
+    }
 
     fun updateConfig(config: Config) {
         val normalized = config.copy(maxSteppedEventCount = config.maxSteppedEventCount.coerceAtLeast(0))
@@ -48,6 +65,12 @@ object Stepper : LogObserver {
 
     fun clearSteppedEvents() {
         _state.update { it.copy(steppedEvents = emptyList()) }
+    }
+
+    private fun addPauseTag(tag: String) {
+        val trimmed = tag.trim()
+        if (trimmed.isEmpty()) return
+        updateConfig { copy(pauseOnTags = pauseOnTags + trimmed) }
     }
 
     override suspend fun emit(event: Log) {

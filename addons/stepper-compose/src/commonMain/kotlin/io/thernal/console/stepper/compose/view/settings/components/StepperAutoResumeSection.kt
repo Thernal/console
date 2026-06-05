@@ -14,7 +14,7 @@ import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.stepper.compose.view.settings.model.StepperIntent
+import io.thernal.console.stepper.compose.stepper.StepperIntent
 
 private val autoResumeOptions = listOf(null, 3, 5, 10, 30)
 
@@ -29,7 +29,7 @@ internal fun StepperAutoResumeSection(
                 AutoResumeChip(
                     seconds = seconds,
                     isSelected = autoResumeSeconds.select { it == seconds },
-                    onPress = { dispatch(StepperIntent.SetAutoResumeSeconds(seconds)) },
+                    onPress = { dispatch(StepperIntent.SetAutoResumeSeconds(seconds = seconds)) },
                 )
             }
         }

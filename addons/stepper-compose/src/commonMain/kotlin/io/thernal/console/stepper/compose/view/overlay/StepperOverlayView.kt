@@ -5,16 +5,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import io.thernal.console.stepper.compose.stepper.Stepper
 import io.thernal.console.stepper.compose.view.overlay.model.StepperOverlayViewModel
 
 @Composable
-internal fun StepperOverlay() {
+internal fun StepperOverlayView() {
     val viewModel = viewModel { StepperOverlayViewModel() }
 
     Box(Modifier.fillMaxSize()) {
         StepperOverlayContent(
             state = viewModel.state,
             dispatch = viewModel::dispatch,
+            onStepperDispatch = Stepper::dispatch,
         )
     }
 }

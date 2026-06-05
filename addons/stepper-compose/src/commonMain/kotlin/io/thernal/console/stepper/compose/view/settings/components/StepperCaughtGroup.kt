@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import io.thernal.console.compose.core.select
 import io.thernal.console.designsystem.components.core.DsDivider
-import io.thernal.console.stepper.compose.view.settings.model.StepperIntent
+import io.thernal.console.stepper.compose.stepper.StepperIntent
 import io.thernal.console.stepper.compose.view.settings.model.StepperSettingsState
 
 @Composable
@@ -18,11 +18,10 @@ internal fun StepperCaughtGroup(
     state: StepperSettingsState,
     dispatch: (StepperIntent) -> Unit,
 ) {
-    val isActive by state.isStepperActive
     val hasEvents by state.steppedEvents.select { it.isNotEmpty() }
 
     AnimatedVisibility(
-        visible = isActive && hasEvents,
+        visible = hasEvents,
         enter = expandVertically() + fadeIn(),
         exit = shrinkVertically() + fadeOut(),
     ) {

@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
-import io.thernal.console.stepper.compose.view.settings.model.StepperIntent
+import io.thernal.console.stepper.compose.stepper.StepperIntent
 
 @Composable
 internal fun StepperActiveSection(
@@ -17,7 +17,7 @@ internal fun StepperActiveSection(
         label = "Active",
         description = "Enable or disable the stepper",
         checked = checked.value,
-        onCheckedChange = { dispatch(StepperIntent.SetEnabled(it)) },
+        onCheckedChange = { dispatch(StepperIntent.SetEnabled(isEnabled = it)) },
     )
 }
 

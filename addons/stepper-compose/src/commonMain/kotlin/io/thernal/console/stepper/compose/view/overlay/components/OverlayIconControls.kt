@@ -12,20 +12,20 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import io.thernal.console.designsystem.components.core.DsIcon
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.stepper.compose.view.overlay.model.StepperOverlayIntent
+import io.thernal.console.stepper.compose.stepper.StepperIntent
 
 @Composable
 internal fun OverlayIconControls(
     isEnabled: State<Boolean>,
     isPaused: State<Boolean>,
     canStep: State<Boolean>,
-    dispatch: (StepperOverlayIntent) -> Unit,
+    dispatch: (StepperIntent) -> Unit,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp4),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        OverlayIconButton(onClick = { dispatch(StepperOverlayIntent.ToggleEnabled) }) {
+        OverlayIconButton(onClick = { dispatch(StepperIntent.ToggleEnabled) }) {
             DsIcon(
                 icon = Icons.Outlined.PowerSettingsNew,
                 size = Theme.metrics.iconMd,
@@ -46,10 +46,10 @@ private fun OverlayActiveControls(
     isEnabled: State<Boolean>,
     isPaused: State<Boolean>,
     canStep: State<Boolean>,
-    dispatch: (StepperOverlayIntent) -> Unit,
+    dispatch: (StepperIntent) -> Unit,
 ) {
     if (!isEnabled.value) return
-    OverlayIconButton(onClick = { dispatch(StepperOverlayIntent.TogglePaused) }) {
+    OverlayIconButton(onClick = { dispatch(StepperIntent.TogglePaused) }) {
         DsIcon(
             icon = if (isPaused.value) Icons.Outlined.PlayArrow else Icons.Outlined.Pause,
             size = Theme.metrics.iconMd,
@@ -62,11 +62,11 @@ private fun OverlayActiveControls(
 @Composable
 private fun OverlayStepButton(
     canStep: State<Boolean>,
-    dispatch: (StepperOverlayIntent) -> Unit,
+    dispatch: (StepperIntent) -> Unit,
 ) {
     OverlayIconButton(
         enabled = canStep.value,
-        onClick = { dispatch(StepperOverlayIntent.StepNext) },
+        onClick = { dispatch(StepperIntent.Next) },
     ) {
         DsIcon(
             icon = Icons.Outlined.SkipNext,

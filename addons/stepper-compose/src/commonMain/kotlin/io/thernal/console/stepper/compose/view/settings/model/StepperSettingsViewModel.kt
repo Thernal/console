@@ -5,10 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.thernal.console.compose.core.IntentHandler
 import io.thernal.console.compose.core.StateHolder
-import io.thernal.console.stepper.compose.Stepper
+import io.thernal.console.stepper.compose.stepper.Stepper
+import io.thernal.console.stepper.compose.stepper.StepperIntent
 import kotlinx.coroutines.launch
 
-class StepperViewModel : ViewModel(), StateHolder, IntentHandler<StepperIntent> {
+class StepperSettingsViewModel : ViewModel(), StateHolder, IntentHandler<StepperSettingsIntent> {
     val state = StepperSettingsState()
 
     init {
@@ -19,35 +20,17 @@ class StepperViewModel : ViewModel(), StateHolder, IntentHandler<StepperIntent> 
 
     override val handler = onIntentUpdate { intent ->
         when (intent) {
-            is StepperIntent.SetTagInput -> state.tagInput.update {
+            is StepperSettingsIntent.SetTagInput -> state.tagInput.update {
                 intent.value.copy(text = intent.value.text)
             }
 
-            is StepperIntent.SetEnabled -> Stepper.updateConfig { copy(enabled = intent.enabled) }
-
-            is StepperIntent.SetPaused -> Stepper.updateConfig { copy(paused = intent.paused) }
-
-            is StepperIntent.SetPauseOnMatch ->
-                Stepper.updateConfig { copy(pauseOnMatch = intent.pauseOnMatch) }
-
-            StepperIntent.AddTag -> {
+            StepperSettingsIntent.AddTag -> {
                 val trimmed = state.tagInput.value.text.trim()
                 if (trimmed.isNotEmpty()) {
-                    Stepper.updateConfig { copy(pauseOnTags = pauseOnTags + trimmed) }
+                    Stepper.dispatch(StepperIntent.AddPauseTag(tag = trimmed))
                     state.tagInput.set(TextFieldValue())
                 }
             }
-
-            is StepperIntent.RemovePauseTag ->
-                Stepper.updateConfig { copy(pauseOnTags = pauseOnTags - intent.tag) }
-
-            is StepperIntent.SetPauseOnLevelAtLeast ->
-                Stepper.updateConfig { copy(pauseOnLevelAtLeast = intent.level) }
-
-            is StepperIntent.SetAutoResumeSeconds ->
-                Stepper.updateConfig { copy(autoResumeSeconds = intent.seconds) }
-
-            StepperIntent.ClearSteppedEvents -> Stepper.clearSteppedEvents()
         }
     }
 
@@ -60,7 +43,6 @@ class StepperViewModel : ViewModel(), StateHolder, IntentHandler<StepperIntent> 
             state.pauseOnTags.set(config.pauseOnTags)
             state.pauseOnLevelAtLeast.set(config.pauseOnLevelAtLeast)
             state.autoResumeSeconds.set(config.autoResumeSeconds)
-            state.isStepperActive.set(config.enabled && config.paused)
         }
     }
 }

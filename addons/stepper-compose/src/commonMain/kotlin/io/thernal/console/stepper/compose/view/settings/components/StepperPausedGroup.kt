@@ -13,13 +13,15 @@ import io.thernal.console.compose.core.preview
 import io.thernal.console.designsystem.components.core.DsDivider
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
-import io.thernal.console.stepper.compose.view.settings.model.StepperIntent
+import io.thernal.console.stepper.compose.stepper.StepperIntent
+import io.thernal.console.stepper.compose.view.settings.model.StepperSettingsIntent
 import io.thernal.console.stepper.compose.view.settings.model.StepperSettingsState
 
 @Composable
 internal fun StepperPausedGroup(
     state: StepperSettingsState,
-    dispatch: (StepperIntent) -> Unit,
+    dispatch: (StepperSettingsIntent) -> Unit,
+    onStepperDispatch: (StepperIntent) -> Unit,
 ) {
     val isVisible by state.isStepperActive
     val isPauseOnMatch by state.pauseOnMatch
@@ -33,7 +35,7 @@ internal fun StepperPausedGroup(
             DsDivider()
             StepperPauseOnMatchSection(
                 checked = state.pauseOnMatch,
-                dispatch = dispatch,
+                dispatch = onStepperDispatch,
             )
             AnimatedVisibility(
                 visible = isPauseOnMatch,
@@ -46,18 +48,19 @@ internal fun StepperPausedGroup(
                         pauseOnTags = state.pauseOnTags,
                         tagInput = state.tagInput,
                         dispatch = dispatch,
+                        onStepperDispatch = onStepperDispatch,
                     )
                     DsDivider()
                     StepperLevelSection(
                         selectedLevel = state.pauseOnLevelAtLeast,
-                        dispatch = dispatch,
+                        dispatch = onStepperDispatch,
                     )
                 }
             }
             DsDivider()
             StepperAutoResumeSection(
                 autoResumeSeconds = state.autoResumeSeconds,
-                dispatch = dispatch,
+                dispatch = onStepperDispatch,
             )
         }
     }
@@ -72,7 +75,7 @@ private fun StepperPauseOnMatchSection(
         label = "Pause on match",
         description = "Pause only when a log matches the filter",
         checked = checked.value,
-        onCheckedChange = { dispatch(StepperIntent.SetPauseOnMatch(it)) },
+        onCheckedChange = { dispatch(StepperIntent.SetPauseOnMatch(shouldPauseOnMatch = it)) },
     )
 }
 
@@ -80,13 +83,15 @@ private fun StepperPauseOnMatchSection(
 @Composable
 private fun PreviewStepperPausedGroup() {
     val state = StepperSettingsState().preview {
-        state.isStepperActive.set(true)
+        state.enabled.set(true)
+        state.paused.set(true)
         state.pauseOnMatch.set(true)
     }
     ThemeProvider {
         StepperPausedGroup(
             state = state,
             dispatch = {},
+            onStepperDispatch = {},
         )
     }
 }

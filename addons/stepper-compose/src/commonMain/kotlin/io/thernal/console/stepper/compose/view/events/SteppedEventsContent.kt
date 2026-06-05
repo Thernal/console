@@ -128,7 +128,7 @@ private fun PreviewSteppedEventsContentEmpty() {
 @Composable
 private fun PreviewSteppedEventsContentFilled() {
     val state = SteppedEventsState().preview {
-        state.events.set(
+        state.steppedEvents.set(
             listOf(
                 Log(message = "Network request completed", tag = "HTTP", level = LogLevel.Info),
                 Log(message = "Cache miss for key: user_profile", tag = "Cache", level = LogLevel.Debug),

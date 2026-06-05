@@ -13,7 +13,7 @@ import io.thernal.console.compose.core.preview
 import io.thernal.console.designsystem.components.core.DsDivider
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
-import io.thernal.console.stepper.compose.view.settings.model.StepperIntent
+import io.thernal.console.stepper.compose.stepper.StepperIntent
 import io.thernal.console.stepper.compose.view.settings.model.StepperSettingsState
 
 @Composable
@@ -46,7 +46,7 @@ private fun StepperPauseSection(
         label = "Pause",
         description = "Hold logs until you step through them",
         checked = checked.value,
-        onCheckedChange = { dispatch(StepperIntent.SetPaused(it)) },
+        onCheckedChange = { dispatch(StepperIntent.SetPaused(isPaused = it)) },
     )
 }
 

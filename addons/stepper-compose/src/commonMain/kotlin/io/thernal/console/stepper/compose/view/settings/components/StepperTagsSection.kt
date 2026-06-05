@@ -26,20 +26,22 @@ import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.stepper.compose.view.settings.model.StepperIntent
+import io.thernal.console.stepper.compose.stepper.StepperIntent
+import io.thernal.console.stepper.compose.view.settings.model.StepperSettingsIntent
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun StepperTagsSection(
     pauseOnTags: State<Set<String>>,
     tagInput: State<TextFieldValue>,
-    dispatch: (StepperIntent) -> Unit,
+    dispatch: (StepperSettingsIntent) -> Unit,
+    onStepperDispatch: (StepperIntent) -> Unit,
 ) {
     SettingsSection(title = "Tags") {
         TagInputField(
             value = tagInput.value,
-            onValueChange = { dispatch(StepperIntent.SetTagInput(it)) },
-            onAdd = { dispatch(StepperIntent.AddTag) },
+            onValueChange = { dispatch(StepperSettingsIntent.SetTagInput(it)) },
+            onAdd = { dispatch(StepperSettingsIntent.AddTag) },
         )
         if (pauseOnTags.value.isEmpty()) {
             DsText(
@@ -58,7 +60,7 @@ internal fun StepperTagsSection(
                         color = Theme.colors.primary01,
                         selected = true,
                         modifier = Modifier.pressable(
-                            onPress = { dispatch(StepperIntent.RemovePauseTag(tag)) },
+                            onPress = { onStepperDispatch(StepperIntent.RemovePauseTag(tag = tag)) },
                         ),
                         trailing = {
                             DsIcon(
@@ -114,6 +116,7 @@ private fun PreviewStepperTagsSectionEmpty() {
             pauseOnTags = remember { mutableStateOf(emptySet()) },
             tagInput = remember { mutableStateOf(TextFieldValue()) },
             dispatch = {},
+            onStepperDispatch = {},
         )
     }
 }
@@ -126,6 +129,7 @@ private fun PreviewStepperTagsSectionFilled() {
             pauseOnTags = remember { mutableStateOf(setOf("HTTP", "Auth", "Cache")) },
             tagInput = remember { mutableStateOf(TextFieldValue()) },
             dispatch = {},
+            onStepperDispatch = {},
         )
     }
 }

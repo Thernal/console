@@ -28,7 +28,7 @@ import io.thernal.console.designsystem.foundation.theme.Theme
 import io.thernal.console.runtime.log.Log
 import io.thernal.console.runtime.log.LogLevel
 import io.thernal.console.stepper.compose.navigation.SteppedEventsRoute
-import io.thernal.console.stepper.compose.view.settings.model.StepperIntent
+import io.thernal.console.stepper.compose.stepper.StepperIntent
 
 private const val CAUGHT_PREVIEW_COUNT = 3
 
