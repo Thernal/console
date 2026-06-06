@@ -1,39 +1,34 @@
 # Console
 
-A lightweight, non-intrusive debug console for Kotlin Multiplatform projects. Wrap your app with `ConsoleProvider` and get a gesture-triggered overlay that collects, filters, and displays logs — on Android, iOS, and JVM.
+A gesture-triggered debug console for Kotlin Multiplatform. Wrap your app with `ConsoleProvider`, then call `Console.notify` from anywhere to capture logs, HTTP traffic, and session state — visible at runtime without touching any production code.
 
-**Platforms:** Android · iOS · JVM
+**Android · iOS · JVM**
+
+---
+
+## What you get
+
+- **Log viewer** — filterable log list with level indicators, tags, and full-text search
+- **Network inspector** — automatic HTTP capture via OkHttp or Ktor: method, status, URL, headers, body, duration
+- **Details panel** — live key/value sidebar for session info, feature flags, or any ambient state
+- **Step debugger** — pause log processing and replay events one by one
+- **Zero production cost** — swap `console-compose` → `console-compose-noop` in release builds; same API, empty bodies
 
 ---
 
 ## Quick start
 
-### 1. Add the dependency
-
-```kotlin
-// settings.gradle.kts — add repository
-pluginManagement {
-    repositories {
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        // ...
-    }
-}
-dependencyResolutionManagement {
-    repositories {
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        // ...
-    }
-}
-```
+### 1. Add dependencies
 
 ```kotlin
 // build.gradle.kts
 dependencies {
-    implementation("io.github.thernal:console-compose:0.1.0")
+    debugImplementation("io.github.thernal:console-compose:0.1.0")
+    releaseImplementation("io.github.thernal:console-compose-noop:0.1.0")
 }
 ```
 
-### 2. Wrap your app
+### 2. Wrap your root composable
 
 ```kotlin
 @Composable
@@ -44,15 +39,15 @@ fun App() {
 }
 ```
 
-### 3. Send logs
+### 3. Log from anywhere
 
 ```kotlin
-// Fire-and-forget (from any thread)
+// Fire-and-forget — thread-safe, non-blocking
 Console.notify {
     Log(message = "User signed in", tag = "Auth", level = LogLevel.Success)
 }
 
-// Suspending — preserves order
+// Suspending — preserves ordering when called sequentially inside a coroutine
 Console.asyncNotify {
     Log(message = "Response: $body", tag = "HTTP", level = LogLevel.Info)
 }
@@ -60,7 +55,7 @@ Console.asyncNotify {
 
 ### 4. Open the console
 
-Swipe **up → down → left → right** anywhere on screen.
+Swipe **↑ → ↓ → ← → →** anywhere on screen (default gesture).
 
 ---
 
@@ -68,40 +63,30 @@ Swipe **up → down → left → right** anywhere on screen.
 
 | Module | Artifact | Description |
 |--------|----------|-------------|
-| `console-runtime` | `io.github.thernal:console-runtime` | Core types: `Log`, `LogLevel`, `Console`, `LogObserver` |
-| `console-api` | `io.github.thernal:console-api` | Public contracts: `ConsoleAddon`, `LogRenderer`, `LogRendererRegistry` |
-| `console-compose` | `io.github.thernal:console-compose` | Compose UI: `ConsoleProvider`, log list, detail view |
-| `console-compose-noop` | `io.github.thernal:console-compose-noop` | No-op stub for production builds |
+| `console-runtime` | `io.github.thernal:console-runtime:0.1.0` | Core types: `Log`, `LogLevel`, `Console`, `LogObserver` |
+| `console-api` | `io.github.thernal:console-api:0.1.0` | Addon contracts: `ConsoleAddon`, `LogRenderer`, `LogRendererRegistry` |
+| `console-compose` | `io.github.thernal:console-compose:0.1.0` | Compose UI: `ConsoleProvider`, log list, detail screen |
+| `console-compose-noop` | `io.github.thernal:console-compose-noop:0.1.0` | No-op stub for production builds |
 
-### Addons
-
-| Module | Artifact | Description |
-|--------|----------|-------------|
-| `addons-details-core` | `io.github.thernal:addons-details-core` | Key/value details panel API |
-| `addons-details-core-noop` | `io.github.thernal:addons-details-core-noop` | No-op stub |
-| `addons-details-compose` | `io.github.thernal:addons-details-compose` | Details panel Compose UI |
-| `addons-stepper-compose` | `io.github.thernal:addons-stepper-compose` | Step-through debugger |
-| `addons-network-core` | `io.github.thernal:addons-network-core` | `NetworkLog` type |
-| `addons-network-okhttp` | `io.github.thernal:addons-network-okhttp` | OkHttp interceptor |
-| `addons-network-ktor` | `io.github.thernal:addons-network-ktor` | Ktor client plugin |
-| `addons-network-ui` | `io.github.thernal:addons-network-ui` | Network log renderer |
+Optional feature modules → [addons/README.md](addons/README.md)
 
 ---
 
-## Production builds
+## Addons at a glance
 
-Swap `console-compose` for `console-compose-noop` in release builds to eliminate all UI and overhead at zero cost:
+| Addon | Artifact(s) | What it adds |
+|-------|-------------|--------------|
+| **Details** | `addons-details-compose` / `addons-details-core-noop` | Live key/value panel |
+| **Network** | `addons-network-core` + `addons-network-ktor` or `addons-network-okhttp` + `addons-network-compose` | HTTP inspector |
+| **Stepper** | `addons-stepper-compose` | Pause-and-step log replay |
 
-```kotlin
-dependencies {
-    debugImplementation("io.github.thernal:console-compose:0.1.0")
-    releaseImplementation("io.github.thernal:console-compose-noop:0.1.0")
-}
-```
+Full setup and configuration → [addons/README.md](addons/README.md)
 
 ---
 
-## Custom trigger
+## Customization
+
+### Custom gesture trigger
 
 ```kotlin
 ConsoleProvider(
@@ -110,6 +95,23 @@ ConsoleProvider(
     YourAppContent()
 }
 ```
+
+### Custom log renderer
+
+Override how `Log.Basic` entries look in the list and detail screen:
+
+```kotlin
+ConsoleProvider(
+    logRenderer = defaultLogRenderer(
+        item = { log, onClick -> MyLogItem(log, onClick) },
+        detail = { log, onBack -> MyLogDetail(log, onBack) },
+    )
+) {
+    YourAppContent()
+}
+```
+
+For addon log types (`Log.Custom` subclasses), register via `LogRendererRegistry` instead — no `ConsoleProvider` change needed.
 
 ---
 

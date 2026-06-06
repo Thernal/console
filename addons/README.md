@@ -1,98 +1,138 @@
 # Addons
 
-Optional feature modules that extend the console. Each addon is self-contained — install only what you need.
-
-Addons are auto-discovered by Gradle; adding a directory under `addons/` with a `build.gradle.kts` is enough to include it in the build.
+Optional modules that extend Console. Each is self-contained — install only what you need.
 
 ---
 
-## Available addons
+## Details
 
-### Details
-
-Displays a persistent key/value panel — useful for session info, feature flags, or any ambient state.
+Displays a live key/value panel inside the console. Useful for session info, feature flags, build metadata, or any ambient state you want visible without digging through logs.
 
 ```kotlin
-// build.gradle.kts
+// debug
 implementation("io.github.thernal:addons-details-compose:0.1.0")
-// production
+// release — no-op stub with the same API, no UI overhead
 implementation("io.github.thernal:addons-details-core-noop:0.1.0")
 ```
 
 ```kotlin
+// Upsert a key/value pair — visible immediately in the Details tab
 ConsoleDetails.put("User" to "alice@example.com")
-ConsoleDetails.put("Env", "staging")
+ConsoleDetails.put("Env" to "staging")
+
+// Remove a key
 ConsoleDetails.remove("Env")
 ```
 
 ---
 
-### Stepper
+## Stepper
 
-Pause log processing and step through events one by one — useful for debugging complex async flows.
+Pauses log processing and lets you replay events one by one — useful for stepping through complex async flows that would otherwise fly past.
 
 ```kotlin
 implementation("io.github.thernal:addons-stepper-compose:0.1.0")
 ```
 
+No code required. The stepper control appears inside the console automatically once the module is on the classpath.
+
 ---
 
-### Network
+## Network
 
-Captures HTTP traffic and renders it in the log list with method, status, URL, headers, and body.
+Captures HTTP traffic and renders it in the log list with method, status code, URL, headers, body, and round-trip duration. Tap any entry to see the full request/response detail.
+
+### OkHttp
 
 ```kotlin
-// OkHttp
 implementation("io.github.thernal:addons-network-core:0.1.0")
 implementation("io.github.thernal:addons-network-okhttp:0.1.0")
-implementation("io.github.thernal:addons-network-ui:0.1.0")
-
-// Ktor
-implementation("io.github.thernal:addons-network-core:0.1.0")
-implementation("io.github.thernal:addons-network-ktor:0.1.0")
-implementation("io.github.thernal:addons-network-ui:0.1.0")
+implementation("io.github.thernal:addons-network-compose:0.1.0")
 ```
 
 ```kotlin
-// OkHttp
-OkHttpClient.Builder()
+val client = OkHttpClient.Builder()
     .addInterceptor(ConsoleNetworkOkHttpInterceptor())
     .build()
+```
 
-// Ktor
-HttpClient {
+### Ktor
+
+```kotlin
+implementation("io.github.thernal:addons-network-core:0.1.0")
+implementation("io.github.thernal:addons-network-ktor:0.1.0")
+implementation("io.github.thernal:addons-network-compose:0.1.0")
+```
+
+```kotlin
+val client = HttpClient {
     install(ConsoleNetworkKtorPlugin)
 }
 ```
 
-`network-ui` auto-installs on Android and iOS — no manual `install()` call needed. Network logs appear in the main log list alongside other entries.
+### Sensitive headers
+
+By default, `Authorization`, `Cookie`, `Set-Cookie`, `X-Api-Key`, and `Proxy-Authorization` header values are replaced with `***`. Pass a `SensitiveHeaders` instance to change this behavior:
+
+```kotlin
+// Custom set and mask string
+ConsoleNetworkOkHttpInterceptor(
+    sensitiveHeaders = SensitiveHeaders(
+        names = setOf("authorization", "x-session-token"),
+        mask = "[redacted]",
+    )
+)
+
+HttpClient {
+    install(ConsoleNetworkKtorPlugin) {
+        sensitiveHeaders = SensitiveHeaders(
+            names = setOf("authorization", "x-session-token"),
+            mask = "[redacted]",
+        )
+    }
+}
+```
+
+```kotlin
+// Disable masking entirely — show all header values as-is
+ConsoleNetworkOkHttpInterceptor(sensitiveHeaders = SensitiveHeaders.NONE)
+
+HttpClient {
+    install(ConsoleNetworkKtorPlugin) {
+        sensitiveHeaders = SensitiveHeaders.NONE
+    }
+}
+```
+
+`SensitiveHeaders.DEFAULT` is the default — the 5 headers listed above, masked with `***`.
+
+`addons-network-compose` auto-installs its renderer on Android and iOS via the addon system — no manual `install()` call needed. Network logs appear inline in the main log list alongside other entries.
 
 ---
 
 ## Building a custom addon
 
-See [CONTRIBUTING.md](../CONTRIBUTING.md) for the full guide. In short:
-
-**1. Module structure**
+### Module structure
 
 ```
 addons/
-  my-addon-core/          # Log.Custom subtype + state (lib.core)
-  my-addon-ui/            # LogRenderer + auto-init (lib.ui)
-  my-addon-core-noop/     # No-op stub for production (lib.core)
+  my-addon-core/     # Log.Custom subtype + any state (convention.lib.core)
+  my-addon-compose/  # LogRenderer + auto-init (convention.lib.ui)
+  my-addon-core-noop/ # No-op stub for production (convention.lib.core)
 ```
 
-**2. Define a log type** (optional — skip if your addon has no custom log shape)
+### 1. Define a log type
 
 ```kotlin
 data class MyLog(
     override val message: String,
     override val level: LogLevel,
-    // ...
+    val customField: String,
+    // standard Log fields with defaults ...
 ) : Log.Custom
 ```
 
-**3. Register a renderer**
+### 2. Register a renderer
 
 ```kotlin
 object MyAddon : ConsoleAddon {
@@ -102,11 +142,12 @@ object MyAddon : ConsoleAddon {
 }
 ```
 
-`MyLog` instances sent via `Console.notify { MyLog(...) }` will then render with `MyLogRenderer` in the existing log list — no new tab required.
+`MyLog` entries sent via `Console.notify { MyLog(...) }` will render with `MyLogRenderer` in the existing log list. No new tab required unless you want one.
 
-**4. Wire auto-init**
+### 3. Wire auto-init
 
-Android — `AndroidManifest.xml`:
+**Android** — subclass `ConsoleAutoInitProvider` and declare it in `AndroidManifest.xml`:
+
 ```xml
 <provider
     android:name=".MyAddonAutoInit"
@@ -114,7 +155,8 @@ Android — `AndroidManifest.xml`:
     android:exported="false" />
 ```
 
-iOS / native:
+**iOS / native** — top-level eager property:
+
 ```kotlin
 @EagerInitialization
 @OptIn(ExperimentalNativeApi::class)

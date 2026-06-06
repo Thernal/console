@@ -1,7 +1,7 @@
 package io.thernal.console.compose.trigger
 
 import androidx.compose.ui.Modifier
-import io.thernal.console.compose.trigger.Swipe
+import io.thernal.console.api.trigger.Swipe
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.AwaitPointerEventScope
 import androidx.compose.ui.input.pointer.PointerEventPass

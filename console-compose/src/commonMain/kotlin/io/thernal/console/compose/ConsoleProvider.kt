@@ -26,7 +26,7 @@ import io.thernal.console.compose.addon.DispatchLogRenderer
 import io.thernal.console.api.trigger.ConsoleTrigger
 import io.thernal.console.api.ui.LogRendererRegistry
 import io.thernal.console.compose.addon.BasicLogRenderer
-import io.thernal.console.compose.trigger.Swipe
+import io.thernal.console.api.trigger.Swipe
 import io.thernal.console.compose.trigger.swipeSequence
 import io.thernal.console.compose.navigation.ConsoleNavHost
 import io.thernal.console.compose.navigation.ConsoleNavigatorImpl

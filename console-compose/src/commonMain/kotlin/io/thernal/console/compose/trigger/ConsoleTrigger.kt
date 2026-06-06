@@ -1,6 +1,7 @@
 package io.thernal.console.compose.trigger
 
 import io.thernal.console.api.trigger.ConsoleTrigger
+import io.thernal.console.api.trigger.Swipe
 
 /**
  * Built-in swipe-sequence trigger for the Console overlay.

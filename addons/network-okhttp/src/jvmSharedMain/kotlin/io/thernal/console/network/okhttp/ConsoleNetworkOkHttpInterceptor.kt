@@ -1,6 +1,8 @@
 package io.thernal.console.network.okhttp
 
 import io.thernal.console.network.NetworkLog
+import io.thernal.console.network.SensitiveHeaders
+import io.thernal.console.network.toNetworkLevel
 import io.thernal.console.runtime.console.Console
 import io.thernal.console.runtime.log.LogLevel
 import okhttp3.Headers
@@ -8,21 +10,13 @@ import okhttp3.Interceptor
 import okhttp3.RequestBody
 import okhttp3.Response
 import okio.Buffer
-import java.net.HttpURLConnection
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
-
-private val SensitiveHeaderNames = setOf(
-    "authorization",
-    "cookie",
-    "set-cookie",
-    "x-api-key",
-    "proxy-authorization",
-)
 
 @OptIn(ExperimentalUuidApi::class)
 class ConsoleNetworkOkHttpInterceptor(
     private val maxBodyBytes: Long = MAX_BODY_BYTES,
+    private val sensitiveHeaders: SensitiveHeaders = SensitiveHeaders.DEFAULT,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -94,19 +88,10 @@ class ConsoleNetworkOkHttpInterceptor(
     }
 
     private fun Headers.toLogMap(): Map<String, String> = names().associateWith { name ->
-        if (name.lowercase() in SensitiveHeaderNames) {
-            "***"
+        if (sensitiveHeaders.shouldMask(name)) {
+            sensitiveHeaders.mask
         } else {
             values(name).joinToString(", ")
-        }
-    }
-
-    private fun Int.toNetworkLevel(): LogLevel {
-        return when {
-            this < HttpURLConnection.HTTP_MULT_CHOICE -> LogLevel.Success
-            this < HttpURLConnection.HTTP_BAD_REQUEST -> LogLevel.Info
-            this < HttpURLConnection.HTTP_INTERNAL_ERROR -> LogLevel.Warning
-            else -> LogLevel.Error
         }
     }
 

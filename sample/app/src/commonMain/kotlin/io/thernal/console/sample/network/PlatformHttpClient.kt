@@ -7,7 +7,8 @@ import io.thernal.console.network.ktor.ConsoleNetworkKtorPlugin
 
 internal fun configureConsoleClient(client: HttpClient): HttpClient {
     return client.config {
-        install(ConsoleNetworkKtorPlugin)
+        install(ConsoleNetworkKtorPlugin) {
+        }
         install(DefaultRequest) {
             headers.append(
                 name = "Accept",

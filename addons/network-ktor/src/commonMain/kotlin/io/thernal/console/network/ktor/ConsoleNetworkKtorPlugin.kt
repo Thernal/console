@@ -8,30 +8,23 @@ import io.ktor.client.plugins.api.Send
 import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.Headers
-import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.OutgoingContent
 import io.ktor.http.content.TextContent
 import io.thernal.console.network.NetworkLog
+import io.thernal.console.network.SensitiveHeaders
+import io.thernal.console.network.toNetworkLevel
 import io.thernal.console.runtime.console.Console
 import io.thernal.console.runtime.log.LogLevel
-import kotlin.time.TimeSource
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-private val SensitiveHeaderNames = setOf(
-    "authorization",
-    "cookie",
-    "set-cookie",
-    "x-api-key",
-    "proxy-authorization",
-)
-
-val ConsoleNetworkKtorPlugin = createClientPlugin("ConsoleNetwork") {
+val ConsoleNetworkKtorPlugin = createClientPlugin("ConsoleNetwork", ::ConsoleNetworkKtorConfig) {
+    val sensitiveHeaders = pluginConfig.sensitiveHeaders
     on(Send) { request ->
-        val startedAt = TimeSource.Monotonic.markNow()
+        val startedAt = kotlin.time.TimeSource.Monotonic.markNow()
         val method = request.method.value
         val url = request.url.buildString()
-        val requestHeaders = request.headers.build().toHeaderMap()
+        val requestHeaders = request.headers.build().toHeaderMap(sensitiveHeaders)
         val requestBody = request.body.toLogBody()
         val groupId = Uuid.random().toString()
 
@@ -51,7 +44,7 @@ val ConsoleNetworkKtorPlugin = createClientPlugin("ConsoleNetwork") {
             val savedCall = runCatching { call.save() }.getOrNull()
             val response = savedCall?.response ?: call.response
             val statusCode = response.status.value
-            val responseHeaders = response.headers.toHeaderMap()
+            val responseHeaders = response.headers.toHeaderMap(sensitiveHeaders)
             val responseBody = runCatching { response.bodyAsText() }
                 .getOrElse { error -> error.toUnavailableBody() }
 
@@ -72,7 +65,7 @@ val ConsoleNetworkKtorPlugin = createClientPlugin("ConsoleNetwork") {
         } catch (error: ResponseException) {
             val elapsedMs = startedAt.elapsedNow().inWholeMilliseconds
             val statusCode = error.response.status.value
-            val responseHeaders = error.response.headers.toHeaderMap()
+            val responseHeaders = error.response.headers.toHeaderMap(sensitiveHeaders)
             val responseBody = runCatching { error.response.call.save().response.bodyAsText() }
                 .getOrElse { bodyError -> bodyError.toUnavailableBody() }
 
@@ -111,10 +104,10 @@ val ConsoleNetworkKtorPlugin = createClientPlugin("ConsoleNetwork") {
     }
 }
 
-private fun Headers.toHeaderMap(): Map<String, String> {
+private fun Headers.toHeaderMap(sensitiveHeaders: SensitiveHeaders): Map<String, String> {
     return entries().associate { (key, values) ->
-        key to if (key.lowercase() in SensitiveHeaderNames) {
-            "***"
+        key to if (sensitiveHeaders.shouldMask(key)) {
+            sensitiveHeaders.mask
         } else {
             values.joinToString(separator = ", ")
         }
@@ -135,13 +128,4 @@ private fun Any.toLogBody(): String? {
 
 private fun Throwable.toUnavailableBody(): String {
     return "<unavailable: ${this::class.simpleName}: ${message.orEmpty()}>"
-}
-
-private fun Int.toNetworkLevel(): LogLevel {
-    return when {
-        this < HttpStatusCode.MultipleChoices.value -> LogLevel.Success
-        this < HttpStatusCode.BadRequest.value -> LogLevel.Info
-        this < HttpStatusCode.InternalServerError.value -> LogLevel.Warning
-        else -> LogLevel.Error
-    }
 }
