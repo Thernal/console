@@ -1,3 +1,5 @@
+@file:Suppress("UnusedParameter")
+
 package io.thernal.console.details
 
 interface ConsoleKey {

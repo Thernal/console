@@ -4,10 +4,6 @@ plugins {
 }
 
 kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-Xsuppress-warning=UNUSED_PARAMETER")
-    }
-
     sourceSets {
         commonMain.dependencies {
             api(libs.kotlinx.coroutines.core)
