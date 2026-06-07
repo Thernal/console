@@ -30,6 +30,10 @@ gradlePlugin {
             id = "io.thernal.console.lib.ui"
             implementationClass = "io.thernal.console.buildlogic.plugins.LibUiConventionPlugin"
         }
+        register("libJvmConvention") {
+            id = "io.thernal.console.lib.jvm"
+            implementationClass = "io.thernal.console.buildlogic.plugins.LibJvmConventionPlugin"
+        }
         register("libPublishConvention") {
             id = "io.thernal.console.publish"
             implementationClass = "io.thernal.console.buildlogic.plugins.LibPublishConventionPlugin"

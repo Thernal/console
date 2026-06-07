@@ -100,5 +100,6 @@ vanniktech-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanni
 # Conventions (resolved from build-logic)
 convention-lib = { id = "io.thernal.console.lib", version = "unspecified" }
 convention-lib-core = { id = "io.thernal.console.lib.core", version = "unspecified" }
+convention-lib-jvm = { id = "io.thernal.console.lib.jvm", version = "unspecified" }
 convention-lib-ui = { id = "io.thernal.console.lib.ui", version = "unspecified" }
 convention-publish = { id = "io.thernal.console.publish", version = "unspecified" }
