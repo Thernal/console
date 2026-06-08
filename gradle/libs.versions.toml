@@ -1,6 +1,6 @@
 [versions]
 # Library
-console = "0.1.0"
+console = "0.1.1"
 
 # Language
 kotlin = "2.4.0"

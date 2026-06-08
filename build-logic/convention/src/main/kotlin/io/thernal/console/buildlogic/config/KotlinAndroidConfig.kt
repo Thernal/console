@@ -9,7 +9,7 @@ import io.thernal.console.buildlogic.extensions.libs
 private const val NAMESPACE_PREFIX = "io.thernal.console"
 
 internal fun Project.configureAndroidTarget(extension: KotlinMultiplatformExtension) {
-    val namespaceSuffix = path.removePrefix(":libs:").replace(':', '.')
+    val namespaceSuffix = path.trimStart(':').replace(':', '.').replace('-', '.')
     val namespace = "$NAMESPACE_PREFIX.$namespaceSuffix"
 
     val compileSdk = libs.findVersion("android-compile-sdk").orElseThrow().requiredVersion.toInt()
