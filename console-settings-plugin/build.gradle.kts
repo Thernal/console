@@ -1,4 +1,5 @@
 import com.vanniktech.maven.publish.SonatypeHost
+import java.util.Properties
 
 plugins {
     `kotlin-dsl`
@@ -9,8 +10,13 @@ dependencies {
     implementation(gradleApi())
 }
 
-group = "io.github.thernal"
-version = "0.1.1"
+val rootProps = Properties().also { props ->
+    rootProject.projectDir.resolve("../gradle.properties")
+        .takeIf { it.exists() }
+        ?.inputStream()?.use(props::load)
+}
+group = rootProps.getProperty("GROUP", "io.github.thernal")
+version = rootProps.getProperty("VERSION", "unspecified")
 
 gradlePlugin {
     plugins {
@@ -22,11 +28,11 @@ gradlePlugin {
 }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
+    publishToMavenCentral(automaticRelease = true)
     if (!providers.gradleProperty("signingInMemoryKey").orNull.isNullOrBlank()) {
         signAllPublications()
     }
-    coordinates("io.github.thernal", "console-settings-plugin", "0.1.1")
+    coordinates(group.toString(), "console-settings-plugin", version.toString())
     pom {
         name.set("console-settings-plugin")
         description.set("Console KMP — Gradle settings plugin (adds required repositories)")

@@ -4,14 +4,13 @@ import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import io.thernal.console.buildlogic.extensions.libs
 
 @Suppress("unused")
 class LibPublishConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             val group = providers.gradleProperty("GROUP").get()
-            val consoleVersion = libs.findVersion("console").orElseThrow().requiredVersion
+            val consoleVersion = providers.gradleProperty("VERSION").get()
 
             // Must be set BEFORE apply — vanniktech reads and finalizes these on apply
             project.group = group
