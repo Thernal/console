@@ -37,7 +37,7 @@ if (env.get() != "dev") {
     configurations.configureEach {
         resolutionStrategy.dependencySubstitution {
             substitute(module("io.github.thernal:console-compose")).using(module("io.github.thernal:console-compose-noop:0.1.0"))
-            substitute(module("io.github.thernal:details-core")).using(module("io.github.thernal:details-core-noop:0.1.0"))
+            substitute(module("io.github.thernal:console-details-core")).using(module("io.github.thernal:console-details-core-noop:0.1.0"))
         }
     }
 }

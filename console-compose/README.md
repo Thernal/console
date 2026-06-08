@@ -3,7 +3,7 @@
 Compose UI layer for Console. Provides `ConsoleProvider` and the default log list and detail screens.
 
 ```kotlin
-implementation("io.github.thernal:console-compose:0.1.0")
+implementation("io.github.thernal:console-compose:<version>")
 ```
 
 For production builds, replace with `console-compose-noop` to eliminate all UI at zero cost.

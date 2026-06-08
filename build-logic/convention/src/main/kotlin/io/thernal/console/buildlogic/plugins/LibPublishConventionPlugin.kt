@@ -11,10 +11,16 @@ class LibPublishConventionPlugin : Plugin<Project> {
         with(target) {
             val group = providers.gradleProperty("GROUP").get()
             val consoleVersion = providers.gradleProperty("VERSION").get()
+            val artifactId = if (project.name.startsWith("console-")) {
+                project.name
+            } else {
+                "console-${project.name}"
+            }
 
             // Must be set BEFORE apply — vanniktech reads and finalizes these on apply
             project.group = group
             project.version = consoleVersion
+            project.extensions.extraProperties["POM_ARTIFACT_ID"] = artifactId
 
             pluginManager.apply("com.vanniktech.maven.publish")
 
@@ -24,8 +30,8 @@ class LibPublishConventionPlugin : Plugin<Project> {
                     signAllPublications()
                 }
                 pom {
-                    name.set(project.name)
-                    description.set("Console KMP — ${project.name}")
+                    name.set(artifactId)
+                    description.set("Console KMP — $artifactId")
                     url.set("https://github.com/Thernal/Console")
                     licenses {
                         license {

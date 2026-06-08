@@ -3,7 +3,7 @@
 Public contracts for the Console addon system. Depend on this module to build addons without pulling in any Compose UI.
 
 ```kotlin
-implementation("io.github.thernal:console-api:0.1.0")
+implementation("io.github.thernal:console-api:<version>")
 ```
 
 ---

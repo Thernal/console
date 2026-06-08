@@ -1,31 +1,51 @@
+<div align="center">
+
 # Console
 
-A gesture-triggered debug console for Kotlin Multiplatform. Wrap your app with `ConsoleProvider`, then call `Console.notify` from anywhere to capture logs, HTTP traffic, and session state — visible at runtime without touching any production code.
+**A gesture-triggered debug overlay for Kotlin Multiplatform apps.**  
+Drop it in, swipe to open, and inspect logs, HTTP traffic, and session state — without touching production code.
 
-**Android · iOS · JVM**
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.thernal/console-compose?label=Maven%20Central&color=4CAF50)](https://central.sonatype.com/artifact/io.github.thernal/console-compose)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.x-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org)
+[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-1.x-4285F4)](https://www.jetbrains.com/compose-multiplatform/)
+[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20JVM-orange)](#)
+
+<!-- 📸 SCREENSHOT: Full-screen shot of the Console overlay open on a phone, showing the log list with colorful level indicators. Ideal width: ~360px, centered. -->
+
+</div>
 
 ---
 
-## What you get
+## Features at a glance
 
-- **Log viewer** — filterable log list with level indicators, tags, and full-text search
-- **Network inspector** — automatic HTTP capture via OkHttp or Ktor: method, status, URL, headers, body, duration
-- **Details panel** — live key/value sidebar for session info, feature flags, or any ambient state
-- **Step debugger** — pause log processing and replay events one by one
-- **Zero production cost** — swap `console-compose` → `console-compose-noop` in release builds; same API, empty bodies
+| | |
+|---|---|
+| 📋 **Log viewer** | Filterable log list — levels, tags, full-text search |
+| 🎨 **Custom log types** | Define `Log.Custom` subtypes with their own UI renderers |
+| 🔍 **Search & filter** | Real-time full-text search across message, tag, and level |
+| 🔗 **Log grouping** | Link related logs with a shared `groupId` |
+| 🌐 **Network inspector** | OkHttp + Ktor interceptors with headers, body, duration, status |
+| 🗂️ **Details panel** | Live key/value sidebar for session info, flags, build metadata |
+| ⏸️ **Stepper** | Pause log processing and replay events one-by-one |
+| 🖥️ **Custom tabs** | Add your own full screens to the Console navigation bar |
+| 👆 **Custom triggers** | Swap the default swipe for any gesture — double-tap, shake, etc. |
+| 🚫 **Zero prod cost** | Noop stubs with identical APIs — no UI, no overhead in release builds |
 
 ---
 
 ## Quick start
 
+> **Latest version:** see the Maven Central badge at the top, or check [central.sonatype.com](https://central.sonatype.com/artifact/io.github.thernal/console-compose). Replace `<version>` in all snippets below with that value.
+
 ### 1. Apply the settings plugin
 
-The settings plugin adds the JetBrains Compose repository, which is required to resolve Compose Multiplatform artifacts.
+Adds the JetBrains Compose repository required to resolve Compose Multiplatform artifacts.
 
 ```kotlin
 // settings.gradle.kts
 plugins {
-    id("io.github.thernal.console") version "0.1.0"
+    id("io.github.thernal.console") version "<version>"
 }
 ```
 
@@ -34,8 +54,8 @@ plugins {
 ```kotlin
 // build.gradle.kts
 dependencies {
-    debugImplementation("io.github.thernal:console-compose:0.1.0")
-    releaseImplementation("io.github.thernal:console-compose-noop:0.1.0")
+    debugImplementation("io.github.thernal:console-compose:<version>")
+    releaseImplementation("io.github.thernal:console-compose-noop:<version>")
 }
 ```
 
@@ -50,54 +70,139 @@ fun App() {
 }
 ```
 
-### 4. Log from anywhere
+### 4. Open the console
+
+Swipe **↑ ↓ ← →** anywhere on screen (default gesture).
+
+---
+
+## Logging
+
+### Basic logs
 
 ```kotlin
 // Fire-and-forget — thread-safe, non-blocking
 Console.notify {
-    Log(message = "User signed in", tag = "Auth", level = LogLevel.Success)
+    Log(message = "Payment initiated", tag = "Payments", level = LogLevel.Info)
 }
 
 // Suspending — preserves ordering when called sequentially inside a coroutine
 Console.asyncNotify {
-    Log(message = "Response: $body", tag = "HTTP", level = LogLevel.Info)
+    Log(message = "Token refreshed", tag = "Auth", level = LogLevel.Success)
 }
 ```
 
-### 5. Open the console
+### Log levels
 
-Swipe **↑ → ↓ → ← → →** anywhere on screen (default gesture).
+| Level | Typical use |
+|-------|-------------|
+| `None` | No level indicator |
+| `Verbose` | Trace-level detail |
+| `Debug` | Development information |
+| `Info` | General flow events |
+| `Success` | Completed operations |
+| `Warning` | Recoverable issues |
+| `Error` | Failures that were handled |
+| `Fatal` | Unrecoverable crashes |
+
+<!-- 📸 SCREENSHOT: Log list showing one entry per level — each with its distinct color chip/indicator. Arrange them vertically: Verbose (grey), Debug (blue), Info (teal), Success (green), Warning (amber), Error (red), Fatal (dark red). -->
+
+### Log grouping
+
+Logs with the same `groupId` are visually linked — useful for correlating events like a network request and its response.
+
+```kotlin
+val id = uuid()
+
+Console.notify {
+    Log(message = "→ POST /auth/login", tag = "Network", level = LogLevel.Debug, groupId = id)
+}
+
+// ... later ...
+
+Console.notify {
+    Log(message = "← 200 OK (143ms)", tag = "Network", level = LogLevel.Success, groupId = id)
+}
+```
+
+<!-- 📸 SCREENSHOT: Log list showing two grouped entries visually connected (indented or with a vertical bar on the left), representing a request and its response from the same call. -->
 
 ---
 
-## Modules
+## Custom log types
 
-| Module | Artifact | Description |
-|--------|----------|-------------|
-| `console-runtime` | `io.github.thernal:console-runtime:0.1.0` | Core types: `Log`, `LogLevel`, `Console`, `LogObserver` |
-| `console-api` | `io.github.thernal:console-api:0.1.0` | Addon contracts: `ConsoleAddon`, `LogRenderer`, `LogRendererRegistry` |
-| `console-compose` | `io.github.thernal:console-compose:0.1.0` | Compose UI: `ConsoleProvider`, log list, detail screen |
-| `console-compose-noop` | `io.github.thernal:console-compose-noop:0.1.0` | No-op stub for production builds |
+Define a subtype of `Log.Custom` to carry structured data through the pipeline.
 
-Optional feature modules → [addons/README.md](addons/README.md)
+```kotlin
+data class AnalyticsLog(
+    override val message: String,
+    override val level: LogLevel = LogLevel.Debug,
+    val eventName: String,
+    val params: Map<String, Any> = emptyMap(),
+    override val id: String = uuid(),
+    override val tag: String? = "Analytics",
+    override val groupId: String? = null,
+    override val timestamp: Instant = Clock.System.now(),
+) : Log.Custom
+```
+
+Send it like any other log:
+
+```kotlin
+Console.notify {
+    AnalyticsLog(
+        message = "screen_view",
+        eventName = "screen_view",
+        params = mapOf("screen_name" to "Checkout"),
+    )
+}
+```
+
+### Custom log renderer
+
+Register a renderer so `AnalyticsLog` entries have their own item and detail screens:
+
+```kotlin
+object AnalyticsAddon : ConsoleAddon {
+    override fun onInstall(console: ConsoleScope) {
+        LogRendererRegistry.register<AnalyticsLog>(
+            LogRenderer(
+                item = { log, onClick -> AnalyticsLogItem(log, onClick) },
+                detail = { log, onBack -> AnalyticsLogDetail(log, onBack) },
+            )
+        )
+    }
+}
+
+// Call once at startup
+AnalyticsAddon.install()
+```
+
+<!-- 📸 SCREENSHOT: Log list showing a custom log entry with a visually distinct style (different background, icon, or color chip) compared to surrounding standard log entries. -->
+
+<!-- 📸 SCREENSHOT: Custom log detail screen — full-screen view of the custom log entry with its structured fields rendered (e.g. event name, params as a key/value table). -->
 
 ---
 
-## Addons at a glance
+## Search & filter
 
-| Addon | Artifact(s) | What it adds |
-|-------|-------------|--------------|
-| **Details** | `details-compose` / `details-core-noop` | Live key/value panel |
-| **Network** | `network-core` + `network-ktor` or `network-okhttp` + `network-compose` | HTTP inspector |
-| **Stepper** | `stepper-compose` | Pause-and-step log replay |
+The log list filters in real time as you type. The query matches against **message**, **tag**, and **level name**.
 
-Full setup and configuration → [addons/README.md](addons/README.md)
+<!-- 📸 SCREENSHOT: Log list with the search bar expanded and a query entered (e.g. "auth"), showing only matching entries with the query term highlighted. -->
 
 ---
 
-## Customization
+## Triggers
 
-### Custom gesture trigger
+### Default trigger
+
+The built-in gesture is a swipe sequence: **↑ ↓ ← →**
+
+```kotlin
+ConsoleProvider { YourAppContent() }  // default trigger, no configuration needed
+```
+
+### Custom swipe sequence
 
 ```kotlin
 ConsoleProvider(
@@ -107,9 +212,183 @@ ConsoleProvider(
 }
 ```
 
-### Custom log renderer
+### Fully custom trigger
 
-Override how `Log.Basic` entries look in the list and detail screen:
+`ConsoleTrigger` is a `fun interface` — any `Modifier` extension that calls `onDetected()` qualifies:
+
+```kotlin
+// Double-tap anywhere on screen
+val doubleTapTrigger = ConsoleTrigger { onDetected ->
+    pointerInput(Unit) {
+        detectTapGestures(onDoubleTap = { onDetected() })
+    }
+}
+
+ConsoleProvider(trigger = doubleTapTrigger) {
+    YourAppContent()
+}
+```
+
+```kotlin
+// Long-press trigger
+val longPressTrigger = ConsoleTrigger { onDetected ->
+    pointerInput(Unit) {
+        detectTapGestures(onLongPress = { onDetected() })
+    }
+}
+```
+
+---
+
+## Network inspector
+
+Captures HTTP traffic and renders it in the log list with method, status code, URL, headers, body, and round-trip duration. Tap any entry to see the full request/response detail.
+
+<!-- 📸 SCREENSHOT: Log list showing several network log entries — each showing method badge (GET/POST), status code chip (200 green, 401 orange, 500 red), URL snippet, and duration in ms. -->
+
+<!-- 📸 SCREENSHOT: Network log detail screen — expanded view showing request URL, method, headers table (with masked Authorization header), request body, response status, response headers, and response body. -->
+
+### OkHttp
+
+```kotlin
+// build.gradle.kts
+dependencies {
+    debugImplementation("io.github.thernal:console-network-core:<version>")
+    debugImplementation("io.github.thernal:console-network-okhttp:<version>")
+    debugImplementation("io.github.thernal:console-network-compose:<version>")
+}
+```
+
+```kotlin
+val client = OkHttpClient.Builder()
+    .addInterceptor(ConsoleNetworkOkHttpInterceptor())
+    .build()
+```
+
+### Ktor
+
+```kotlin
+// build.gradle.kts
+dependencies {
+    debugImplementation("io.github.thernal:console-network-core:<version>")
+    debugImplementation("io.github.thernal:console-network-ktor:<version>")
+    debugImplementation("io.github.thernal:console-network-compose:<version>")
+}
+```
+
+```kotlin
+val client = HttpClient {
+    install(ConsoleNetworkKtorPlugin)
+}
+```
+
+### Sensitive headers
+
+`Authorization`, `Cookie`, `Set-Cookie`, `X-Api-Key`, and `Proxy-Authorization` are masked with `***` by default (`SensitiveHeaders.DEFAULT`).
+
+```kotlin
+// Custom names and mask string
+ConsoleNetworkOkHttpInterceptor(
+    sensitiveHeaders = SensitiveHeaders(
+        names = setOf("authorization", "x-session-token"),
+        mask = "[redacted]",
+    )
+)
+
+// Disable masking entirely
+ConsoleNetworkOkHttpInterceptor(sensitiveHeaders = SensitiveHeaders.NONE)
+
+// Same API for Ktor
+HttpClient {
+    install(ConsoleNetworkKtorPlugin) {
+        sensitiveHeaders = SensitiveHeaders.NONE
+    }
+}
+```
+
+---
+
+## Details panel
+
+A live key/value sidebar for session info, feature flags, user context, or any ambient state — visible at a glance without scrolling through logs.
+
+```kotlin
+// build.gradle.kts
+dependencies {
+    debugImplementation("io.github.thernal:console-details-compose:<version>")
+    releaseImplementation("io.github.thernal:console-details-core-noop:<version>")
+}
+```
+
+```kotlin
+// Upsert — updates in place if the key already exists
+ConsoleDetails.put("User" to "alice@example.com")
+ConsoleDetails.put("Environment" to "staging")
+ConsoleDetails.put("Feature:NewCheckout" to "enabled")
+
+// Remove
+ConsoleDetails.remove("Environment")
+```
+
+<!-- 📸 SCREENSHOT: Console open on the Details tab showing a clean key/value list — e.g. User, Environment, App Version, Feature flags with their current values. -->
+
+---
+
+## Stepper
+
+Pauses log processing and lets you replay events one-by-one — useful for stepping through complex async flows that would otherwise scroll past instantly.
+
+```kotlin
+// build.gradle.kts
+dependencies {
+    debugImplementation("io.github.thernal:console-stepper-compose:<version>")
+}
+```
+
+No code required. Once the module is on the classpath, the stepper control appears automatically as a floating overlay inside the console. Tap **Pause** to freeze the pipeline, **Step** to advance one event at a time, and **Resume** to return to live mode.
+
+<!-- 📸 SCREENSHOT: Console with the Stepper overlay visible — showing the Pause / Step / Resume floating controls over the log list. Ideally captured with the pipeline paused and a queued-events badge showing a count. -->
+
+---
+
+## Custom tabs
+
+Add your own full-screen view to the Console navigation bar by implementing `ConsoleAddon`.
+
+```kotlin
+// 1. Define the tab
+object MetricsTab : ConsoleTab {
+    override val title = "Metrics"
+    override val icon = Icons.Default.BarChart
+    override val order = 10  // lower = further left in the nav bar
+
+    @Composable
+    override fun Content() {
+        MetricsScreen()
+    }
+}
+
+// 2. Expose it via an addon
+object MetricsAddon : ConsoleAddon {
+    override fun tab(): ConsoleTab = MetricsTab
+}
+
+// 3. Install once at app startup
+MetricsAddon.install()
+```
+
+Beyond tabs, `ConsoleAddon` also supports:
+
+- **`navGraph()`** — register a full navigation sub-graph behind your tab
+- **`overlay()`** — inject a floating composable on top of the console UI
+
+<!-- 📸 SCREENSHOT: Console open showing the bottom navigation bar with a custom tab selected (e.g. "Metrics" with a bar-chart icon) alongside the default Logs tab. The custom tab's content screen is visible. -->
+
+---
+
+## Custom log renderer for `Log.Basic`
+
+Override how standard log entries look without defining a custom type:
 
 ```kotlin
 ConsoleProvider(
@@ -122,7 +401,32 @@ ConsoleProvider(
 }
 ```
 
-For addon log types (`Log.Custom` subclasses), register via `LogRendererRegistry` instead — no `ConsoleProvider` change needed.
+For `Log.Custom` subtypes, use `LogRendererRegistry` instead — no `ConsoleProvider` change needed.
+
+---
+
+## Modules
+
+### Core
+
+| Artifact | Description |
+|----------|-------------|
+| `io.github.thernal:console-runtime:<version>` | Core types — `Log`, `LogLevel`, `Console`, `LogObserver` |
+| `io.github.thernal:console-api:<version>` | Addon contracts — `ConsoleAddon`, `ConsoleTab`, `LogRenderer`, `LogRendererRegistry` |
+| `io.github.thernal:console-compose:<version>` | Compose UI — `ConsoleProvider`, log list, detail screen |
+| `io.github.thernal:console-compose-noop:<version>` | No-op stub for production builds |
+
+### Addons
+
+| Artifact | Description |
+|----------|-------------|
+| `io.github.thernal:console-details-compose:<version>` | Live key/value Details panel |
+| `io.github.thernal:console-details-core-noop:<version>` | No-op stub for production builds |
+| `io.github.thernal:console-network-core:<version>` | Shared network log types |
+| `io.github.thernal:console-network-okhttp:<version>` | OkHttp interceptor |
+| `io.github.thernal:console-network-ktor:<version>` | Ktor plugin |
+| `io.github.thernal:console-network-compose:<version>` | Network log UI renderer |
+| `io.github.thernal:console-stepper-compose:<version>` | Pause-and-step log replay |
 
 ---
 

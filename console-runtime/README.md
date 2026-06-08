@@ -3,7 +3,7 @@
 Core types and log processing pipeline. No UI dependencies — safe to use in any layer.
 
 ```kotlin
-implementation("io.github.thernal:console-runtime:0.1.0")
+implementation("io.github.thernal:console-runtime:<version>")
 ```
 
 ---
