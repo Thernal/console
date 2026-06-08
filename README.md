@@ -66,7 +66,7 @@ Console.asyncNotify {
 
 ### 5. Open the console
 
-Swipe **↑ → ↓ → ← → →** anywhere on screen (default gesture).
+Swipe **↑ ↓ ← →** anywhere on screen (default gesture).
 
 ---
 
