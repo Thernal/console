@@ -10,7 +10,7 @@ dependencies {
 }
 
 group = "io.github.thernal"
-version = "0.1.0"
+version = "0.1.1"
 
 gradlePlugin {
     plugins {
@@ -22,11 +22,11 @@ gradlePlugin {
 }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
     if (!providers.gradleProperty("signingInMemoryKey").orNull.isNullOrBlank()) {
         signAllPublications()
     }
-    coordinates("io.github.thernal", "console-settings-plugin", "0.1.0")
+    coordinates("io.github.thernal", "console-settings-plugin", "0.1.1")
     pom {
         name.set("console-settings-plugin")
         description.set("Console KMP — Gradle settings plugin (adds required repositories)")
