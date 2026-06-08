@@ -18,7 +18,18 @@ A gesture-triggered debug console for Kotlin Multiplatform. Wrap your app with `
 
 ## Quick start
 
-### 1. Add dependencies
+### 1. Apply the settings plugin
+
+The settings plugin adds the JetBrains Compose repository, which is required to resolve Compose Multiplatform artifacts.
+
+```kotlin
+// settings.gradle.kts
+plugins {
+    id("io.github.thernal.console") version "0.1.0"
+}
+```
+
+### 2. Add dependencies
 
 ```kotlin
 // build.gradle.kts
@@ -28,7 +39,7 @@ dependencies {
 }
 ```
 
-### 2. Wrap your root composable
+### 3. Wrap your root composable
 
 ```kotlin
 @Composable
@@ -39,7 +50,7 @@ fun App() {
 }
 ```
 
-### 3. Log from anywhere
+### 4. Log from anywhere
 
 ```kotlin
 // Fire-and-forget — thread-safe, non-blocking
@@ -53,7 +64,7 @@ Console.asyncNotify {
 }
 ```
 
-### 4. Open the console
+### 5. Open the console
 
 Swipe **↑ → ↓ → ← → →** anywhere on screen (default gesture).
 
@@ -76,9 +87,9 @@ Optional feature modules → [addons/README.md](addons/README.md)
 
 | Addon | Artifact(s) | What it adds |
 |-------|-------------|--------------|
-| **Details** | `addons-details-compose` / `addons-details-core-noop` | Live key/value panel |
-| **Network** | `addons-network-core` + `addons-network-ktor` or `addons-network-okhttp` + `addons-network-compose` | HTTP inspector |
-| **Stepper** | `addons-stepper-compose` | Pause-and-step log replay |
+| **Details** | `details-compose` / `details-core-noop` | Live key/value panel |
+| **Network** | `network-core` + `network-ktor` or `network-okhttp` + `network-compose` | HTTP inspector |
+| **Stepper** | `stepper-compose` | Pause-and-step log replay |
 
 Full setup and configuration → [addons/README.md](addons/README.md)
 

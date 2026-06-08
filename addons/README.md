@@ -10,9 +10,9 @@ Displays a live key/value panel inside the console. Useful for session info, fea
 
 ```kotlin
 // debug
-implementation("io.github.thernal:addons-details-compose:0.1.0")
+implementation("io.github.thernal:details-compose:0.1.0")
 // release — no-op stub with the same API, no UI overhead
-implementation("io.github.thernal:addons-details-core-noop:0.1.0")
+implementation("io.github.thernal:details-core-noop:0.1.0")
 ```
 
 ```kotlin
@@ -31,7 +31,7 @@ ConsoleDetails.remove("Env")
 Pauses log processing and lets you replay events one by one — useful for stepping through complex async flows that would otherwise fly past.
 
 ```kotlin
-implementation("io.github.thernal:addons-stepper-compose:0.1.0")
+implementation("io.github.thernal:stepper-compose:0.1.0")
 ```
 
 No code required. The stepper control appears inside the console automatically once the module is on the classpath.
@@ -45,9 +45,9 @@ Captures HTTP traffic and renders it in the log list with method, status code, U
 ### OkHttp
 
 ```kotlin
-implementation("io.github.thernal:addons-network-core:0.1.0")
-implementation("io.github.thernal:addons-network-okhttp:0.1.0")
-implementation("io.github.thernal:addons-network-compose:0.1.0")
+implementation("io.github.thernal:network-core:0.1.0")
+implementation("io.github.thernal:network-okhttp:0.1.0")
+implementation("io.github.thernal:network-compose:0.1.0")
 ```
 
 ```kotlin
@@ -59,9 +59,9 @@ val client = OkHttpClient.Builder()
 ### Ktor
 
 ```kotlin
-implementation("io.github.thernal:addons-network-core:0.1.0")
-implementation("io.github.thernal:addons-network-ktor:0.1.0")
-implementation("io.github.thernal:addons-network-compose:0.1.0")
+implementation("io.github.thernal:network-core:0.1.0")
+implementation("io.github.thernal:network-ktor:0.1.0")
+implementation("io.github.thernal:network-compose:0.1.0")
 ```
 
 ```kotlin

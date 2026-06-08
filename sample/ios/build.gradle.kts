@@ -36,8 +36,8 @@ kotlin {
 if (env.get() != "dev") {
     configurations.configureEach {
         resolutionStrategy.dependencySubstitution {
-            substitute(project(":console-compose")).using(project(":console-compose-noop"))
-            substitute(project(":addons:details-api")).using(project(":addons:details-core-noop"))
+            substitute(module("io.github.thernal:console-compose")).using(module("io.github.thernal:console-compose-noop:0.1.0"))
+            substitute(module("io.github.thernal:details-core")).using(module("io.github.thernal:details-core-noop:0.1.0"))
         }
     }
 }

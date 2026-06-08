@@ -80,6 +80,18 @@ ktor-client-java = { module = "io.ktor:ktor-client-java", version.ref = "ktor" }
 # Detekt
 detekt-ktlint-wrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
 
+# Console library (used in sample)
+console-compose = { module = "io.github.thernal:console-compose", version.ref = "console" }
+console-compose-noop = { module = "io.github.thernal:console-compose-noop", version.ref = "console" }
+console-runtime = { module = "io.github.thernal:console-runtime", version.ref = "console" }
+console-details-compose = { module = "io.github.thernal:details-compose", version.ref = "console" }
+console-details-core-noop = { module = "io.github.thernal:details-core-noop", version.ref = "console" }
+console-stepper-compose = { module = "io.github.thernal:stepper-compose", version.ref = "console" }
+console-network-core = { module = "io.github.thernal:network-core", version.ref = "console" }
+console-network-ktor = { module = "io.github.thernal:network-ktor", version.ref = "console" }
+console-network-okhttp = { module = "io.github.thernal:network-okhttp", version.ref = "console" }
+console-network-compose = { module = "io.github.thernal:network-compose", version.ref = "console" }
+
 # Build plugins (used inside build-logic)
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
