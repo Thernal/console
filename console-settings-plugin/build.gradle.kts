@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     `kotlin-dsl`
     id("com.vanniktech.maven.publish") version "0.33.0"
@@ -20,7 +22,7 @@ gradlePlugin {
 }
 
 mavenPublishing {
-    publishToMavenCentral()
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     if (!providers.gradleProperty("signingInMemoryKey").orNull.isNullOrBlank()) {
         signAllPublications()
     }

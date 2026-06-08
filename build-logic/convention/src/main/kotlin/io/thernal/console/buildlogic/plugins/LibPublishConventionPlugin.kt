@@ -1,6 +1,7 @@
 package io.thernal.console.buildlogic.plugins
 
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -20,7 +21,7 @@ class LibPublishConventionPlugin : Plugin<Project> {
             pluginManager.apply("com.vanniktech.maven.publish")
 
             extensions.configure<MavenPublishBaseExtension> {
-                publishToMavenCentral()
+                publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
                 if (!providers.gradleProperty("signingInMemoryKey").orNull.isNullOrBlank()) {
                     signAllPublications()
                 }
