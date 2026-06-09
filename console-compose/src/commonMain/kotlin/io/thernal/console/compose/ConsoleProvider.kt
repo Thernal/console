@@ -13,6 +13,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.navigation3.runtime.NavKey
 import io.thernal.console.api.addon.ConsoleTab
 import io.thernal.console.api.navigation.ConsoleNavigator
@@ -60,7 +62,8 @@ fun ConsoleProvider(
     val backStack = remember { mutableStateListOf<NavKey>(ConsoleRoute.Stub, ConsoleRoute.Main) }
     val consoleVisible = remember { mutableStateOf(false) }
     val requestedTab = remember { mutableStateOf<ConsoleTab?>(null) }
-    val navigator: ConsoleNavigator = remember { ConsoleNavigatorImpl(backStack, consoleVisible, requestedTab) }
+    val navigator: ConsoleNavigator =
+        remember { ConsoleNavigatorImpl(backStack, consoleVisible, requestedTab) }
 
     ThemeProvider {
         CompositionLocalProvider(
@@ -89,7 +92,18 @@ fun ConsoleProvider(
                     enter = fadeIn(),
                     exit = fadeOut(),
                 ) {
-                    Box(Modifier.fillMaxSize()) {
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            .pointerInput(Unit) {
+                                awaitPointerEventScope {
+                                    while (true) {
+                                        awaitPointerEvent(PointerEventPass.Initial)
+                                            .changes.forEach { it.consume() }
+                                    }
+                                }
+                            },
+                    ) {
                         ConsoleNavHost(
                             navController = navigator,
                             backStack = backStack,

@@ -12,5 +12,5 @@ java {
 }
 
 dependencies {
-    implementation(libs.console.runtime)
+    implementation(projects.consoleRuntime)
 }

@@ -36,8 +36,6 @@ Drop it in, swipe to open, and inspect logs, HTTP traffic, and session state —
 
 ## Quick start
 
-> **Latest version:** see the Maven Central badge at the top, or check [central.sonatype.com](https://central.sonatype.com/artifact/io.github.thernal/console-compose). Replace `<version>` in all snippets below with that value.
-
 ### 1. Apply the settings plugin
 
 Adds the JetBrains Compose repository required to resolve Compose Multiplatform artifacts.
