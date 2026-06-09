@@ -27,7 +27,7 @@ class ConsoleNetworkOkHttpInterceptor(
         val requestHeaders = request.headers.toLogMap()
         val requestBody = request.body?.readToString()
 
-        Console.notify {
+        Console.blockingNotify {
             NetworkLog.Request(
                 method = method,
                 url = url,
@@ -45,7 +45,7 @@ class ConsoleNetworkOkHttpInterceptor(
             val responseBody = runCatching { response.peekBody(maxBodyBytes).string() }.getOrNull()
             val responseHeaders = response.headers.toLogMap()
 
-            Console.notify {
+            Console.blockingNotify {
                 NetworkLog.Response(
                     method = method,
                     url = url,
@@ -62,7 +62,7 @@ class ConsoleNetworkOkHttpInterceptor(
         } catch (e: Exception) {
             val durationMs = System.currentTimeMillis() - startMs
 
-            Console.notify {
+            Console.blockingNotify {
                 NetworkLog.Response(
                     method = method,
                     url = url,

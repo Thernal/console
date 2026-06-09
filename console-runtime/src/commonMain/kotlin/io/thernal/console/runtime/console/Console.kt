@@ -7,6 +7,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.concurrent.Volatile
@@ -47,6 +48,14 @@ class Console private constructor() : ConsoleScope {
         }
     }
 
+    override fun blockingNotify(event: () -> Log) {
+        if (!isEnabled) return
+        val e = event()
+        runBlocking {
+            processMutex.withLock { processEvent(e) }
+        }
+    }
+
     override suspend fun asyncNotify(event: () -> Log) {
         if (!isEnabled) return
         val e = event()
@@ -83,6 +92,9 @@ class Console private constructor() : ConsoleScope {
         }
         override fun notify(event: () -> Log) {
             default.notify(event)
+        }
+        override fun blockingNotify(event: () -> Log) {
+            default.blockingNotify(event)
         }
         override suspend fun asyncNotify(event: () -> Log) {
             default.asyncNotify(event)

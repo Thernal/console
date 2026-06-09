@@ -8,5 +8,6 @@ interface ConsoleScope {
     fun removeObserver(observer: LogObserver)
     fun setProcessors(processors: List<LogProcessor>)
     fun notify(event: () -> Log)
+    fun blockingNotify(event: () -> Log)
     suspend fun asyncNotify(event: () -> Log)
 }
