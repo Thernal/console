@@ -98,7 +98,7 @@ fun ConsoleProvider(
                             .pointerInput(Unit) {
                                 awaitPointerEventScope {
                                     while (true) {
-                                        awaitPointerEvent(PointerEventPass.Initial)
+                                        awaitPointerEvent(PointerEventPass.Main)
                                             .changes.forEach { it.consume() }
                                     }
                                 }
