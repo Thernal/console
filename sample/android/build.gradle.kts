@@ -30,7 +30,7 @@ android {
 // Prod flavor swaps full console implementations for their noop counterparts.
 configurations.matching { it.name.startsWith("prod") }.configureEach {
     resolutionStrategy.dependencySubstitution {
-        substitute(module("io.github.thernal:console-compose")).using(module("io.github.thernal:console-compose-noop:0.1.0"))
+        substitute(module("io.github.thernal:console-ui")).using(module("io.github.thernal:console-ui-noop:0.1.0"))
         substitute(module("io.github.thernal:console-details-core")).using(module("io.github.thernal:console-details-core-noop:0.1.0"))
     }
 }

@@ -4,13 +4,25 @@ Optional modules that extend Console. Each is self-contained — install only wh
 
 ---
 
+## Logging
+
+Provides the log list, log detail screen, and `BasicLog` renderer. Required if you want to see logs in the console.
+
+```kotlin
+implementation("io.github.thernal:console-logging-ui:<version>")
+```
+
+No code required. Auto-installs on Android and iOS via the addon system.
+
+---
+
 ## Details
 
 Displays a live key/value panel inside the console. Useful for session info, feature flags, build metadata, or any ambient state you want visible without digging through logs.
 
 ```kotlin
 // debug
-implementation("io.github.thernal:console-details-compose:<version>")
+implementation("io.github.thernal:console-details-ui:<version>")
 // release — no-op stub with the same API, no UI overhead
 implementation("io.github.thernal:console-details-core-noop:<version>")
 ```
@@ -31,7 +43,7 @@ ConsoleDetails.remove("Env")
 Pauses log processing and lets you replay events one by one — useful for stepping through complex async flows that would otherwise fly past.
 
 ```kotlin
-implementation("io.github.thernal:console-stepper-compose:<version>")
+implementation("io.github.thernal:console-stepper-ui:<version>")
 ```
 
 No code required. The stepper control appears inside the console automatically once the module is on the classpath.
@@ -47,7 +59,7 @@ Captures HTTP traffic and renders it in the log list with method, status code, U
 ```kotlin
 implementation("io.github.thernal:console-network-core:<version>")
 implementation("io.github.thernal:console-network-okhttp:<version>")
-implementation("io.github.thernal:console-network-compose:<version>")
+implementation("io.github.thernal:console-network-ui:<version>")
 ```
 
 ```kotlin
@@ -61,7 +73,7 @@ val client = OkHttpClient.Builder()
 ```kotlin
 implementation("io.github.thernal:console-network-core:<version>")
 implementation("io.github.thernal:console-network-ktor:<version>")
-implementation("io.github.thernal:console-network-compose:<version>")
+implementation("io.github.thernal:console-network-ui:<version>")
 ```
 
 ```kotlin
@@ -106,7 +118,7 @@ HttpClient {
 
 `SensitiveHeaders.DEFAULT` is the default — the 5 headers listed above, masked with `***`.
 
-`addons-network-compose` auto-installs its renderer on Android and iOS via the addon system — no manual `install()` call needed. Network logs appear inline in the main log list alongside other entries.
+`console-network-ui` auto-installs its renderer on Android and iOS via the addon system — no manual `install()` call needed. Network logs appear inline in the main log list alongside other entries.
 
 ---
 
@@ -116,8 +128,8 @@ HttpClient {
 
 ```
 addons/
-  my-addon-core/     # Log.Custom subtype + any state (convention.lib.core)
-  my-addon-compose/  # LogRenderer + auto-init (convention.lib.ui)
+  my-addon-core/      # Log.Custom subtype + any state (convention.lib.core)
+  my-addon-ui/        # LogRenderer + auto-init (convention.lib.ui)
   my-addon-core-noop/ # No-op stub for production (convention.lib.core)
 ```
 

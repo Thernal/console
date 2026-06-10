@@ -9,8 +9,8 @@ kotlin {
             api(projects.consoleRuntime)
             implementation(projects.designsystem.components)
             api(libs.compose.ui)
-            implementation(libs.compose.foundation)
-            implementation(libs.jetbrains.navigation3.ui)
+            api(libs.compose.foundation)
+            api(libs.jetbrains.navigation3.ui)
         }
     }
 }
