@@ -76,8 +76,8 @@ include(":sample:jvm")
 
 include(":console-runtime")
 include(":console-api")
-include(":console-compose")
-include(":console-compose-noop")
+include(":console-ui")
+include(":console-ui-noop")
 include(":designsystem:foundation")
 include(":designsystem:components")
 

@@ -20,7 +20,7 @@ class Console private constructor() : ConsoleScope {
     private val processMutex = Mutex()
 
     @Volatile
-    override var isEnabled: Boolean = true
+    var isEnabled: Boolean = true
 
     override fun addObserver(observer: LogObserver) {
         observers.update { current ->
@@ -75,7 +75,7 @@ class Console private constructor() : ConsoleScope {
     companion object : ConsoleScope {
         private val default = Console()
 
-        override var isEnabled: Boolean
+        var isEnabled: Boolean
             get() = default.isEnabled
             set(value) {
                 default.isEnabled = value

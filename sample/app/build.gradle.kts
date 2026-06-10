@@ -11,11 +11,12 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.jetbrains.lifecycle.viewmodel)
             implementation(libs.jetbrains.lifecycle.viewmodel.compose)
-            implementation(projects.consoleCompose)
-            implementation(projects.addons.detailsCompose)
-            implementation(projects.addons.stepperCompose)
+            implementation(projects.consoleUi)
+            implementation(projects.addons.loggingUi)
+            implementation(projects.addons.detailsUi)
+            implementation(projects.addons.stepperUi)
             implementation(projects.addons.networkKtor)
-            implementation(projects.addons.networkCompose)
+            implementation(projects.addons.networkUi)
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
