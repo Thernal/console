@@ -6,13 +6,16 @@ on:
       - main
       - 'v[0-9]*'
 
-permissions:
-  contents: write
+concurrency:
+  group: ci-${{ github.head_ref }}
+  cancel-in-progress: true
 
 jobs:
-  detekt-autofix:
-    name: Detekt auto-fix
+  build:
+    name: Build & Detekt
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,10 +40,66 @@ jobs:
         with:
           commit_message: "fix: detekt auto-fix"
 
-  build:
-    name: Build & Detekt check
-    needs: detekt-autofix
-    runs-on: ubuntu-latest
+      - name: Detekt check
+        run: ./gradlew detekt
+
+      - name: Report detekt findings
+        if: always()
+        run: |
+          python3 << 'EOF'
+          import xml.etree.ElementTree as ET
+          import os
+          import sys
+
+          report = '.misc/detekt/detekt-report.xml'
+          workspace = os.environ.get('GITHUB_WORKSPACE', '')
+          summary_file = os.environ.get('GITHUB_STEP_SUMMARY', os.devnull)
+
+          if not os.path.exists(report):
+              print('No detekt report found.')
+              sys.exit(0)
+
+          findings = []
+          for file_node in ET.parse(report).getroot().findall('file'):
+              abs_path = file_node.get('name', '')
+              rel_path = abs_path.removeprefix(workspace + '/') if workspace else abs_path
+              for error in file_node.findall('error'):
+                  findings.append((
+                      rel_path,
+                      error.get('line', '1'),
+                      error.get('column', '1'),
+                      error.get('source', '').split('.')[-1],
+                      error.get('message', '').replace('\n', ' '),
+                  ))
+
+          for rel_path, line, col, rule, msg in findings:
+              print(f'::error file={rel_path},line={line},col={col}::{rule}: {msg}')
+
+          with open(summary_file, 'a') as f:
+              if findings:
+                  f.write(f'## Detekt — {len(findings)} violation(s)\n\n')
+                  f.write('| File | Line | Rule | Message |\n')
+                  f.write('|------|------|------|---------|\n')
+                  for rel_path, line, col, rule, msg in findings:
+                      f.write(f'| `{rel_path.split("/")[-1]}` | {line} | `{rule}` | {msg} |\n')
+              else:
+                  f.write('## Detekt — no violations :white_check_mark:\n')
+
+          if findings:
+              sys.exit(1)
+          EOF
+
+      - name: Build
+        run: ./gradlew assemble
+
+      - name: Test
+        run: ./gradlew allTests
+
+  build-ios:
+    name: Build iOS
+    runs-on: macos-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,8 +115,5 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build
-        run: ./gradlew assemble
-
-      - name: Detekt check
-        run: ./gradlew detekt
+      - name: Build iOS
+        run: ./gradlew compileKotlinIosArm64

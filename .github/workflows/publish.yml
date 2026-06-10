@@ -5,6 +5,12 @@ on:
     tags:
       - 'release/v*'
 
+env:
+  ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
+  ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
+  ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+  ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -23,24 +29,14 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Write signing key
+      - name: Verify version matches tag
         run: |
-          echo "${{ secrets.SIGNING_KEY }}" > $HOME/signing.asc
-          gpg --batch --import $HOME/signing.asc
-          gpg --list-secret-keys
+          TAG_VERSION="${GITHUB_REF_NAME#release/v}"
+          GRADLE_VERSION=$(grep "^VERSION=" gradle.properties | cut -d= -f2)
+          [ "$TAG_VERSION" = "$GRADLE_VERSION" ] || (echo "Version mismatch: tag=$TAG_VERSION gradle=$GRADLE_VERSION" && exit 1)
 
       - name: Publish libraries
         run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-configuration-cache
-        env:
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
 
       - name: Publish settings plugin
         run: ./gradlew -p console-settings-plugin publishAllPublicationsToMavenCentralRepository --no-configuration-cache
-        env:
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
