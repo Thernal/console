@@ -5,7 +5,7 @@
 **A gesture-triggered debug overlay for Kotlin Multiplatform apps.**  
 Drop it in, swipe to open, and inspect logs, HTTP traffic, and session state — without touching production code.
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.thernal/console-compose?label=Maven%20Central&color=4CAF50)](https://central.sonatype.com/artifact/io.github.thernal/console-compose)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.thernal/console-ui?label=Maven%20Central&color=4CAF50)](https://central.sonatype.com/artifact/io.github.thernal/console-ui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.x-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org)
 [![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-1.x-4285F4)](https://www.jetbrains.com/compose-multiplatform/)
@@ -52,8 +52,9 @@ plugins {
 ```kotlin
 // build.gradle.kts
 dependencies {
-    debugImplementation("io.github.thernal:console-compose:<version>")
-    releaseImplementation("io.github.thernal:console-compose-noop:<version>")
+    debugImplementation("io.github.thernal:console-ui:<version>")
+    debugImplementation("io.github.thernal:console-logging-ui:<version>")
+    releaseImplementation("io.github.thernal:console-ui-noop:<version>")
 }
 ```
 
@@ -253,7 +254,7 @@ Captures HTTP traffic and renders it in the log list with method, status code, U
 dependencies {
     debugImplementation("io.github.thernal:console-network-core:<version>")
     debugImplementation("io.github.thernal:console-network-okhttp:<version>")
-    debugImplementation("io.github.thernal:console-network-compose:<version>")
+    debugImplementation("io.github.thernal:console-network-ui:<version>")
 }
 ```
 
@@ -270,7 +271,7 @@ val client = OkHttpClient.Builder()
 dependencies {
     debugImplementation("io.github.thernal:console-network-core:<version>")
     debugImplementation("io.github.thernal:console-network-ktor:<version>")
-    debugImplementation("io.github.thernal:console-network-compose:<version>")
+    debugImplementation("io.github.thernal:console-network-ui:<version>")
 }
 ```
 
@@ -313,7 +314,7 @@ A live key/value sidebar for session info, feature flags, user context, or any a
 ```kotlin
 // build.gradle.kts
 dependencies {
-    debugImplementation("io.github.thernal:console-details-compose:<version>")
+    debugImplementation("io.github.thernal:console-details-ui:<version>")
     releaseImplementation("io.github.thernal:console-details-core-noop:<version>")
 }
 ```
@@ -339,7 +340,7 @@ Pauses log processing and lets you replay events one-by-one — useful for stepp
 ```kotlin
 // build.gradle.kts
 dependencies {
-    debugImplementation("io.github.thernal:console-stepper-compose:<version>")
+    debugImplementation("io.github.thernal:console-stepper-ui:<version>")
 }
 ```
 
@@ -384,25 +385,6 @@ Beyond tabs, `ConsoleAddon` also supports:
 
 ---
 
-## Custom log renderer for `Log.Basic`
-
-Override how standard log entries look without defining a custom type:
-
-```kotlin
-ConsoleProvider(
-    logRenderer = defaultLogRenderer(
-        item = { log, onClick -> MyLogItem(log, onClick) },
-        detail = { log, onBack -> MyLogDetail(log, onBack) },
-    )
-) {
-    YourAppContent()
-}
-```
-
-For `Log.Custom` subtypes, use `LogRendererRegistry` instead — no `ConsoleProvider` change needed.
-
----
-
 ## Modules
 
 ### Core
@@ -411,20 +393,21 @@ For `Log.Custom` subtypes, use `LogRendererRegistry` instead — no `ConsoleProv
 |----------|-------------|
 | `io.github.thernal:console-runtime:<version>` | Core types — `Log`, `LogLevel`, `Console`, `LogObserver` |
 | `io.github.thernal:console-api:<version>` | Addon contracts — `ConsoleAddon`, `ConsoleTab`, `LogRenderer`, `LogRendererRegistry` |
-| `io.github.thernal:console-compose:<version>` | Compose UI — `ConsoleProvider`, log list, detail screen |
-| `io.github.thernal:console-compose-noop:<version>` | No-op stub for production builds |
+| `io.github.thernal:console-ui:<version>` | Compose UI shell — `ConsoleProvider`, navigation, overlay |
+| `io.github.thernal:console-ui-noop:<version>` | No-op stub for production builds |
 
 ### Addons
 
 | Artifact | Description |
 |----------|-------------|
-| `io.github.thernal:console-details-compose:<version>` | Live key/value Details panel |
+| `io.github.thernal:console-logging-ui:<version>` | Log list, log detail screen, `BasicLog` renderer |
+| `io.github.thernal:console-details-ui:<version>` | Live key/value Details panel |
 | `io.github.thernal:console-details-core-noop:<version>` | No-op stub for production builds |
 | `io.github.thernal:console-network-core:<version>` | Shared network log types |
 | `io.github.thernal:console-network-okhttp:<version>` | OkHttp interceptor |
 | `io.github.thernal:console-network-ktor:<version>` | Ktor plugin |
-| `io.github.thernal:console-network-compose:<version>` | Network log UI renderer |
-| `io.github.thernal:console-stepper-compose:<version>` | Pause-and-step log replay |
+| `io.github.thernal:console-network-ui:<version>` | Network log UI renderer |
+| `io.github.thernal:console-stepper-ui:<version>` | Pause-and-step log replay |
 
 ---
 

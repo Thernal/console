@@ -1,12 +1,12 @@
-# console-compose
+# console-ui
 
-Compose UI layer for Console. Provides `ConsoleProvider` and the default log list and detail screens.
+Compose UI layer for Console. Provides `ConsoleProvider` and the core console shell.
 
 ```kotlin
-implementation("io.github.thernal:console-compose:<version>")
+implementation("io.github.thernal:console-ui:<version>")
 ```
 
-For production builds, replace with `console-compose-noop` to eliminate all UI at zero cost.
+For production builds, replace with `console-ui-noop` to eliminate all UI at zero cost.
 
 ---
 
@@ -29,7 +29,6 @@ fun App() {
 |-----------|---------|-------------|
 | `enabled` | `true` | Disables the console entirely when `false` |
 | `trigger` | swipe ↑↓←→ | Gesture that opens the console |
-| `logRenderer` | `DefaultLogRenderer` | Fallback renderer for `Log.Basic` |
 
 ---
 
@@ -43,29 +42,12 @@ ConsoleProvider(
 
 ---
 
-## Custom log renderer
-
-Override the default item or detail appearance for `Log.Basic`:
-
-```kotlin
-ConsoleProvider(
-    logRenderer = defaultLogRenderer(
-        item = { log, onClick -> MyLogItem(log, onClick) },
-        detail = { log, onBack -> MyLogDetail(log, onBack) },
-    )
-) { }
-```
-
-For addon-specific types (`Log.Custom` subclasses), register in `LogRendererRegistry` instead — `DispatchLogRenderer` picks them up automatically without any change to `ConsoleProvider`.
-
----
-
 ## DispatchLogRenderer
 
-Wraps the `logRenderer` parameter internally. For each log:
+Consulted internally for every log rendered in the list and detail screens. For each log:
 
 1. Looks up `LogRendererRegistry` by exact `KClass` — O(1).
 2. If found, delegates to the registered addon renderer.
-3. Otherwise falls back to the provided `logRenderer`.
+3. Otherwise falls back to the built-in `BasicLogRenderer` provided by `console-logging-ui`.
 
 Addons that call `LogRendererRegistry.register<MyLog>(MyRenderer)` in `onInstall` work automatically — no `ConsoleProvider` change needed.

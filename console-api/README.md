@@ -81,7 +81,7 @@ LogRendererRegistry.register<MyLog>(MyLogRenderer)
 val renderer: LogRenderer? = LogRendererRegistry.find(log)
 ```
 
-`DispatchLogRenderer` in `console-compose` checks this registry automatically for every log rendered in the list and detail screens — no extra wiring needed.
+`DispatchLogRenderer` in `console-ui` checks this registry automatically for every log rendered in the list and detail screens — no extra wiring needed.
 
 ---
 
