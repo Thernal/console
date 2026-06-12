@@ -49,20 +49,20 @@ object MyTab : ConsoleTab {
 
 ## LogRenderer
 
-Controls how a log type appears in the log list and detail screen. Register via `LogRendererRegistry` for a specific `Log.Custom` subtype.
+Controls how a log type appears in the log list and detail screen. Register via `LogRendererRegistry` for a specific `Log` subtype.
 
 ```kotlin
 object MyLogRenderer : LogRenderer {
     @Composable
-    override fun Item(log: Log, onClick: () -> Unit) {
+    override fun Item(log: Log, modifier: Modifier) {
         if (log !is MyLog) return
-        MyLogItem(log = log, onClick = onClick)
+        MyLogItem(log = log, modifier = modifier)
     }
 
     @Composable
-    override fun Detail(log: Log, onBack: () -> Unit) {
+    override fun Detail(log: Log) {
         if (log !is MyLog) return
-        MyLogDetail(log = log, onBack = onBack)
+        MyLogDetail(log = log)
     }
 }
 ```

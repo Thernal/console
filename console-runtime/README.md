@@ -16,12 +16,12 @@ Console.notify {
     Log(message = "Something happened", tag = "MyTag", level = LogLevel.Info)
 }
 
-// Custom log type — implement Log.Custom for addon-specific payloads
+// Custom log type — implement Log for addon-specific payloads
 data class NetworkLog(
     override val message: String,
     override val level: LogLevel,
     // ...
-) : Log.Custom
+) : Log
 ```
 
 ### LogLevel

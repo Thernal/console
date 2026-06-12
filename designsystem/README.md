@@ -1,6 +1,6 @@
 # designsystem
 
-Internal design system for Console. **Not published as a standalone library** — consumed only by `console-compose` and addon UI modules.
+Internal design system for Console. **Not published as a standalone library** — consumed only by `console-ui` and addon UI modules.
 
 ---
 
@@ -51,6 +51,7 @@ Theme.opacity.S12
 | `DsScaffold` | Full-screen layout with optional top/bottom bar |
 | `DsAppBar` | Top bar with leading, trailing, and center slots |
 | `DsCard` | Rounded bordered surface |
+| `DsContainer` | Bordered box wrapper |
 | `DsChip` | Label chip with optional border (selected state) |
 | `DsText` | Styled text |
 | `DsIcon` | Icon with size/color control |
@@ -59,6 +60,7 @@ Theme.opacity.S12
 | `DsSwitch` | Toggle switch |
 | `DsTextField` | Input with hint, prefix, suffix slots |
 | `DsCollapsible` | Scroll-driven collapsible header + content |
+| `DsTabView` | Animated tab row with indicator |
 | `DsNavigationBar` | Bottom navigation bar |
 
 ### Modifiers

@@ -47,7 +47,9 @@ ConsoleProvider(
 Consulted internally for every log rendered in the list and detail screens. For each log:
 
 1. Looks up `LogRendererRegistry` by exact `KClass` — O(1).
-2. If found, delegates to the registered addon renderer.
-3. Otherwise falls back to the built-in `BasicLogRenderer` provided by `console-logging-ui`.
+2. If a renderer is registered for that type, delegates to it.
+3. Otherwise renders nothing.
+
+`console-logging-ui` registers `BasicLogRenderer` for the built-in `BasicLog` type, so standard logs render out of the box once that addon is on the classpath. Custom log types render only when their renderer is registered.
 
 Addons that call `LogRendererRegistry.register<MyLog>(MyRenderer)` in `onInstall` work automatically — no `ConsoleProvider` change needed.

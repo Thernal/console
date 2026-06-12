@@ -22,7 +22,7 @@ Drop it in, swipe to open, and inspect logs, HTTP traffic, and session state —
 | | |
 |---|---|
 | 📋 **Log viewer** | Filterable log list — levels, tags, full-text search |
-| 🎨 **Custom log types** | Define `Log.Custom` subtypes with their own UI renderers |
+| 🎨 **Custom log types** | Define your own `Log` subtypes with their own UI renderers |
 | 🔍 **Search & filter** | Real-time full-text search across message, tag, and level |
 | 🔗 **Log grouping** | Link related logs with a shared `groupId` |
 | 🌐 **Network inspector** | OkHttp + Ktor interceptors with headers, body, duration, status |
@@ -111,7 +111,7 @@ Console.asyncNotify {
 Logs with the same `groupId` are visually linked — useful for correlating events like a network request and its response.
 
 ```kotlin
-val id = uuid()
+val id = Uuid.random().toString()
 
 Console.notify {
     Log(message = "→ POST /auth/login", tag = "Network", level = LogLevel.Debug, groupId = id)
@@ -130,7 +130,7 @@ Console.notify {
 
 ## Custom log types
 
-Define a subtype of `Log.Custom` to carry structured data through the pipeline.
+Implement `Log` to carry structured data through the pipeline.
 
 ```kotlin
 data class AnalyticsLog(
@@ -138,11 +138,11 @@ data class AnalyticsLog(
     override val level: LogLevel = LogLevel.Debug,
     val eventName: String,
     val params: Map<String, Any> = emptyMap(),
-    override val id: String = uuid(),
+    override val id: String = Uuid.random().toString(),
     override val tag: String? = "Analytics",
     override val groupId: String? = null,
     override val timestamp: Instant = Clock.System.now(),
-) : Log.Custom
+) : Log
 ```
 
 Send it like any other log:
@@ -159,17 +159,26 @@ Console.notify {
 
 ### Custom log renderer
 
-Register a renderer so `AnalyticsLog` entries have their own item and detail screens:
+Implement `LogRenderer` so `AnalyticsLog` entries have their own item and detail screens, then register it for the type:
 
 ```kotlin
+object AnalyticsLogRenderer : LogRenderer {
+    @Composable
+    override fun Item(log: Log, modifier: Modifier) {
+        if (log !is AnalyticsLog) return
+        AnalyticsLogItem(log, modifier)
+    }
+
+    @Composable
+    override fun Detail(log: Log) {
+        if (log !is AnalyticsLog) return
+        AnalyticsLogDetail(log)
+    }
+}
+
 object AnalyticsAddon : ConsoleAddon {
     override fun onInstall(console: ConsoleScope) {
-        LogRendererRegistry.register<AnalyticsLog>(
-            LogRenderer(
-                item = { log, onClick -> AnalyticsLogItem(log, onClick) },
-                detail = { log, onBack -> AnalyticsLogDetail(log, onBack) },
-            )
-        )
+        LogRendererRegistry.register<AnalyticsLog>(AnalyticsLogRenderer)
     }
 }
 

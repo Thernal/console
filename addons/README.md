@@ -128,7 +128,7 @@ HttpClient {
 
 ```
 addons/
-  my-addon-core/      # Log.Custom subtype + any state (convention.lib.core)
+  my-addon-core/      # Log subtype + any state (convention.lib.core)
   my-addon-ui/        # LogRenderer + auto-init (convention.lib.ui)
   my-addon-core-noop/ # No-op stub for production (convention.lib.core)
 ```
@@ -141,7 +141,7 @@ data class MyLog(
     override val level: LogLevel,
     val customField: String,
     // standard Log fields with defaults ...
-) : Log.Custom
+) : Log
 ```
 
 ### 2. Register a renderer
