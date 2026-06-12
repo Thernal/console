@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,7 +20,6 @@ import io.thernal.console.api.navigation.ConsoleRoute
 import io.thernal.console.api.navigation.LocalConsoleNavigator
 import io.thernal.console.api.addon.ConsoleOverlays
 import io.thernal.console.api.ui.LocalLogRenderer
-import io.thernal.console.runtime.console.Console
 import io.thernal.console.ui.addon.DispatchLogRenderer
 import io.thernal.console.api.trigger.ConsoleTrigger
 import io.thernal.console.api.trigger.Swipe
@@ -42,8 +40,6 @@ fun ConsoleProvider(
     ),
     content: @Composable () -> Unit,
 ) {
-    SideEffect { Console.isEnabled = enabled }
-
     if (!enabled) {
         content()
         return
@@ -52,8 +48,9 @@ fun ConsoleProvider(
     val backStack = remember { mutableStateListOf<NavKey>(ConsoleRoute.Stub, ConsoleRoute.Main) }
     val consoleVisible = remember { mutableStateOf(false) }
     val requestedTab = remember { mutableStateOf<ConsoleTab?>(null) }
-    val navigator: ConsoleNavigator =
-        remember { ConsoleNavigatorImpl(backStack, consoleVisible, requestedTab) }
+    val navigator: ConsoleNavigator = remember {
+        ConsoleNavigatorImpl(backStack, consoleVisible, requestedTab)
+    }
 
     ThemeProvider {
         CompositionLocalProvider(
