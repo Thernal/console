@@ -1,18 +1,16 @@
 ## Summary
 
-<!-- Describe what this PR does and why. -->
-
-## Type
-
-- [ ] Bug fix
-- [ ] New feature
-- [ ] New addon
-- [ ] Refactor
-- [ ] Docs / chore
+<!-- What this PR does and why. -->
 
 ## Checklist
 
-- [ ] Code compiles (`./gradlew assemble`)
-- [ ] Detekt passes (`./gradlew detekt`)
+- [ ] `./gradlew assemble` passes
+- [ ] `./gradlew detekt` passes
 - [ ] Public API changes are intentional and documented
-- [ ] New addon follows the addon guidelines in `CONTRIBUTING.md`
+
+<!-- UI change? Add screenshots. Breaking change? Note the migration path. -->
+
+<!--
+Need a richer template? Append ?template=NAME to the PR URL:
+  ?template=feature.md   ?template=bugfix.md   ?template=addon.md
+-->

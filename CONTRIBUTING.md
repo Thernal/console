@@ -49,17 +49,18 @@ To check manually:
 
 ```
 console-runtime/        # Core data models and log processing
-console-api/            # Public contracts (interfaces, sealed classes)
-console-compose/        # Default Compose UI implementation
-console-compose-noop/   # No-op implementation for release builds
+console-api/            # Public contracts (interfaces, addon system)
+console-ui/             # Default Compose UI shell (ConsoleProvider)
+console-ui-noop/        # No-op implementation for release builds
 designsystem/
   foundation/           # Colors, typography, shapes, theme
   components/           # Reusable Ds* composables
 addons/                 # Optional feature modules
+  logging-ui/           # Log list, log detail, BasicLog renderer
   details-core/         # Details addon state & API
   details-core-noop/    # No-op stub for production
-  details-compose/      # Details addon Compose UI
-  stepper-compose/      # Stepper addon
+  details-ui/           # Details addon Compose UI
+  stepper-ui/           # Stepper addon
   network-core/         # Network log type
   network-okhttp/       # OkHttp interceptor
   network-ktor/         # Ktor plugin
@@ -71,7 +72,7 @@ sample/                 # Sample app (not published)
 
 Addons are self-contained optional modules under `addons/`. Each addon typically consists of:
 
-- `addons/<name>-core/` — Pure Kotlin: `Log.Custom` subtype, state (no Compose, no UI)
+- `addons/<name>-core/` — Pure Kotlin: `Log` subtype, state (no Compose, no UI)
 - `addons/<name>-core-noop/` — No-op stub for production builds
 - `addons/<name>-ui/` — Compose UI: `LogRenderer` + auto-init
 
@@ -89,7 +90,7 @@ addons/
     src/commonMain/kotlin/io/thernal/console/myaddon/
   my-addon-ui/
     build.gradle.kts
-    src/commonMain/kotlin/io/thernal/console/myaddon/compose/
+    src/commonMain/kotlin/io/thernal/console/myaddon/ui/
 ```
 
 Modules are auto-discovered — no need to edit `settings.gradle.kts`.
@@ -114,7 +115,7 @@ plugins {
 
 **3. Package naming**
 
-Follow the pattern: `io.thernal.console.<addonname>[.compose]`
+Follow the pattern: `io.thernal.console.<addonname>[.ui]`
 
 **4. Implement `ConsoleAddon`**
 
@@ -126,14 +127,16 @@ object MyAddon : ConsoleAddon {
 }
 ```
 
-**5. Register in the Compose module's `AndroidManifest.xml`** (Android auto-init)
+**5. Register in the `-ui` module's `AndroidManifest.xml`** (Android auto-init)
 
 ```xml
 <provider
-    android:name="io.thernal.console.myaddon.compose.MyAddonAutoInit"
-    android:authorities="${applicationId}.my_addon_init"
+    android:name="io.thernal.console.myaddon.ui.MyAddonAutoInit"
+    android:authorities="${applicationId}.console-my-addon-init"
     android:exported="false" />
 ```
+
+The provider class subclasses `ConsoleAutoInitProvider` and calls `MyAddon.install()` in `init()`. For iOS / native, use a top-level `@EagerInitialization` property with `consoleAddonInit { MyAddon.install() }` instead.
 
 ## Pull requests
 
