@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import io.thernal.console.designsystem.components.provider.ThemeProvider
@@ -58,7 +59,13 @@ fun DsScaffold(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(containerColor),
+            .background(containerColor)
+            // Block pointer events from leaking to whatever is drawn behind the
+            // scaffold (e.g. the host app under the console overlay). A pointer-input
+            // node, even with an empty body, stops siblings behind it from being
+            // hit-tested (sharePointerInputWithSiblings = false) without consuming
+            // anything from its own children. Same approach Material Surface uses.
+            .pointerInput(Unit) {},
     ) {
         if (topBar != null) {
             Box(

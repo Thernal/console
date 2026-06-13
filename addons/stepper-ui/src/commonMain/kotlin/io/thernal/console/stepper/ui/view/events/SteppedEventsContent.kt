@@ -1,6 +1,5 @@
 package io.thernal.console.stepper.ui.view.events
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +22,7 @@ import io.thernal.console.ui.core.preview
 import io.thernal.console.designsystem.components.core.DsAppBar
 import io.thernal.console.designsystem.components.core.DsIcon
 import io.thernal.console.designsystem.components.core.DsIconButton
+import io.thernal.console.designsystem.components.core.DsScaffold
 import io.thernal.console.designsystem.components.core.DsText
 import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.components.provider.ThemeProvider
@@ -36,19 +36,25 @@ import io.thernal.console.stepper.ui.view.events.model.SteppedEventsState
 internal fun SteppedEventsContent(state: SteppedEventsState) {
     val navigator = LocalConsoleNavigator.current
 
-    Column(modifier = Modifier.fillMaxSize().background(Theme.colors.background1)) {
-        DsAppBar(
-            content = { SteppedEventsTitle(events = state.events) },
-            leading = {
-                DsIconButton(onClick = { navigator.pop() }) {
-                    DsIcon(
-                        icon = Icons.AutoMirrored.Filled.ArrowBackIos,
-                        color = Theme.colors.content02,
-                    )
-                }
-            },
+    DsScaffold(
+        topBar = {
+            DsAppBar(
+                content = { SteppedEventsTitle(events = state.events) },
+                leading = {
+                    DsIconButton(onClick = { navigator.pop() }) {
+                        DsIcon(
+                            icon = Icons.AutoMirrored.Filled.ArrowBackIos,
+                            color = Theme.colors.content02,
+                        )
+                    }
+                },
+            )
+        },
+    ) { padding ->
+        SteppedEventsBody(
+            events = state.events,
+            modifier = Modifier.padding(padding),
         )
-        SteppedEventsBody(events = state.events)
     }
 }
 
@@ -62,13 +68,16 @@ private fun SteppedEventsTitle(events: State<List<Log>>) {
 }
 
 @Composable
-private fun SteppedEventsBody(events: State<List<Log>>) {
+private fun SteppedEventsBody(
+    events: State<List<Log>>,
+    modifier: Modifier = Modifier,
+) {
     val navigator = LocalConsoleNavigator.current
     val renderer = LocalLogRenderer.current
 
     if (events.value.isEmpty()) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -87,7 +96,7 @@ private fun SteppedEventsBody(events: State<List<Log>>) {
         }
     } else {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             contentPadding = PaddingValues(
                 top = Theme.dimens.dp8,
                 bottom = Theme.dimens.dp16,
