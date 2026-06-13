@@ -1,6 +1,10 @@
-<!-- Wrong template? Open the **Preview** tab, click one below, then delete this block. -->
-> **Pick a template** (open the **Preview** tab, then click — your branch is kept):
-> [✨ Feature](?expand=1&template=feature.md) · [🐛 Bug fix](?expand=1&template=bugfix.md) · [🧩 Addon](?expand=1&template=addon.md)
+Please go to the **Preview** tab and select the template for your change:
+
+* [✨ Feature](?expand=1&template=feature.md)
+* [🐛 Bug fix](?expand=1&template=bugfix.md)
+* [🧩 Addon](?expand=1&template=addon.md)
+
+<!-- If none applies, delete the block above and fill in below. -->
 
 ## Summary
 
@@ -11,5 +15,3 @@
 - [ ] `./gradlew assemble` passes
 - [ ] `./gradlew detekt` passes
 - [ ] Public API changes are intentional and documented
-
-<!-- UI change? Add screenshots. Breaking change? Note the migration path. -->
