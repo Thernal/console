@@ -21,7 +21,7 @@ class DsCollapsibleState internal constructor(
         if (heightPx == headerHeightPx) return
         headerHeightPx = heightPx
         topAppBarState.heightOffsetLimit = -heightPx
-        topAppBarState.heightOffset = topAppBarState.heightOffset
+        topAppBarState.heightOffset = topAppBarState.heightOffset.coerceIn(-heightPx, 0f)
     }
 }
 
