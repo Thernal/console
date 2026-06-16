@@ -20,7 +20,7 @@ import io.thernal.console.api.ui.LocalLogRenderer
 import io.thernal.console.designsystem.components.core.DsDivider
 import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.log.Log
+import io.thernal.console.core.log.Log
 
 @Composable
 internal fun OverlayCurrentLogSection(

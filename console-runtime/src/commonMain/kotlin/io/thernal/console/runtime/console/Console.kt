@@ -1,6 +1,10 @@
 package io.thernal.console.runtime.console
 
-import io.thernal.console.runtime.log.Log
+import io.thernal.console.core.ConsoleInternalApi
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.ConsoleScope
+import io.thernal.console.core.LogObserver
+import io.thernal.console.core.LogProcessor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -22,7 +26,25 @@ class Console private constructor() : ConsoleScope {
     @Volatile
     var isEnabled: Boolean = true
 
+    @Volatile
+    private var sealed: Boolean = false
+
+    val isSealed: Boolean get() = sealed
+
+    /**
+     * Permanently locks registration: after this call [addObserver] and [setProcessors]
+     * become no-ops. One-way — there is no unseal. Emission ([notify] and friends) and
+     * [removeObserver] keep working, so already-registered observers continue to receive
+     * events and the registered set can only shrink, never grow. Call once after
+     * first-party setup to block later (e.g. third-party) observer injection.
+     */
+    fun seal() {
+        sealed = true
+    }
+
+    @ConsoleInternalApi
     override fun addObserver(observer: LogObserver) {
+        if (sealed) return
         observers.update { current ->
             if (current.any { it === observer }) {
                 current
@@ -32,11 +54,13 @@ class Console private constructor() : ConsoleScope {
         }
     }
 
+    @ConsoleInternalApi
     override fun removeObserver(observer: LogObserver) {
         observers.update { current -> current.filterNot { it === observer } }
     }
 
     override fun setProcessors(processors: List<LogProcessor>) {
+        if (sealed) return
         this.processors.value = processors
     }
 
@@ -81,9 +105,18 @@ class Console private constructor() : ConsoleScope {
                 default.isEnabled = value
             }
 
+        val isSealed: Boolean get() = default.isSealed
+
+        fun seal() {
+            default.seal()
+        }
+
+        @ConsoleInternalApi
         override fun addObserver(observer: LogObserver) {
             default.addObserver(observer)
         }
+
+        @ConsoleInternalApi
         override fun removeObserver(observer: LogObserver) {
             default.removeObserver(observer)
         }

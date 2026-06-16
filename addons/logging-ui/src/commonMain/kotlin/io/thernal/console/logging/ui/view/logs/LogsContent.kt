@@ -17,7 +17,7 @@ import io.thernal.console.logging.ui.view.logs.model.LogsIntent
 import io.thernal.console.logging.ui.view.logs.model.LogsState
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.LogLevel
 import io.thernal.console.logging.ui.view.logs.components.LogList
 import io.thernal.console.logging.ui.view.logs.components.LogsEmptyState
 import io.thernal.console.logging.ui.view.logs.components.LogsLevelFilter
@@ -25,7 +25,7 @@ import io.thernal.console.logging.ui.view.logs.components.LogsSearchBar
 import io.thernal.console.logging.ui.view.logs.components.LogsTagFilter
 import io.thernal.console.designsystem.components.core.collapsible.DsCollapsible
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.log.Log
+import io.thernal.console.core.log.Log
 
 @Composable
 internal fun LogsContent(

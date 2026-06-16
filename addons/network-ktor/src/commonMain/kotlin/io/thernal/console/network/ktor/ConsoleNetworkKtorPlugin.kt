@@ -14,7 +14,7 @@ import io.thernal.console.network.NetworkLog
 import io.thernal.console.network.SensitiveHeaders
 import io.thernal.console.network.toNetworkLevel
 import io.thernal.console.runtime.console.Console
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.LogLevel
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 

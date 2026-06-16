@@ -2,8 +2,8 @@ package io.thernal.console.ui.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.log.LogLevel
 import io.thernal.console.designsystem.foundation.theme.Theme
 import io.thernal.console.designsystem.foundation.theme.ThemeColors
 import kotlin.math.abs

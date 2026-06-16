@@ -7,6 +7,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.consoleUi)
+            implementation(projects.consoleRuntime)
             implementation(projects.designsystem.components)
             // UI
             implementation(libs.compose.foundation)

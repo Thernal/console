@@ -16,7 +16,7 @@ import io.thernal.console.designsystem.foundation.theme.Theme
 import io.thernal.console.network.NetworkLog
 import io.thernal.console.network.ui.components.networklogitem.components.NetworkLogHeader
 import io.thernal.console.network.ui.components.networklogitem.components.NetworkLogMeta
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.LogLevel
 
 @Composable
 internal fun NetworkLogItem(

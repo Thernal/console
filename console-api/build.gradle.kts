@@ -6,7 +6,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(projects.consoleRuntime)
+            api(projects.consoleCore)
             api(projects.designsystem.components)
             api(libs.compose.ui)
             api(libs.compose.foundation)

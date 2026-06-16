@@ -1,6 +1,6 @@
 package io.thernal.console.network
 
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.LogLevel
 
 private const val HTTP_REDIRECT = 300
 private const val HTTP_CLIENT_ERROR = 400

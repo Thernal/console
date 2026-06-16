@@ -15,7 +15,7 @@ import io.thernal.console.network.ui.view.networklogdetail.components.NetworkLog
 import io.thernal.console.network.ui.view.networklogdetail.components.NetworkLogSummary
 import io.thernal.console.network.ui.view.networklogdetail.model.NetworkLogDetailIntent
 import io.thernal.console.network.ui.view.networklogdetail.model.NetworkLogDetailState
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.LogLevel
 
 @Composable
 internal fun NetworkLogDetailContent(

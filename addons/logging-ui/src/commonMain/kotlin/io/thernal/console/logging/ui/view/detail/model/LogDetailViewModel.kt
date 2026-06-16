@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import io.thernal.console.logging.ui.ConsoleLogObserver
 import io.thernal.console.ui.core.IntentHandler
 import io.thernal.console.ui.core.StateHolder
-import io.thernal.console.runtime.log.Log
+import io.thernal.console.core.log.Log
 import kotlinx.coroutines.launch
 
 class LogDetailViewModel(

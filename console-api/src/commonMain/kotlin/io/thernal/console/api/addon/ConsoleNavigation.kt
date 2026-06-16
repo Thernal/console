@@ -9,7 +9,7 @@ object ConsoleNavigation {
     val tabs: List<ConsoleTab> get() = _tabs
     val graphs: List<ConsoleNavGraph> get() = _graphs
 
-    fun registerTab(tab: ConsoleTab) {
+    internal fun registerTab(tab: ConsoleTab) {
         if (_tabs.none { it::class == tab::class }) {
             val index = _tabs.indexOfFirst { it.order > tab.order }
             if (index == -1) {
@@ -20,7 +20,7 @@ object ConsoleNavigation {
         }
     }
 
-    fun registerGraph(graph: ConsoleNavGraph) {
+    internal fun registerGraph(graph: ConsoleNavGraph) {
         if (_graphs.none { it::class == graph::class }) {
             _graphs.add(graph)
         }

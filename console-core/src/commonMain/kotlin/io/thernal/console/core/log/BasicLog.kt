@@ -1,4 +1,4 @@
-package io.thernal.console.runtime.log
+package io.thernal.console.core.log
 
 import kotlin.time.Clock
 import kotlin.time.Instant

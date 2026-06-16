@@ -1,7 +1,7 @@
 package io.thernal.console.stepper.ui.stepper
 
 import io.thernal.console.ui.core.ViewIntent
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.LogLevel
 
 sealed interface StepperIntent : ViewIntent {
     data class SetEnabled(val isEnabled: Boolean) : StepperIntent

@@ -59,9 +59,9 @@ private fun PreviewStepperOverlayContentEnabled() {
         state.isPaused.set(true)
         state.steppedEvents.set(
             listOf(
-                io.thernal.console.runtime.log.Log(message = "Network request completed"),
-                io.thernal.console.runtime.log.Log(message = "Cache miss"),
-                io.thernal.console.runtime.log.Log(message = "Auth token expired"),
+                io.thernal.console.core.log.Log(message = "Network request completed"),
+                io.thernal.console.core.log.Log(message = "Cache miss"),
+                io.thernal.console.core.log.Log(message = "Auth token expired"),
             ),
         )
         state.isExpanded.set(true)

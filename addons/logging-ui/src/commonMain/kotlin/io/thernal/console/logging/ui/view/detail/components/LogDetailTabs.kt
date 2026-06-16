@@ -10,7 +10,7 @@ import io.thernal.console.designsystem.components.core.tabview.DsTabState
 import io.thernal.console.designsystem.components.core.tabview.DsTabView
 import io.thernal.console.designsystem.components.modifier.applyIf
 import io.thernal.console.designsystem.components.modifier.focusRing
-import io.thernal.console.runtime.log.Log
+import io.thernal.console.core.log.Log
 
 @Composable
 fun LogDetailTabs(

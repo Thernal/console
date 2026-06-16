@@ -11,6 +11,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.jetbrains.lifecycle.viewmodel)
             implementation(libs.jetbrains.lifecycle.viewmodel.compose)
+            implementation(projects.consoleRuntime)
             implementation(projects.consoleUi)
             implementation(projects.addons.loggingUi)
             implementation(projects.addons.detailsUi)

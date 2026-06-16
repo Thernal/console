@@ -1,7 +1,7 @@
 package io.thernal.console.logging.ui
 
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.console.LogObserver
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.LogObserver
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
