@@ -6,6 +6,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            api(projects.consoleCore)
             api(libs.kotlinx.coroutines.core)
         }
     }

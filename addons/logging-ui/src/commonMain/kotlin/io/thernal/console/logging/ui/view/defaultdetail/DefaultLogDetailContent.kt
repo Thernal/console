@@ -5,8 +5,8 @@ import io.thernal.console.ui.common.logAccentColor
 import io.thernal.console.logging.ui.view.defaultdetail.components.MessageCard
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.log.LogLevel
 
 @Composable
 internal fun DefaultLogDetailContent(

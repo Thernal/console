@@ -1,7 +1,7 @@
 package io.thernal.console.network
 
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.log.LogLevel
 import kotlin.time.Clock
 import kotlin.time.Instant
 import kotlin.uuid.ExperimentalUuidApi

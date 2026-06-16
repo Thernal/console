@@ -10,8 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import io.thernal.console.ui.common.extensions.toHms
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.log.LogLevel
 import io.thernal.console.ui.common.highlight
 import io.thernal.console.ui.common.logAccentColor
 import io.thernal.console.designsystem.components.core.DsCard

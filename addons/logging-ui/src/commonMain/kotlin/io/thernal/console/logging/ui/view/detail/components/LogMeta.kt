@@ -8,8 +8,8 @@ import io.thernal.console.ui.common.logAccentColor
 import io.thernal.console.designsystem.components.core.chip.DsChip
 import io.thernal.console.designsystem.components.core.chip.DsChipSize
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.log.LogLevel
 
 @Composable
 fun LogMeta(log: Log) {

@@ -1,9 +1,9 @@
 package io.thernal.console.stepper.ui.stepper
 
 import io.thernal.console.ui.core.IntentHandler
-import io.thernal.console.runtime.console.LogObserver
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.LogObserver
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.log.LogLevel
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

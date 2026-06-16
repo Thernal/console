@@ -3,7 +3,7 @@ package io.thernal.console.api.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import io.thernal.console.runtime.log.Log
+import io.thernal.console.core.log.Log
 
 interface LogRenderer {
     @Composable

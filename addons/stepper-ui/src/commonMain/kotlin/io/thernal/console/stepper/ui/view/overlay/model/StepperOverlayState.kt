@@ -4,7 +4,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.unit.IntSize
 import io.thernal.console.ui.core.ViewState
 import io.thernal.console.ui.core.derive
-import io.thernal.console.runtime.log.Log
+import io.thernal.console.core.log.Log
 
 @Stable
 class StepperOverlayState : ViewState() {

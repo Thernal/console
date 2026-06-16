@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.thernal.console.details.ConsoleDetails
 import io.thernal.console.runtime.console.Console
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.log.LogLevel
 import io.thernal.console.sample.network.FakeTodoRepository
 import kotlinx.coroutines.launch
 

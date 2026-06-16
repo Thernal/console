@@ -7,6 +7,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.addons.networkCore)
+            implementation(projects.consoleRuntime)
         }
         val jvmSharedMain by creating {
             dependsOn(commonMain.get())

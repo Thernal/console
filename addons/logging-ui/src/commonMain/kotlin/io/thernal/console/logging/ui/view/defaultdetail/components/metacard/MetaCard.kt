@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import io.thernal.console.ui.common.extensions.toHms
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.log.LogLevel
 import io.thernal.console.designsystem.components.core.DsContainer
 import io.thernal.console.designsystem.components.core.chip.DsChip
 import io.thernal.console.designsystem.components.core.chip.DsChipSize

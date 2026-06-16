@@ -7,6 +7,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.consoleUi)
+            implementation(projects.consoleRuntime)
             implementation(projects.designsystem.components)
             implementation(libs.jetbrains.navigation3.ui)
             implementation(libs.jetbrains.lifecycle.viewmodel.nav3)

@@ -28,8 +28,8 @@ import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.log.LogLevel
 import io.thernal.console.stepper.ui.view.events.model.SteppedEventsState
 
 @Composable

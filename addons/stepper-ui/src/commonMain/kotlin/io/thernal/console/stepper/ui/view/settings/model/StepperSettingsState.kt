@@ -4,8 +4,8 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.input.TextFieldValue
 import io.thernal.console.ui.core.ViewState
 import io.thernal.console.ui.core.derive
-import io.thernal.console.runtime.log.Log
-import io.thernal.console.runtime.log.LogLevel
+import io.thernal.console.core.log.Log
+import io.thernal.console.core.log.LogLevel
 
 @Stable
 class StepperSettingsState : ViewState() {

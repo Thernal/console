@@ -12,7 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import io.thernal.console.api.ui.LogRenderer
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.runtime.log.Log
+import io.thernal.console.core.log.Log
 
 @Composable
 fun LogDetailPager(
