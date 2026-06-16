@@ -14,10 +14,17 @@ internal fun Project.configureAndroidTarget(extension: KotlinMultiplatformExtens
 
     val compileSdk = libs.findVersion("android-compile-sdk").orElseThrow().requiredVersion.toInt()
     val minSdk = libs.findVersion("android-min-sdk").orElseThrow().requiredVersion.toInt()
+    val consumerRules = rootProject.file("gradle/consumer-rules.pro")
 
     extension.targets.withType(KotlinMultiplatformAndroidLibraryTarget::class.java).configureEach {
         this.namespace = namespace
         this.compileSdk = compileSdk
         this.minSdk = minSdk
+        // Ship Console's (deliberately minimal) consumer keep rules in every AAR so
+        // consuming apps can fully shrink/obfuscate Console internals in release.
+        optimization {
+            consumerKeepRules.publish = true
+            consumerKeepRules.files(consumerRules)
+        }
     }
 }
