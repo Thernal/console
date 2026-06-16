@@ -74,8 +74,11 @@ auto-discovered). Match a neighboring module of the same kind.
 Discover the current module topology and dependency edges via graphify
 (`/graphify query "module topology and dependency direction"`) before cross-module work. Then:
 
-- Preserve dependency direction. Keep cross-cutting primitives in `console-runtime` /
-  `console-api`; do not push business-specific logic into them for convenience.
+- Preserve dependency direction. `console-core` holds the cross-cutting primitives (log model,
+  `ConsoleScope` / `LogObserver` / `LogProcessor`, `ConsoleInternalApi`). `console-runtime` (the
+  `Console` pipeline) and `console-api` / `console-ui` (view layer) both depend on `console-core`,
+  NOT on each other — the view layer must stay independent of the observer pipeline. Do not push
+  business-specific logic into these modules for convenience.
 - Addon UI stays inside its own `-ui` module; addons do not depend on each other's internals.
 - Cross-addon communication goes through `console-api` contracts and the registries, not direct
   module-to-module coupling.
@@ -87,10 +90,17 @@ Before adding or changing an addon, study an existing one via graphify
 (`/graphify query "addon module structure, LogRendererRegistry registration, and auto-init wiring"`)
 or by reading an existing `addons/*-ui` module and mirroring it. Hold these invariants:
 
-- Split into `-core` / `-api` (`Log.Custom` subtype + state, no UI), `-ui` (a `LogRenderer`
-  registered in `LogRendererRegistry`, auto-initialized), and `-noop` (same API, empty bodies).
+- Split into `-core` (custom `Log` subtype + state, no UI), `-ui` (a `LogRenderer` registered in
+  `LogRendererRegistry`, auto-initialized), and `-noop` (same API, empty bodies).
+- `ConsoleAddon.onInstall()` takes no parameters and must stay Console-free. Addons that capture
+  logs reference the `Console` singleton (`console-runtime`) DIRECTLY in `onInstall` and declare a
+  `console-runtime` dependency; view-only addons leave `onInstall` empty and depend only on
+  `console-api` / `console-core`.
+- Registration APIs (`Console.addObserver`, `LogRendererRegistry.register`) are `@ConsoleInternalApi`
+  (opt-in, error level) — opt in with `@file:OptIn(ConsoleInternalApi::class)`. `Console.seal()`
+  locks the observer pipeline against later injection (use after first-party setup in release).
 - `LogRendererRegistry` dispatches by exact `KClass` (O(1), no `canRender()`); `DispatchLogRenderer`
-  checks the registry first and falls back to the provided renderer for `Log.Basic`.
+  checks the registry first and falls back to the provided renderer for `BasicLog`.
 - Auto-init: Android via a `ConsoleAutoInitProvider` subclass + manifest `<provider>`; iOS/native
   via a top-level `@EagerInitialization` property using `consoleAddonInit { }`.
 

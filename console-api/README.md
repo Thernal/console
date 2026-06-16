@@ -1,6 +1,9 @@
 # console-api
 
-Public contracts for the Console addon system. Depend on this module to build addons without pulling in any Compose UI.
+Public contracts for the Console addon system — renderers, tabs, overlays, navigation, and
+the `ConsoleAddon` entry point. Depends only on [`console-core`](../console-core), **not** on
+`console-runtime`: the view layer is independent of the observer pipeline. For pure data
+types/contracts with no Compose, see `console-core`.
 
 ```kotlin
 implementation("io.github.thernal:console-api:<version>")
@@ -12,11 +15,18 @@ implementation("io.github.thernal:console-api:<version>")
 
 Entry point for every addon. Install it once at app startup — auto-init providers handle this automatically on Android and iOS.
 
+`onInstall()` is the data-plane hook and takes no parameters: addons that capture logs
+reference the `Console` singleton (`console-runtime`) directly there; view-only addons leave
+it empty. The registration APIs (`Console.addObserver`, `LogRendererRegistry.register`) are
+`@ConsoleInternalApi`, so opt in at the top of the file.
+
 ```kotlin
+@file:OptIn(ConsoleInternalApi::class)
+
 object MyAddon : ConsoleAddon {
-    override fun onInstall(console: ConsoleScope) {
-        console.addObserver(MyObserver)          // optional
-        LogRendererRegistry.register<MyLog>(MyRenderer) // optional
+    override fun onInstall() {
+        Console.addObserver(MyObserver)                  // optional — references the Console singleton directly
+        LogRendererRegistry.register<MyLog>(MyRenderer)  // optional
     }
 
     override fun tab(): ConsoleTab = MyTab        // optional
@@ -27,6 +37,9 @@ object MyAddon : ConsoleAddon {
 // Manual install (iOS / JVM)
 MyAddon.install()
 ```
+
+Only observer/renderer-capturing addons need a `console-runtime` dependency (for `Console`);
+view-only addons depend on `console-api` / `console-core` alone.
 
 ---
 
@@ -74,7 +87,7 @@ object MyLogRenderer : LogRenderer {
 Type-keyed registry — dispatches to the correct renderer in O(1) without any `canRender()` boilerplate.
 
 ```kotlin
-// Register — typically in ConsoleAddon.onInstall
+// Register — typically in ConsoleAddon.onInstall (requires @OptIn(ConsoleInternalApi::class))
 LogRendererRegistry.register<MyLog>(MyLogRenderer)
 
 // Lookup — used internally by DispatchLogRenderer

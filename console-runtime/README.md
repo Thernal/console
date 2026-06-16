@@ -1,38 +1,22 @@
 # console-runtime
 
-Core types and log processing pipeline. No UI dependencies — safe to use in any layer.
+The `Console` singleton and its log-processing pipeline — the data plane. Depends on
+`console-core` for the log model and contracts; adds no UI. `console-api` / `console-ui` do
+**not** depend on this module, so the UI layer can ship without the pipeline.
 
 ```kotlin
 implementation("io.github.thernal:console-runtime:<version>")
 ```
 
----
-
-## Log
-
-```kotlin
-// Basic log
-Console.notify {
-    Log(message = "Something happened", tag = "MyTag", level = LogLevel.Info)
-}
-
-// Custom log type — implement Log for addon-specific payloads
-data class NetworkLog(
-    override val message: String,
-    override val level: LogLevel,
-    // ...
-) : Log
-```
-
-### LogLevel
-
-`None` · `Verbose` · `Debug` · `Info` · `Success` · `Warning` · `Error` · `Fatal`
+The log model (`Log`, `LogLevel`) and contracts (`LogObserver`, `LogProcessor`,
+`ConsoleScope`) live in [`console-core`](../console-core).
 
 ---
 
 ## Console
 
-Global singleton. Thread-safe — `notify` dispatches asynchronously; `asyncNotify` suspends until observers have processed the event.
+Global singleton. Thread-safe — `notify` dispatches asynchronously; `asyncNotify` suspends
+until observers have processed the event.
 
 ```kotlin
 // Fire-and-forget
@@ -50,31 +34,41 @@ Console.isEnabled = false  // drops all events silently
 
 ---
 
-## LogObserver
+## Observers & processors (first-party)
 
-Implement to receive every log event dispatched through `Console`:
+`addObserver` / `removeObserver` / `setProcessors` feed the pipeline. `addObserver` and
+`removeObserver` are marked `@ConsoleInternalApi` — they are for addons and release sinks,
+not the general public API, so callers must opt in explicitly:
 
 ```kotlin
-object MyObserver : LogObserver {
-    override suspend fun emit(event: Log) {
-        // runs on a single-threaded dispatcher — no synchronization needed
-    }
-}
+@file:OptIn(ConsoleInternalApi::class)
 
 Console.addObserver(MyObserver)
 Console.removeObserver(MyObserver)
+
+// Processors transform/filter before observers — a natural place for redaction
+Console.setProcessors(listOf(
+    LogProcessor { log ->
+        log.takeIf { it.level != LogLevel.Verbose } ?: Log(message = "[suppressed]")
+    },
+))
 ```
 
 ---
 
-## LogProcessor
+## Sealing — release injection lock
 
-Transform or filter logs before they reach observers:
+After registering your first-party observers (e.g. a Crashlytics sink in a release build),
+lock the pipeline so nothing can add observers afterwards — including third-party SDKs that
+initialize later, or runtime injection:
 
 ```kotlin
-Console.setProcessors(listOf(
-    LogProcessor { log ->
-        log.takeIf { it.level != LogLevel.Verbose } ?: Log(message = "[suppressed]")
-    }
-))
+Console.addObserver(CrashlyticsLogObserver())  // your release sink
+Console.seal()                                 // one-way — addObserver/setProcessors become no-ops
 ```
+
+Sealing is one-way (no unseal). Emission (`notify` and friends) and `removeObserver` keep
+working, so the registered set can only shrink, never grow. It is a runtime lock that
+complements the compile-time `@ConsoleInternalApi` opt-in; for release builds, also enable
+R8 obfuscation. It does not stop a determined in-process attacker (who has bigger levers
+anyway) — it raises the bar against casual/third-party observer injection.

@@ -147,8 +147,10 @@ data class MyLog(
 ### 2. Register a renderer
 
 ```kotlin
+@file:OptIn(ConsoleInternalApi::class)
+
 object MyAddon : ConsoleAddon {
-    override fun onInstall(console: ConsoleScope) {
+    override fun onInstall() {
         LogRendererRegistry.register<MyLog>(MyLogRenderer)
     }
 }

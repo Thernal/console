@@ -48,8 +48,9 @@ To check manually:
 ## Project structure
 
 ```
-console-runtime/        # Core data models and log processing
-console-api/            # Public contracts (interfaces, addon system)
+console-core/           # Foundation: log model + contracts (Log, ConsoleScope, LogObserver/Processor, ConsoleInternalApi)
+console-runtime/        # Console singleton + log pipeline (depends on console-core)
+console-api/            # Addon contracts (depends on console-core, NOT runtime — view layer is pipeline-independent)
 console-ui/             # Default Compose UI shell (ConsoleProvider)
 console-ui-noop/        # No-op implementation for release builds
 designsystem/
@@ -120,9 +121,13 @@ Follow the pattern: `io.thernal.console.<addonname>[.ui]`
 **4. Implement `ConsoleAddon`**
 
 ```kotlin
+@file:OptIn(ConsoleInternalApi::class)
+
 object MyAddon : ConsoleAddon {
-    override fun onInstall(console: ConsoleScope) {
+    override fun onInstall() {
         LogRendererRegistry.register<MyLog>(MyLogRenderer)
+        // Observer-capturing addons also call Console.addObserver(...) here
+        // (add a console-runtime dependency); view-only addons leave this empty.
     }
 }
 ```

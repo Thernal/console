@@ -162,6 +162,8 @@ Console.notify {
 Implement `LogRenderer` so `AnalyticsLog` entries have their own item and detail screens, then register it for the type:
 
 ```kotlin
+@file:OptIn(ConsoleInternalApi::class)  // LogRendererRegistry.register is a first-party API
+
 object AnalyticsLogRenderer : LogRenderer {
     @Composable
     override fun Item(log: Log, modifier: Modifier) {
@@ -177,7 +179,7 @@ object AnalyticsLogRenderer : LogRenderer {
 }
 
 object AnalyticsAddon : ConsoleAddon {
-    override fun onInstall(console: ConsoleScope) {
+    override fun onInstall() {
         LogRendererRegistry.register<AnalyticsLog>(AnalyticsLogRenderer)
     }
 }
@@ -400,8 +402,9 @@ Beyond tabs, `ConsoleAddon` also supports:
 
 | Artifact | Description |
 |----------|-------------|
-| `io.github.thernal:console-runtime:<version>` | Core types — `Log`, `LogLevel`, `Console`, `LogObserver` |
-| `io.github.thernal:console-api:<version>` | Addon contracts — `ConsoleAddon`, `ConsoleTab`, `LogRenderer`, `LogRendererRegistry` |
+| `io.github.thernal:console-core:<version>` | Foundation — `Log`, `LogLevel`, `LogObserver`, `LogProcessor`, `ConsoleScope` (no UI, no pipeline) |
+| `io.github.thernal:console-runtime:<version>` | `Console` singleton + log pipeline (depends on `console-core`) |
+| `io.github.thernal:console-api:<version>` | Addon contracts — `ConsoleAddon`, `ConsoleTab`, `LogRenderer`, `LogRendererRegistry` (depends on `console-core`, not runtime) |
 | `io.github.thernal:console-ui:<version>` | Compose UI shell — `ConsoleProvider`, navigation, overlay |
 | `io.github.thernal:console-ui-noop:<version>` | No-op stub for production builds |
 
