@@ -12,4 +12,12 @@ interface ConsoleTab {
 
     @Composable
     fun Content()
+
+    /**
+     * Optional actions contributed to the console app bar while this tab is selected.
+     * Rendered in the app bar trailing area, before the close button. Empty by default.
+     */
+    @Composable
+    fun Actions() {
+    }
 }
