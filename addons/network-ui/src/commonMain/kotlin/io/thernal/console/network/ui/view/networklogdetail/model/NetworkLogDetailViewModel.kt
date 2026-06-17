@@ -5,6 +5,8 @@ import io.thernal.console.ui.core.EffectHandler
 import io.thernal.console.ui.core.IntentHandler
 import io.thernal.console.ui.core.StateHolder
 import io.thernal.console.network.NetworkLog
+import io.thernal.console.network.ui.common.extensions.resolveNetworkBody
+import io.thernal.console.network.ui.common.extensions.toCopyText
 import io.thernal.console.network.ui.common.extensions.toCurlCommand
 import io.thernal.console.network.ui.common.extensions.toDisplayText
 import io.thernal.console.network.ui.common.extensions.toShareText
@@ -34,7 +36,11 @@ class NetworkLogDetailViewModel(
             }
 
             NetworkLogDetailIntent.CopyBody -> {
-                launchEffect(NetworkLogDetailEffect.Copy(data = log.body.orEmpty()))
+                val data = log.body
+                    ?.takeIf { it.isNotBlank() }
+                    ?.let { resolveNetworkBody(rawBody = it, headers = log.headers).toCopyText() }
+                    .orEmpty()
+                launchEffect(NetworkLogDetailEffect.Copy(data = data))
             }
 
             NetworkLogDetailIntent.CopyCurl -> {
