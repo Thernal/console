@@ -60,6 +60,14 @@ class LibConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("kotlin-stdlib").orElseThrow())
                     }
                 }
+
+                sourceSets.named("commonTest") {
+                    dependencies {
+                        implementation(libs.findLibrary("kotlin-test").orElseThrow())
+                        implementation(libs.findLibrary("kotlinx-coroutines-test").orElseThrow())
+                        implementation(libs.findLibrary("turbine").orElseThrow())
+                    }
+                }
             }
         }
     }
