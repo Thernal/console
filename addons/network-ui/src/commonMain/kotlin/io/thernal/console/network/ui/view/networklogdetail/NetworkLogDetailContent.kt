@@ -3,8 +3,10 @@ package io.thernal.console.network.ui.view.networklogdetail
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import io.thernal.console.ui.core.preview
 import io.thernal.console.ui.common.logAccentColor
+import io.thernal.console.network.ui.common.extensions.resolveNetworkBody
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.Theme
@@ -53,7 +55,8 @@ internal fun NetworkLogDetailContent(
             )
         }
 
-        log.body?.takeIf { it.isNotBlank() }?.let { body ->
+        log.body?.takeIf { it.isNotBlank() }?.let { rawBody ->
+            val body = remember(log) { resolveNetworkBody(rawBody = rawBody, headers = log.headers) }
             NetworkLogBody(
                 title = if (log is NetworkLog.Request) {
                     "Request Body"
@@ -80,7 +83,7 @@ private fun PreviewNetworkLogDetailContentRequest() {
                 method = "POST",
                 url = "https://api.example.com/v1/users",
                 headers = mapOf("Content-Type" to "application/json", "Authorization" to "***"),
-                body = """{"name": "John", "email": "john@example.com"}""",
+                body = """{"name": "John", "email": "john@example.com", "roles": ["admin", "user"]}""",
             ),
             state = NetworkLogDetailState().preview { state.bodyExpanded.set(true) },
             onDispatch = {},
@@ -103,6 +106,26 @@ private fun PreviewNetworkLogDetailContentResponse() {
                 level = LogLevel.Success,
             ),
             state = NetworkLogDetailState().preview { state.headersExpanded.set(true) },
+            onDispatch = {},
+        )
+    }
+}
+
+@DsPreview
+@Composable
+private fun PreviewNetworkLogDetailContentBinaryResponse() {
+    ThemeProvider {
+        NetworkLogDetailContent(
+            log = NetworkLog.Response(
+                method = "GET",
+                url = "https://api.example.com/v1/avatar.png",
+                statusCode = 200,
+                headers = mapOf("Content-Type" to "image/png", "Content-Length" to "1048576"),
+                body = "PNG\r\n\n",
+                durationMs = 120L,
+                level = LogLevel.Success,
+            ),
+            state = NetworkLogDetailState().preview { state.bodyExpanded.set(true) },
             onDispatch = {},
         )
     }

@@ -8,6 +8,7 @@ import io.thernal.console.details.ConsoleDetails
 import io.thernal.console.runtime.console.Console
 import io.thernal.console.core.log.Log
 import io.thernal.console.core.log.LogLevel
+import io.thernal.console.network.NetworkLog
 import io.thernal.console.sample.network.FakeTodoRepository
 import kotlinx.coroutines.launch
 
@@ -20,6 +21,8 @@ class SampleViewModel : ViewModel() {
 
     private val _isCreatingPost = mutableStateOf(false)
     val isCreatingPost: State<Boolean> = _isCreatingPost
+
+    private var jsonDemoCounter = 0
 
     // Console.notify is fire-and-forget — safe to call from any thread or context
     fun logAtLevel(level: LogLevel) {
@@ -79,6 +82,43 @@ class SampleViewModel : ViewModel() {
         }
     }
 
+    // Emits a synthetic network log with a minified JSON body so the detail view's JSON
+    // pretty-printing can be tested without depending on a live response
+    fun logUnformattedJson() {
+        val groupId = "json-demo-${jsonDemoCounter++}"
+        val url = "https://api.example.com/v1/echo"
+
+        Console.notify {
+            NetworkLog.Request(
+                method = "POST",
+                url = url,
+                headers = jsonHeaders(DEMO_REQUEST_JSON),
+                body = DEMO_REQUEST_JSON,
+                groupId = groupId,
+            )
+        }
+
+        Console.notify {
+            NetworkLog.Response(
+                method = "POST",
+                url = url,
+                headers = jsonHeaders(DEMO_RESPONSE_JSON),
+                body = DEMO_RESPONSE_JSON,
+                statusCode = DEMO_STATUS_OK,
+                durationMs = DEMO_DURATION_MS,
+                level = LogLevel.Success,
+                groupId = groupId,
+            )
+        }
+    }
+
+    private fun jsonHeaders(body: String): Map<String, String> {
+        return mapOf(
+            "Content-Type" to "application/json",
+            "Content-Length" to body.length.toString(),
+        )
+    }
+
     override fun onCleared() {
         repository.close()
         super.onCleared()
@@ -86,5 +126,19 @@ class SampleViewModel : ViewModel() {
 
     companion object {
         const val ORDERED_LOG_COUNT = 5
+
+        private const val DEMO_STATUS_OK = 200
+        private const val DEMO_DURATION_MS = 12L
+
+        private const val DEMO_REQUEST_JSON =
+            """{"title":"console sample post","body":"unformatted single-line json",""" +
+                """"userId":42,"tags":["network","json"]}"""
+
+        private const val DEMO_RESPONSE_JSON =
+            """{"id":42,"name":"Console Sample","active":true,""" +
+                """"tags":["network","json","kmp"],""" +
+                """"meta":{"createdAt":"2026-06-17T10:00:00Z","views":1280,""" +
+                """"nested":{"a":1,"b":[1,2,3],"c":null}},""" +
+                """"items":[{"k":"v1"},{"k":"v2"}]}"""
     }
 }

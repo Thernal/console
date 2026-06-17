@@ -17,7 +17,7 @@ internal fun NetworkLog.toShareText(): String {
         body?.takeIf { it.isNotBlank() }?.let {
             appendLine()
             appendLine("Body:")
-            append(it)
+            append(resolveNetworkBody(rawBody = it, headers = headers).toCopyText())
         }
     }.trim()
 }
