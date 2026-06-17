@@ -52,7 +52,7 @@ internal fun NetworkLogItem(
                 text = log.url.highlight(),
                 style = Theme.typography.body02,
                 color = Theme.colors.content01,
-                maxLines = 1,
+                maxLines = 5,
                 overflow = TextOverflow.Ellipsis,
             )
 
