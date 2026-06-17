@@ -96,7 +96,7 @@ jobs:
         run: ./gradlew allTests
 
   build-ios:
-    name: Build iOS
+    name: Build & Test iOS
     runs-on: macos-latest
     permissions:
       contents: read
@@ -117,3 +117,6 @@ jobs:
 
       - name: Build iOS
         run: ./gradlew compileKotlinIosArm64
+
+      - name: Test iOS
+        run: ./gradlew iosSimulatorArm64Test
