@@ -100,6 +100,13 @@ fun SampleScreen(viewModel: SampleViewModel = viewModel { SampleViewModel() }) {
                 }
             }
         }
+
+        // Emits a synthetic log with a minified JSON body to test detail-view pretty-printing
+        DemoSection(title = "JSON Body Formatting") {
+            Button(onClick = viewModel::logUnformattedJson) {
+                Text("Emit unformatted JSON")
+            }
+        }
     }
 }
 
