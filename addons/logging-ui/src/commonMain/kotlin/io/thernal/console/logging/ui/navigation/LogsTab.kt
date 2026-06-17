@@ -1,5 +1,6 @@
 package io.thernal.console.logging.ui.navigation
 
+import io.thernal.console.logging.ui.view.logs.components.LogsActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
@@ -15,5 +16,10 @@ internal object LogsTab : ConsoleTab {
     @Composable
     override fun Content() {
         LogsView()
+    }
+
+    @Composable
+    override fun Actions() {
+        LogsActions()
     }
 }

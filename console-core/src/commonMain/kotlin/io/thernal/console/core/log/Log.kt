@@ -24,6 +24,21 @@ interface Log {
         }.contains(query, ignoreCase = true)
     }
 
+    /**
+     * Shareable plain-text representation of this log, used when copying logs out of the console.
+     * Defaults to the level/tag-prefixed message; custom log types may override it to expose their
+     * richer content (e.g. a network log's headers and body).
+     */
+    fun toShareText(): String {
+        return buildString {
+            if (level != LogLevel.None) {
+                append("[${level.name}] ")
+            }
+            tag?.let { append("[$it] ") }
+            append(message)
+        }
+    }
+
     companion object {
         operator fun invoke(
             message: String,

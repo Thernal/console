@@ -47,6 +47,8 @@ internal fun ConsoleContent(
                     )
                 },
                 trailing = {
+                    tabs.getOrNull(selectedIndex.value)?.Actions()
+
                     DsIconButton(onClick = onClose) {
                         DsIcon(
                             icon = Icons.Default.Close,

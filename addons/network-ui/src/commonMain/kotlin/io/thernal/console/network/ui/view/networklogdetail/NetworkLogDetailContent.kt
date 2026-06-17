@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import io.thernal.console.ui.core.preview
 import io.thernal.console.ui.common.logAccentColor
-import io.thernal.console.network.ui.common.extensions.resolveNetworkBody
+import io.thernal.console.network.resolveNetworkBody
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.Theme

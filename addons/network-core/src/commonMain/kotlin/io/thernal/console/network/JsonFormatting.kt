@@ -1,4 +1,4 @@
-package io.thernal.console.network.ui.common.extensions
+package io.thernal.console.network
 
 private const val JSON_INDENT_UNIT = "  "
 private val JSON_NUMBER_REGEX = Regex("""-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?""")

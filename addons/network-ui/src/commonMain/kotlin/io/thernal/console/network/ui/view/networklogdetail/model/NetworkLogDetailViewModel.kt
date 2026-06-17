@@ -5,11 +5,10 @@ import io.thernal.console.ui.core.EffectHandler
 import io.thernal.console.ui.core.IntentHandler
 import io.thernal.console.ui.core.StateHolder
 import io.thernal.console.network.NetworkLog
-import io.thernal.console.network.ui.common.extensions.resolveNetworkBody
-import io.thernal.console.network.ui.common.extensions.toCopyText
+import io.thernal.console.network.resolveNetworkBody
+import io.thernal.console.network.toCopyText
 import io.thernal.console.network.ui.common.extensions.toCurlCommand
 import io.thernal.console.network.ui.common.extensions.toDisplayText
-import io.thernal.console.network.ui.common.extensions.toShareText
 
 class NetworkLogDetailViewModel(
     private val log: NetworkLog,

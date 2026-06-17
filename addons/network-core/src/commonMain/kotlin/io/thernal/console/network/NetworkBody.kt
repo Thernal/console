@@ -1,10 +1,10 @@
-package io.thernal.console.network.ui.common.extensions
+package io.thernal.console.network
 
 /**
- * Classified representation of a network body, decided from its content type and bytes so the
- * detail view can render readable payloads and avoid dumping unreadable binary content.
+ * Classified representation of a network body, decided from its content type and bytes so that
+ * consumers can render readable payloads and avoid dumping unreadable binary content.
  */
-internal sealed interface NetworkBody {
+sealed interface NetworkBody {
 
     /** A text payload, pretty-printed when it was detected as JSON, raw otherwise. */
     data class Text(val value: String) : NetworkBody
