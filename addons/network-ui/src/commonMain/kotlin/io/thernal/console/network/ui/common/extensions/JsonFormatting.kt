@@ -75,7 +75,10 @@ private fun String.writeJsonObject(
         i = skipWhitespace(i)
         require(i < length) { "Unterminated object" }
         when (this[i]) {
-            ',' -> i++
+            ',' -> {
+                out.append(',')
+                i++
+            }
 
             '}' -> {
                 out.newLineIndent(depth)
@@ -106,7 +109,10 @@ private fun String.writeJsonArray(
         i = skipWhitespace(i)
         require(i < length) { "Unterminated array" }
         when (this[i]) {
-            ',' -> i++
+            ',' -> {
+                out.append(',')
+                i++
+            }
 
             ']' -> {
                 out.newLineIndent(depth)
