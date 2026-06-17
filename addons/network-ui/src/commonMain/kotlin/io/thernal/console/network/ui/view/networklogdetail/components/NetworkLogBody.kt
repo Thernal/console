@@ -20,8 +20,8 @@ import io.thernal.console.designsystem.components.core.DsText
 import io.thernal.console.designsystem.components.modifier.applyIf
 import io.thernal.console.designsystem.components.modifier.focusRing
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.network.ui.common.extensions.NetworkBody
-import io.thernal.console.network.ui.common.extensions.toHumanReadableSize
+import io.thernal.console.network.NetworkBody
+import io.thernal.console.network.toHumanReadableSize
 
 @Composable
 internal fun NetworkLogBody(

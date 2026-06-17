@@ -1,4 +1,4 @@
-package io.thernal.console.network.ui.common.extensions
+package io.thernal.console.network
 
 import kotlin.math.roundToInt
 
@@ -34,7 +34,7 @@ private val BINARY_MIME_TYPES = setOf(
  * metadata. Detection prefers the declared `Content-Type`, then falls back to inspecting the bytes
  * so unreadable payloads are never dumped as raw text.
  */
-internal fun resolveNetworkBody(
+fun resolveNetworkBody(
     rawBody: String,
     headers: Map<String, String>,
 ): NetworkBody {
@@ -55,7 +55,7 @@ internal fun resolveNetworkBody(
 }
 
 /** Plain-text rendering of a body for copy/share actions, mirroring what the detail view shows. */
-internal fun NetworkBody.toCopyText(): String {
+fun NetworkBody.toCopyText(): String {
     return when (this) {
         is NetworkBody.Text -> value
 
@@ -67,7 +67,7 @@ internal fun NetworkBody.toCopyText(): String {
 }
 
 /** Formats a byte count as a human-readable size such as `12 B`, `4.2 KB` or `3.0 MB`. */
-internal fun Long.toHumanReadableSize(): String {
+fun Long.toHumanReadableSize(): String {
     if (this < BYTES_PER_UNIT) return "$this B"
 
     var size = this / BYTES_PER_UNIT

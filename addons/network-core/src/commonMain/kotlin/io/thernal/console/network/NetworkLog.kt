@@ -37,6 +37,27 @@ sealed interface NetworkLog : Log {
         }.contains(query, ignoreCase = true)
     }
 
+    override fun toShareText(): String {
+        return buildString {
+            appendLine("$method $url")
+            if (this@NetworkLog is Response) {
+                statusCode?.let { appendLine("Status: $it") }
+                durationMs?.let { appendLine("Duration: ${it}ms") }
+            }
+
+            appendLine()
+            appendLine("Headers:")
+            append(headers.entries.joinToString(separator = "\n") { "${it.key}: ${it.value}" })
+
+            body?.takeIf { it.isNotBlank() }?.let { rawBody ->
+                appendLine()
+                appendLine()
+                appendLine("Body:")
+                append(resolveNetworkBody(rawBody = rawBody, headers = headers).toCopyText())
+            }
+        }.trim()
+    }
+
     @OptIn(ExperimentalUuidApi::class)
     data class Request(
         override val method: String,

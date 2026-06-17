@@ -1,4 +1,4 @@
-package io.thernal.console.network.ui.common.extensions
+package io.thernal.console.network
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
