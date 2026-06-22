@@ -13,7 +13,7 @@ implementation("io.github.thernal:console-api:<version>")
 
 ## ConsoleAddon
 
-Entry point for every addon. Install it once at app startup — auto-init providers handle this automatically on Android and iOS.
+Entry point for every addon. Install it once at app startup — auto-init handles this automatically on Android (`ContentProvider`), iOS/native (`@EagerInitialization`), and JVM (`ServiceLoader`).
 
 `onInstall()` is the data-plane hook and takes no parameters: addons that capture logs
 reference the `Console` singleton (`console-runtime`) directly there; view-only addons leave
@@ -34,7 +34,7 @@ object MyAddon : ConsoleAddon {
     override fun overlay(): @Composable BoxScope.() -> Unit = { MyOverlay() } // optional
 }
 
-// Manual install (iOS / JVM)
+// Manual install — only if you skip auto-init wiring
 MyAddon.install()
 ```
 

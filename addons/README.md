@@ -12,7 +12,7 @@ Provides the log list, log detail screen, and `BasicLog` renderer. Required if y
 implementation("io.github.thernal:console-logging-ui:<version>")
 ```
 
-No code required. Auto-installs on Android and iOS via the addon system.
+No code required. Auto-installs on Android, iOS, and JVM via the addon system.
 
 ---
 
@@ -118,7 +118,7 @@ HttpClient {
 
 `SensitiveHeaders.DEFAULT` is the default — the 5 headers listed above, masked with `***`.
 
-`console-network-ui` auto-installs its renderer on Android and iOS via the addon system — no manual `install()` call needed. Network logs appear inline in the main log list alongside other entries.
+`console-network-ui` auto-installs its renderer on Android, iOS, and JVM via the addon system — no manual `install()` call needed. Network logs appear inline in the main log list alongside other entries.
 
 ---
 
@@ -175,4 +175,20 @@ object MyAddon : ConsoleAddon {
 @EagerInitialization
 @OptIn(ExperimentalNativeApi::class)
 private val init = consoleAddonInit { MyAddon.install() }
+```
+
+**JVM** — a `ConsoleInitializer` discovered via `ServiceLoader` (the JVM counterpart of the
+Android `ContentProvider` and native `@EagerInitialization` hooks). Triggered once by the
+console shell at first `ConsoleProvider` composition — no end-user call required.
+
+```kotlin
+// src/jvmMain/kotlin/.../MyAddonAutoInit.kt
+internal class MyAddonAutoInit : ConsoleInitializer {
+    override fun init() = MyAddon.install()
+}
+```
+
+```
+// src/jvmMain/resources/META-INF/services/io.thernal.console.api.autoinit.ConsoleInitializer
+com.example.MyAddonAutoInit
 ```
