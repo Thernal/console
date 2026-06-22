@@ -19,6 +19,7 @@ import io.thernal.console.api.navigation.LocalConsoleNavigator
 import io.thernal.console.api.addon.ConsoleOverlays
 import io.thernal.console.api.ui.LocalLogRenderer
 import io.thernal.console.ui.addon.DispatchLogRenderer
+import io.thernal.console.ui.autoinit.installPlatformAddons
 import io.thernal.console.api.trigger.ConsoleTrigger
 import io.thernal.console.api.trigger.Swipe
 import io.thernal.console.ui.trigger.swipeSequence
@@ -42,6 +43,10 @@ fun ConsoleProvider(
         content()
         return
     }
+
+    // Run platform addon auto-registration once, before the console UI reads the registries.
+    // No-op on Android/native (handled by their startup hooks); ServiceLoader discovery on JVM.
+    remember { installPlatformAddons() }
 
     val backStack = remember { mutableStateListOf<NavKey>(ConsoleRoute.Stub, ConsoleRoute.Main) }
     val consoleVisible = remember { mutableStateOf(false) }
