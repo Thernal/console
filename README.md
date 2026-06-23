@@ -2,7 +2,7 @@
 
 # Console
 
-**A gesture-triggered debug overlay for Kotlin Multiplatform apps.**  
+**A gesture-triggered in-app devtool for Kotlin Multiplatform apps.**  
 Drop it in, swipe to open, and inspect logs, HTTP traffic, and session state — without touching production code.
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.thernal/console-ui?label=Maven%20Central&color=4CAF50)](https://central.sonatype.com/artifact/io.github.thernal/console-ui)
