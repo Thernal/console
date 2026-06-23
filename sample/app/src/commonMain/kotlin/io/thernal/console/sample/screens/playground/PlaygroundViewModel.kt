@@ -1,18 +1,18 @@
-package io.thernal.console.sample.counter
+package io.thernal.console.sample.screens.playground
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.thernal.console.details.ConsoleDetails
-import io.thernal.console.runtime.console.Console
 import io.thernal.console.core.log.Log
 import io.thernal.console.core.log.LogLevel
+import io.thernal.console.details.ConsoleDetails
 import io.thernal.console.network.NetworkLog
+import io.thernal.console.runtime.console.Console
 import io.thernal.console.sample.network.FakeTodoRepository
 import kotlinx.coroutines.launch
 
-class SampleViewModel : ViewModel() {
+class PlaygroundViewModel : ViewModel() {
 
     private val repository = FakeTodoRepository()
 
@@ -24,18 +24,14 @@ class SampleViewModel : ViewModel() {
 
     private var jsonDemoCounter = 0
 
-    // Console.notify is fire-and-forget — safe to call from any thread or context
+    // Console.notify is fire-and-forget — order is irrelevant for a single independent log.
     fun logAtLevel(level: LogLevel) {
         Console.notify {
-            Log(
-                message = "Log at ${level.name.lowercase()} level",
-                level = level,
-                tag = "Demo",
-            )
+            Log(message = "Log at ${level.name.lowercase()} level", level = level, tag = "Demo")
         }
     }
 
-    // asyncNotify suspends until each event is processed — order is guaranteed across all callers
+    // asyncNotify suspends until each event is processed — order is guaranteed across the run.
     fun logOrdered() {
         viewModelScope.launch {
             repeat(times = ORDERED_LOG_COUNT) { index ->
@@ -50,7 +46,6 @@ class SampleViewModel : ViewModel() {
         }
     }
 
-    // ConsoleDetails.put upserts a key — visible in the Details tab inside the console
     fun setSessionInfo() {
         ConsoleDetails.put("User" to "alice@example.com")
         ConsoleDetails.put("Env" to "staging")
@@ -63,9 +58,9 @@ class SampleViewModel : ViewModel() {
         ConsoleDetails.remove("Build")
     }
 
-    // Network requests are captured automatically by ConsoleNetworkKtorPlugin — no extra code needed
+    // Network requests are captured automatically by the Ktor network addon — no extra code.
     fun fetchTodo() {
-        if (isFetchingTodo.value) return
+        if (_isFetchingTodo.value) return
         viewModelScope.launch {
             _isFetchingTodo.value = true
             runCatching { repository.fetchTodo() }
@@ -74,7 +69,7 @@ class SampleViewModel : ViewModel() {
     }
 
     fun createPost() {
-        if (isCreatingPost.value) return
+        if (_isCreatingPost.value) return
         viewModelScope.launch {
             _isCreatingPost.value = true
             runCatching { repository.createPost() }
@@ -83,7 +78,7 @@ class SampleViewModel : ViewModel() {
     }
 
     // Emits a synthetic network log with a minified JSON body so the detail view's JSON
-    // pretty-printing can be tested without depending on a live response
+    // pretty-printing can be shown without depending on a live response.
     fun logUnformattedJson() {
         val groupId = "json-demo-${jsonDemoCounter++}"
         val url = "https://api.example.com/v1/echo"
