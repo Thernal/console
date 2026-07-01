@@ -4,6 +4,7 @@ import io.thernal.console.core.log.BasicLog
 import io.thernal.console.core.log.Log
 import io.thernal.console.core.log.LogLevel
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNull
@@ -105,6 +106,20 @@ class CrashSessionSerializerTest {
         val basic = assertIs<BasicLog>(log)
         assertEquals("orphan", basic.message)
         assertEquals(LogLevel.Warning, basic.level)
+    }
+
+    @Test
+    fun `stream prefix plus records is byte-identical to serialize`() {
+        val session = sessionOf(
+            BasicLog(message = "first", id = "a"),
+            BasicLog(message = "second", id = "b"),
+        )
+
+        val streamed = session.logs.fold(CrashSessionSerializer.encodeStreamPrefix(session.header)) { acc, log ->
+            acc + CrashSessionSerializer.encodeRecord(log)
+        }
+
+        assertContentEquals(CrashSessionSerializer.serialize(session), streamed)
     }
 
     @Test

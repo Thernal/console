@@ -53,6 +53,25 @@ object CrashSessionSerializer {
         return reader.readRecord()?.let(::decodeHeader)
     }
 
+    /**
+     * Container prefix for a *streamed* session file: the format version plus the header record.
+     * A file holding this prefix followed by [encodeRecord] outputs is byte-identical to the
+     * [serialize] layout, so [deserialize] reads it back (tolerating a truncated tail).
+     */
+    fun encodeStreamPrefix(header: CrashSessionHeader): ByteArray {
+        val writer = ByteWriter()
+        writer.writeInt(CRASH_FORMAT_VERSION)
+        writer.writeRecord(encodeHeader(header))
+        return writer.toByteArray()
+    }
+
+    /** One framed log record, appendable after [encodeStreamPrefix]. */
+    fun encodeRecord(log: Log): ByteArray {
+        val writer = ByteWriter()
+        writer.writeRecord(encodeEnvelope(encodeLog(log)))
+        return writer.toByteArray()
+    }
+
     internal fun encodeLog(log: Log): LogEnvelope {
         val encoder = LogCodecRegistry.encoderFor(log)
         val payload = encoder?.let { runCatching { it.codec.encode(log) }.getOrNull() }.orEmpty()
