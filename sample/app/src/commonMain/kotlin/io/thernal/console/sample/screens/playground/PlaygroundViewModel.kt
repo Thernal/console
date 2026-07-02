@@ -107,6 +107,13 @@ class PlaygroundViewModel : ViewModel() {
         }
     }
 
+    // Thrown uncaught on purpose: the crash-report addon's handler appends the fatal record,
+    // finalizes the session file, then chains to the platform default so the app still dies.
+    // After relaunch the session appears in the console's Crashes tab.
+    fun crash(): Nothing {
+        error("Manual crash from the Playground")
+    }
+
     private fun jsonHeaders(body: String): Map<String, String> {
         return mapOf(
             "Content-Type" to "application/json",
