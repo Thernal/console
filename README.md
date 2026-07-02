@@ -361,6 +361,31 @@ No code required. Once the module is on the classpath, the stepper control appea
 
 ---
 
+## Crash reports
+
+Streams every log to disk as it happens and captures uncaught exceptions, so after a crash you can relaunch the app and inspect the session locally — the fatal stack trace plus the logs that led up to it — without waiting for a remote crash-reporting round-trip.
+
+```kotlin
+// build.gradle.kts
+dependencies {
+    debugImplementation("io.github.thernal:console-crash-report-ui:<version>")
+}
+```
+
+No code required. Past sessions appear in the **Crashes** tab, classified as **Confirmed** (trace captured), **Probable** (died in the foreground — native crash/OOM/ANR), or **Safe** (killed in the background; hidden by default, toggleable from the in-console settings screen). Opening a session shows its logs — network logs render with their full detail, the fatal stack trace arrives as the final Fatal-level entry — and each log opens its own detail screen. Sessions are deleted with a swipe, and persistence is tunable from the settings screen or in code:
+
+```kotlin
+CrashReports.updateConfig {
+    copy(bodyPolicy = CrashBodyPolicy.None, maxSessions = 5)
+}
+```
+
+See [`addons/crash-report-ui`](addons/crash-report-ui/README.md) for the save-filter, redactor, and custom log codec details.
+
+<!-- 📸 SCREENSHOT: Console open on the Crashes tab — a session list with Confirmed/Probable badges, then a detail screen showing the session's logs ending with the Fatal-level crash entry. -->
+
+---
+
 ## Custom tabs
 
 Add your own full-screen view to the Console navigation bar by implementing `ConsoleAddon`.
@@ -420,6 +445,8 @@ Beyond tabs, `ConsoleAddon` also supports:
 | `io.github.thernal:console-network-ktor:<version>` | Ktor plugin |
 | `io.github.thernal:console-network-ui:<version>` | Network log UI renderer |
 | `io.github.thernal:console-stepper-ui:<version>` | Pause-and-step log replay |
+| `io.github.thernal:console-crash-report-core:<version>` | Crash session serialization + `LogCodec` registry |
+| `io.github.thernal:console-crash-report-ui:<version>` | Crashes tab — streaming persistence, crash capture, session list/detail |
 
 ---
 
