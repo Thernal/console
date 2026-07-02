@@ -20,7 +20,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.unit.Dp.Companion.Unspecified
 
 @Composable
-@Suppress("LongMethod")
 internal fun rememberSwipeActionState(
     itemId: Any? = null,
     enabled: Boolean = true,
