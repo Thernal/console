@@ -9,12 +9,12 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.thernal.console.crash.ui.view.settings.components.CrashSettingsBodyPolicySection
-import io.thernal.console.crash.ui.view.settings.components.CrashSettingsLevelSection
-import io.thernal.console.crash.ui.view.settings.components.CrashSettingsTagsSection
+import io.thernal.console.crash.ui.view.settings.components.CrashSettingsFilterGroup
 import io.thernal.console.crash.ui.view.settings.components.CrashSettingsToggleRow
 import io.thernal.console.crash.ui.view.settings.model.CrashReportSettingsIntent
 import io.thernal.console.crash.ui.view.settings.model.CrashReportSettingsState
 import io.thernal.console.designsystem.components.core.DsAppBar
+import io.thernal.console.designsystem.components.core.DsDivider
 import io.thernal.console.designsystem.components.core.DsIcon
 import io.thernal.console.designsystem.components.core.DsIconButton
 import io.thernal.console.designsystem.components.core.DsScaffold
@@ -73,47 +73,21 @@ private fun SettingsBody(
             CrashSettingsToggleRow(
                 label = "Show safe sessions",
                 description = "List background and clean terminations too",
-                checked = state.showSafeSessions.value,
+                checked = state.showSafeSessions,
                 onCheckedChange = { dispatch(CrashReportSettingsIntent.SetShowSafeSessions(it)) },
             )
         }
         item {
-            CrashSettingsToggleRow(
-                label = "Filter persisted logs",
-                description = "Only logs matching the criteria below are written to a session",
-                checked = state.persistOnMatch.value,
-                onCheckedChange = { dispatch(CrashReportSettingsIntent.SetPersistOnMatch(it)) },
+            DsDivider()
+        }
+        item {
+            CrashSettingsFilterGroup(
+                state = state,
+                dispatch = dispatch,
             )
         }
-        if (state.persistOnMatch.value) {
-            item {
-                CrashSettingsLevelSection(
-                    selectedLevel = state.persistLevelAtLeast,
-                    onLevelSelected = { dispatch(CrashReportSettingsIntent.SetPersistLevelAtLeast(it)) },
-                )
-            }
-            item {
-                CrashSettingsTagsSection(
-                    title = "Include tags",
-                    emptyHint = "Matching all tags",
-                    tags = state.includeTags,
-                    tagInput = state.includeTagInput,
-                    onTagInputChange = { dispatch(CrashReportSettingsIntent.SetIncludeTagInput(it)) },
-                    onAddTag = { dispatch(CrashReportSettingsIntent.AddIncludeTag) },
-                    onRemoveTag = { dispatch(CrashReportSettingsIntent.RemoveIncludeTag(it)) },
-                )
-            }
-            item {
-                CrashSettingsTagsSection(
-                    title = "Exclude tags",
-                    emptyHint = "Nothing excluded",
-                    tags = state.excludeTags,
-                    tagInput = state.excludeTagInput,
-                    onTagInputChange = { dispatch(CrashReportSettingsIntent.SetExcludeTagInput(it)) },
-                    onAddTag = { dispatch(CrashReportSettingsIntent.AddExcludeTag) },
-                    onRemoveTag = { dispatch(CrashReportSettingsIntent.RemoveExcludeTag(it)) },
-                )
-            }
+        item {
+            DsDivider()
         }
         item {
             CrashSettingsBodyPolicySection(

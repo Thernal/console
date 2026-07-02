@@ -24,13 +24,10 @@ internal fun CrashSettingsBodyPolicySection(
     CrashSettingsSection(title = "Network bodies") {
         Row(horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8)) {
             CrashBodyPolicy.entries.forEach { policy ->
-                DsChip(
+                PolicyChip(
                     label = policy.name,
-                    color = Theme.colors.primary01,
-                    selected = selectedPolicy.select { it == policy }.value,
-                    modifier = Modifier.pressable(
-                        onPress = { onPolicySelected(policy) },
-                    ),
+                    isSelected = selectedPolicy.select { it == policy },
+                    onPress = { onPolicySelected(policy) },
                 )
             }
         }
@@ -40,6 +37,22 @@ internal fun CrashSettingsBodyPolicySection(
             color = Theme.colors.content04,
         )
     }
+}
+
+@Composable
+private fun PolicyChip(
+    label: String,
+    isSelected: State<Boolean>,
+    onPress: () -> Unit,
+) {
+    DsChip(
+        label = label,
+        color = Theme.colors.primary01,
+        selected = isSelected.value,
+        modifier = Modifier.pressable(
+            onPress = onPress,
+        ),
+    )
 }
 
 @DsPreview

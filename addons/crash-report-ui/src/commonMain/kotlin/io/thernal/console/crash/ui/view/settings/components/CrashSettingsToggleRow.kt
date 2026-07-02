@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.thernal.console.designsystem.components.core.DsSwitch
@@ -18,7 +21,7 @@ import io.thernal.console.designsystem.foundation.theme.Theme
 internal fun CrashSettingsToggleRow(
     label: String,
     description: String?,
-    checked: Boolean,
+    checked: State<Boolean>,
     onCheckedChange: (Boolean) -> Unit,
 ) {
     Row(
@@ -48,7 +51,7 @@ internal fun CrashSettingsToggleRow(
             }
         }
         DsSwitch(
-            checked = checked,
+            checked = checked.value,
             onCheckedChange = onCheckedChange,
         )
     }
@@ -61,7 +64,7 @@ private fun PreviewCrashSettingsToggleRow() {
         CrashSettingsToggleRow(
             label = "Show safe sessions",
             description = "List background and clean terminations too",
-            checked = false,
+            checked = remember { mutableStateOf(false) },
             onCheckedChange = {},
         )
     }
