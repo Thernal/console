@@ -1,7 +1,7 @@
-package io.thernal.console.crash.ui.view.logdetail.model
+package io.thernal.console.stepper.ui.view.logdetail.model
 
 import androidx.lifecycle.ViewModel
-import io.thernal.console.crash.ui.CrashReports
+import io.thernal.console.stepper.ui.stepper.Stepper
 import io.thernal.console.ui.core.IntentHandler
 import io.thernal.console.ui.core.StateHolder
 import io.thernal.console.ui.logdetail.model.LogDetailIntent
@@ -9,13 +9,12 @@ import io.thernal.console.ui.logdetail.model.LogDetailState
 import io.thernal.console.ui.logdetail.model.resolveLogGroup
 
 /**
- * Feeds the shared log-group detail from a persisted crash session rather than the live pipeline:
- * restored logs are never re-emitted through `Console.notify`, so `logging-ui`'s detail (which
- * reads its live observer) cannot find them. Grouping works the same way — `groupId` survives the
- * round-trip, so a restored request/response pair pages together.
+ * Feeds the shared log-group detail from Stepper's own caught events rather than the live Logs
+ * buffer: a paused log may not have reached the logging observer yet (observers emit
+ * sequentially and Stepper suspends the loop), and the Logs buffer can be cleared or capped
+ * independently — Stepper's list is the only source guaranteed to hold what Stepper shows.
  */
-internal class CrashLogDetailViewModel(
-    sessionId: String,
+internal class SteppedLogDetailViewModel(
     logId: String,
 ) : ViewModel(),
     StateHolder,
@@ -32,7 +31,7 @@ internal class CrashLogDetailViewModel(
 
     init {
         val group = resolveLogGroup(
-            sourceLogs = CrashReports.open(sessionId)?.logs.orEmpty(),
+            sourceLogs = Stepper.state.value.steppedEvents,
             targetLogId = logId,
         )
 

@@ -15,8 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import io.thernal.console.api.navigation.ConsoleRoute
 import io.thernal.console.api.navigation.LocalConsoleNavigator
+import io.thernal.console.stepper.ui.navigation.SteppedLogRoute
 import io.thernal.console.api.ui.LocalLogRenderer
 import io.thernal.console.ui.core.preview
 import io.thernal.console.designsystem.components.core.DsAppBar
@@ -115,7 +115,7 @@ private fun SteppedEventsBody(
                     modifier = Modifier.pressable(
                         onPress = {
                             navigator.push(
-                                key = ConsoleRoute.LogDetail(logId = log.id),
+                                key = SteppedLogRoute(logId = log.id),
                             )
                         },
                     ),
