@@ -9,12 +9,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import io.thernal.console.api.ui.LogRenderer
 import io.thernal.console.ui.common.LocalSearchQuery
 import io.thernal.console.api.ui.NoOpLogRenderer
 import io.thernal.console.ui.core.preview
 import io.thernal.console.ui.core.select
+import io.thernal.console.ui.logdetail.components.CopyLogAction
 import io.thernal.console.ui.logdetail.components.LogDetailPager
 import io.thernal.console.ui.logdetail.components.LogNotFoundState
 import io.thernal.console.ui.logdetail.components.LogDetailSearchField
@@ -54,6 +56,12 @@ fun LogDetailContent(
         return
     }
 
+    // Keep the state's selected page in sync with pager swipes so activeLog (meta chips,
+    // the app-bar copy) always reflects the visible page.
+    LaunchedEffect(tabState.pagerState.currentPage) {
+        onDispatch(LogDetailIntent.SelectPage(pageIndex = tabState.pagerState.currentPage))
+    }
+
     DsScaffold(
         topBar = {
             DsAppBar(
@@ -69,6 +77,9 @@ fun LogDetailContent(
                         style = Theme.typography.title01,
                         color = Theme.colors.content01,
                     )
+                },
+                trailing = {
+                    CopyLogAction(activeLog = state.activeLog)
                 },
             )
         },

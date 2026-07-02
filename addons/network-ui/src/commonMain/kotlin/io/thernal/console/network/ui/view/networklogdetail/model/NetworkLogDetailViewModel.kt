@@ -26,10 +26,6 @@ class NetworkLogDetailViewModel(
                 state.bodyExpanded.update { !this }
             }
 
-            NetworkLogDetailIntent.CopyAll -> {
-                launchEffect(NetworkLogDetailEffect.Copy(data = log.toShareText()))
-            }
-
             NetworkLogDetailIntent.CopyHeaders -> {
                 launchEffect(NetworkLogDetailEffect.Copy(data = log.headers.toDisplayText()))
             }
