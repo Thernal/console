@@ -76,6 +76,12 @@ fun PlaygroundScreen(
                 Text("Emit unformatted JSON")
             }
         }
+
+        Section(title = "Crash report") {
+            Button(onClick = viewModel::crash) {
+                Text("Crash the app")
+            }
+        }
     }
 }
 
