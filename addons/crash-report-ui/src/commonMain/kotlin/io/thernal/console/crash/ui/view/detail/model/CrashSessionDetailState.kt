@@ -15,7 +15,4 @@ class CrashSessionDetailState : ViewState() {
      * the first entry and renders through the same log-item UI as everything else.
      */
     val logs = field(emptyList<Log>())
-
-    /** Crash summary from the sidecar; `null` for sessions without a captured trace. */
-    val crashSummary = field<String?>(null)
 }

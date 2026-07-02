@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import io.thernal.console.api.ui.LocalLogRenderer
 import io.thernal.console.crash.ui.view.detail.model.CrashSessionDetailState
@@ -36,13 +37,7 @@ internal fun CrashSessionDetailContent(
     DsScaffold(
         topBar = {
             DsAppBar(
-                content = {
-                    DsText(
-                        text = state.crashSummary.value ?: "Session logs",
-                        style = Theme.typography.title01,
-                        color = Theme.colors.content01,
-                    )
-                },
+                content = { CrashSessionDetailTitle(logs = state.logs) },
                 leading = {
                     DsIconButton(onClick = onBack) {
                         DsIcon(
@@ -68,6 +63,15 @@ internal fun CrashSessionDetailContent(
             modifier = Modifier.padding(padding),
         )
     }
+}
+
+@Composable
+private fun CrashSessionDetailTitle(logs: State<List<Log>>) {
+    DsText(
+        text = "Session (${logs.value.size})",
+        style = Theme.typography.title01,
+        color = Theme.colors.content01,
+    )
 }
 
 @Composable
@@ -118,7 +122,6 @@ private fun PreviewCrashSessionDetailContent() {
                 Log(message = "Auth token refreshed", tag = "Auth", level = LogLevel.Info),
             ),
         )
-        state.crashSummary.set("IllegalStateException: boom")
         state.isLoaded.set(true)
     }
     ThemeProvider {
