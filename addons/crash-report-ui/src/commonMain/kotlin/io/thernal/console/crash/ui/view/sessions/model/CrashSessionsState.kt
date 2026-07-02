@@ -15,9 +15,6 @@ class CrashSessionsState : ViewState() {
     /** Safe sessions (background/clean kills) are hidden by default. */
     val showSafe = field(false)
 
-    /** Session id whose delete button is armed and awaiting the confirming second tap. */
-    val armedDeleteId = field<String?>(null)
-
     val visibleSessions: State<List<CrashSessionSummary>> = derivedStateOf {
         if (showSafe.value) {
             sessions.value

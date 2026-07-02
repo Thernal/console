@@ -6,11 +6,9 @@ internal sealed interface CrashSessionsIntent : ViewIntent {
 
     data class SetShowSafe(val showSafe: Boolean) : CrashSessionsIntent
 
-    /** First delete tap: arms the row's confirm state instead of deleting. */
-    data class ArmDelete(val sessionId: String) : CrashSessionsIntent
-
-    /** Second tap on an armed row: performs the destructive delete. */
-    data class ConfirmDelete(val sessionId: String) : CrashSessionsIntent
-
-    data object DisarmDelete : CrashSessionsIntent
+    /**
+     * Deletes a past session. The swipe-to-reveal gesture is the destructive confirm — the
+     * delete button only becomes tappable after the row is deliberately swiped open.
+     */
+    data class Delete(val sessionId: String) : CrashSessionsIntent
 }
