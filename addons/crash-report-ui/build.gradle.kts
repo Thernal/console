@@ -9,6 +9,7 @@ kotlin {
             api(projects.addons.crashReportCore)
             api(projects.consoleApi)
             implementation(projects.consoleRuntime)
+            implementation(projects.addons.networkCore)
         }
     }
 }
