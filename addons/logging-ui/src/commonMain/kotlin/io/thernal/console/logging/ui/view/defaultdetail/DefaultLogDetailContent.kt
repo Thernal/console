@@ -9,14 +9,10 @@ import io.thernal.console.core.log.Log
 import io.thernal.console.core.log.LogLevel
 
 @Composable
-internal fun DefaultLogDetailContent(
-    log: Log,
-    onCopy: () -> Unit,
-) {
+internal fun DefaultLogDetailContent(log: Log) {
     MessageCard(
         log = log,
         accentColor = log.logAccentColor(),
-        onCopy = onCopy,
     )
 }
 
@@ -30,7 +26,6 @@ private fun PreviewDefaultLogDetailContent() {
                 tag = "API",
                 level = LogLevel.Info,
             ),
-            onCopy = {},
         )
     }
 }
