@@ -1,4 +1,4 @@
-package io.thernal.console.logging.ui.view.detail.components
+package io.thernal.console.ui.logdetail.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

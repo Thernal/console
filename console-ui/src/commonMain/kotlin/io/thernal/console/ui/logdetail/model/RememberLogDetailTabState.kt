@@ -1,4 +1,4 @@
-package io.thernal.console.logging.ui.view.detail.model
+package io.thernal.console.ui.logdetail.model
 
 import androidx.compose.runtime.Composable
 import io.thernal.console.designsystem.components.core.tabview.DsTabState

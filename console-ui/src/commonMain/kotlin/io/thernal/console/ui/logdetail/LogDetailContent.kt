@@ -1,4 +1,4 @@
-package io.thernal.console.logging.ui.view.detail
+package io.thernal.console.ui.logdetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,17 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.thernal.console.api.ui.LogRenderer
 import io.thernal.console.ui.common.LocalSearchQuery
+import io.thernal.console.api.ui.NoOpLogRenderer
 import io.thernal.console.ui.core.preview
 import io.thernal.console.ui.core.select
-import io.thernal.console.logging.ui.addon.BasicLogRenderer
-import io.thernal.console.logging.ui.view.detail.components.LogDetailPager
-import io.thernal.console.logging.ui.view.detail.components.LogNotFoundState
-import io.thernal.console.logging.ui.view.detail.components.LogDetailSearchField
-import io.thernal.console.logging.ui.view.detail.components.LogDetailTabs
-import io.thernal.console.logging.ui.view.detail.components.LogMeta
-import io.thernal.console.logging.ui.view.detail.model.LogDetailIntent
-import io.thernal.console.logging.ui.view.detail.model.LogDetailState
-import io.thernal.console.logging.ui.view.detail.model.rememberLogDetailTabState
+import io.thernal.console.ui.logdetail.components.LogDetailPager
+import io.thernal.console.ui.logdetail.components.LogNotFoundState
+import io.thernal.console.ui.logdetail.components.LogDetailSearchField
+import io.thernal.console.ui.logdetail.components.LogDetailTabs
+import io.thernal.console.ui.logdetail.components.LogMeta
+import io.thernal.console.ui.logdetail.model.LogDetailIntent
+import io.thernal.console.ui.logdetail.model.LogDetailState
+import io.thernal.console.ui.logdetail.model.rememberLogDetailTabState
 import io.thernal.console.designsystem.components.core.DsAppBar
 import io.thernal.console.designsystem.components.core.DsIcon
 import io.thernal.console.designsystem.components.core.DsIconButton
@@ -35,8 +35,13 @@ import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.core.log.Log
 import io.thernal.console.core.log.LogLevel
 
+/**
+ * Shared full-screen container for a log-group detail: app bar, group tabs, meta chips, in-detail
+ * search, and a pager whose pages render through [renderer]. Data-source agnostic — logging-ui
+ * feeds it from the live pipeline, crash-report-ui from a restored crash session.
+ */
 @Composable
-internal fun LogDetailContent(
+fun LogDetailContent(
     state: LogDetailState,
     onDispatch: (LogDetailIntent) -> Unit,
     onBack: () -> Unit,
@@ -139,7 +144,7 @@ private fun PreviewLogDetailContentFound() {
             },
             onDispatch = {},
             onBack = {},
-            renderer = BasicLogRenderer(),
+            renderer = NoOpLogRenderer,
         )
     }
 }
