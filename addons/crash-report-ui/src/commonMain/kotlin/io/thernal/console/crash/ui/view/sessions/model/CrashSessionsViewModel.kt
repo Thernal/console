@@ -16,7 +16,6 @@ internal class CrashSessionsViewModel :
 
     override val handler = onIntentUpdate { intent ->
         when (intent) {
-            is CrashSessionsIntent.SetShowSafe -> state.showSafe.set(intent.showSafe)
             is CrashSessionsIntent.Delete -> CrashReports.delete(intent.sessionId)
         }
     }
@@ -25,6 +24,9 @@ internal class CrashSessionsViewModel :
         CrashReports.refreshSessions()
         viewModelScope.launch {
             CrashReports.sessions.collect { state.sessions.set(it) }
+        }
+        viewModelScope.launch {
+            CrashReports.config.collect { state.showSafeSessions.set(it.showSafeSessions) }
         }
     }
 }

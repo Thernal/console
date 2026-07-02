@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -25,7 +23,6 @@ import io.thernal.console.crash.ui.session.CrashSessionSummary
 import io.thernal.console.crash.ui.session.toDisplayLog
 import io.thernal.console.crash.ui.view.sessions.model.CrashSessionsIntent
 import io.thernal.console.crash.ui.view.sessions.model.CrashSessionsState
-import io.thernal.console.designsystem.components.core.DsSwitch
 import io.thernal.console.designsystem.components.core.DsIcon
 import io.thernal.console.designsystem.components.core.DsIconButton
 import io.thernal.console.designsystem.components.core.DsText
@@ -43,48 +40,13 @@ internal fun CrashSessionsContent(
     onSessionClick: (CrashSessionSummary) -> Unit,
     dispatch: (CrashSessionsIntent) -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        SafeToggleRow(
+    if (state.visibleSessions.value.isEmpty()) {
+        CrashSessionsEmptyState()
+    } else {
+        SessionList(
             state = state,
+            onSessionClick = onSessionClick,
             dispatch = dispatch,
-        )
-
-        if (state.visibleSessions.value.isEmpty()) {
-            CrashSessionsEmptyState()
-        } else {
-            SessionList(
-                state = state,
-                onSessionClick = onSessionClick,
-                dispatch = dispatch,
-            )
-        }
-    }
-}
-
-@Composable
-private fun SafeToggleRow(
-    state: CrashSessionsState,
-    dispatch: (CrashSessionsIntent) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                horizontal = Theme.dimens.dp12,
-                vertical = Theme.dimens.dp6,
-            ),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        DsText(
-            text = "Show safe terminations (${state.hiddenSafeCount.value})",
-            style = Theme.typography.body02,
-            color = Theme.colors.content02,
-        )
-
-        DsSwitch(
-            checked = state.showSafe.value,
-            onCheckedChange = { dispatch(CrashSessionsIntent.SetShowSafe(it)) },
         )
     }
 }

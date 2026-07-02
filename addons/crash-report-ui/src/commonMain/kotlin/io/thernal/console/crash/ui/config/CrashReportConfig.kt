@@ -14,6 +14,8 @@ import io.thernal.console.core.log.LogLevel
  * coarse — it keeps or drops a whole log. Field-level masking happens upstream at capture
  * (e.g. `SensitiveHeaders` in the network interceptors) or via [redactor].
  *
+ * @property showSafeSessions when `true` the session list also shows Safe terminations
+ *   (background/clean kills); hidden by default.
  * @property persistOnMatch when `false` (default) every log is persisted; when `true` the
  *   level/tag criteria below must match.
  * @property persistLevelAtLeast minimum [LogLevel] to persist ([LogLevel.None] never matches).
@@ -27,6 +29,7 @@ import io.thernal.console.core.log.LogLevel
  *   to drop the log entirely.
  */
 data class CrashReportConfig(
+    val showSafeSessions: Boolean = false,
     val persistOnMatch: Boolean = false,
     val persistLevelAtLeast: LogLevel? = null,
     val includeTags: Set<String> = emptySet(),

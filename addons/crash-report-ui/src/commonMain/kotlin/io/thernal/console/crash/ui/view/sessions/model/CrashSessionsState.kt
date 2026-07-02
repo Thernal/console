@@ -12,18 +12,14 @@ class CrashSessionsState : ViewState() {
 
     val sessions = field(emptyList<CrashSessionSummary>())
 
-    /** Safe sessions (background/clean kills) are hidden by default. */
-    val showSafe = field(false)
+    /** Mirrors `CrashReportConfig.showSafeSessions`; toggled from the settings screen. */
+    val showSafeSessions = field(false)
 
     val visibleSessions: State<List<CrashSessionSummary>> = derivedStateOf {
-        if (showSafe.value) {
+        if (showSafeSessions.value) {
             sessions.value
         } else {
             sessions.value.filter { it.classification != CrashSessionClass.Safe }
         }
-    }
-
-    val hiddenSafeCount: State<Int> = derivedStateOf {
-        sessions.value.count { it.classification == CrashSessionClass.Safe }
     }
 }
