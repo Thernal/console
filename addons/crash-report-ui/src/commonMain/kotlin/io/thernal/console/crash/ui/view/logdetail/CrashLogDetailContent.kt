@@ -1,11 +1,14 @@
 package io.thernal.console.crash.ui.view.logdetail
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.thernal.console.api.ui.LocalLogRenderer
@@ -64,8 +67,24 @@ private fun LogDetailBody(
     val log = state.log.value
 
     if (log != null) {
-        Box(modifier = modifier.fillMaxSize()) {
-            renderer.Detail(log = log)
+        // Same container contract as logging-ui's detail pager: the renderer's Detail owns
+        // neither padding nor scrolling, the host screen provides both.
+        val scrollState = remember(log.id) { ScrollState(initial = 0) }
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(
+                    horizontal = Theme.dimens.dp12,
+                    vertical = Theme.dimens.dp16,
+                ),
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState),
+            ) {
+                renderer.Detail(log = log)
+            }
         }
     } else if (state.isLoaded.value) {
         Box(
