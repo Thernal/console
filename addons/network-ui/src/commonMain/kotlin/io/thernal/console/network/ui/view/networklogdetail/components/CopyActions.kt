@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Notes
-import androidx.compose.material.icons.automirrored.outlined.Subject
 import androidx.compose.material.icons.outlined.DataObject
 import androidx.compose.material.icons.outlined.Terminal
 import androidx.compose.runtime.Composable
@@ -20,13 +19,6 @@ internal fun CopyActions(
     onDispatch: (NetworkLogDetailIntent) -> Unit,
 ) {
     Row(horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8)) {
-        CopyChip(
-            label = "All",
-            icon = Icons.AutoMirrored.Outlined.Subject,
-            accentColor = accentColor,
-            onClick = { onDispatch(NetworkLogDetailIntent.CopyAll) },
-        )
-
         CopyChip(
             label = "Headers",
             icon = Icons.AutoMirrored.Outlined.Notes,

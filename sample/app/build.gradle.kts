@@ -21,6 +21,7 @@ kotlin {
             implementation(projects.addons.stepperUi)
             implementation(projects.addons.networkKtor)
             implementation(projects.addons.networkUi)
+            implementation(projects.addons.crashReportUi)
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)

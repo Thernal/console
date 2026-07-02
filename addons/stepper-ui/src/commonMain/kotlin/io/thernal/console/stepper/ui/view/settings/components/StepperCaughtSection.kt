@@ -16,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import io.thernal.console.api.navigation.ConsoleRoute
 import io.thernal.console.api.navigation.LocalConsoleNavigator
 import io.thernal.console.api.ui.LocalLogRenderer
 import io.thernal.console.designsystem.components.core.DsIcon
@@ -28,6 +27,7 @@ import io.thernal.console.designsystem.foundation.theme.Theme
 import io.thernal.console.core.log.Log
 import io.thernal.console.core.log.LogLevel
 import io.thernal.console.stepper.ui.navigation.SteppedEventsRoute
+import io.thernal.console.stepper.ui.navigation.SteppedLogRoute
 import io.thernal.console.stepper.ui.stepper.StepperIntent
 
 private const val CAUGHT_PREVIEW_COUNT = 3
@@ -94,7 +94,7 @@ internal fun StepperCaughtSection(
                     modifier = Modifier.pressable(
                         onPress = {
                             navigator.push(
-                                key = ConsoleRoute.LogDetail(logId = log.id),
+                                key = SteppedLogRoute(logId = log.id),
                             )
                         },
                     ),

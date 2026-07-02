@@ -14,8 +14,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import io.thernal.console.api.navigation.ConsoleRoute
 import io.thernal.console.api.navigation.LocalConsoleNavigator
+import io.thernal.console.stepper.ui.navigation.SteppedLogRoute
 import io.thernal.console.api.ui.LocalLogRenderer
 import io.thernal.console.designsystem.components.core.DsDivider
 import io.thernal.console.designsystem.components.modifier.pressable
@@ -51,7 +51,7 @@ private fun OverlayCurrentLogContent(log: Log) {
             modifier = Modifier.pressable(
                 onPress = {
                     navigator.push(
-                        key = ConsoleRoute.LogDetail(logId = log.id),
+                        key = SteppedLogRoute(logId = log.id),
                     )
                 },
             ),
