@@ -9,13 +9,13 @@ class CrashSessionDetailState : ViewState() {
 
     val isLoaded = field(false)
 
-    /** Logs preceding the crash, in capture order (fatal record excluded). */
-    val precedingLogs = field(emptyList<Log>())
+    /**
+     * The session's restored logs in capture order. The fatal crash record — a `BasicLog` with the
+     * `Crash` tag and `Fatal` level appended by the handler — is the last entry and renders through
+     * the same log-item UI as everything else.
+     */
+    val logs = field(emptyList<Log>())
 
     /** Crash summary from the sidecar; `null` for sessions without a captured trace. */
     val crashSummary = field<String?>(null)
-
-    val stackTrace = field<String?>(null)
-
-    val crashedAtMs = field<Long?>(null)
 }
