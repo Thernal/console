@@ -34,7 +34,7 @@ data class CrashReportConfig(
     val persistLevelAtLeast: LogLevel? = null,
     val includeTags: Set<String> = emptySet(),
     val excludeTags: Set<String> = emptySet(),
-    val bodyPolicy: CrashBodyPolicy = CrashBodyPolicy.Truncated,
+    val bodyPolicy: CrashBodyPolicy = CrashBodyPolicy.Full,
     val maxBodySize: Int = DEFAULT_MAX_BODY_SIZE,
     val maxSessions: Int = DEFAULT_MAX_SESSIONS,
     val redactor: ((Log) -> Log?)? = null,

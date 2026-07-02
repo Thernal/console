@@ -9,9 +9,9 @@ enum class CrashBodyPolicy {
     /** Drop the body entirely; only the request/response metadata is persisted. */
     None,
 
-    /** Persist at most `maxBodySize` characters of the body (the default). */
+    /** Persist at most `maxBodySize` characters of the body. */
     Truncated,
 
-    /** Persist the body as captured. */
+    /** Persist the body as captured (the default). */
     Full,
 }

@@ -19,7 +19,7 @@ class CrashReportSettingsState : ViewState() {
 
     val excludeTags = field(emptySet<String>())
 
-    val bodyPolicy = field(CrashBodyPolicy.Truncated)
+    val bodyPolicy = field(CrashBodyPolicy.Full)
 
     val includeTagInput = field(TextFieldValue())
 
