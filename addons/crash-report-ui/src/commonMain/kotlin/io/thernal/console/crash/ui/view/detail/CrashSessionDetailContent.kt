@@ -109,13 +109,13 @@ private fun PreviewCrashSessionDetailContent() {
     val state = CrashSessionDetailState().preview {
         state.logs.set(
             listOf(
-                Log(message = "Auth token refreshed", tag = "Auth", level = LogLevel.Info),
-                Log(message = "Cart sync failed", tag = "Cart", level = LogLevel.Warning),
                 Log(
                     message = "IllegalStateException: boom\n  at PlaygroundViewModel.crash(...)",
                     tag = "Crash",
                     level = LogLevel.Fatal,
                 ),
+                Log(message = "Cart sync failed", tag = "Cart", level = LogLevel.Warning),
+                Log(message = "Auth token refreshed", tag = "Auth", level = LogLevel.Info),
             ),
         )
         state.crashSummary.set("IllegalStateException: boom")

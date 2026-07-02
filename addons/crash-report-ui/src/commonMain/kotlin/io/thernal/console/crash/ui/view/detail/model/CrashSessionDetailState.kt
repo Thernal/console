@@ -10,9 +10,9 @@ class CrashSessionDetailState : ViewState() {
     val isLoaded = field(false)
 
     /**
-     * The session's restored logs in capture order. The fatal crash record — a `BasicLog` with the
-     * `Crash` tag and `Fatal` level appended by the handler — is the last entry and renders through
-     * the same log-item UI as everything else.
+     * The session's restored logs, newest first (matching the live Logs view). The fatal crash
+     * record — a `BasicLog` with the `Crash` tag and `Fatal` level appended by the handler — is
+     * the first entry and renders through the same log-item UI as everything else.
      */
     val logs = field(emptyList<Log>())
 

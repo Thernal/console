@@ -26,7 +26,8 @@ internal class CrashSessionDetailViewModel(
         val sidecar = CrashReportRuntime.store?.readCrashSidecar(sessionId)?.let(CrashSidecar::parse)
 
         snapshot {
-            state.logs.set(session?.logs.orEmpty())
+            // Newest first, matching the live Logs view — the fatal crash record lands on top.
+            state.logs.set(session?.logs.orEmpty().asReversed())
             state.crashSummary.set(sidecar?.summary)
             state.isLoaded.set(true)
         }
