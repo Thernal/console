@@ -448,6 +448,8 @@ Beyond tabs, `ConsoleAddon` also supports:
 | `io.github.thernal:console-stepper-ui:<version>` | Pause-and-step log replay |
 | `io.github.thernal:console-crash-report-core:<version>` | Crash session serialization + `LogCodec` registry |
 | `io.github.thernal:console-crash-report-ui:<version>` | Crashes tab — streaming persistence, crash capture, session list/detail |
+| `io.github.thernal:console-settings-api:<version>` | Settings registration contract — `SettingsSection`, entry DSL, `SettingsRegistry` |
+| `io.github.thernal:console-settings-api-noop:<version>` | No-op stub for production builds |
 
 ---
 
