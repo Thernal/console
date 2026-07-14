@@ -450,6 +450,7 @@ Beyond tabs, `ConsoleAddon` also supports:
 | `io.github.thernal:console-crash-report-ui:<version>` | Crashes tab — streaming persistence, crash capture, session list/detail |
 | `io.github.thernal:console-settings-api:<version>` | Settings registration contract — `SettingsSection`, entry DSL, `SettingsRegistry` |
 | `io.github.thernal:console-settings-api-noop:<version>` | No-op stub for production builds |
+| `io.github.thernal:console-settings-ui:<version>` | Settings tab — persisted per-addon overrides, entry renderers, General section |
 
 ---
 

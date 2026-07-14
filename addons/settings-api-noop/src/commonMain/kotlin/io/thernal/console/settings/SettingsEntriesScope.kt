@@ -44,10 +44,4 @@ interface SettingsEntriesScope<C : Any> {
         read: (C) -> Set<String>,
         write: C.(Set<String>) -> C,
     )
-
-    fun action(
-        title: String,
-        destructive: Boolean = false,
-        onClick: () -> Unit,
-    )
 }
