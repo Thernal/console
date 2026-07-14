@@ -31,8 +31,8 @@ override fun settings() = settingsEntries(
 ```
 
 Available entry kinds: `toggle`, `int` (min/max), `enum` (optional `noneLabel` for a nullable
-value), `tags`, `action` (settings-owned operations only — data operations like "clear all" stay
-on the addon tab's own `Actions()`).
+value), `tags`. Operations (e.g. "clear all") aren't settings entries — they stay on the addon
+tab's own `Actions()`, or on a dedicated component inside a `settingsCustom` section (see below).
 
 ## Escape hatch
 

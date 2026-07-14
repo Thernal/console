@@ -23,7 +23,7 @@ sealed interface SettingsSection {
         override val order: Int,
         val config: StateFlow<C>,
         val update: (C.() -> C) -> Unit,
-        val entries: List<SettingsEntry<C>>,
+        val entries: List<SettingsEntry<C, *>>,
     ) : SettingsSection
 
     /**

@@ -42,11 +42,4 @@ interface SettingsEntriesScope<C : Any> {
         read: (C) -> Set<String>,
         write: C.(Set<String>) -> C,
     )
-
-    /** Settings-owned operations only (e.g. General → Reset). Data ops stay in the tab's `Actions()`. */
-    fun action(
-        title: String,
-        destructive: Boolean = false,
-        onClick: () -> Unit,
-    )
 }

@@ -18,7 +18,6 @@ fun <C : Any> settingsEntries(
     val scope = SettingsEntriesScopeBuilder<C>()
     scope.build()
     val duplicateKey = scope.entries
-        .filterIsInstance<SettingsEntry.Field<C, *>>()
         .groupingBy { it.key }
         .eachCount()
         .entries
@@ -37,7 +36,7 @@ fun <C : Any> settingsEntries(
 
 private class SettingsEntriesScopeBuilder<C : Any> : SettingsEntriesScope<C> {
 
-    val entries = mutableListOf<SettingsEntry<C>>()
+    val entries = mutableListOf<SettingsEntry<C, *>>()
 
     override fun toggle(
         key: String,
@@ -47,7 +46,7 @@ private class SettingsEntriesScopeBuilder<C : Any> : SettingsEntriesScope<C> {
         read: (C) -> Boolean,
         write: C.(Boolean) -> C,
     ) {
-        entries += SettingsEntry.Field(
+        entries += SettingsEntry(
             key = key,
             title = title,
             description = description,
@@ -69,7 +68,7 @@ private class SettingsEntriesScopeBuilder<C : Any> : SettingsEntriesScope<C> {
         read: (C) -> Int,
         write: C.(Int) -> C,
     ) {
-        entries += SettingsEntry.Field(
+        entries += SettingsEntry(
             key = key,
             title = title,
             description = description,
@@ -91,7 +90,7 @@ private class SettingsEntriesScopeBuilder<C : Any> : SettingsEntriesScope<C> {
         read: (C) -> E?,
         write: C.(E?) -> C,
     ) {
-        entries += SettingsEntry.Field(
+        entries += SettingsEntry(
             key = key,
             title = title,
             description = description,
@@ -111,7 +110,7 @@ private class SettingsEntriesScopeBuilder<C : Any> : SettingsEntriesScope<C> {
         read: (C) -> Set<String>,
         write: C.(Set<String>) -> C,
     ) {
-        entries += SettingsEntry.Field(
+        entries += SettingsEntry(
             key = key,
             title = title,
             description = description,
@@ -120,18 +119,6 @@ private class SettingsEntriesScopeBuilder<C : Any> : SettingsEntriesScope<C> {
             write = write,
             enabledWhen = enabledWhen,
             codec = TagsCodec,
-        )
-    }
-
-    override fun action(
-        title: String,
-        destructive: Boolean,
-        onClick: () -> Unit,
-    ) {
-        entries += SettingsEntry.Action(
-            title = title,
-            destructive = destructive,
-            onClick = onClick,
         )
     }
 }

@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
-import kotlin.test.assertTrue
 import kotlinx.coroutines.flow.MutableStateFlow
 
 private data class FakeConfig(
@@ -84,25 +83,10 @@ class SettingsEntriesTest {
         assertEquals(setOf("a", "b"), codec.decode(" a, b ,a"))
     }
 
-    @Test
-    fun `action entry is never persisted and carries the destructive flag`() {
-        var clicked = false
-
-        @Suppress("UNCHECKED_CAST")
-        val section = settingsEntries(id = "s", title = "S", config = config, update = update) {
-            action("Reset", destructive = true) { clicked = true }
-        } as SettingsSection.Entries<FakeConfig>
-
-        val action = section.entries.single() as SettingsEntry.Action<FakeConfig>
-        assertTrue(action.destructive)
-        action.onClick()
-        assertTrue(clicked)
-    }
-
     @Suppress("UNCHECKED_CAST")
-    private fun singleEntry(build: SettingsEntriesScope<FakeConfig>.() -> Unit): SettingsEntry.Field<FakeConfig, *> {
+    private fun singleEntry(build: SettingsEntriesScope<FakeConfig>.() -> Unit): SettingsEntry<FakeConfig, *> {
         val section = settingsEntries(id = "s", title = "S", config = config, update = update, build = build)
             as SettingsSection.Entries<FakeConfig>
-        return section.entries.single() as SettingsEntry.Field<FakeConfig, *>
+        return section.entries.single()
     }
 }
