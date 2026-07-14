@@ -1,11 +1,13 @@
 package io.thernal.console.crash.ui.runtime
 
-import io.thernal.console.crash.ui.store.CrashFileSystem
 import io.thernal.console.crash.ui.store.CrashStore
+import io.thernal.console.io.ConsoleFileSystem
 import kotlin.concurrent.Volatile
 import kotlin.time.Clock
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
+
+private const val DIRECTORY_NAME = "console-crash-report"
 
 /**
  * Holds the process-wide [CrashStore] and the current streaming session. Started once from the
@@ -20,7 +22,7 @@ internal object CrashReportRuntime {
     val store: CrashStore? get() = activeStore
 
     fun start() {
-        val directoryPath = CrashFileSystem.defaultBaseDirectoryPath() ?: return
+        val directoryPath = ConsoleFileSystem.baseDirectoryPath(DIRECTORY_NAME) ?: return
         startIn(directoryPath)
     }
 

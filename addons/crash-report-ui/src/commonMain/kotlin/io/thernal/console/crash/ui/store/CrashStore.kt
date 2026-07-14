@@ -3,6 +3,8 @@ package io.thernal.console.crash.ui.store
 import io.thernal.console.core.log.Log
 import io.thernal.console.crash.CrashSessionHeader
 import io.thernal.console.crash.CrashSessionSerializer
+import io.thernal.console.io.AppendSink
+import io.thernal.console.io.ConsoleFileSystem
 import kotlin.concurrent.Volatile
 
 /**
@@ -29,7 +31,7 @@ internal class CrashStore(
     private var activeStem: String? = null
 
     @Volatile
-    private var activeSink: CrashAppendSink? = null
+    private var activeSink: AppendSink? = null
 
     @Volatile
     private var activeHeader: CrashSessionHeader? = null
@@ -48,13 +50,13 @@ internal class CrashStore(
         id: String,
         startedAtMs: Long,
     ): Boolean {
-        if (!CrashFileSystem.ensureDirectory(directoryPath)) return false
+        if (!ConsoleFileSystem.ensureDirectory(directoryPath)) return false
         closeSession()
         applyRetention()
 
         val stem = "$startedAtMs$STEM_SEPARATOR$id"
         val header = CrashSessionHeader(id = id, crashedAt = startedAtMs, summary = "")
-        val sink = CrashFileSystem.openAppend(filePath(stem = stem, suffix = LOG_SUFFIX)) ?: return false
+        val sink = ConsoleFileSystem.openAppend(filePath(stem = stem, suffix = LOG_SUFFIX)) ?: return false
         if (!sink.append(CrashSessionSerializer.encodeStreamPrefix(header))) {
             sink.close()
             return false
@@ -80,7 +82,7 @@ internal class CrashStore(
     /** Atomically writes the `.crash` sidecar (summary + stack trace) for the active session. */
     fun writeCrashSidecar(content: String): Boolean {
         val stem = activeStem ?: return false
-        return CrashFileSystem.writeAtomically(
+        return ConsoleFileSystem.writeAtomically(
             path = filePath(stem = stem, suffix = CRASH_SUFFIX),
             bytes = content.encodeToByteArray(),
         )
@@ -89,7 +91,7 @@ internal class CrashStore(
     /** Atomically overwrites the `.state` sidecar (last fg/bg state) for the active session. */
     fun writeStateSidecar(state: String): Boolean {
         val stem = activeStem ?: return false
-        return CrashFileSystem.writeAtomically(
+        return ConsoleFileSystem.writeAtomically(
             path = filePath(stem = stem, suffix = STATE_SUFFIX),
             bytes = state.encodeToByteArray(),
         )
@@ -110,7 +112,7 @@ internal class CrashStore(
             CrashStoreEntry(
                 id = parsed.id,
                 startedAtMs = parsed.startedAtMs,
-                hasCrash = CrashFileSystem.exists(filePath(stem = parsed.stem, suffix = CRASH_SUFFIX)),
+                hasCrash = ConsoleFileSystem.exists(filePath(stem = parsed.stem, suffix = CRASH_SUFFIX)),
                 state = readSidecar(stem = parsed.stem, suffix = STATE_SUFFIX),
             )
         }
@@ -120,8 +122,8 @@ internal class CrashStore(
     fun readLogSegments(id: String): List<ByteArray> {
         val stem = findStem(id) ?: return emptyList()
         return listOfNotNull(
-            CrashFileSystem.readBytes(filePath(stem = stem, suffix = OLD_LOG_SUFFIX)),
-            CrashFileSystem.readBytes(filePath(stem = stem, suffix = LOG_SUFFIX)),
+            ConsoleFileSystem.readBytes(filePath(stem = stem, suffix = OLD_LOG_SUFFIX)),
+            ConsoleFileSystem.readBytes(filePath(stem = stem, suffix = LOG_SUFFIX)),
         )
     }
 
@@ -154,13 +156,13 @@ internal class CrashStore(
         activeSink?.close()
         activeSink = null
 
-        CrashFileSystem.delete(filePath(stem = stem, suffix = OLD_LOG_SUFFIX))
-        CrashFileSystem.rename(
+        ConsoleFileSystem.delete(filePath(stem = stem, suffix = OLD_LOG_SUFFIX))
+        ConsoleFileSystem.rename(
             fromPath = filePath(stem = stem, suffix = LOG_SUFFIX),
             toPath = filePath(stem = stem, suffix = OLD_LOG_SUFFIX),
         )
 
-        val sink = CrashFileSystem.openAppend(filePath(stem = stem, suffix = LOG_SUFFIX)) ?: return
+        val sink = ConsoleFileSystem.openAppend(filePath(stem = stem, suffix = LOG_SUFFIX)) ?: return
         if (!sink.append(CrashSessionSerializer.encodeStreamPrefix(header))) {
             sink.close()
             return
@@ -177,7 +179,7 @@ internal class CrashStore(
     /** Past session stems (active excluded), newest first. */
     private fun pastStems(): List<ParsedStem> {
         val active = activeStem
-        return CrashFileSystem.listFileNames(directoryPath)
+        return ConsoleFileSystem.listFileNames(directoryPath)
             .filter { name -> name.endsWith(LOG_SUFFIX) }
             .mapNotNull { name -> parseStem(name.removeSuffix(LOG_SUFFIX)) }
             .filterNot { parsed -> parsed.stem == active }
@@ -191,17 +193,17 @@ internal class CrashStore(
     }
 
     private fun deleteSessionFiles(stem: String) {
-        CrashFileSystem.delete(filePath(stem = stem, suffix = LOG_SUFFIX))
-        CrashFileSystem.delete(filePath(stem = stem, suffix = OLD_LOG_SUFFIX))
-        CrashFileSystem.delete(filePath(stem = stem, suffix = CRASH_SUFFIX))
-        CrashFileSystem.delete(filePath(stem = stem, suffix = STATE_SUFFIX))
+        ConsoleFileSystem.delete(filePath(stem = stem, suffix = LOG_SUFFIX))
+        ConsoleFileSystem.delete(filePath(stem = stem, suffix = OLD_LOG_SUFFIX))
+        ConsoleFileSystem.delete(filePath(stem = stem, suffix = CRASH_SUFFIX))
+        ConsoleFileSystem.delete(filePath(stem = stem, suffix = STATE_SUFFIX))
     }
 
     private fun readSidecar(
         stem: String,
         suffix: String,
     ): String? {
-        return CrashFileSystem.readBytes(filePath(stem = stem, suffix = suffix))?.decodeToString()
+        return ConsoleFileSystem.readBytes(filePath(stem = stem, suffix = suffix))?.decodeToString()
     }
 
     private fun parseStem(stem: String): ParsedStem? {

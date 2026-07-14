@@ -6,7 +6,7 @@ import io.thernal.console.crash.ui.config.CrashReportConfig
 import io.thernal.console.crash.ui.handler.CrashCapture
 import io.thernal.console.crash.ui.runtime.CrashReportRuntime
 import io.thernal.console.crash.ui.session.CrashSessionClass
-import io.thernal.console.crash.ui.store.CrashFileSystem
+import io.thernal.console.io.ConsoleFileSystem
 import io.thernal.console.runtime.console.Console
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -28,7 +28,7 @@ class CrashReportsTest {
         Console.isEnabled = true
         CrashCapture.reset()
         CrashReportRuntime.reset()
-        directoryPath = "${CrashFileSystem.temporaryDirectoryPath()}/crash-reports-test-${Uuid.random()}"
+        directoryPath = "${ConsoleFileSystem.temporaryDirectoryPath()}/crash-reports-test-${Uuid.random()}"
         CrashReportRuntime.startIn(directoryPath)
     }
 
@@ -37,10 +37,10 @@ class CrashReportsTest {
         CrashReports.updateConfig { CrashReportConfig() }
         CrashCapture.reset()
         CrashReportRuntime.reset()
-        CrashFileSystem.listFileNames(directoryPath).forEach { name ->
-            CrashFileSystem.delete("$directoryPath/$name")
+        ConsoleFileSystem.listFileNames(directoryPath).forEach { name ->
+            ConsoleFileSystem.delete("$directoryPath/$name")
         }
-        CrashFileSystem.delete(directoryPath)
+        ConsoleFileSystem.delete(directoryPath)
     }
 
     @Test

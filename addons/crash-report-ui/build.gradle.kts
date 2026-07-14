@@ -8,6 +8,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.addons.crashReportCore)
             api(projects.consoleUi)
+            implementation(projects.consoleIo)
             implementation(projects.consoleRuntime)
             implementation(projects.addons.networkCore)
             implementation(projects.designsystem.components)
