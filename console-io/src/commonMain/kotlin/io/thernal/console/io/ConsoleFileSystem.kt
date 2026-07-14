@@ -1,17 +1,18 @@
-package io.thernal.console.crash.ui.store
+package io.thernal.console.io
 
 /**
- * Minimal platform file-system access for [CrashStore]. Implementations must keep writes safe to
- * call from a dying thread (plain blocking IO, no coroutine machinery).
+ * Minimal platform file-system access shared by addons that persist small amounts of data
+ * (crash sessions, settings overrides). Implementations must keep writes safe to call from a
+ * dying thread (plain blocking IO, no coroutine machinery).
  */
-internal expect object CrashFileSystem {
+expect object ConsoleFileSystem {
 
     /**
-     * Backup-excluded platform directory for crash sessions (Android `noBackupFilesDir`, iOS
-     * Application Support + `NSURLIsExcludedFromBackupKey`, JVM home), or `null` when unavailable
-     * (e.g. Android before the auto-init `Context` arrives).
+     * Backup-excluded platform base directory for [directoryName] (Android `noBackupFilesDir`,
+     * iOS Application Support + `NSURLIsExcludedFromBackupKey`, JVM home), or `null` when
+     * unavailable (e.g. Android before the auto-init `Context` arrives).
      */
-    fun defaultBaseDirectoryPath(): String?
+    fun baseDirectoryPath(directoryName: String): String?
 
     /** Platform temporary directory; used by tests. */
     fun temporaryDirectoryPath(): String
@@ -21,7 +22,7 @@ internal expect object CrashFileSystem {
     fun listFileNames(directoryPath: String): List<String>
 
     /** Opens [path] for appending, creating it when missing. */
-    fun openAppend(path: String): CrashAppendSink?
+    fun openAppend(path: String): AppendSink?
 
     fun readBytes(path: String): ByteArray?
 

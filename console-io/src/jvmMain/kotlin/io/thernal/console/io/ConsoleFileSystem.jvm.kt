@@ -1,16 +1,14 @@
-package io.thernal.console.crash.ui.store
+package io.thernal.console.io
 
 import java.io.File
 import java.io.FileOutputStream
 
-private const val DIRECTORY_NAME = "console-crash-report"
+actual object ConsoleFileSystem {
 
-internal actual object CrashFileSystem {
-
-    actual fun defaultBaseDirectoryPath(): String? {
+    actual fun baseDirectoryPath(directoryName: String): String? {
         val home = System.getProperty("user.home")?.takeIf { it.isNotBlank() }
         val base = home?.let { File(it, ".console") } ?: File(temporaryDirectoryPath())
-        return File(base, DIRECTORY_NAME).absolutePath
+        return File(base, directoryName).absolutePath
     }
 
     actual fun temporaryDirectoryPath(): String {
@@ -26,8 +24,8 @@ internal actual object CrashFileSystem {
         return File(directoryPath).listFiles()?.map { it.name }.orEmpty()
     }
 
-    actual fun openAppend(path: String): CrashAppendSink? {
-        return runCatching { AppendSink(FileOutputStream(path, true)) }.getOrNull()
+    actual fun openAppend(path: String): AppendSink? {
+        return runCatching { JvmAppendSink(FileOutputStream(path, true)) }.getOrNull()
     }
 
     actual fun readBytes(path: String): ByteArray? {
@@ -69,7 +67,7 @@ internal actual object CrashFileSystem {
         return from.renameTo(to)
     }
 
-    private class AppendSink(private val stream: FileOutputStream) : CrashAppendSink {
+    private class JvmAppendSink(private val stream: FileOutputStream) : AppendSink {
 
         // FileOutputStream.write is an unbuffered write(2) syscall, so each record reaches the
         // kernel page cache immediately — surviving process death without an fsync.

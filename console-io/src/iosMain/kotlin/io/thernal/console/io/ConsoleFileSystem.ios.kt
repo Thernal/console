@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalForeignApi::class)
 
-package io.thernal.console.crash.ui.store
+package io.thernal.console.io
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf
@@ -23,17 +23,15 @@ import platform.Foundation.seekToEndOfFile
 import platform.Foundation.writeToFile
 import platform.posix.memcpy
 
-private const val DIRECTORY_NAME = "console-crash-report"
+actual object ConsoleFileSystem {
 
-internal actual object CrashFileSystem {
-
-    actual fun defaultBaseDirectoryPath(): String? {
+    actual fun baseDirectoryPath(directoryName: String): String? {
         val supportDirectory = NSSearchPathForDirectoriesInDomains(
             directory = NSApplicationSupportDirectory,
             domainMask = NSUserDomainMask,
             expandTilde = true,
         ).firstOrNull() as? String ?: return null
-        val path = "$supportDirectory/$DIRECTORY_NAME"
+        val path = "$supportDirectory/$directoryName"
         if (!ensureDirectory(path)) return null
         excludeFromBackup(path)
         return path
@@ -61,7 +59,7 @@ internal actual object CrashFileSystem {
             .orEmpty()
     }
 
-    actual fun openAppend(path: String): CrashAppendSink? {
+    actual fun openAppend(path: String): AppendSink? {
         val manager = NSFileManager.defaultManager
         if (!manager.fileExistsAtPath(path)) {
             val isCreated = manager.createFileAtPath(path = path, contents = null, attributes = null)
@@ -69,7 +67,7 @@ internal actual object CrashFileSystem {
         }
         val handle = NSFileHandle.fileHandleForWritingAtPath(path) ?: return null
         handle.seekToEndOfFile()
-        return AppendSink(handle)
+        return IosAppendSink(handle)
     }
 
     actual fun readBytes(path: String): ByteArray? {
@@ -110,7 +108,7 @@ internal actual object CrashFileSystem {
         )
     }
 
-    private class AppendSink(private val handle: NSFileHandle) : CrashAppendSink {
+    private class IosAppendSink(private val handle: NSFileHandle) : AppendSink {
 
         // NSFileHandle writes are unbuffered write(2) syscalls, so each record reaches the kernel
         // immediately — surviving process death without an fsync. The error-returning overload is

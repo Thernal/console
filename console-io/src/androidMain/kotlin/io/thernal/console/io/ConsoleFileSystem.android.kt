@@ -1,20 +1,17 @@
-package io.thernal.console.crash.ui.store
+package io.thernal.console.io
 
-import io.thernal.console.crash.ui.CrashReportContextHolder
 import java.io.File
 import java.io.FileOutputStream
 
-private const val DIRECTORY_NAME = "console-crash-report"
+actual object ConsoleFileSystem {
 
-internal actual object CrashFileSystem {
-
-    actual fun defaultBaseDirectoryPath(): String? {
-        val context = CrashReportContextHolder.applicationContext ?: return null
-        return File(context.noBackupFilesDir, DIRECTORY_NAME).absolutePath
+    actual fun baseDirectoryPath(directoryName: String): String? {
+        val context = ConsoleIoContextHolder.applicationContext ?: return null
+        return File(context.noBackupFilesDir, directoryName).absolutePath
     }
 
     actual fun temporaryDirectoryPath(): String {
-        val cacheDir = CrashReportContextHolder.applicationContext?.cacheDir?.absolutePath
+        val cacheDir = ConsoleIoContextHolder.applicationContext?.cacheDir?.absolutePath
         return cacheDir ?: System.getProperty("java.io.tmpdir")
     }
 
@@ -27,8 +24,8 @@ internal actual object CrashFileSystem {
         return File(directoryPath).listFiles()?.map { it.name }.orEmpty()
     }
 
-    actual fun openAppend(path: String): CrashAppendSink? {
-        return runCatching { AppendSink(FileOutputStream(path, true)) }.getOrNull()
+    actual fun openAppend(path: String): AppendSink? {
+        return runCatching { AndroidAppendSink(FileOutputStream(path, true)) }.getOrNull()
     }
 
     actual fun readBytes(path: String): ByteArray? {
@@ -70,7 +67,7 @@ internal actual object CrashFileSystem {
         return from.renameTo(to)
     }
 
-    private class AppendSink(private val stream: FileOutputStream) : CrashAppendSink {
+    private class AndroidAppendSink(private val stream: FileOutputStream) : AppendSink {
 
         // FileOutputStream.write is an unbuffered write(2) syscall, so each record reaches the
         // kernel page cache immediately — surviving process death without an fsync.

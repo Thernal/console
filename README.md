@@ -428,6 +428,7 @@ Beyond tabs, `ConsoleAddon` also supports:
 | Artifact | Description |
 |----------|-------------|
 | `io.github.thernal:console-core:<version>` | Foundation — `Log`, `LogLevel`, `LogObserver`, `LogProcessor`, `ConsoleScope` (no UI, no pipeline) |
+| `io.github.thernal:console-io:<version>` | Shared file-system infrastructure — `ConsoleFileSystem`, `AppendSink` (no UI, no pipeline) |
 | `io.github.thernal:console-runtime:<version>` | `Console` singleton + log pipeline (depends on `console-core`) |
 | `io.github.thernal:console-api:<version>` | Addon contracts — `ConsoleAddon`, `ConsoleTab`, `LogRenderer`, `LogRendererRegistry` (depends on `console-core`, not runtime) |
 | `io.github.thernal:console-ui:<version>` | Compose UI shell — `ConsoleProvider`, navigation, overlay |
