@@ -12,12 +12,13 @@ implementation("io.github.thernal:console-settings-ui:<version>")
 
 ## What it renders
 
-- A search field filters entry titles (`Entries` sections) or a section's title/keywords
-  (`Custom` sections) — everything scrolls in one `LazyColumn`, no nested scrollables.
+- A search field matches a section's own title first (showing every entry in that section when
+  it does) and falls back to matching individual entry titles otherwise; `Custom` sections also
+  match their declared keywords — everything scrolls in one `LazyColumn`, no nested scrollables.
 - One row per entry kind: toggle, number field (clamps to `[min, max]`), single-choice picker
-  (with an optional "none" chip), tag/chip editor, and a plain-or-destructive action.
-- A **General** section with "Reset all settings" — a two-tap destructive action that deletes
-  every persisted override file. In-session values stay until the next launch: the
+  (with an optional "none" chip), and a tag/chip editor.
+- A **General** section with "Reset all settings" — a two-tap destructive button (`DsButton`)
+  that deletes every persisted override file. In-session values stay until the next launch: the
   programmatic-init layer that ran at startup can't be reconstructed mid-session.
 
 ## Persistence
