@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
@@ -46,15 +47,18 @@ fun DsTextField(
         decorationBox = { innerTextField ->
             Row(
                 modifier = Modifier
+                    .defaultMinSize(minHeight = Theme.metrics.minTouchTarget)
                     .background(Theme.colors.background2, Theme.rounding.r12)
                     .border(Theme.metrics.borderWidth, Theme.colors.border, Theme.rounding.r12)
-                    .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
+                    .padding(horizontal = Theme.dimens.dp12),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 prefix?.invoke(this)
 
                 Box(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(vertical = Theme.dimens.dp12),
                     contentAlignment = Alignment.CenterStart,
                 ) {
                     if (value.text.isEmpty()) {
