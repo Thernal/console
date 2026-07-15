@@ -10,9 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import io.thernal.console.designsystem.components.core.collapsible.DsCollapsible
 import io.thernal.console.designsystem.foundation.theme.Theme
@@ -126,11 +124,11 @@ private fun <C : Any> EntryRow(
  * (`toggle`/`int`/`enum`/`tags`) produced — [EntryKind] and the entry's value type are paired by
  * construction in `settings-api`, so every cast below always succeeds.
  *
- * Each wrapper below builds a `derivedStateOf` per field and hands the `State` straight to the row
- * composable — it never reads `.value` itself (no `by`), so its own body has zero read dependency
- * on [configState] and never recomposes when config changes. The row composable is the only place
- * that reads `.value`, and only for its own field, so a change to one field in the shared config
- * doesn't recompose any other row in the section.
+ * Each wrapper below derives a `State` per field via [io.thernal.console.ui.core.select] and hands
+ * it straight to the row composable — it never reads `.value` itself (no `by`), so its own body has
+ * zero read dependency on [configState] and never recomposes when config changes. The row
+ * composable is the only place that reads `.value`, and only for its own field, so a change to one
+ * field in the shared config doesn't recompose any other row in the section.
  */
 @Composable
 private fun <C : Any> ToggleFieldRow(
@@ -140,8 +138,8 @@ private fun <C : Any> ToggleFieldRow(
 ) {
     @Suppress("UNCHECKED_CAST")
     val typed = entry as SettingsEntry<C, Boolean>
-    val checked = remember { derivedStateOf { typed.read(configState.value) } }
-    val enabled = remember { derivedStateOf { typed.enabledWhen(configState.value) } }
+    val checked = configState.select { typed.read(it) }
+    val enabled = configState.select { typed.enabledWhen(it) }
     SettingsToggleRow(
         title = typed.title,
         description = typed.description,
@@ -163,8 +161,8 @@ private fun <C : Any> IntFieldRow(
 ) {
     @Suppress("UNCHECKED_CAST")
     val typed = entry as SettingsEntry<C, Int>
-    val value = remember { derivedStateOf { typed.read(configState.value) } }
-    val enabled = remember { derivedStateOf { typed.enabledWhen(configState.value) } }
+    val value = configState.select { typed.read(it) }
+    val enabled = configState.select { typed.enabledWhen(it) }
     SettingsIntFieldRow(
         title = typed.title,
         description = typed.description,
@@ -188,8 +186,8 @@ private fun <C : Any, E : Enum<E>> EnumFieldRow(
 ) {
     @Suppress("UNCHECKED_CAST")
     val typed = entry as SettingsEntry<C, E?>
-    val selected = remember { derivedStateOf { typed.read(configState.value) } }
-    val enabled = remember { derivedStateOf { typed.enabledWhen(configState.value) } }
+    val selected = configState.select { typed.read(it) }
+    val enabled = configState.select { typed.enabledWhen(it) }
     SettingsEnumPickerRow(
         title = typed.title,
         description = typed.description,
@@ -212,8 +210,8 @@ private fun <C : Any> TagsFieldRow(
 ) {
     @Suppress("UNCHECKED_CAST")
     val typed = entry as SettingsEntry<C, Set<String>>
-    val tags = remember { derivedStateOf { typed.read(configState.value) } }
-    val enabled = remember { derivedStateOf { typed.enabledWhen(configState.value) } }
+    val tags = configState.select { typed.read(it) }
+    val enabled = configState.select { typed.enabledWhen(it) }
     SettingsTagsEditorRow(
         title = typed.title,
         description = typed.description,
