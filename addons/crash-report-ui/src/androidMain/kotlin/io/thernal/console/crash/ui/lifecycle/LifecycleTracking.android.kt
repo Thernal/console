@@ -3,11 +3,11 @@ package io.thernal.console.crash.ui.lifecycle
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import io.thernal.console.crash.ui.CrashReportContextHolder
 import io.thernal.console.crash.ui.session.TerminationState
+import io.thernal.console.io.ConsoleIoContextHolder
 
 internal actual fun installLifecycleTracking(onStateChanged: (TerminationState) -> Unit) {
-    val application = CrashReportContextHolder.applicationContext as? Application ?: return
+    val application = ConsoleIoContextHolder.applicationContext as? Application ?: return
     application.registerActivityLifecycleCallbacks(StartedCountCallbacks(onStateChanged))
 }
 

@@ -15,6 +15,14 @@ class LogsViewModel : ViewModel(), StateHolder, IntentHandler<LogsIntent> {
 
     private var rawLogs: List<Log> = emptyList()
 
+    /**
+     * Append-only: a tag's position is fixed the first time it's ever seen and never
+     * recomputed from the (evicting) ring buffer, so a tag doesn't reorder just because its
+     * oldest surviving log got dropped past `maxLogCount` — only whether it's currently shown
+     * (see [syncFromRaw]) depends on the live buffer.
+     */
+    private val tagFirstSeenOrder = mutableListOf<String>()
+
     init {
         viewModelScope.launch {
             ConsoleLogObserver.logs.collect { logs ->
@@ -35,7 +43,9 @@ class LogsViewModel : ViewModel(), StateHolder, IntentHandler<LogsIntent> {
     }
 
     private fun syncFromRaw() {
-        state.tags.update { rawLogs.mapNotNull { it.tag }.distinct() }
+        val currentTags = rawLogs.mapNotNullTo(mutableSetOf()) { it.tag }
+        currentTags.forEach { tag -> if (tag !in tagFirstSeenOrder) tagFirstSeenOrder += tag }
+        state.tags.update { tagFirstSeenOrder.filter { it in currentTags } }
         state.hasAnyLogs.update { rawLogs.isNotEmpty() }
         filterLogs()
     }

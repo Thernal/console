@@ -10,6 +10,7 @@ import io.thernal.console.details.ui.view.details.DetailsView
 internal object DetailsTab : ConsoleTab {
     override val title = "Details"
     override val icon: ImageVector = Icons.Default.Info
+    override val order = 20
 
     @Composable
     override fun Content() {

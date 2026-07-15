@@ -42,7 +42,13 @@ object Stepper : LogObserver, IntentHandler<StepperIntent> {
     }
 
     fun updateConfig(config: Config) {
-        val normalized = config.copy(maxSteppedEventCount = config.maxSteppedEventCount.coerceAtLeast(0))
+        val normalized = config.copy(
+            maxSteppedEventCount = config.maxSteppedEventCount.coerceAtLeast(0),
+            // A paused pipeline must always have a visible resume affordance (the floating
+            // overlay) — enforced here too, not just via enabledWhen in the settings UI, so a
+            // programmatic write can't leave the stepper paused with no way to step through it.
+            paused = config.paused && config.enabled && config.overlayVisible,
+        )
         _config.value = normalized
         _state.update { current ->
             val trimmedEvents = when {
@@ -146,6 +152,7 @@ object Stepper : LogObserver, IntentHandler<StepperIntent> {
 
     data class Config(
         val enabled: Boolean = false,
+        val overlayVisible: Boolean = true,
         val paused: Boolean = false,
         val pauseOnMatch: Boolean = false,
         val pauseOnTags: Set<String> = emptySet(),

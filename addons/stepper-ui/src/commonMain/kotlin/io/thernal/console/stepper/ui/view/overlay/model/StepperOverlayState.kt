@@ -8,6 +8,7 @@ import io.thernal.console.core.log.Log
 
 @Stable
 class StepperOverlayState : ViewState() {
+    val isVisible = field(true)
     val isEnabled = field(false)
     val isPaused = field(false)
     val pendingLogs = field(0)
