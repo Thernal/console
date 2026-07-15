@@ -93,6 +93,7 @@ class StepperOverlayViewModel : ViewModel(), StateHolder, IntentHandler<StepperO
 
         snapshot {
             if (!config.enabled) state.isExpanded.set(false)
+            state.isVisible.set(config.overlayVisible)
             state.isEnabled.set(config.enabled)
             state.isPaused.set(config.paused)
             state.pendingLogs.set(stepperState.pendingLogs)
