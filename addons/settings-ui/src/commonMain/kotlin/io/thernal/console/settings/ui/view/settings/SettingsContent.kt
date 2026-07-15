@@ -1,6 +1,5 @@
 package io.thernal.console.settings.ui.view.settings
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +14,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import io.thernal.console.designsystem.components.core.collapsible.DsCollapsible
 import io.thernal.console.designsystem.foundation.theme.Theme
 import io.thernal.console.settings.EntryKind
 import io.thernal.console.settings.SettingsEntry
@@ -40,18 +40,21 @@ internal fun SettingsContent(
     val sections by state.sections
     val query by state.searchQuery
 
-    Column(Modifier.fillMaxSize()) {
-        SettingsSearchBar(
-            query = query,
-            onQueryChange = { dispatch(SettingsIntent.SetQuery(it)) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
-        )
-
-        CompositionLocalProvider(LocalSearchQuery provides state.searchQuery.select { it.text }) {
+    CompositionLocalProvider(LocalSearchQuery provides state.searchQuery.select { it.text }) {
+        DsCollapsible(
+            modifier = Modifier.fillMaxSize(),
+            header = {
+                SettingsSearchBar(
+                    query = query,
+                    onQueryChange = { dispatch(SettingsIntent.SetQuery(it)) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
+                )
+            },
+        ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.weight(1f),
                 contentPadding = PaddingValues(bottom = Theme.dimens.dp16),
             ) {
                 sections.sortedBy { it.order }.forEach { section ->
