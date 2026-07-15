@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import io.thernal.console.designsystem.components.core.DsIcon
-import io.thernal.console.designsystem.components.core.DsIconButton
 import io.thernal.console.designsystem.components.core.DsTextField
+import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.foundation.theme.Theme
 
 @Composable
@@ -34,12 +34,12 @@ internal fun SettingsSearchBar(
         },
         suffix = {
             AnimatedVisibility(visible = query.text.isNotEmpty()) {
-                DsIconButton(
-                    onClick = { onQueryChange(TextFieldValue()) },
-                    contentColor = Theme.colors.content04,
-                ) {
-                    DsIcon(icon = Icons.Outlined.Clear, size = Theme.metrics.iconSm)
-                }
+                DsIcon(
+                    icon = Icons.Outlined.Clear,
+                    size = Theme.metrics.iconSm,
+                    color = Theme.colors.content04,
+                    modifier = Modifier.pressable(onPress = { onQueryChange(TextFieldValue()) }),
+                )
             }
         },
     )

@@ -1,6 +1,5 @@
 package io.thernal.console.settings.ui.view.settings
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,9 +8,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import io.thernal.console.designsystem.components.core.collapsible.DsCollapsible
 import io.thernal.console.designsystem.foundation.theme.Theme
 import io.thernal.console.settings.EntryKind
 import io.thernal.console.settings.SettingsEntry
@@ -37,18 +40,21 @@ internal fun SettingsContent(
     val sections by state.sections
     val query by state.searchQuery
 
-    Column(Modifier.fillMaxSize()) {
-        SettingsSearchBar(
-            query = query,
-            onQueryChange = { dispatch(SettingsIntent.SetQuery(it)) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
-        )
-
-        CompositionLocalProvider(LocalSearchQuery provides state.searchQuery.select { it.text }) {
+    CompositionLocalProvider(LocalSearchQuery provides state.searchQuery.select { it.text }) {
+        DsCollapsible(
+            modifier = Modifier.fillMaxSize(),
+            header = {
+                SettingsSearchBar(
+                    query = query,
+                    onQueryChange = { dispatch(SettingsIntent.SetQuery(it)) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
+                )
+            },
+        ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.weight(1f),
                 contentPadding = PaddingValues(bottom = Theme.dimens.dp16),
             ) {
                 sections.sortedBy { it.order }.forEach { section ->
@@ -102,13 +108,16 @@ private fun <C : Any> EntryRow(
     section: SettingsSection.Entries<C>,
     entry: SettingsEntry<C, *>,
 ) {
-    val config by section.config.collectAsState()
+    // Not destructured with `by` here on purpose: reading `.value` at this scope would recompose
+    // every row in the section whenever ANY field changes. Passing the raw State down lets each
+    // row below select only the slice it actually reads.
+    val configState = section.config.collectAsState()
 
     when (val kind = entry.kind) {
-        EntryKind.Toggle -> ToggleFieldRow(section, entry, config)
-        is EntryKind.IntField -> IntFieldRow(section, entry, kind, config)
-        is EntryKind.EnumPicker<*> -> EnumFieldRow(section, entry, kind, config)
-        EntryKind.Tags -> TagsFieldRow(section, entry, config)
+        EntryKind.Toggle -> ToggleFieldRow(section, entry, configState)
+        is EntryKind.IntField -> IntFieldRow(section, entry, kind, configState)
+        is EntryKind.EnumPicker<*> -> EnumFieldRow(section, entry, kind, configState)
+        EntryKind.Tags -> TagsFieldRow(section, entry, configState)
     }
 }
 
@@ -116,20 +125,28 @@ private fun <C : Any> EntryRow(
  * Each branch above is only reached for the [SettingsEntry] its own builder function
  * (`toggle`/`int`/`enum`/`tags`) produced — [EntryKind] and the entry's value type are paired by
  * construction in `settings-api`, so every cast below always succeeds.
+ *
+ * Each wrapper below builds a `derivedStateOf` per field and hands the `State` straight to the row
+ * composable — it never reads `.value` itself (no `by`), so its own body has zero read dependency
+ * on [configState] and never recomposes when config changes. The row composable is the only place
+ * that reads `.value`, and only for its own field, so a change to one field in the shared config
+ * doesn't recompose any other row in the section.
  */
 @Composable
 private fun <C : Any> ToggleFieldRow(
     section: SettingsSection.Entries<C>,
     entry: SettingsEntry<C, *>,
-    config: C,
+    configState: State<C>,
 ) {
     @Suppress("UNCHECKED_CAST")
     val typed = entry as SettingsEntry<C, Boolean>
+    val checked = remember { derivedStateOf { typed.read(configState.value) } }
+    val enabled = remember { derivedStateOf { typed.enabledWhen(configState.value) } }
     SettingsToggleRow(
         title = typed.title,
         description = typed.description,
-        checked = typed.read(config),
-        enabled = typed.enabledWhen(config),
+        checked = checked,
+        enabled = enabled,
         onCheckedChange = { value ->
             section.update { typed.write(this, value) }
             SettingsStore.persist(section, typed, value)
@@ -142,20 +159,22 @@ private fun <C : Any> IntFieldRow(
     section: SettingsSection.Entries<C>,
     entry: SettingsEntry<C, *>,
     kind: EntryKind.IntField,
-    config: C,
+    configState: State<C>,
 ) {
     @Suppress("UNCHECKED_CAST")
     val typed = entry as SettingsEntry<C, Int>
+    val value = remember { derivedStateOf { typed.read(configState.value) } }
+    val enabled = remember { derivedStateOf { typed.enabledWhen(configState.value) } }
     SettingsIntFieldRow(
         title = typed.title,
         description = typed.description,
-        value = typed.read(config),
+        value = value,
         min = kind.min,
         max = kind.max,
-        enabled = typed.enabledWhen(config),
-        onValueChange = { value ->
-            section.update { typed.write(this, value) }
-            SettingsStore.persist(section, typed, value)
+        enabled = enabled,
+        onValueChange = { newValue ->
+            section.update { typed.write(this, newValue) }
+            SettingsStore.persist(section, typed, newValue)
         },
     )
 }
@@ -165,17 +184,19 @@ private fun <C : Any, E : Enum<E>> EnumFieldRow(
     section: SettingsSection.Entries<C>,
     entry: SettingsEntry<C, *>,
     kind: EntryKind.EnumPicker<E>,
-    config: C,
+    configState: State<C>,
 ) {
     @Suppress("UNCHECKED_CAST")
     val typed = entry as SettingsEntry<C, E?>
+    val selected = remember { derivedStateOf { typed.read(configState.value) } }
+    val enabled = remember { derivedStateOf { typed.enabledWhen(configState.value) } }
     SettingsEnumPickerRow(
         title = typed.title,
         description = typed.description,
         options = kind.options,
         noneLabel = kind.noneLabel,
-        selected = typed.read(config),
-        enabled = typed.enabledWhen(config),
+        selected = selected,
+        enabled = enabled,
         onSelect = { value ->
             section.update { typed.write(this, value) }
             SettingsStore.persist(section, typed, value)
@@ -187,15 +208,17 @@ private fun <C : Any, E : Enum<E>> EnumFieldRow(
 private fun <C : Any> TagsFieldRow(
     section: SettingsSection.Entries<C>,
     entry: SettingsEntry<C, *>,
-    config: C,
+    configState: State<C>,
 ) {
     @Suppress("UNCHECKED_CAST")
     val typed = entry as SettingsEntry<C, Set<String>>
+    val tags = remember { derivedStateOf { typed.read(configState.value) } }
+    val enabled = remember { derivedStateOf { typed.enabledWhen(configState.value) } }
     SettingsTagsEditorRow(
         title = typed.title,
         description = typed.description,
-        tags = typed.read(config),
-        enabled = typed.enabledWhen(config),
+        tags = tags,
+        enabled = enabled,
         onTagsChange = { value ->
             section.update { typed.write(this, value) }
             SettingsStore.persist(section, typed, value)

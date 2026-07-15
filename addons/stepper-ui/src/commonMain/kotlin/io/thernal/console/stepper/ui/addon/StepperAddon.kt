@@ -13,10 +13,12 @@ import io.thernal.console.api.addon.ConsoleNavGraph
 import io.thernal.console.api.addon.ConsoleTab
 import io.thernal.console.stepper.ui.navigation.StepperNavGraph
 import io.thernal.console.stepper.ui.navigation.StepperTab
+import io.thernal.console.settings.SettingsRegistry
 
 object StepperAddon : ConsoleAddon {
     override fun onInstall() {
         Console.addObserver(Stepper)
+        SettingsRegistry.register(stepperSettingsSection())
     }
 
     override fun tab(): ConsoleTab = StepperTab

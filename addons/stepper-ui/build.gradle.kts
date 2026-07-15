@@ -9,6 +9,7 @@ kotlin {
             api(projects.consoleUi)
             implementation(projects.consoleRuntime)
             implementation(projects.designsystem.components)
+            implementation(projects.addons.settingsApi)
             implementation(libs.jetbrains.navigation3.ui)
             implementation(libs.jetbrains.lifecycle.viewmodel.nav3)
             implementation(libs.compose.foundation)
