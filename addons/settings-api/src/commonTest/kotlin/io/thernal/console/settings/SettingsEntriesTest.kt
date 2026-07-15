@@ -73,6 +73,18 @@ class SettingsEntriesTest {
     }
 
     @Test
+    fun `default snapshots the config value at build time unaffected by later updates`() {
+        config.value = FakeConfig(enabled = true, count = 5)
+
+        val section = settingsEntries(id = "snap", title = "Snap", config = config, update = update) {
+            toggle("enabled", "Enabled", read = { it.enabled }, write = { copy(enabled = it) })
+        } as SettingsSection.Entries<FakeConfig>
+        config.value = FakeConfig(enabled = false, count = 99)
+
+        assertEquals(FakeConfig(enabled = true, count = 5), section.default)
+    }
+
+    @Test
     fun `tags entry trims blanks and dedupes on decode`() {
         val entry = singleEntry {
             tags("names", "Names", read = { emptySet() }, write = { this })

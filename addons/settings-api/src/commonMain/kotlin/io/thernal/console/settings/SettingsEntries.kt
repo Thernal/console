@@ -6,6 +6,9 @@ import kotlinx.coroutines.flow.StateFlow
  * Builds a [SettingsSection.Entries] section bound to an addon facade's existing `config` /
  * `update` pair — the facade `StateFlow` stays the single source of truth. [id] is also the
  * persistence file name; entry keys declared in [build] must be unique within the section.
+ * Snapshots `config.value` as [SettingsSection.Entries.default] — call this before registering
+ * the section (addons always do, at `onInstall()` time), so the snapshot is the code default and
+ * not an already-applied persisted override.
  */
 fun <C : Any> settingsEntries(
     id: String,
@@ -31,6 +34,7 @@ fun <C : Any> settingsEntries(
         config = config,
         update = update,
         entries = scope.entries,
+        default = config.value,
     )
 }
 

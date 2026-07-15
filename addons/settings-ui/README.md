@@ -18,8 +18,9 @@ implementation("io.github.thernal:console-settings-ui:<version>")
 - One row per entry kind: toggle, number field (clamps to `[min, max]`), single-choice picker
   (with an optional "none" chip), and a tag/chip editor.
 - A **General** section with "Reset all settings" — a two-tap destructive button (`DsButton`)
-  that deletes every persisted override file. In-session values stay until the next launch: the
-  programmatic-init layer that ran at startup can't be reconstructed mid-session.
+  that deletes every persisted override file and resets every registered section's live config
+  back to its code default (the `config.value` captured at registration time, before any override
+  applied), so the UI reflects the reset immediately — no relaunch needed.
 
 ## Persistence
 
