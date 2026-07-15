@@ -27,7 +27,7 @@ internal fun SettingsSearchBar(
         prefix = {
             DsIcon(
                 icon = Icons.Outlined.Search,
-                size = Theme.metrics.iconMd,
+                size = Theme.metrics.iconSm,
                 color = Theme.colors.content04,
                 modifier = Modifier.padding(end = Theme.dimens.dp8),
             )
@@ -38,7 +38,7 @@ internal fun SettingsSearchBar(
                     onClick = { onQueryChange(TextFieldValue()) },
                     contentColor = Theme.colors.content04,
                 ) {
-                    DsIcon(icon = Icons.Outlined.Clear, size = Theme.metrics.iconMd)
+                    DsIcon(icon = Icons.Outlined.Clear, size = Theme.metrics.iconSm)
                 }
             }
         },

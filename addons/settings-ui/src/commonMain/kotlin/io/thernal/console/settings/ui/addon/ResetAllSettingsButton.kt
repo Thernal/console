@@ -43,8 +43,8 @@ internal fun ResetAllSettingsButton(onClick: () -> Unit) {
     ) {
         DsText(
             text = (if (isArmed) "Tap again to confirm" else "Reset all settings").highlight(),
-            style = Theme.typography.body01,
+            style = Theme.typography.body02,
         )
-        DsIcon(icon = Icons.Outlined.Delete, size = Theme.metrics.iconMd)
+        DsIcon(icon = Icons.Outlined.Delete, size = Theme.metrics.iconSm)
     }
 }
