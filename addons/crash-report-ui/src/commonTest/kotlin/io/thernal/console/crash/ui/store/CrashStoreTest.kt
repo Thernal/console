@@ -3,6 +3,7 @@ package io.thernal.console.crash.ui.store
 import io.thernal.console.core.log.BasicLog
 import io.thernal.console.core.log.Log
 import io.thernal.console.crash.CrashSessionSerializer
+import io.thernal.console.io.ConsoleFileSystem
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -19,15 +20,15 @@ class CrashStoreTest {
 
     @BeforeTest
     fun createDirectory() {
-        directoryPath = "${CrashFileSystem.temporaryDirectoryPath()}/crash-store-test-${Uuid.random()}"
+        directoryPath = "${ConsoleFileSystem.temporaryDirectoryPath()}/crash-store-test-${Uuid.random()}"
     }
 
     @AfterTest
     fun wipeDirectory() {
-        CrashFileSystem.listFileNames(directoryPath).forEach { name ->
-            CrashFileSystem.delete("$directoryPath/$name")
+        ConsoleFileSystem.listFileNames(directoryPath).forEach { name ->
+            ConsoleFileSystem.delete("$directoryPath/$name")
         }
-        CrashFileSystem.delete(directoryPath)
+        ConsoleFileSystem.delete(directoryPath)
     }
 
     @Test

@@ -13,7 +13,7 @@ import io.thernal.console.crash.ui.codec.NetworkRequestLogCodec
 import io.thernal.console.crash.ui.config.CrashBodyPolicy
 import io.thernal.console.crash.ui.config.CrashReportConfig
 import io.thernal.console.crash.ui.runtime.CrashReportRuntime
-import io.thernal.console.crash.ui.store.CrashFileSystem
+import io.thernal.console.io.ConsoleFileSystem
 import io.thernal.console.network.NetworkLog
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -36,17 +36,17 @@ class CrashStreamWriterTest {
     fun resetRuntime() {
         CrashReports.updateConfig { CrashReportConfig() }
         CrashReportRuntime.reset()
-        directoryPath = "${CrashFileSystem.temporaryDirectoryPath()}/crash-writer-test-${Uuid.random()}"
+        directoryPath = "${ConsoleFileSystem.temporaryDirectoryPath()}/crash-writer-test-${Uuid.random()}"
     }
 
     @AfterTest
     fun tearDown() {
         CrashReports.updateConfig { CrashReportConfig() }
         CrashReportRuntime.reset()
-        CrashFileSystem.listFileNames(directoryPath).forEach { name ->
-            CrashFileSystem.delete("$directoryPath/$name")
+        ConsoleFileSystem.listFileNames(directoryPath).forEach { name ->
+            ConsoleFileSystem.delete("$directoryPath/$name")
         }
-        CrashFileSystem.delete(directoryPath)
+        ConsoleFileSystem.delete(directoryPath)
     }
 
     @Test

@@ -12,11 +12,13 @@ import io.thernal.console.logging.ui.navigation.LogsTab
 import io.thernal.console.core.ConsoleInternalApi
 import io.thernal.console.runtime.console.Console
 import io.thernal.console.core.log.BasicLog
+import io.thernal.console.settings.SettingsRegistry
 
 internal object LoggingAddon : ConsoleAddon {
     override fun onInstall() {
         Console.addObserver(ConsoleLogObserver)
         LogRendererRegistry.register<BasicLog>(BasicLogRenderer())
+        SettingsRegistry.register(loggingSettingsSection())
     }
 
     override fun tab(): ConsoleTab = LogsTab

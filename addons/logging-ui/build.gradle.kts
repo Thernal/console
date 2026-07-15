@@ -9,6 +9,7 @@ kotlin {
             api(projects.consoleUi)
             implementation(projects.consoleRuntime)
             implementation(projects.designsystem.components)
+            implementation(projects.addons.settingsApi)
             // UI
             implementation(libs.compose.foundation)
             implementation(libs.compose.material.icons.extended)

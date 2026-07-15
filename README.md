@@ -428,6 +428,7 @@ Beyond tabs, `ConsoleAddon` also supports:
 | Artifact | Description |
 |----------|-------------|
 | `io.github.thernal:console-core:<version>` | Foundation — `Log`, `LogLevel`, `LogObserver`, `LogProcessor`, `ConsoleScope` (no UI, no pipeline) |
+| `io.github.thernal:console-io:<version>` | Shared file-system infrastructure — `ConsoleFileSystem`, `AppendSink` (no UI, no pipeline) |
 | `io.github.thernal:console-runtime:<version>` | `Console` singleton + log pipeline (depends on `console-core`) |
 | `io.github.thernal:console-api:<version>` | Addon contracts — `ConsoleAddon`, `ConsoleTab`, `LogRenderer`, `LogRendererRegistry` (depends on `console-core`, not runtime) |
 | `io.github.thernal:console-ui:<version>` | Compose UI shell — `ConsoleProvider`, navigation, overlay |
@@ -447,6 +448,9 @@ Beyond tabs, `ConsoleAddon` also supports:
 | `io.github.thernal:console-stepper-ui:<version>` | Pause-and-step log replay |
 | `io.github.thernal:console-crash-report-core:<version>` | Crash session serialization + `LogCodec` registry |
 | `io.github.thernal:console-crash-report-ui:<version>` | Crashes tab — streaming persistence, crash capture, session list/detail |
+| `io.github.thernal:console-settings-api:<version>` | Settings registration contract — `SettingsSection`, entry DSL, `SettingsRegistry` |
+| `io.github.thernal:console-settings-api-noop:<version>` | No-op stub for production builds |
+| `io.github.thernal:console-settings-ui:<version>` | Settings tab — persisted per-addon overrides, entry renderers, General section |
 
 ---
 

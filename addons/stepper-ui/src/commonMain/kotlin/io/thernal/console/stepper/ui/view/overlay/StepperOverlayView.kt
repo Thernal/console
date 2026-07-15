@@ -11,6 +11,7 @@ import io.thernal.console.stepper.ui.view.overlay.model.StepperOverlayViewModel
 @Composable
 internal fun StepperOverlayView() {
     val viewModel = viewModel { StepperOverlayViewModel() }
+    if (!viewModel.state.isVisible.value) return
 
     Box(Modifier.fillMaxSize()) {
         StepperOverlayContent(

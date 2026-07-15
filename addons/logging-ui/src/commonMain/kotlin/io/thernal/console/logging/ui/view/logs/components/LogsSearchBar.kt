@@ -12,8 +12,8 @@ import io.thernal.console.ui.core.select
 import io.thernal.console.logging.ui.view.logs.model.LogsIntent
 import io.thernal.console.logging.ui.view.logs.model.LogsState
 import io.thernal.console.designsystem.components.core.DsIcon
-import io.thernal.console.designsystem.components.core.DsIconButton
 import io.thernal.console.designsystem.components.core.DsTextField
+import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.components.provider.ThemeProvider
 import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.Theme
@@ -41,15 +41,14 @@ internal fun LogsSearchBar(
             AnimatedVisibility(
                 visible = state.searchQuery.select { it.text.isNotEmpty() }.value,
             ) {
-                DsIconButton(
-                    onClick = { dispatch(LogsIntent.SetQuery(TextFieldValue())) },
-                    contentColor = Theme.colors.content04,
-                ) {
-                    DsIcon(
-                        icon = Icons.Outlined.Clear,
-                        size = Theme.metrics.iconMd,
-                    )
-                }
+                DsIcon(
+                    icon = Icons.Outlined.Clear,
+                    size = Theme.metrics.iconMd,
+                    color = Theme.colors.content04,
+                    modifier = Modifier.pressable(
+                        onPress = { dispatch(LogsIntent.SetQuery(TextFieldValue())) },
+                    ),
+                )
             }
         },
     )

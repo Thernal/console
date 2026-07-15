@@ -75,6 +75,7 @@ include(":sample:ios")
 include(":sample:jvm")
 
 include(":console-core")
+include(":console-io")
 include(":console-runtime")
 include(":console-api")
 include(":console-ui")
