@@ -20,6 +20,7 @@ import io.thernal.console.settings.ui.store.SettingsStore
 import io.thernal.console.settings.ui.view.settings.components.SettingsEnumPickerRow
 import io.thernal.console.settings.ui.view.settings.components.SettingsIntFieldRow
 import io.thernal.console.settings.ui.view.settings.components.SettingsSearchBar
+import io.thernal.console.settings.ui.view.settings.components.SettingsSectionDivider
 import io.thernal.console.settings.ui.view.settings.components.SettingsSectionHeader
 import io.thernal.console.settings.ui.view.settings.components.SettingsTagsEditorRow
 import io.thernal.console.settings.ui.view.settings.components.SettingsToggleRow
@@ -79,6 +80,7 @@ private fun <C : Any> LazyListScope.entriesSection(
             EntryRow(section = section, entry = entry)
         }
     }
+    item(key = "${section.id}.divider") { SettingsSectionDivider() }
 }
 
 private fun LazyListScope.customSection(
@@ -92,6 +94,7 @@ private fun LazyListScope.customSection(
 
     item(key = section.id) { SettingsSectionHeader(title = section.title) }
     section.content(this)
+    item(key = "${section.id}.divider") { SettingsSectionDivider() }
 }
 
 @Composable
