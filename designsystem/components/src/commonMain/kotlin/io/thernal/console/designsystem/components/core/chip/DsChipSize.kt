@@ -16,8 +16,8 @@ enum class DsChipSize {
             )
 
             Medium -> PaddingValues(
-                horizontal = Theme.dimens.dp14,
-                vertical = Theme.dimens.dp8,
+                horizontal = Theme.dimens.dp12,
+                vertical = Theme.dimens.dp6,
             )
         }
     }

@@ -25,7 +25,7 @@ internal fun SettingsToggleRow(
         modifier = Modifier
             .fillMaxWidth()
             .alpha(if (enabled) 1f else DISABLED_ALPHA)
-            .padding(horizontal = Theme.dimens.dp16, vertical = Theme.dimens.dp12),
+            .padding(horizontal = Theme.dimens.dp16, vertical = Theme.dimens.dp8),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {

@@ -31,11 +31,14 @@ internal fun <E : Enum<E>> SettingsEnumPickerRow(
         modifier = Modifier
             .fillMaxWidth()
             .alpha(if (enabled) 1f else DISABLED_ALPHA)
-            .padding(horizontal = Theme.dimens.dp16, vertical = Theme.dimens.dp12),
+            .padding(horizontal = Theme.dimens.dp16, vertical = Theme.dimens.dp8),
         verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
     ) {
         SettingsRowLabel(title = title, description = description)
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8)) {
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
+            verticalArrangement = Arrangement.spacedBy(Theme.dimens.dp8),
+        ) {
             if (noneLabel != null) {
                 DsChip(
                     label = noneLabel,

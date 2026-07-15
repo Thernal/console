@@ -6,13 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.thernal.console.designsystem.components.core.DsText
 import io.thernal.console.designsystem.foundation.theme.Theme
-import io.thernal.console.ui.common.highlight
 
 @Composable
 internal fun SettingsSectionHeader(title: String) {
     DsText(
-        text = title.highlight(),
-        style = Theme.typography.title02,
+        text = title,
+        style = Theme.typography.title01,
         color = Theme.colors.content02,
         modifier = Modifier
             .fillMaxWidth()

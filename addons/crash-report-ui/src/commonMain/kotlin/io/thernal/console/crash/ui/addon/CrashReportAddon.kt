@@ -19,6 +19,7 @@ import io.thernal.console.crash.ui.session.TerminationState
 import io.thernal.console.crash.ui.writer.CrashStreamWriter
 import io.thernal.console.network.NetworkLog
 import io.thernal.console.runtime.console.Console
+import io.thernal.console.settings.SettingsRegistry
 import kotlin.concurrent.Volatile
 
 object CrashReportAddon : ConsoleAddon {
@@ -37,6 +38,7 @@ object CrashReportAddon : ConsoleAddon {
         registerNetworkCodecs()
         installCrashHandler(CrashCapture::onUncaught)
         installLifecycleTracking(::onLifecycleStateChanged)
+        SettingsRegistry.register(crashReportSettingsSection())
     }
 
     override fun tab(): ConsoleTab = CrashReportTab

@@ -22,7 +22,7 @@ internal fun SettingsRowLabel(
     ) {
         DsText(
             text = title.highlight(),
-            style = Theme.typography.body01,
+            style = Theme.typography.body02,
             color = Theme.colors.content01,
         )
         if (description != null) {

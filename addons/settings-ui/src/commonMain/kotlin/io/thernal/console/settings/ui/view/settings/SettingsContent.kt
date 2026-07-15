@@ -65,8 +65,11 @@ private fun <C : Any> LazyListScope.entriesSection(
     section: SettingsSection.Entries<C>,
     query: String,
 ) {
-    val hits = section.entries.filter { entry ->
-        query.isBlank() || entry.title.contains(query, ignoreCase = true)
+    val sectionMatches = query.isBlank() || section.title.contains(query, ignoreCase = true)
+    val hits = if (sectionMatches) {
+        section.entries
+    } else {
+        section.entries.filter { entry -> entry.title.contains(query, ignoreCase = true) }
     }
     if (hits.isEmpty()) return
 
