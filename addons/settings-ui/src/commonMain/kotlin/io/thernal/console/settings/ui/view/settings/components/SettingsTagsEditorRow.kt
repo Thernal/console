@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import io.thernal.console.designsystem.components.core.DsIcon
 import io.thernal.console.designsystem.components.core.DsTextField
 import io.thernal.console.designsystem.components.core.chip.DsChip
+import io.thernal.console.designsystem.components.core.chip.DsChipSize
 import io.thernal.console.designsystem.components.modifier.pressable
 import io.thernal.console.designsystem.foundation.theme.Theme
 
@@ -101,6 +102,7 @@ internal fun SettingsTagsEditorRow(
                     DsChip(
                         label = tag,
                         selected = true,
+                        size = DsChipSize.Small,
                         modifier = Modifier.pressable(
                             enabled = enabled.value,
                             onPress = { onTagsChange(tagsValue - tag) },
