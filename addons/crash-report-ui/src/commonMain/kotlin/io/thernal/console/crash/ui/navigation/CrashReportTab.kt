@@ -11,6 +11,7 @@ import io.thernal.console.crash.ui.view.sessions.components.CrashSessionsActions
 internal object CrashReportTab : ConsoleTab {
     override val title: String = "Crashes"
     override val icon: ImageVector = Icons.Outlined.ReportProblem
+    override val order = 30
 
     @Composable
     override fun Content() {

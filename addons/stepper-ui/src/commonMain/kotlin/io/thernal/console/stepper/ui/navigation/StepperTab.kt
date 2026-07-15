@@ -11,6 +11,7 @@ import io.thernal.console.stepper.ui.view.caught.components.StepperCaughtActions
 internal object StepperTab : ConsoleTab {
     override val title: String = "Stepper"
     override val icon: ImageVector = Icons.Outlined.BugReport
+    override val order = 10
 
     @Composable
     override fun Content() {
