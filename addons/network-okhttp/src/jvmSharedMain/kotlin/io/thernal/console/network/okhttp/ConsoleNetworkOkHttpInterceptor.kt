@@ -1,5 +1,6 @@
 package io.thernal.console.network.okhttp
 
+import io.thernal.console.network.NetworkConfig
 import io.thernal.console.network.NetworkLog
 import io.thernal.console.network.SensitiveHeaders
 import io.thernal.console.network.toNetworkLevel
@@ -16,8 +17,18 @@ import kotlin.uuid.Uuid
 @OptIn(ExperimentalUuidApi::class)
 class ConsoleNetworkOkHttpInterceptor(
     private val maxBodyBytes: Long = MAX_BODY_BYTES,
-    private val sensitiveHeaders: SensitiveHeaders = SensitiveHeaders.DEFAULT,
+    sensitiveHeaders: SensitiveHeaders = SensitiveHeaders.DEFAULT,
 ) : Interceptor {
+
+    init {
+        // Seeds NetworkConfig once at construction time, the same "programmatic init" layer every
+        // other addon's own config already has — toLogMap() below always reads NetworkConfig live,
+        // so a change made through the settings UI takes effect on the next request without
+        // reconstructing this interceptor.
+        if (sensitiveHeaders != SensitiveHeaders.DEFAULT) {
+            NetworkConfig.updateConfig { copy(sensitiveHeaders = sensitiveHeaders.names) }
+        }
+    }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -87,11 +98,14 @@ class ConsoleNetworkOkHttpInterceptor(
         }.getOrNull()
     }
 
-    private fun Headers.toLogMap(): Map<String, String> = names().associateWith { name ->
-        if (sensitiveHeaders.shouldMask(name)) {
-            sensitiveHeaders.mask
-        } else {
-            values(name).joinToString(", ")
+    private fun Headers.toLogMap(): Map<String, String> {
+        val sensitiveHeaders = SensitiveHeaders(names = NetworkConfig.config.value.sensitiveHeaders)
+        return names().associateWith { name ->
+            if (sensitiveHeaders.shouldMask(name)) {
+                sensitiveHeaders.mask
+            } else {
+                values(name).joinToString(", ")
+            }
         }
     }
 

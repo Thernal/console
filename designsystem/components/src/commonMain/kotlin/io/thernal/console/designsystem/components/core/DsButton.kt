@@ -45,7 +45,7 @@ fun DsButton(
             .background(color = color.copy(alpha = Opacity.S12), shape = shape)
             .border(width = Theme.metrics.borderWidth, color = color.copy(alpha = Opacity.S35), shape = shape)
             .pressable(onPress = onClick, enabled = enabled)
-            .padding(horizontal = Theme.dimens.dp12, vertical = Theme.dimens.dp8),
+            .padding(horizontal = Theme.dimens.dp16, vertical = Theme.dimens.dp12),
         horizontalArrangement = horizontalArrangement,
         verticalAlignment = Alignment.CenterVertically,
     ) {

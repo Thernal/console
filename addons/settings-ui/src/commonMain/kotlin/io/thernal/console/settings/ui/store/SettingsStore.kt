@@ -78,17 +78,31 @@ internal object SettingsStore {
         writeKeyValues(section.id, next)
     }
 
-    /** Deletes every persisted override file; in-session values stay until the next launch. */
+    /**
+     * Deletes every persisted override file and resets every registered section's runtime config
+     * back to its [SettingsSection.Entries.default] — through the same [SettingsSection.Entries
+     * .update] the individual entry rows already call, so the Settings UI's `collectAsState()`
+     * on each section's `config` picks up the reset immediately.
+     */
     fun clearAll() {
         writeScope.launch { clearAllNow() }
     }
 
     /** The synchronous core of [clearAll], exposed for deterministic tests. */
-    internal fun clearAllNow() {
+    internal fun clearAllNow(sections: List<SettingsSection.Entries<*>> = registeredEntrySections()) {
         val directory = baseDirectoryPath() ?: return
         ConsoleFileSystem.listFileNames(directory).forEach { name ->
             ConsoleFileSystem.delete("$directory/$name")
         }
+        sections.forEach { section -> resetToDefault(section) }
+    }
+
+    private fun registeredEntrySections(): List<SettingsSection.Entries<*>> {
+        return SettingsRegistry.sections.value.filterIsInstance<SettingsSection.Entries<*>>()
+    }
+
+    private fun <C : Any> resetToDefault(section: SettingsSection.Entries<C>) {
+        section.update { section.default }
     }
 
     private fun readKeyValues(sectionId: String): Map<String, String>? {

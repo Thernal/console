@@ -15,7 +15,9 @@ sealed interface SettingsSection {
 
     /**
      * Standard path: typed entries bound to an addon facade's `StateFlow` [config], rendered and
-     * persisted centrally with no addon-written UI code — see [SettingsEntry].
+     * persisted centrally with no addon-written UI code — see [SettingsEntry]. [default] is
+     * [config]'s value at registration time (before any persisted override is applied), used to
+     * reset the section's runtime config back to its code default.
      */
     class Entries<C : Any> internal constructor(
         override val id: String,
@@ -24,6 +26,7 @@ sealed interface SettingsSection {
         val config: StateFlow<C>,
         val update: (C.() -> C) -> Unit,
         val entries: List<SettingsEntry<C, *>>,
+        val default: C,
     ) : SettingsSection
 
     /**

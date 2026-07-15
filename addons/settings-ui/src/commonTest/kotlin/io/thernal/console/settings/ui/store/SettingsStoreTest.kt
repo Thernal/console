@@ -92,6 +92,18 @@ class SettingsStoreTest {
     }
 
     @Test
+    fun `clearAllNow resets a passed section's live config back to its default`() {
+        val config = MutableStateFlow(FakeConfig())
+        val section = section(config)
+        SettingsStore.writeOverride(section, entry(section), true)
+        config.value = FakeConfig(enabled = true, maxCount = 42) // simulate user edits in-session
+
+        SettingsStore.clearAllNow(sections = listOf(section))
+
+        assertEquals(FakeConfig(), config.value)
+    }
+
+    @Test
     fun `applyOverrides restores a persisted value over the code default`() {
         val config = MutableStateFlow(FakeConfig())
         val section = section(config)

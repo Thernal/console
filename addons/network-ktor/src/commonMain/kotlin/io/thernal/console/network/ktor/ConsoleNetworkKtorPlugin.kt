@@ -10,6 +10,7 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.Headers
 import io.ktor.http.content.OutgoingContent
 import io.ktor.http.content.TextContent
+import io.thernal.console.network.NetworkConfig
 import io.thernal.console.network.NetworkLog
 import io.thernal.console.network.SensitiveHeaders
 import io.thernal.console.network.toNetworkLevel
@@ -19,11 +20,17 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 val ConsoleNetworkKtorPlugin = createClientPlugin("ConsoleNetwork", ::ConsoleNetworkKtorConfig) {
-    val sensitiveHeaders = pluginConfig.sensitiveHeaders
+    // Seeds NetworkConfig once at plugin-install time, the same "programmatic init" layer every
+    // other addon's own config already has — capture below always reads NetworkConfig live, so a
+    // change made through the settings UI takes effect on the next request without a restart.
+    if (pluginConfig.sensitiveHeaders != SensitiveHeaders.DEFAULT) {
+        NetworkConfig.updateConfig { copy(sensitiveHeaders = pluginConfig.sensitiveHeaders.names) }
+    }
     on(Send) { request ->
         val startedAt = kotlin.time.TimeSource.Monotonic.markNow()
         val method = request.method.value
         val url = request.url.buildString()
+        val sensitiveHeaders = SensitiveHeaders(names = NetworkConfig.config.value.sensitiveHeaders)
         val requestHeaders = request.headers.build().toHeaderMap(sensitiveHeaders)
         val requestBody = request.body.toLogBody()
         val groupId = Uuid.random().toString()
