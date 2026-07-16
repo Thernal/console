@@ -80,6 +80,8 @@ include(":console-runtime")
 include(":console-api")
 include(":console-ui")
 include(":console-ui-noop")
+include(":console-bundle-core")
+include(":console-bundle-ui")
 include(":designsystem:foundation")
 include(":designsystem:components")
 
