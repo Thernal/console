@@ -52,6 +52,17 @@ plugins {
 ```kotlin
 // build.gradle.kts
 dependencies {
+    debugImplementation("io.github.thernal:console-bundle-ui:<version>")
+    releaseImplementation("io.github.thernal:console-ui-noop:<version>")
+}
+```
+
+`console-bundle-ui` brings in every console module and addon at once. Prefer
+hand-picking? Depend on the individual artifacts instead (see
+[Modules](#modules)):
+
+```kotlin
+dependencies {
     debugImplementation("io.github.thernal:console-ui:<version>")
     debugImplementation("io.github.thernal:console-logging-ui:<version>")
     releaseImplementation("io.github.thernal:console-ui-noop:<version>")
@@ -422,6 +433,18 @@ Beyond tabs, `ConsoleAddon` also supports:
 ---
 
 ## Modules
+
+### Bundles
+
+One-dependency aggregators. Both exclude the design system (add
+`console-components` yourself if you want the `Ds*` primitives) and the HTTP
+interceptors (add the `console-network-ktor` / `console-network-okhttp` module
+matching your client).
+
+| Artifact | Description |
+|----------|-------------|
+| `io.github.thernal:console-bundle-core:<version>` | Everything a plain JVM/domain module can depend on — `console-core`/`io`/`runtime` + every addon `-core` module (no Compose) |
+| `io.github.thernal:console-bundle-ui:<version>` | The full console — `console-bundle-core` + the UI shell and every addon |
 
 ### Core
 
