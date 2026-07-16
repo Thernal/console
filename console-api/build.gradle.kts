@@ -7,7 +7,6 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.consoleCore)
-            api(projects.designsystem.components)
             api(libs.compose.ui)
             api(libs.compose.foundation)
             api(libs.jetbrains.navigation3.ui)
