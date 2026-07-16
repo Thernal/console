@@ -12,5 +12,8 @@ kotlin {
             api(libs.compose.foundation)
             api(libs.jetbrains.navigation3.ui)
         }
+        androidMain.dependencies {
+            implementation(projects.consoleIo)
+        }
     }
 }
