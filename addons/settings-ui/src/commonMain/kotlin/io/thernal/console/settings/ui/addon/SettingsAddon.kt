@@ -14,6 +14,7 @@ object SettingsAddon : ConsoleAddon {
 
     override fun onInstall() {
         SettingsStore.install()
+        SettingsRegistry.register(dockSettingsSection())
         SettingsRegistry.register(generalSection())
     }
 
