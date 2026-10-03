@@ -2,13 +2,12 @@
 
 package io.thernal.console.stepper.ui.addon
 
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.runtime.Composable
 import io.thernal.console.stepper.ui.stepper.Stepper
-import io.thernal.console.stepper.ui.view.overlay.StepperOverlayView
+import io.thernal.console.stepper.ui.dock.StepperDockWidget
 import io.thernal.console.core.ConsoleInternalApi
 import io.thernal.console.runtime.console.Console
 import io.thernal.console.api.addon.ConsoleAddon
+import io.thernal.console.api.addon.ConsoleDockWidget
 import io.thernal.console.api.addon.ConsoleNavGraph
 import io.thernal.console.api.addon.ConsoleTab
 import io.thernal.console.stepper.ui.navigation.StepperNavGraph
@@ -23,5 +22,5 @@ object StepperAddon : ConsoleAddon {
 
     override fun tab(): ConsoleTab = StepperTab
     override fun navGraph(): ConsoleNavGraph = StepperNavGraph
-    override fun overlay(): @Composable BoxScope.() -> Unit = { StepperOverlayView() }
+    override fun dockWidget(): ConsoleDockWidget = StepperDockWidget
 }

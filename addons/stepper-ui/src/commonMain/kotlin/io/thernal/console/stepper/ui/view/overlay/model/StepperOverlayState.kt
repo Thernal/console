@@ -1,24 +1,18 @@
 package io.thernal.console.stepper.ui.view.overlay.model
 
 import androidx.compose.runtime.Stable
-import androidx.compose.ui.unit.IntSize
 import io.thernal.console.ui.core.ViewState
 import io.thernal.console.ui.core.derive
 import io.thernal.console.core.log.Log
 
 @Stable
 class StepperOverlayState : ViewState() {
-    val isVisible = field(true)
     val isEnabled = field(false)
     val isPaused = field(false)
     val pendingLogs = field(0)
     val blockedLogId = field<String?>(null)
     val blockedTag = field<String?>(null)
     val steppedEvents = field(emptyList<Log>())
-    val isExpanded = field(false)
-    val offsetX = field(0f)
-    val offsetY = field(0f)
-    val cardSize = field(IntSize.Zero)
 
     val currentLog = steppedEvents.derive { currentEvents ->
         currentEvents.lastOrNull()
@@ -47,15 +41,6 @@ class StepperOverlayState : ViewState() {
             isPaused.value && pendingLogs.value == 0 -> "Idle"
             isPaused.value -> "Running · ${pendingLogs.value} queued"
             else -> "Running"
-        }
-    }
-
-    val statusTone = isEnabled.derive { isStepperEnabled ->
-        when {
-            !isStepperEnabled -> StepperStatusTone.Disabled
-            isPaused.value && canStep.value -> StepperStatusTone.Paused
-            isPaused.value -> StepperStatusTone.Idle
-            else -> StepperStatusTone.Running
         }
     }
 }

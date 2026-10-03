@@ -44,10 +44,9 @@ object Stepper : LogObserver, IntentHandler<StepperIntent> {
     fun updateConfig(config: Config) {
         val normalized = config.copy(
             maxSteppedEventCount = config.maxSteppedEventCount.coerceAtLeast(0),
-            // A paused pipeline must always have a visible resume affordance (the floating
-            // overlay) — enforced here too, not just via enabledWhen in the settings UI, so a
-            // programmatic write can't leave the stepper paused with no way to step through it.
-            paused = config.paused && config.enabled && config.overlayVisible,
+            // A paused pipeline must always have a visible resume affordance. The dock keeps the
+            // stepper widget on screen while it is paused, whatever the dock-wide visibility says.
+            paused = config.paused && config.enabled,
         )
         _config.value = normalized
         _state.update { current ->
@@ -152,6 +151,7 @@ object Stepper : LogObserver, IntentHandler<StepperIntent> {
 
     data class Config(
         val enabled: Boolean = false,
+        @Deprecated("Visibility is controlled for every dock widget in the dock settings; this value is ignored")
         val overlayVisible: Boolean = true,
         val paused: Boolean = false,
         val pauseOnMatch: Boolean = false,

@@ -36,14 +36,6 @@ private fun SettingsEntriesScope<Stepper.Config>.visibilityEntries() {
         read = { it.enabled },
         write = { copy(enabled = it) },
     )
-    toggle(
-        key = "overlayVisible",
-        title = "Show floating overlay",
-        description = "Hides the floating indicator without disabling capture or pausing",
-        enabledWhen = { it.enabled },
-        read = { it.overlayVisible },
-        write = { copy(overlayVisible = it) },
-    )
 }
 
 private fun SettingsEntriesScope<Stepper.Config>.pauseEntries() {
@@ -51,7 +43,7 @@ private fun SettingsEntriesScope<Stepper.Config>.pauseEntries() {
         key = "paused",
         title = "Pause",
         description = "Hold logs until you step through them",
-        enabledWhen = { it.enabled && it.overlayVisible },
+        enabledWhen = { it.enabled },
         read = { it.paused },
         write = { copy(paused = it) },
     )
