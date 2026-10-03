@@ -62,6 +62,9 @@ addons/                 # Optional feature modules
   details-core-noop/    # No-op stub for production
   details-ui/           # Details addon Compose UI
   stepper-ui/           # Stepper addon
+  inspector-core/       # UI inspector config and API
+  inspector-core-noop/  # No-op stub for production
+  inspector-ui/         # UI inspector engine, tab, overlay, settings
   network-core/         # Network log type
   network-okhttp/       # OkHttp interceptor
   network-ktor/         # Ktor plugin

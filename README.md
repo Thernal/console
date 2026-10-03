@@ -28,6 +28,7 @@ Drop it in, swipe to open, and inspect logs, HTTP traffic, and session state —
 | 🌐 **Network inspector** | OkHttp + Ktor interceptors with headers, body, duration, status |
 | 🗂️ **Details panel** | Live key/value sidebar for session info, flags, build metadata |
 | ⏸️ **Stepper** | Pause log processing and replay events one-by-one |
+| 🔬 **UI inspector** | Composable tree, bounds, recomposition counts, heatmap, quick controls, font and RTL overrides |
 | 🖥️ **Custom tabs** | Add your own full screens to the Console navigation bar |
 | 👆 **Custom triggers** | Swap the default swipe for any gesture — double-tap, shake, etc. |
 | 🚫 **Zero prod cost** | Noop stubs with identical APIs — no UI, no overhead in release builds |
@@ -366,7 +367,7 @@ dependencies {
 }
 ```
 
-No code required. Once the module is on the classpath, the stepper control appears automatically as a floating overlay inside the console. Tap **Pause** to freeze the pipeline, **Step** to advance one event at a time, and **Resume** to return to live mode.
+No code required. Once the module is on the classpath, the stepper control appears automatically in the floating dock. Tap **Pause** to freeze the pipeline, **Step** to advance one event at a time, and **Resume** to return to live mode. While the pipeline is paused the widget stays on screen even if floating widgets are hidden.
 
 <!-- 📸 SCREENSHOT: Console with the Stepper overlay visible — showing the Pause / Step / Resume floating controls over the log list. Ideally captured with the pipeline paused and a queued-events badge showing a count. -->
 
@@ -423,10 +424,62 @@ object MetricsAddon : ConsoleAddon {
 MetricsAddon.install()
 ```
 
+## Floating dock and overlays
+
+Interactive floating controls live in one shared **dock**: a compact, opaque container that owns position and
+stacking, so addons never fight over screen corners. Resting, it is one round button that snaps to a screen edge.
+Tapping it opens a card with a tab per widget (sorted by title, so no addon looks more important than another); the
+selected widget's live summary and controls fill the card, and switching tabs slides between them. The card is the
+only place controls live, so each control is always under the addon it belongs to. The button shows a dot while a
+widget is running. When a widget needs the user (an inspect pick, a paused stepper) the border turns amber, and
+when the dock is folded it grows a pill with just that widget's quick actions. The dock never folds by itself, so you
+can toggle several controls in a row, and it cannot be hidden while a widget needs attention.
+
+Add a widget from your addon:
+
+```kotlin
+object MetricsWidget : ConsoleDockWidget {
+    override val id = "metrics"
+    override val title = "Metrics"
+    override val icon = Icons.Default.BarChart
+
+    @Composable override fun status() = ConsoleDockStatus.Idle   // Active shows a dot, Attention grows a pill, pins it
+    @Composable override fun summary(): String? = "3 tracked"    // live line under the title
+    @Composable override fun QuickAction() { /* what to do right now, beside the folded dock; only shown while status is Attention */ }
+    @Composable override fun Panel() {
+        DsChipGroup(title = "Metrics") {
+            DsActionChip(label = "Chart", icon = Icons.Default.BarChart, onClick = { /* ... */ })
+        }
+    }
+}
+
+object MetricsAddon : ConsoleAddon {
+    override fun dockWidget(): ConsoleDockWidget = MetricsWidget
+}
+```
+
+Full-screen decoration goes through layered overlays instead, ordered and hidden together with the widget they name:
+
+```kotlin
+override fun overlays() = listOf(
+    ConsoleOverlay(layer = ConsoleOverlayLayer.Backdrop, widgetId = "metrics") { /* draws, no touches */ },
+    ConsoleOverlay(layer = ConsoleOverlayLayer.Capture, widgetId = "metrics") { /* may take over touches */ },
+)
+```
+
+Stacking, bottom to top: app, `Backdrop`, `Capture`, legacy `overlay()`, the dock, the console itself.
+
+Build the panel from the design system's `DsChipGroup` and `DsActionChip` (a labelled wrap of icon-only buttons, tinted
+when on) and the quick action from `DsQuickAction`.
+
+**Hiding:** Settings → *Floating widgets* has a switch that hides every widget and overlay, and a list of widget ids
+to hide individually. Widgets that need attention (a paused stepper, an active inspector pick) stay visible. The same
+config is available in code: `ConsoleDock.updateConfig { copy(isVisible = false) }`.
+
 Beyond tabs, `ConsoleAddon` also supports:
 
 - **`navGraph()`** — register a full navigation sub-graph behind your tab
-- **`overlay()`** — inject a floating composable on top of the console UI
+- **`overlay()`** — inject a free-form composable over the app (prefer `dockWidget()` and `overlays()` above)
 
 <!-- 📸 SCREENSHOT: Console open showing the bottom navigation bar with a custom tab selected (e.g. "Metrics" with a bar-chart icon) alongside the default Logs tab. The custom tab's content screen is visible. -->
 
@@ -469,6 +522,9 @@ matching your client).
 | `io.github.thernal:console-network-ktor:<version>` | Ktor plugin |
 | `io.github.thernal:console-network-ui:<version>` | Network log UI renderer |
 | `io.github.thernal:console-stepper-ui:<version>` | Pause-and-step log replay |
+| `io.github.thernal:console-inspector-core:<version>` | UI inspector config and facade |
+| `io.github.thernal:console-inspector-core-noop:<version>` | No-op stub for production builds |
+| `io.github.thernal:console-inspector-ui:<version>` | UI inspector — tree, overlay, recomposition tracking, display overrides |
 | `io.github.thernal:console-crash-report-core:<version>` | Crash session serialization + `LogCodec` registry |
 | `io.github.thernal:console-crash-report-ui:<version>` | Crashes tab — streaming persistence, crash capture, session list/detail |
 | `io.github.thernal:console-settings-api:<version>` | Settings registration contract — `SettingsSection`, entry DSL, `SettingsRegistry` |
