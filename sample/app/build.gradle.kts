@@ -18,6 +18,7 @@ kotlin {
             implementation(projects.consoleUi)
             implementation(projects.addons.loggingUi)
             implementation(projects.addons.detailsUi)
+            implementation(projects.addons.inspectorUi)
             implementation(projects.addons.stepperUi)
             implementation(projects.addons.networkKtor)
             implementation(projects.addons.networkUi)

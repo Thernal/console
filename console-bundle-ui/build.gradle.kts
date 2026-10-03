@@ -16,6 +16,7 @@ kotlin {
             api(projects.consoleUi)
             api(projects.addons.crashReportUi)
             api(projects.addons.detailsUi)
+            api(projects.addons.inspectorUi)
             api(projects.addons.loggingUi)
             api(projects.addons.networkUi)
             api(projects.addons.settingsApi)
