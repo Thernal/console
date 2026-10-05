@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.InternalComposeApi
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.getValue
@@ -22,6 +23,9 @@ import io.thernal.console.inspector.ui.engine.InspectorEngine
 /**
  * Wraps the host app content. Keeps its structure stable whatever the config says, so toggling
  * settings never resets app state: only the provided values change.
+ *
+ * The tree builder finds the app content by this function's name (`HOST_NAME` in `TreeBuilder.kt`),
+ * so keep the two in sync when renaming it.
  */
 @Composable
 internal fun InspectorHost(content: @Composable () -> Unit) {
@@ -29,7 +33,8 @@ internal fun InspectorHost(content: @Composable () -> Unit) {
     val baseDensity = LocalDensity.current
     val baseDirection = LocalLayoutDirection.current
 
-    InspectorEngine.rootData = currentComposer.compositionData
+    val compositionData = currentComposer.compositionData
+    SideEffect { InspectorEngine.rootData = compositionData }
     LaunchedEffect(Unit) { InspectorEngine.run() }
 
     val density = remember(baseDensity, config.fontScale) {

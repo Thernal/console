@@ -5,14 +5,20 @@ import io.thernal.console.inspector.InspectorConfig
 import io.thernal.console.inspector.InspectorFontScale
 import io.thernal.console.inspector.InspectorLayoutDirection
 import io.thernal.console.settings.SettingsEntriesScope
+import io.thernal.console.settings.SettingsRegistry
 import io.thernal.console.settings.SettingsSection
 import io.thernal.console.settings.settingsEntries
 
+/**
+ * Registered directly against [SettingsRegistry] rather than through a `ConsoleAddon.settings()`
+ * hook — same reasoning as `CrashReportAddon`/`NetworkAddon`/`StepperAddon`: keeps `console-api`
+ * free of a `settings-api` dependency edge.
+ */
 internal fun inspectorSettingsSection(): SettingsSection {
     return settingsEntries(
         id = "inspector",
-        title = "UI Inspector",
-        order = 40,
+        title = "Inspector",
+        order = 50,
         config = ConsoleInspector.config,
         update = ConsoleInspector::updateConfig,
     ) {
@@ -79,8 +85,8 @@ private fun SettingsEntriesScope<InspectorConfig>.recompositionEntries() {
     int(
         key = "heatmapThreshold",
         title = "Heatmap threshold",
-        min = 1,
-        max = HEATMAP_THRESHOLD_MAX,
+        min = InspectorConfig.MIN_HEATMAP_THRESHOLD,
+        max = InspectorConfig.MAX_HEATMAP_THRESHOLD,
         description = "Recomposition count that counts as fully hot",
         enabledWhen = { it.enabled && it.trackRecompositions && it.showHeatmap },
         read = { it.heatmapThreshold },
@@ -169,5 +175,3 @@ private fun SettingsEntriesScope<InspectorConfig>.environmentEntries() {
         write = { copy(layoutDirection = it) },
     )
 }
-
-private const val HEATMAP_THRESHOLD_MAX = 1_000

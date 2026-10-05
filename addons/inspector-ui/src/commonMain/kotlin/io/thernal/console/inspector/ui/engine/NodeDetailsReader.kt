@@ -5,7 +5,11 @@ package io.thernal.console.inspector.ui.engine
 import androidx.compose.runtime.tooling.ComposeToolingApi
 import androidx.compose.runtime.tooling.parseSourceInformation
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.LayoutInfo
 import androidx.compose.ui.platform.InspectableValue
+import io.thernal.console.inspector.ui.engine.geometry.readNodePadding
+import io.thernal.console.inspector.ui.engine.tree.InspectorNode
+import io.thernal.console.inspector.ui.engine.tree.InspectorSnapshot
 import kotlin.math.roundToInt
 
 /** Builds [NodeDetails] for a node of a fresh snapshot. */
@@ -50,7 +54,7 @@ internal object NodeDetailsReader {
         )
     }
 
-    private fun readModifiers(layout: androidx.compose.ui.layout.LayoutInfo): List<String> =
+    private fun readModifiers(layout: LayoutInfo): List<String> =
         runCatching { layout.getModifierInfo() }.getOrDefault(emptyList()).take(MAX_MODIFIERS).map { info ->
             val modifier = info.modifier
             val inspectable = modifier as? InspectableValue

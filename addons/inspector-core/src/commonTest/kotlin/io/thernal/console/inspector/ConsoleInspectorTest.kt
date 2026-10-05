@@ -29,8 +29,15 @@ class ConsoleInspectorTest {
     fun `updateConfig keeps the heatmap threshold positive and auto refresh in range`() {
         ConsoleInspector.updateConfig { copy(heatmapThreshold = -5, autoRefreshSeconds = 999) }
 
-        assertEquals(1, ConsoleInspector.config.value.heatmapThreshold)
+        assertEquals(InspectorConfig.MIN_HEATMAP_THRESHOLD, ConsoleInspector.config.value.heatmapThreshold)
         assertEquals(InspectorConfig.MAX_AUTO_REFRESH_SECONDS, ConsoleInspector.config.value.autoRefreshSeconds)
+    }
+
+    @Test
+    fun `updateConfig caps the heatmap threshold`() {
+        ConsoleInspector.updateConfig { copy(heatmapThreshold = Int.MAX_VALUE) }
+
+        assertEquals(InspectorConfig.MAX_HEATMAP_THRESHOLD, ConsoleInspector.config.value.heatmapThreshold)
     }
 
     @Test

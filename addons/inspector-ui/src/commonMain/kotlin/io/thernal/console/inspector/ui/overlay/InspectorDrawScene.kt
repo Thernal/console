@@ -2,8 +2,8 @@ package io.thernal.console.inspector.ui.overlay
 
 import androidx.compose.ui.geometry.Rect
 import io.thernal.console.inspector.InspectorConfig
-import io.thernal.console.inspector.ui.engine.InspectorNode
-import io.thernal.console.inspector.ui.engine.InspectorSnapshot
+import io.thernal.console.inspector.ui.engine.tree.InspectorNode
+import io.thernal.console.inspector.ui.engine.tree.InspectorSnapshot
 
 /** Everything the draw layer needs for one frame, resolved outside the draw lambda. */
 internal class InspectorDrawScene(

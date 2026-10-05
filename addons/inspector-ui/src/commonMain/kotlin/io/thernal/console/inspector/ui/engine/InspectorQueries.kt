@@ -1,5 +1,9 @@
 package io.thernal.console.inspector.ui.engine
 
+import io.thernal.console.inspector.ui.engine.recomposition.RecompositionEntry
+import io.thernal.console.inspector.ui.engine.recomposition.canReadSkips
+import io.thernal.console.inspector.ui.engine.tree.InspectorNode
+
 /** Read-only views over the engine's current state. */
 internal object InspectorQueries {
     fun selectedNode(): InspectorNode? {

@@ -65,7 +65,7 @@ implementation("io.github.thernal:console-inspector-core-noop:<version>")
 ```
 
 No code required: the **Inspector** tab appears and the overlay is installed automatically.
-On JVM desktop, call `enableInspectorSourceInformation()` before creating the window, otherwise
+On JVM desktop, call `enableInspectorSourceInformation()` (`io.thernal.console.inspector.ui`) before creating the window, otherwise
 composable names are missing for the root composition.
 
 - **Framework components:** tapping picks the smallest component under the finger, `Text`, `Icon` and `Box` included, so
@@ -80,7 +80,7 @@ composable names are missing for the root composition.
   parameters, recomposition count and last reason), *Recompositions* (ranking and composition timing).
   Actions: inspect, freeze, refresh, copy the tree, reset statistics.
 - **Quick controls:** the inspector is in the floating dock as a tab by default; turn off *Show quick controls* in Settings to remove it.
-  Its controls are icon-only buttons (long press shows the name) grouped as *Actions* (inspect, freeze, tree), *Overlay* (bounds, labels, counters, heatmap, flash on recomposition,
+  Its controls are icon-only buttons (long press shows the name) grouped as *Actions* (inspect, measure, freeze, tree), *Overlay* (bounds, labels, counters, heatmap, flash on recomposition,
   reset) and *Environment* (font scale, RTL). While you pick, the dock turns amber; fold it and it becomes a pill with **Details** and
   **Exit**, which stays on screen even when floating widgets are hidden. The dock never folds by itself.
 - **Recomposition counts:** a scope's first pass is its initial composition and is not counted. Scopes without a

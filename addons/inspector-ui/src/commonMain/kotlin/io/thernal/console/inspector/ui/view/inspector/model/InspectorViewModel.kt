@@ -1,17 +1,20 @@
 package io.thernal.console.inspector.ui.view.inspector.model
 
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.thernal.console.inspector.ConsoleInspector
 import io.thernal.console.inspector.ui.engine.InspectorEngine
 import io.thernal.console.inspector.ui.engine.InspectorQueries
-import io.thernal.console.inspector.ui.engine.InspectorSnapshot
+import io.thernal.console.inspector.ui.engine.tree.InspectorSnapshot
+import io.thernal.console.inspector.ui.view.inspector.TreeRows
 import io.thernal.console.ui.core.IntentHandler
 import io.thernal.console.ui.core.StateHolder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.microseconds
 
 internal class InspectorViewModel : ViewModel(), StateHolder, IntentHandler<InspectorIntent> {
     val state = InspectorState()
@@ -40,9 +43,9 @@ internal class InspectorViewModel : ViewModel(), StateHolder, IntentHandler<Insp
         collapsed.update { keys -> if (key in keys) keys - key else keys + key }
     }
 
-    private fun setQuery(value: String) {
+    private fun setQuery(value: TextFieldValue) {
         state.query.set(value)
-        query.value = value
+        query.value = value.text
     }
 
     private fun selectNode(key: Any) {
@@ -64,12 +67,14 @@ internal class InspectorViewModel : ViewModel(), StateHolder, IntentHandler<Insp
                 InspectorEngine.nodeCounts,
                 InspectorEngine.selectedKey,
                 ConsoleInspector.config,
-                combine(collapsed, query) { c, q -> c to q },
+                combine(collapsed, query) { keys, text -> keys to text },
             ) { snapshot, counts, selectedKey, config, (collapsedKeys, text) ->
                 val rows = TreeRows.build(snapshot, config.hideFrameworkNodes, collapsedKeys, text, counts, selectedKey)
-                state.summary.set(summary(snapshot, rows.size))
-                rows
-            }.collect { state.rows.set(it) }
+                rows to summary(snapshot, rows.size)
+            }.collect { (rows, summary) ->
+                state.rows.set(rows)
+                state.summary.set(summary)
+            }
         }
     }
 
@@ -83,16 +88,12 @@ internal class InspectorViewModel : ViewModel(), StateHolder, IntentHandler<Insp
 
     private fun observeStats() {
         viewModelScope.launch {
-            combine(
-                InspectorEngine.timing,
-                InspectorEngine.nodeCounts,
-                InspectorEngine.isFrozen,
-                ConsoleInspector.config,
-            ) { timing, _, isFrozen, config ->
+            combine(InspectorEngine.timing, InspectorEngine.nodeCounts, ConsoleInspector.config) { timing, _, config ->
+                timing to InspectorQueries.ranking(RANKING_LIMIT, config.hideFrameworkNodes)
+            }.collect { (timing, ranking) ->
                 state.timing.set(timing)
-                state.isFrozen.set(isFrozen)
-                state.ranking.set(InspectorQueries.ranking(RANKING_LIMIT, config.hideFrameworkNodes))
-            }.collect { }
+                state.ranking.set(ranking)
+            }
         }
     }
 
@@ -100,10 +101,8 @@ internal class InspectorViewModel : ViewModel(), StateHolder, IntentHandler<Insp
         snapshot: InspectorSnapshot,
         visibleCount: Int,
     ): String = "$visibleCount of ${snapshot.nodes.size} composables · " +
-        "${snapshot.subCompositionCount} sub-compositions · built in ${snapshot.buildMicros / MICROS_PER_MILLI} ms"
-
-    private companion object {
-        const val RANKING_LIMIT = 50
-        const val MICROS_PER_MILLI = 1_000L
-    }
+        "${snapshot.subCompositionCount} sub-compositions · " +
+        "built in ${snapshot.buildMicros.microseconds.inWholeMilliseconds} ms"
 }
+
+private const val RANKING_LIMIT = 50

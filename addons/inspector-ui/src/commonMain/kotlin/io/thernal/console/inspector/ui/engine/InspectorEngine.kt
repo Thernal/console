@@ -5,6 +5,15 @@ import androidx.compose.runtime.tooling.CompositionData
 import androidx.compose.ui.geometry.Offset
 import io.thernal.console.inspector.ConsoleInspector
 import io.thernal.console.inspector.InspectorCommand
+import io.thernal.console.inspector.ui.engine.geometry.outerBoundsOf
+import io.thernal.console.inspector.ui.engine.geometry.pickRect
+import io.thernal.console.inspector.ui.engine.recomposition.InspectorEvent
+import io.thernal.console.inspector.ui.engine.recomposition.InspectorTiming
+import io.thernal.console.inspector.ui.engine.recomposition.RecompositionCounts
+import io.thernal.console.inspector.ui.engine.recomposition.RecompositionObserver
+import io.thernal.console.inspector.ui.engine.tree.InspectorNode
+import io.thernal.console.inspector.ui.engine.tree.InspectorSnapshot
+import io.thernal.console.inspector.ui.engine.tree.TreeBuilder
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,18 +24,22 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.microseconds
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
 
 /** Single owner of the inspector's runtime state. Everything here runs on the main thread. */
 internal object InspectorEngine {
-    private const val STATS_INTERVAL_MILLIS = 250L
-    private const val FLASH_RETENTION_MILLIS = 10_000L
-    private const val MIN_AUTO_REFRESH_GAP_MILLIS = 500L
-    private const val BUILD_COST_FACTOR = 8L
-    private const val MILLIS_PER_SECOND = 1_000L
-    private const val MICROS_PER_MILLI = 1_000L
+    private val STATS_INTERVAL = 250.milliseconds
+    private val FLASH_RETENTION = 10.seconds
+    private val MIN_AUTO_REFRESH_GAP = 500.milliseconds
+    private const val BUILD_COST_FACTOR = 8
 
-    /** Slot tables of sub-compositions, filled by Compose while `LocalInspectionTables` is provided. */
+    /**
+     * Slot tables of sub-compositions, filled by Compose while `LocalInspectionTables` is provided. Mutable because
+     * that local's contract is a set Compose adds to; nothing else writes it.
+     */
     val tables: MutableSet<CompositionData> = mutableSetOf()
     var rootData: CompositionData? = null
 
@@ -34,6 +47,7 @@ internal object InspectorEngine {
     private val observer = RecompositionObserver()
     private val tally = RecompositionCounts()
     private val reasons = HashMap<Any, String>()
+    private val compositionStarts = HashMap<Any, TimeSource.Monotonic.ValueTimeMark>()
     private var isCountsDirty = false
     private var isStructureDirty = false
     private var hadAppScopeInPass = false
@@ -67,8 +81,9 @@ internal object InspectorEngine {
     private val _skippedCounts = MutableStateFlow<Map<Int, Int>>(emptyMap())
     val skippedCounts: StateFlow<Map<Int, Int>> = _skippedCounts.asStateFlow()
 
-    /** Node key to the clock time of its latest recomposition, for the flash highlight. */
-    val flashes = mutableStateMapOf<Any, Long>()
+    /** Node key to the clock time of its latest recomposition, for the flash highlight. Snapshot state, read-only. */
+    private val _flashes = mutableStateMapOf<Any, Long>()
+    val flashes: Map<Any, Long> = _flashes
 
     fun nowMillis(): Long {
         return clock.elapsedNow().inWholeMilliseconds
@@ -120,8 +135,8 @@ internal object InspectorEngine {
         _snapshot.value = built
         isCountsDirty = true
         isStructureDirty = false
-        val gap = maxOf(MIN_AUTO_REFRESH_GAP_MILLIS, built.buildMicros * BUILD_COST_FACTOR / MICROS_PER_MILLI)
-        nextAutoRefreshMillis = nowMillis() + gap
+        val gap = maxOf(MIN_AUTO_REFRESH_GAP, built.buildMicros.microseconds * BUILD_COST_FACTOR)
+        nextAutoRefreshMillis = nowMillis() + gap.inWholeMilliseconds
         publishCounts()
     }
 
@@ -143,8 +158,8 @@ internal object InspectorEngine {
             .minWithOrNull(compareBy({ it.second.width * it.second.height }, { -it.first.depth }))
             ?.first
         if (InspectorMeasure.isMeasuring.value) {
-            val routed = InspectorMeasure.route(hit?.key, isPress)
-            if (routed !== InspectorMeasure.KEEP) _selectedKey.value = routed
+            val pick = InspectorMeasure.route(hit?.key, isPress)
+            if (pick is InspectorMeasure.Pick.Select) _selectedKey.value = pick.key
         } else {
             _selectedKey.value = hit?.key
         }
@@ -158,7 +173,7 @@ internal object InspectorEngine {
     fun resetStats() {
         tally.reset()
         reasons.clear()
-        flashes.clear()
+        _flashes.clear()
         _timing.value = InspectorTiming()
         _nodeCounts.value = emptyMap()
         _ownNodeCounts.value = emptyMap()
@@ -176,6 +191,7 @@ internal object InspectorEngine {
                     refresh(force = true)
                 } else {
                     observer.detach()
+                    compositionStarts.clear()
                 }
             }
     }
@@ -185,7 +201,8 @@ internal object InspectorEngine {
             when (event) {
                 is InspectorEvent.ScopePassed -> onScopePassed(event.identity, event.wasSkipped)
                 is InspectorEvent.ScopeInvalidated -> onScopeInvalidated(event.identity, event.reason)
-                is InspectorEvent.CompositionTimed -> onCompositionTimed(event.micros)
+                is InspectorEvent.CompositionStarted -> compositionStarts[event.composition] = event.mark
+                is InspectorEvent.CompositionEnded -> onCompositionEnded(event)
             }
         }
     }
@@ -194,8 +211,12 @@ internal object InspectorEngine {
      * Only passes that ran app scopes are timed. The inspector tab recomposes whenever its own numbers
      * change, so counting those passes would feed itself forever.
      */
-    private fun onCompositionTimed(micros: Long) {
-        if (hadAppScopeInPass) _timing.update { it.plus(micros) }
+    private fun onCompositionEnded(event: InspectorEvent.CompositionEnded) {
+        val started = compositionStarts.remove(event.composition)
+        if (started != null && hadAppScopeInPass) {
+            val micros = (event.mark - started).inWholeMicroseconds
+            _timing.update { it.plus(micros) }
+        }
         hadAppScopeInPass = false
     }
 
@@ -208,7 +229,7 @@ internal object InspectorEngine {
         wasSkipped: Boolean?,
     ) {
         val snapshot = _snapshot.value
-        val owner = snapshot.nodeIdForIdentity(identity)?.let { snapshot.nodes.getOrNull(it) }
+        val owner = snapshot.ownerOf(identity)
         if (owner != null && snapshot.isInspectorOwn(owner)) return
         if (owner?.isUnderApp == true) hadAppScopeInPass = true
         val isFirstSight = tally.isFirstSight(identity)
@@ -225,7 +246,7 @@ internal object InspectorEngine {
         isCountsDirty = true
         val node = attributedNode(identity)
         if (node != null && ConsoleInspector.config.value.highlightRecompositions) {
-            flashes[node.key] = nowMillis()
+            _flashes[node.key] = nowMillis()
         }
     }
 
@@ -257,7 +278,7 @@ internal object InspectorEngine {
             .collectLatest { (isEnabled, seconds) ->
                 if (!isEnabled || seconds <= 0) return@collectLatest
                 while (true) {
-                    delay(seconds * MILLIS_PER_SECOND)
+                    delay(seconds.seconds)
                     refresh()
                 }
             }
@@ -265,7 +286,7 @@ internal object InspectorEngine {
 
     private suspend fun statsLoop() {
         while (true) {
-            delay(STATS_INTERVAL_MILLIS)
+            delay(STATS_INTERVAL)
             val isFrameworkHidden = ConsoleInspector.config.value.hideFrameworkNodes
             if (isFrameworkHidden != wasFrameworkHidden) {
                 wasFrameworkHidden = isFrameworkHidden
@@ -273,8 +294,8 @@ internal object InspectorEngine {
             }
             if (isCountsDirty) publishCounts()
             if (isStructureDirty && nowMillis() >= nextAutoRefreshMillis) refresh()
-            val cutoff = nowMillis() - FLASH_RETENTION_MILLIS
-            flashes.entries.removeAll { it.value < cutoff }
+            val cutoff = nowMillis() - FLASH_RETENTION.inWholeMilliseconds
+            _flashes.entries.removeAll { it.value < cutoff }
         }
     }
 

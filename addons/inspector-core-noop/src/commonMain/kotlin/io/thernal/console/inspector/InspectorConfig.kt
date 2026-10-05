@@ -32,7 +32,7 @@ data class InspectorConfig(
                 MIN_HIGHLIGHT_DURATION_MILLIS,
                 MAX_HIGHLIGHT_DURATION_MILLIS,
             ),
-            heatmapThreshold = heatmapThreshold.coerceAtLeast(1),
+            heatmapThreshold = heatmapThreshold.coerceIn(MIN_HEATMAP_THRESHOLD, MAX_HEATMAP_THRESHOLD),
             autoRefreshSeconds = autoRefreshSeconds.coerceIn(0, MAX_AUTO_REFRESH_SECONDS),
         )
     }
@@ -42,6 +42,8 @@ data class InspectorConfig(
         const val MIN_HIGHLIGHT_DURATION_MILLIS = 100
         const val MAX_HIGHLIGHT_DURATION_MILLIS = 5_000
         const val DEFAULT_HEATMAP_THRESHOLD = 30
+        const val MIN_HEATMAP_THRESHOLD = 1
+        const val MAX_HEATMAP_THRESHOLD = 1_000
         const val MAX_AUTO_REFRESH_SECONDS = 60
     }
 }

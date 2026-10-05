@@ -1,12 +1,12 @@
 package io.thernal.console.inspector.ui.dock
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountTree
+import androidx.compose.material.icons.outlined.AccountTree
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import io.thernal.console.api.addon.ConsoleDockStatus
@@ -14,15 +14,15 @@ import io.thernal.console.api.addon.ConsoleDockWidget
 import io.thernal.console.inspector.ConsoleInspector
 import io.thernal.console.inspector.ui.engine.InspectorEngine
 import io.thernal.console.inspector.ui.engine.InspectorMeasure
-import io.thernal.console.inspector.ui.engine.InspectorNode
-import io.thernal.console.inspector.ui.engine.InspectorSnapshot
-import io.thernal.console.inspector.ui.engine.measureDistance
+import io.thernal.console.inspector.ui.engine.geometry.measureDistance
+import io.thernal.console.inspector.ui.engine.tree.InspectorNode
+import io.thernal.console.inspector.ui.engine.tree.InspectorSnapshot
 
 /** The inspector's place in the console dock. It is hidden unless quick controls are on or a pick is active. */
 internal object InspectorDockWidget : ConsoleDockWidget {
     override val id = "inspector"
     override val title = "Inspector"
-    override val icon: ImageVector = Icons.Default.AccountTree
+    override val icon: ImageVector = Icons.Outlined.AccountTree
 
     @Composable
     override fun isAvailable(): Boolean {
@@ -76,17 +76,11 @@ internal object InspectorDockWidget : ConsoleDockWidget {
     }
 }
 
-private class PickLine(
+/** Compared by value, so `derivedStateOf` only notifies when the text itself changes. */
+private data class PickLine(
     val selectedName: String?,
     val measureText: String,
-) {
-    override fun equals(other: Any?): Boolean =
-        other is PickLine && other.selectedName == selectedName && other.measureText == measureText
-
-    override fun hashCode(): Int {
-        return 31 * (selectedName?.hashCode() ?: 0) + measureText.hashCode()
-    }
-}
+)
 
 private fun pickLine(
     snapshot: InspectorSnapshot,

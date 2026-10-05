@@ -9,9 +9,10 @@ import io.thernal.console.api.addon.ConsoleOverlay
 import io.thernal.console.api.addon.ConsoleOverlayLayer
 import io.thernal.console.api.addon.ConsoleTab
 import io.thernal.console.core.ConsoleInternalApi
+import io.thernal.console.inspector.ui.dock.InspectorDockWidget
+import io.thernal.console.inspector.ui.enableInspectorSourceInformation
 import io.thernal.console.inspector.ui.host.InspectorHost
 import io.thernal.console.inspector.ui.navigation.InspectorTab
-import io.thernal.console.inspector.ui.dock.InspectorDockWidget
 import io.thernal.console.inspector.ui.overlay.InspectorBackdrop
 import io.thernal.console.inspector.ui.overlay.InspectorCapture
 import io.thernal.console.settings.SettingsRegistry

@@ -19,7 +19,7 @@ import androidx.compose.ui.layout.positionInWindow
  * touch screens, plain hovering with a mouse.
  */
 @Composable
-internal fun InspectorPickLayer(onPick: (Offset, Boolean) -> Unit) {
+internal fun InspectorPickLayer(onPick: (point: Offset, isPress: Boolean) -> Unit) {
     var origin by remember { mutableStateOf(Offset.Zero) }
     Box(
         Modifier

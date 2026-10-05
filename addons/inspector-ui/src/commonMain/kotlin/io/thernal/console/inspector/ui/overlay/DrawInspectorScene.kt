@@ -3,32 +3,18 @@ package io.thernal.console.inspector.ui.overlay
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.layout.LayoutInfo
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.LayoutInfo
 import androidx.compose.ui.text.TextMeasurer
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
-import androidx.compose.ui.unit.sp
-import io.thernal.console.inspector.ui.engine.InspectorNode
-import io.thernal.console.inspector.ui.engine.measureDistance
-import io.thernal.console.inspector.ui.engine.readNodePadding
+import io.thernal.console.inspector.ui.engine.geometry.DistanceSegment
+import io.thernal.console.inspector.ui.engine.geometry.insetSegments
+import io.thernal.console.inspector.ui.engine.geometry.measureDistance
+import io.thernal.console.inspector.ui.engine.geometry.readNodePadding
+import io.thernal.console.inspector.ui.engine.tree.InspectorNode
 import kotlin.math.roundToInt
-
-private const val MAX_DRAWN_NODES = 600
-private const val MAX_LABELS = 150
-private const val BOUNDS_ALPHA = 0.55f
-private const val HEAT_ALPHA = 0.35f
-private const val FLASH_ALPHA = 0.55f
-private const val SELECTION_ALPHA = 0.25f
-private const val PADDING_ALPHA = 0.35f
-private const val LABEL_BACKGROUND_ALPHA = 0.85f
-private const val STROKE_PX = 1f
-private const val SELECTION_STROKE_PX = 3f
-private const val LABEL_PADDING_PX = 3f
-private const val DASH_PX = 6f
-private val labelTextSize = 9.sp
 
 internal fun DrawScope.drawInspectorScene(
     scene: InspectorDrawScene,
@@ -43,7 +29,8 @@ internal fun DrawScope.drawInspectorScene(
         if (bounds.width <= 0f || bounds.height <= 0f) return@forEach
         val count = scene.counts[node.id] ?: 0
         if (config.showHeatmap && count > 0) {
-            drawRect(heatColor(count, config.heatmapThreshold).copy(alpha = HEAT_ALPHA), bounds.topLeft, bounds.size)
+            val heat = style.heat.colorFor(count, config.heatmapThreshold)
+            drawRect(heat.copy(alpha = HEAT_ALPHA), bounds.topLeft, bounds.size)
         }
         if (config.showBounds) {
             drawRect(style.bounds.copy(alpha = BOUNDS_ALPHA), bounds.topLeft, bounds.size, style = Stroke(STROKE_PX))
@@ -83,12 +70,14 @@ private fun DrawScope.drawAnchor(
     val bounds = liveBounds[node.id] ?: return
     drawRect(style.anchor.copy(alpha = SELECTION_ALPHA), bounds.topLeft, bounds.size)
     drawRect(style.anchor, bounds.topLeft, bounds.size, style = Stroke(SELECTION_STROKE_PX))
-    val tagTop = Offset(bounds.left, bounds.top - tagHeight(measurer))
+    val tagTop = Offset(bounds.left, bounds.top - tagHeight(style, measurer))
     drawTag("${node.name} (anchor)", tagTop, alignRight = false, style, measurer)
 }
 
-private fun tagHeight(measurer: TextMeasurer): Float =
-    measurer.measure("A", TextStyle(fontSize = labelTextSize), maxLines = 1).size.height + 2 * LABEL_PADDING_PX
+private fun tagHeight(
+    style: InspectorDrawStyle,
+    measurer: TextMeasurer,
+): Float = measurer.measure(TAG_SAMPLE, style.labelText, maxLines = 1).size.height + 2 * LABEL_PADDING_PX
 
 private fun DrawScope.drawDistance(
     anchor: Rect,
@@ -97,9 +86,7 @@ private fun DrawScope.drawDistance(
     measurer: TextMeasurer,
 ) {
     val dash = Stroke(STROKE_PX * 2, pathEffect = PathEffect.dashPathEffect(floatArrayOf(DASH_PX, DASH_PX)))
-    measureDistance(anchor, target).segments.forEach { segment ->
-        drawGap(segment.from, segment.to, dash, style, measurer)
-    }
+    measureDistance(anchor, target).segments.forEach { drawGap(it, dash, style, measurer) }
 }
 
 private fun DrawScope.drawFlash(
@@ -171,26 +158,19 @@ private fun DrawScope.drawMeasurements(
     measurer: TextMeasurer,
 ) {
     val dash = Stroke(STROKE_PX, pathEffect = PathEffect.dashPathEffect(floatArrayOf(DASH_PX, DASH_PX)))
-    val midX = inner.center.x
-    val midY = inner.center.y
-    drawGap(Offset(outer.left, midY), Offset(inner.left, midY), dash, style, measurer)
-    drawGap(Offset(inner.right, midY), Offset(outer.right, midY), dash, style, measurer)
-    drawGap(Offset(midX, outer.top), Offset(midX, inner.top), dash, style, measurer)
-    drawGap(Offset(midX, inner.bottom), Offset(midX, outer.bottom), dash, style, measurer)
+    insetSegments(inner, outer).forEach { drawGap(it, dash, style, measurer) }
 }
 
 private fun DrawScope.drawGap(
-    from: Offset,
-    to: Offset,
+    segment: DistanceSegment,
     stroke: Stroke,
     style: InspectorDrawStyle,
     measurer: TextMeasurer,
 ) {
-    val length = maxOf(kotlin.math.abs(to.x - from.x), kotlin.math.abs(to.y - from.y))
-    if (length < 1f) return
-    drawLine(style.measurement, from, to, strokeWidth = stroke.width, pathEffect = stroke.pathEffect)
-    val label = "${(length / density).roundToInt()}"
-    drawTag(label, Offset((from.x + to.x) / 2, (from.y + to.y) / 2), alignRight = false, style, measurer)
+    if (segment.length < 1f) return
+    drawLine(style.measurement, segment.from, segment.to, strokeWidth = stroke.width, pathEffect = stroke.pathEffect)
+    val label = "${(segment.length / density).roundToInt()}"
+    drawTag(label, segment.center, alignRight = false, style, measurer)
 }
 
 private fun DrawScope.drawTag(
@@ -200,10 +180,26 @@ private fun DrawScope.drawTag(
     style: InspectorDrawStyle,
     measurer: TextMeasurer,
 ) {
-    val result = measurer.measure(text, TextStyle(fontSize = labelTextSize, color = style.labelText), maxLines = 1)
+    val result = measurer.measure(text, style.labelText, maxLines = 1)
     val width = result.size.width + 2 * LABEL_PADDING_PX
     val height = result.size.height + 2 * LABEL_PADDING_PX
     val left = if (alignRight) anchor.x - width else anchor.x
     drawRect(style.labelBackground.copy(alpha = LABEL_BACKGROUND_ALPHA), Offset(left, anchor.y), Size(width, height))
     drawText(result, topLeft = Offset(left + LABEL_PADDING_PX, anchor.y + LABEL_PADDING_PX))
 }
+
+private const val MAX_DRAWN_NODES = 600
+private const val MAX_LABELS = 150
+private const val BOUNDS_ALPHA = 0.55f
+private const val HEAT_ALPHA = 0.35f
+private const val FLASH_ALPHA = 0.55f
+private const val SELECTION_ALPHA = 0.25f
+private const val PADDING_ALPHA = 0.35f
+private const val LABEL_BACKGROUND_ALPHA = 0.85f
+private const val STROKE_PX = 1f
+private const val SELECTION_STROKE_PX = 3f
+private const val LABEL_PADDING_PX = 3f
+private const val DASH_PX = 6f
+
+/** Any single glyph: only the line height of the tag text is needed. */
+private const val TAG_SAMPLE = "A"

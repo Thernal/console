@@ -20,12 +20,3 @@ internal data class NodeDetails(
     val parameterNames: List<String>,
     val slotValues: List<String>,
 )
-
-/**
- * `20` when the composable's own recompositions are all there is, `20 own · 40 with framework below` when hidden
- * framework components under it recomposed too.
- */
-internal fun NodeDetails.recompositionText(): String {
-    if (recompositions == ownRecompositions) return recompositions.toString()
-    return "$ownRecompositions own · $recompositions with framework below"
-}

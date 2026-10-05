@@ -9,9 +9,6 @@ import kotlinx.coroutines.flow.asStateFlow
  * second item, which is the engine's normal selection. Tapping the anchor again lets the next tap set a new one.
  */
 internal object InspectorMeasure {
-    /** Returned by [route] when the selection must stay as it is. */
-    val KEEP = Any()
-
     private val _isMeasuring = MutableStateFlow(false)
     val isMeasuring: StateFlow<Boolean> = _isMeasuring.asStateFlow()
 
@@ -24,28 +21,37 @@ internal object InspectorMeasure {
     }
 
     /**
-     * Routes a pick while measuring and returns the key to select, or [KEEP] to leave the selection alone.
-     * [isPress] is a fresh touch, as opposed to a finger moving on.
+     * Routes a pick while measuring and says what the selection becomes. [isPress] is a fresh touch, as opposed to a
+     * finger moving on.
      */
     fun route(
         hitKey: Any?,
         isPress: Boolean,
-    ): Any? {
+    ): Pick {
         val anchor = _anchorKey.value
         return when {
             anchor == null && isPress -> {
                 _anchorKey.value = hitKey
-                hitKey
+                Pick.Select(hitKey)
             }
 
-            anchor == null -> KEEP
+            anchor == null -> Pick.Keep
 
             isPress && hitKey == anchor -> {
                 _anchorKey.value = null
-                null
+                Pick.Select(null)
             }
 
-            else -> hitKey
+            else -> Pick.Select(hitKey)
         }
+    }
+
+    /** What a pick does to the selection while measuring. */
+    sealed interface Pick {
+        /** Leave the selection as it is. */
+        data object Keep : Pick
+
+        /** Select [key], or clear the selection when it is null. */
+        data class Select(val key: Any?) : Pick
     }
 }
