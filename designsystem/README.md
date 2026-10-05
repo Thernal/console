@@ -1,6 +1,8 @@
 # designsystem
 
-Internal design system for Console. **Not published as a standalone library** — consumed only by `console-ui` and addon UI modules.
+Design system for Console, used by `console-ui` and every addon UI module. Both modules are published, but they are
+not part of the bundles: add `console-components` yourself to build an addon UI (a tab, a dock widget panel) with the
+same `Ds*` primitives.
 
 ---
 
@@ -52,7 +54,12 @@ Theme.opacity.S12
 | `DsAppBar` | Top bar with leading, trailing, and center slots |
 | `DsCard` | Rounded bordered surface |
 | `DsContainer` | Bordered box wrapper |
+| `DsButton` | Tinted button; one `color` drives background, border and content |
 | `DsChip` | Label chip with optional border (selected state) |
+| `DsActionChip` | Icon-only on/off button; the name shows in a tooltip on long press and is the accessibility label |
+| `DsChipGroup` | Caption plus chips wrapping onto as many rows as needed; the dock widget panels are built from it |
+| `DsQuickAction` | Small square icon button for a folded dock widget's pill; `isPrimary` fills it |
+| `DsSwipeActionHost` / `DsSwipeActionPane` | Swipe-to-reveal row actions; panes under one host close each other |
 | `DsText` | Styled text |
 | `DsIcon` | Icon with size/color control |
 | `DsIconButton` | Pressable icon |

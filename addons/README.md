@@ -1,201 +1,27 @@
 # Addons
 
-Optional modules that extend Console. Each is self-contained — install only what you need.
+Optional modules that extend Console. Each is self-contained: install only what you need. Every addon family has its
+own README with setup, settings and architecture; this page is the index plus a guide to writing your own.
 
----
+| Addon | Artifacts | What it does |
+|-------|-----------|--------------|
+| [Logging](logging-ui/README.md) | `console-logging-ui` | The **Logs** tab: log list, filters, grouped detail pager, `BasicLog` renderer. Needed to see logs at all. |
+| [Details](details-ui/README.md) | `console-details-ui`, `-details-core`, `-details-core-noop` | Live key/value panel for session info, flags, build metadata. |
+| [Stepper](stepper-ui/README.md) | `console-stepper-ui` | Pauses the log pipeline and releases events one at a time. |
+| [Network](network-ui/README.md) | `console-network-ui`, `-network-core`, `-network-ktor`, `-network-okhttp` | HTTP capture for Ktor and OkHttp, with header masking and body formatting. |
+| [Crash reports](crash-report-ui/README.md) | `console-crash-report-ui`, `-crash-report-core` | Streams logs to disk and keeps crash sessions to inspect after relaunch. |
+| [UI inspector](inspector-ui/README.md) | `console-inspector-ui`, `-inspector-core`, `-inspector-core-noop` | Composable tree, picking, measuring, padding, recomposition counts and heatmap. |
+| [Settings](settings-ui/README.md) | `console-settings-ui`, [`-settings-api`](settings-api/README.md), `-settings-api-noop` | The **Settings** tab and the persisted per-addon settings every other addon registers into. |
 
-## Logging
+Every `-ui` artifact installs itself on Android, iOS and JVM; no `install()` call is needed. Addons with a public
+facade ship a `-noop` artifact with the same API for release builds; addons without one (stepper, network, crash
+reports) belong in debug-only code.
 
-Provides the log list, log detail screen, and `BasicLog` renderer. Required if you want to see logs in the console.
-
-```kotlin
-implementation("io.github.thernal:console-logging-ui:<version>")
-```
-
-No code required. Auto-installs on Android, iOS, and JVM via the addon system.
-
----
-
-## Details
-
-Displays a live key/value panel inside the console. Useful for session info, feature flags, build metadata, or any ambient state you want visible without digging through logs.
-
-```kotlin
-// debug
-implementation("io.github.thernal:console-details-ui:<version>")
-// release — no-op stub with the same API, no UI overhead
-implementation("io.github.thernal:console-details-core-noop:<version>")
-```
-
-```kotlin
-// Upsert a key/value pair — visible immediately in the Details tab
-ConsoleDetails.put("User" to "alice@example.com")
-ConsoleDetails.put("Env" to "staging")
-
-// Remove a key
-ConsoleDetails.remove("Env")
-```
-
----
-
-## Stepper
-
-Pauses log processing and lets you replay events one by one — useful for stepping through complex async flows that would otherwise fly past.
-
-```kotlin
-implementation("io.github.thernal:console-stepper-ui:<version>")
-```
-
-No code required. The stepper control appears inside the console automatically once the module is on the classpath.
-
----
-
-## UI inspector
-
-Inspects the running Compose UI from inside the console: the composable tree, bounds, sizes and
-modifiers, tap-to-select on the app, and recomposition tracking with counters, flashes and a heatmap.
-Works on Android, iOS and JVM; everything is read through Compose's tooling APIs, so no per-platform
-code is needed.
-
-```kotlin
-// debug
-implementation("io.github.thernal:console-inspector-ui:<version>")
-// release — no-op stub with the same API, no UI overhead
-implementation("io.github.thernal:console-inspector-core-noop:<version>")
-```
-
-No code required: the **Inspector** tab appears and the overlay is installed automatically.
-On JVM desktop, call `enableInspectorSourceInformation()` (`io.thernal.console.inspector.ui`) before creating the window, otherwise
-composable names are missing for the root composition.
-
-- **Picking, step by step:** like a design tool, a tap picks the outermost component under the finger (screen-filling
-  roots and same-sized wrappers are skipped), and tapping inside the selection again steps one level in, down to
-  `Text`, `Icon` and `Box`. Tapping beside the selection picks on its level. Dragging picks the smallest component under
-  the finger right away. A mouse picks by clicking; hovering picks nothing. *Details* has *Select parent* to go back up.
-- **Framework components:** picking reaches every component; with the *framework filter* on, the steps skip hidden
-  framework wrappers but still end on the `Text` or `Icon` under the finger. The filter only thins out the tree, bounds
-  and labels. Plain `Layout` calls are named after
-  the composable that uses them (`BasicText`, `Box`). Items that share an edge read `Touching · 0 dp`.
-- **Frame, padding and margin:** a component's box is its frame, the edge you see: the first background, border,
-  shadow or clip in its modifier chain. Padding after that is *inside* the frame and padding before it is margin, so
-  `Modifier.background(...).padding(16.dp)` is framed at the background and gaps between cards are measured
-  border to border. With nothing drawn, every padding counts as inside. The selected component's padding is drawn as an
-  amber band inside its frame and its margin as a fainter one outside, with sizes in dp, and *Details* lists both
-  (`top 18 · left 18 · right 18 · bottom 18 dp`). They are read from where each padding modifier sits in the chain, so
-  stacked paddings and RTL are right. Tapping a margin still picks that component, not its parent.
-- **Tab:** *Tree* (search, collapse), *Details* (source, size in dp and px, parent, modifiers,
-  parameters, recomposition count and last reason, distance from the measuring anchor), *Recompositions* (ranking,
-  composition timing and reset). Actions: inspect, freeze, refresh, copy the tree.
-- **Quick controls:** the inspector is in the floating dock as a tab by default; turn off *Show quick controls* in Settings to remove it.
-  Its controls are icon-only buttons (long press shows the name) grouped as *Actions* (inspect, measure, freeze, tree), *Overlay* (bounds, labels, counters, heatmap, flash on recomposition,
-  reset) and *Environment* (font scale, RTL). While you pick, the dock turns amber; fold it and it becomes a pill with **Details** and
-  **Exit**, which stays on screen even when floating widgets are hidden. The dock never folds by itself.
-- **Recomposition counts:** a scope's first pass is its initial composition and is not counted. Scopes without a
-  group identity (most of them) are matched to their composable through the scope object in the slot table, so they are
-  counted too. A pass where the parent recomposed but the composable's parameters had not changed is a **skip**: the
-  function did not run. Skips are not counted as recompositions (they never flash or heat the heatmap) and are listed
-  separately as *Skipped* in *Details*, the same split Android Studio makes. *Details* shows the composable's own count,
-  and `20 own · 40 with framework below` when hidden framework components under it (a `Text`) recomposed as well; the
-  heatmap and the ×N tags use the larger number so lambda-driven updates are not lost. Checked against a `SideEffect`
-  counter on Android and the iOS simulator (20 recompositions counted as 20, 20 skips as 20 skips, on both). A scope
-  that recomposes before the first tree read counts as its first pass. The skip flag is a Compose internal: if a Compose
-  version changes it, the read switches itself off and every pass counts, so the numbers include skips again.
-- **Measure:** the ruler button in the dock turns inspect mode into a two-point ruler. The first tap sets a green anchor
-  and tapping inside it steps the anchor in; tapping another item then picks the second one on the anchor's level (tap
-  again to step in, or drag) and draws the distance between them in dp, and the dock row repeats it
-  (`↔ 24 · ↕ 12 dp`). Side by side or stacked items show the gap between their facing edges, diagonal ones an L of two
-  gaps, and an item inside the other shows its four insets. Turn the ruler off and on to choose a new anchor.
-  In the tab, *Measure from here* in *Details* makes the selected composable the anchor; select another one in the
-  tree and *Details* shows the distance (the overlay draws it too). *Clear anchor* removes it.
-- **Inspect mode:** closes the console, then tap or drag over the app to pick a component. The overlay
-  shows its bounds, size and the distance to its parent; **Details** reopens the tab.
-- **Settings** (Settings tab, persisted): enable, quick controls, recomposition tracking, flash highlight and duration,
-  heatmap and threshold, counters, bounds, labels, measurements, framework filter and app source
-  filters, auto-refresh, and font scale / layout direction overrides.
-
-```kotlin
-// Programmatic control, same API in the no-op artifact
-ConsoleInspector.updateConfig { copy(showBounds = true, showRecompositionCounters = true) }
-ConsoleInspector.dispatch(InspectorCommand.ResetStats)
-```
-
-Notes: composition timings only count passes that ran app composables, so the inspector's own UI never
-inflates them. Names and source positions need the slot-table source information, which the addon switches
-on at install time (debug only). Library composables on iOS have no parameter names. Hidden
-"framework" composables are matched by a built-in list of file names; set app source filters to
-define app code precisely.
-
----
-
-## Network
-
-Captures HTTP traffic and renders it in the log list with method, status code, URL, headers, body, and round-trip duration. Tap any entry to see the full request/response detail.
-
-### OkHttp
-
-```kotlin
-implementation("io.github.thernal:console-network-core:<version>")
-implementation("io.github.thernal:console-network-okhttp:<version>")
-implementation("io.github.thernal:console-network-ui:<version>")
-```
-
-```kotlin
-val client = OkHttpClient.Builder()
-    .addInterceptor(ConsoleNetworkOkHttpInterceptor())
-    .build()
-```
-
-### Ktor
-
-```kotlin
-implementation("io.github.thernal:console-network-core:<version>")
-implementation("io.github.thernal:console-network-ktor:<version>")
-implementation("io.github.thernal:console-network-ui:<version>")
-```
-
-```kotlin
-val client = HttpClient {
-    install(ConsoleNetworkKtorPlugin)
-}
-```
-
-### Sensitive headers
-
-By default, `Authorization`, `Cookie`, `Set-Cookie`, `X-Api-Key`, and `Proxy-Authorization` header values are replaced with `***`. Pass a `SensitiveHeaders` instance to change this behavior:
-
-```kotlin
-// Custom set and mask string
-ConsoleNetworkOkHttpInterceptor(
-    sensitiveHeaders = SensitiveHeaders(
-        names = setOf("authorization", "x-session-token"),
-        mask = "[redacted]",
-    )
-)
-
-HttpClient {
-    install(ConsoleNetworkKtorPlugin) {
-        sensitiveHeaders = SensitiveHeaders(
-            names = setOf("authorization", "x-session-token"),
-            mask = "[redacted]",
-        )
-    }
-}
-```
-
-```kotlin
-// Disable masking entirely — show all header values as-is
-ConsoleNetworkOkHttpInterceptor(sensitiveHeaders = SensitiveHeaders.NONE)
-
-HttpClient {
-    install(ConsoleNetworkKtorPlugin) {
-        sensitiveHeaders = SensitiveHeaders.NONE
-    }
-}
-```
-
-`SensitiveHeaders.DEFAULT` is the default — the 5 headers listed above, masked with `***`.
-
-`console-network-ui` auto-installs its renderer on Android, iOS, and JVM via the addon system — no manual `install()` call needed. Network logs appear inline in the main log list alongside other entries.
+Module READMEs: [crash-report-core](crash-report-core/README.md) ·
+[details-core](details-core/README.md) · [details-core-noop](details-core-noop/README.md) ·
+[inspector-core](inspector-core/README.md) · [inspector-core-noop](inspector-core-noop/README.md) ·
+[network-core](network-core/README.md) · [network-ktor](network-ktor/README.md) ·
+[network-okhttp](network-okhttp/README.md) · [settings-api-noop](settings-api-noop/README.md)
 
 ---
 
@@ -205,12 +31,15 @@ HttpClient {
 
 ```
 addons/
-  my-addon-core/      # Log subtype + any state (convention.lib.core)
-  my-addon-ui/        # LogRenderer + auto-init (convention.lib.ui)
-  my-addon-core-noop/ # No-op stub for production (convention.lib.core)
+  my-addon-core/      # Log subtype, facade and state, no UI   (convention.lib.core)
+  my-addon-ui/        # ConsoleAddon, renderer, tab, auto-init  (convention.lib.ui)
+  my-addon-core-noop/ # same public API, empty bodies           (convention.lib.core)
 ```
 
-### 1. Define a log type
+Addon modules are discovered automatically by `settings.gradle.kts`. Addons never depend on each other's internals:
+they meet through `console-api` contracts and the registries.
+
+### 1. Define a log type (optional)
 
 ```kotlin
 data class MyLog(
@@ -221,23 +50,44 @@ data class MyLog(
 ) : Log
 ```
 
-### 2. Register a renderer
+### 2. Implement the addon
+
+`ConsoleAddon` has one data-plane hook and several optional UI contributions; implement only what you need.
 
 ```kotlin
 @file:OptIn(ConsoleInternalApi::class)
 
 object MyAddon : ConsoleAddon {
     override fun onInstall() {
-        LogRendererRegistry.register<MyLog>(MyLogRenderer)
+        LogRendererRegistry.register<MyLog>(MyLogRenderer)   // render MyLog in the Logs tab
+        Console.addObserver(MyObserver)                      // only addons that capture logs (needs console-runtime)
+        SettingsRegistry.register(mySettingsSection())       // optional, see settings-api
     }
+
+    override fun tab(): ConsoleTab = MyTab                   // a screen in the console nav bar
+    override fun navGraph(): ConsoleNavGraph = MyNavGraph    // routes behind the tab
+    override fun dockWidget(): ConsoleDockWidget = MyWidget  // controls in the floating dock
+    override fun overlays() = listOf(                        // full-screen layers over the app
+        ConsoleOverlay(layer = ConsoleOverlayLayer.Backdrop, widgetId = MyWidget.id) { MyDrawing() },
+    )
+    override fun contentWrapper(): ConsoleContentWrapper =   // CompositionLocals for the app content
+        { content -> MyHost(content) }
 }
 ```
 
-`MyLog` entries sent via `Console.notify { MyLog(...) }` will render with `MyLogRenderer` in the existing log list. No new tab required unless you want one.
+`MyLog` entries sent via `Console.notify { MyLog(...) }` render with `MyLogRenderer` in the existing log list; no new
+tab is required unless you want one. The contracts are described in [`console-api`](../console-api/README.md) and the
+dock in the [main README](../README.md#floating-dock-and-overlays).
 
 ### 3. Wire auto-init
 
-**Android** — subclass `ConsoleAutoInitProvider` and declare it in `AndroidManifest.xml`:
+**Android**: subclass `ConsoleAutoInitProvider` and declare it in the module's `AndroidManifest.xml`:
+
+```kotlin
+internal class MyAddonAutoInit : ConsoleAutoInitProvider() {
+    override fun init() = MyAddon.install()
+}
+```
 
 ```xml
 <provider
@@ -246,7 +96,7 @@ object MyAddon : ConsoleAddon {
     android:exported="false" />
 ```
 
-**iOS / native** — top-level eager property:
+**iOS / native**: a top-level eager property in `nativeMain`:
 
 ```kotlin
 @EagerInitialization
@@ -254,9 +104,8 @@ object MyAddon : ConsoleAddon {
 private val init = consoleAddonInit { MyAddon.install() }
 ```
 
-**JVM** — a `ConsoleInitializer` discovered via `ServiceLoader` (the JVM counterpart of the
-Android `ContentProvider` and native `@EagerInitialization` hooks). Triggered once by the
-console shell at first `ConsoleProvider` composition — no end-user call required.
+**JVM**: a `ConsoleInitializer` discovered via `ServiceLoader`, triggered once by the console shell at the first
+`ConsoleProvider` composition; no end-user call required.
 
 ```kotlin
 // src/jvmMain/kotlin/.../MyAddonAutoInit.kt
@@ -269,3 +118,8 @@ internal class MyAddonAutoInit : ConsoleInitializer {
 // src/jvmMain/resources/META-INF/services/io.thernal.console.api.autoinit.ConsoleInitializer
 com.example.MyAddonAutoInit
 ```
+
+### 4. Document it
+
+Give the `-ui` module a README with install, usage, settings and an architecture section, and a short README in each
+sibling module that points to it. Add a row to the table above.
