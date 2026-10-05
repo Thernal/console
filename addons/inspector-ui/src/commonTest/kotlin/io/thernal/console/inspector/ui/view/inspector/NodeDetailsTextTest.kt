@@ -17,6 +17,7 @@ class NodeDetailsTextTest {
         sizeDp = null,
         positionDp = null,
         padding = null,
+        margin = null,
         density = null,
         layoutDirection = null,
         recompositions = recompositions,

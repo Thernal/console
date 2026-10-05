@@ -29,9 +29,11 @@ object MyAddon : ConsoleAddon {
         LogRendererRegistry.register<MyLog>(MyRenderer)  // optional
     }
 
-    override fun tab(): ConsoleTab = MyTab        // optional
-    override fun navGraph(): ConsoleNavGraph = MyNavGraph // optional
-    override fun overlay(): @Composable BoxScope.() -> Unit = { MyOverlay() } // optional
+    override fun tab(): ConsoleTab = MyTab                    // optional
+    override fun navGraph(): ConsoleNavGraph = MyNavGraph     // optional
+    override fun dockWidget(): ConsoleDockWidget = MyWidget   // optional
+    override fun overlays(): List<ConsoleOverlay> = listOf(/* ... */) // optional
+    override fun contentWrapper(): ConsoleContentWrapper = { content -> MyHost(content) } // optional
 }
 
 // Manual install — only if you skip auto-init wiring
@@ -51,12 +53,18 @@ Adds a tab to the console navigation bar.
 object MyTab : ConsoleTab {
     override val title = "My Addon"
     override val icon: ImageVector = Icons.Outlined.Star
-    override val order: Int = 10  // lower = earlier; default = Int.MAX_VALUE
+    override val order: Int = 50  // lower = earlier; default = Int.MAX_VALUE
 
     @Composable
     override fun Content() { MyTabScreen() }
+
+    @Composable
+    override fun Actions() { MyTabActions() }  // optional, shown in the app bar while the tab is selected
 }
 ```
+
+Every tab should use a distinct `order`. First-party values, spaced by 10: Logs 0, Stepper 10, Details 20,
+Crashes 30, Inspector 40, Settings `Int.MAX_VALUE` (always last).
 
 ---
 
@@ -109,3 +117,53 @@ object MyNavGraph : ConsoleNavGraph {
     }
 }
 ```
+
+---
+
+## ConsoleDockWidget
+
+Interactive floating controls live in one shared dock owned by `console-ui`. A widget contributes a tab inside it:
+
+```kotlin
+object MyWidget : ConsoleDockWidget {
+    override val id = "my-widget"          // unique; also what users list under "Hidden widgets"
+    override val title = "Mine"
+    override val icon = Icons.Outlined.Star
+
+    @Composable override fun isAvailable() = true                 // false takes no space in the dock
+    @Composable override fun status() = ConsoleDockStatus.Idle    // Active shows a dot; Attention pins it and grows a pill
+    @Composable override fun summary(): String? = "3 tracked"     // live line above the panel
+    @Composable override fun QuickAction() { /* beside the folded dock, only while status is Attention */ }
+    @Composable override fun Panel() { /* every control, built from DsChipGroup / DsActionChip */ }
+}
+```
+
+Widgets are sorted by `order`, then by `title`; leave `order` unset to keep the dock neutral. Visibility is set by
+`ConsoleDock.config` (`isVisible`, `hiddenWidgetIds`), which the settings addon exposes as *Floating widgets*; a widget
+whose status is `Attention` always stays visible.
+
+---
+
+## ConsoleOverlay
+
+Full-screen layers above the app and below the dock and the console, ordered bottom to top: `Backdrop` (draws, never
+handles touches), then `Capture` (may take over touches), then the legacy `overlay()`. Within a layer, `order`
+ascends. Give an overlay the `widgetId` of your dock widget and it is hidden together with that widget.
+
+```kotlin
+override fun overlays() = listOf(
+    ConsoleOverlay(layer = ConsoleOverlayLayer.Backdrop, widgetId = "my-widget") { MyDrawing() },
+    ConsoleOverlay(layer = ConsoleOverlayLayer.Capture, widgetId = "my-widget") { MyTouchLayer() },
+)
+```
+
+Prefer `dockWidget()` and `overlays()` over the free-form `overlay()`.
+
+---
+
+## ConsoleContentWrapper
+
+`@Composable (content: @Composable () -> Unit) -> Unit` applied around the **host app content** (not the console UI),
+outermost first in registration order. Use it to provide `CompositionLocal`s the app content must see; the UI
+inspector uses it for its slot-table access and its font scale and RTL overrides. Register it before the first
+composition: a late registration changes the composition structure above the app and resets its state.

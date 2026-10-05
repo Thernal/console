@@ -208,7 +208,9 @@ AnalyticsAddon.install()
 
 ## Search & filter
 
-The log list filters in real time as you type. The query matches against **message**, **tag**, and **level name**.
+The log list filters in real time as you type. The query matches the log **message**; tags and levels are chip filters
+above the list (an empty selection means all). See [`addons/logging-ui`](addons/logging-ui/README.md) for the buffer
+size and capture settings.
 
 <!-- 📸 SCREENSHOT: Log list with the search bar expanded and a query entered (e.g. "auth"), showing only matching entries with the query term highlighted. -->
 
@@ -309,12 +311,9 @@ val client = HttpClient {
 `Authorization`, `Cookie`, `Set-Cookie`, `X-Api-Key`, and `Proxy-Authorization` are masked with `***` by default (`SensitiveHeaders.DEFAULT`).
 
 ```kotlin
-// Custom names and mask string
+// Custom names
 ConsoleNetworkOkHttpInterceptor(
-    sensitiveHeaders = SensitiveHeaders(
-        names = setOf("authorization", "x-session-token"),
-        mask = "[redacted]",
-    )
+    sensitiveHeaders = SensitiveHeaders(names = setOf("authorization", "x-session-token"))
 )
 
 // Disable masking entirely
@@ -327,6 +326,10 @@ HttpClient {
     }
 }
 ```
+
+The names can also be changed at runtime from the *Network* settings section. Masked values always read `***`; a
+custom `mask` is currently not applied. See [`addons/network-ui`](addons/network-ui/README.md) for the capture flow and
+body handling.
 
 ---
 
@@ -352,6 +355,9 @@ ConsoleDetails.put("Feature:NewCheckout" to "enabled")
 ConsoleDetails.remove("Environment")
 ```
 
+`ConsoleKey` declares reusable keys, and `ConsoleDetails.clear()` empties the panel; see
+[`addons/details-ui`](addons/details-ui/README.md).
+
 <!-- 📸 SCREENSHOT: Console open on the Details tab showing a clean key/value list — e.g. User, Environment, App Version, Feature flags with their current values. -->
 
 ---
@@ -369,7 +375,30 @@ dependencies {
 
 No code required. Once the module is on the classpath, the stepper control appears automatically in the floating dock. Tap **Pause** to freeze the pipeline, **Step** to advance one event at a time, and **Resume** to return to live mode. While the pipeline is paused the widget stays on screen even if floating widgets are hidden.
 
+A held event holds the whole pipeline, including callers that wait for it (`asyncNotify`, `blockingNotify`, the network
+integrations). See [`addons/stepper-ui`](addons/stepper-ui/README.md) for the pause filter and auto-resume.
+
 <!-- 📸 SCREENSHOT: Console with the Stepper overlay visible — showing the Pause / Step / Resume floating controls over the log list. Ideally captured with the pipeline paused and a queued-events badge showing a count. -->
+
+---
+
+## UI inspector
+
+Inspects the running Compose UI from inside the console: the composable tree, design-tool style picking, frame,
+padding and margin, a two-point ruler, and recomposition counts with flashes and a heatmap, plus font scale and RTL
+overrides for the app content.
+
+```kotlin
+// build.gradle.kts
+dependencies {
+    debugImplementation("io.github.thernal:console-inspector-ui:<version>")
+    releaseImplementation("io.github.thernal:console-inspector-core-noop:<version>")
+}
+```
+
+No code required: the **Inspector** tab and the dock widget appear automatically. On JVM desktop call
+`enableInspectorSourceInformation()` before creating the window. See
+[`addons/inspector-ui`](addons/inspector-ui/README.md) for every feature, the settings and the architecture.
 
 ---
 
@@ -511,6 +540,9 @@ matching your client).
 | `io.github.thernal:console-ui-noop:<version>` | No-op stub for production builds |
 
 ### Addons
+
+Each addon has its own README with setup, settings and architecture; start from the
+[addon index](addons/README.md).
 
 | Artifact | Description |
 |----------|-------------|

@@ -1,10 +1,16 @@
 package io.thernal.console.inspector.ui.engine.tree
 
 import androidx.compose.ui.geometry.Rect
-import io.thernal.console.inspector.ui.engine.geometry.boundsOf
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.LayoutInfo
+import io.thernal.console.inspector.ui.engine.geometry.frameBoundsOf
+import io.thernal.console.inspector.ui.engine.geometry.frameCoordinatesOf
 import io.thernal.console.inspector.ui.engine.geometry.union
 
-/** Immutable result of one tree build. */
+/**
+ * Immutable result of one tree build. The only state it keeps is a cache of where each layout node's frame sits in
+ * its modifier chain, found the first time the bounds are read; it is only touched on the main thread.
+ */
 internal class InspectorSnapshot(
     val nodes: List<InspectorNode>,
     private val idByKey: Map<Any, Int>,
@@ -12,6 +18,8 @@ internal class InspectorSnapshot(
     val buildMicros: Long,
     val subCompositionCount: Int,
 ) {
+    private val frames = HashMap<LayoutInfo, LayoutCoordinates?>()
+
     fun nodeByKey(key: Any?): InspectorNode? {
         return idByKey[key]?.let { nodes.getOrNull(it) }
     }
@@ -31,6 +39,19 @@ internal class InspectorSnapshot(
         return false
     }
 
+    /** Whether [inner] is [outer] or sits somewhere inside it. */
+    fun holds(
+        outer: InspectorNode,
+        inner: InspectorNode,
+    ): Boolean {
+        var current: InspectorNode? = inner
+        while (current != null) {
+            if (current.id == outer.id) return true
+            current = nodes.getOrNull(current.parentId)
+        }
+        return false
+    }
+
     fun knowsIdentity(identity: Any?): Boolean {
         return idByGroupIdentity.containsKey(identity)
     }
@@ -39,19 +60,25 @@ internal class InspectorSnapshot(
         if (hideFramework) nodes.filterNot { it.isFramework } else nodes
 
     /**
-     * Current window bounds of every node, indexed by node id: the union of its own layout nodes and
-     * its children's bounds. Read from live layout coordinates, so call it per frame while drawing.
+     * Current window bounds of every node, indexed by node id: the union of its own layout nodes' frames (the box
+     * with the background or border, see `frameIndex`) and its children's bounds. Read from live layout
+     * coordinates, so call it per frame while drawing.
      */
     fun liveBounds(): List<Rect?> {
         val result = arrayOfNulls<Rect>(nodes.size)
         for (index in nodes.indices.reversed()) {
             val node = nodes[index]
             var bounds = result[index]
-            node.layouts.forEach { bounds = union(bounds, boundsOf(it)) }
+            node.layouts.forEach { bounds = union(bounds, frameBoundsOf(it, frameOf(it))) }
             result[index] = bounds
             if (node.parentId >= 0) result[node.parentId] = union(result[node.parentId], bounds)
         }
         return result.asList()
+    }
+
+    private fun frameOf(layout: LayoutInfo): LayoutCoordinates? {
+        if (frames.containsKey(layout)) return frames[layout]
+        return frameCoordinatesOf(layout).also { frames[layout] = it }
     }
 
     /** The node a recomposition of [owner] is credited to: with [hideFramework], hidden framework nodes pass it up. */

@@ -10,6 +10,11 @@ internal sealed interface InspectorIntent : ViewIntent {
 
     data object SelectParent : InspectorIntent
 
+    /** Makes the selected node the measuring anchor, so the next selection shows the distance from it. */
+    data object MeasureFromSelected : InspectorIntent
+
+    data object ClearAnchor : InspectorIntent
+
     data class ToggleCollapsed(val key: Any) : InspectorIntent
 
     data class SetQuery(val query: TextFieldValue) : InspectorIntent

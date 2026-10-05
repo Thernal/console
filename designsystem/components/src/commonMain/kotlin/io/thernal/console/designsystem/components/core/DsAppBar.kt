@@ -24,6 +24,11 @@ import io.thernal.console.designsystem.foundation.theme.DsPreview
 import io.thernal.console.designsystem.foundation.theme.LocalDsContentColor
 import io.thernal.console.designsystem.foundation.theme.Theme
 
+/**
+ * Top app bar with [leading], centered [content] and [trailing] slots. The two side slots share the width equally so
+ * [content] stays centered; set [trailingFitsContent] when there is no [content] and [trailing] holds several actions,
+ * so they take the width they need and [leading] gets the rest.
+ */
 @Composable
 fun DsAppBar(
     modifier: Modifier = Modifier,
@@ -32,6 +37,7 @@ fun DsAppBar(
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     leadingArrangement: Arrangement.Horizontal = Arrangement.Start,
     trailingArrangement: Arrangement.Horizontal = Arrangement.End,
+    trailingFitsContent: Boolean = false,
     leading: @Composable RowScope.() -> Unit = {},
     trailing: @Composable RowScope.() -> Unit = {},
     content: @Composable RowScope.() -> Unit = {},
@@ -60,7 +66,7 @@ fun DsAppBar(
             content()
 
             Row(
-                modifier = Modifier.weight(1f),
+                modifier = if (trailingFitsContent) Modifier else Modifier.weight(1f),
                 horizontalArrangement = trailingArrangement,
                 verticalAlignment = verticalAlignment,
                 content = trailing,

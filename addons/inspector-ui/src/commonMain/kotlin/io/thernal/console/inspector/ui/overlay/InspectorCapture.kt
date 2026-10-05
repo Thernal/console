@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import io.thernal.console.inspector.ConsoleInspector
 import io.thernal.console.inspector.ui.engine.InspectorEngine
+import io.thernal.console.inspector.ui.engine.InspectorPicker
 
 /** Capture layer: swallows touches and picks the node under the pointer while inspect mode is on. */
 @Composable
@@ -15,7 +16,7 @@ internal fun BoxScope.InspectorCapture() {
     if (config.enabled && isInspecting) {
         InspectorPickLayer(
             onPick = { point, isPress ->
-                InspectorEngine.selectAt(point, isPress)
+                InspectorPicker.pick(point, isPress)
             },
         )
     }
