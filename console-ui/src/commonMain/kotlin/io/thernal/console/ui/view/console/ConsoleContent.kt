@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import io.thernal.console.api.addon.ConsoleTab
 import io.thernal.console.ui.view.console.components.ConsoleNavigationBar
 import io.thernal.console.ui.view.console.model.ConsoleIntent
@@ -39,11 +40,14 @@ internal fun ConsoleContent(
     DsScaffold(
         topBar = {
             DsAppBar(
+                trailingFitsContent = true,
                 leading = {
                     DsText(
                         text = "Console",
                         style = Theme.typography.title01,
                         color = Theme.colors.content01,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 trailing = {

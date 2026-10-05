@@ -8,7 +8,6 @@ import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.PauseCircle
 import androidx.compose.material.icons.outlined.PlayCircle
 import androidx.compose.material.icons.outlined.Refresh
-import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -64,9 +63,6 @@ internal fun InspectorActions() {
             },
         ) {
             DsIcon(icon = Icons.Outlined.ContentCopy, color = Theme.colors.content02)
-        }
-        DsIconButton(onClick = { ConsoleInspector.dispatch(InspectorCommand.ResetStats) }) {
-            DsIcon(icon = Icons.Outlined.RestartAlt, color = Theme.colors.content02)
         }
     }
 }
