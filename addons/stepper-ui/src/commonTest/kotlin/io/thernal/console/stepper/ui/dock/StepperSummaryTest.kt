@@ -29,7 +29,7 @@ class StepperSummaryTest {
     }
 
     @Test
-    fun `a paused pipeline with nothing waiting reads paused, not idle`() {
+    fun `a paused pipeline with nothing waiting reads paused and not idle`() {
         assertEquals(
             "Paused",
             stepperSummary(isEnabled = true, isPaused = true, statusText = "Idle", heldCount = 0),

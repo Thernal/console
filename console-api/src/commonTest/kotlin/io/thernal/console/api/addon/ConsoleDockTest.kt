@@ -65,7 +65,7 @@ class ConsoleDockTest {
     }
 
     @Test
-    fun `widgets with the same order are sorted by title, not by who registered first`() {
+    fun `widgets with the same order are sorted by title and not by who registered first`() {
         val zulu = FakeWidget(id = "dock-test-zulu", title = "Zulu", order = 70)
         val alpha = FakeWidget(id = "dock-test-alpha", title = "alpha", order = 70)
 

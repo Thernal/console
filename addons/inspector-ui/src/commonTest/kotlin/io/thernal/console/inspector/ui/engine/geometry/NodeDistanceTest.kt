@@ -69,7 +69,7 @@ class NodeDistanceTest {
     }
 
     @Test
-    fun `items that share an edge are touching, not overlapping`() {
+    fun `items that share an edge are touching and not overlapping`() {
         val distance = measureDistance(Rect(0f, 0f, 100f, 40f), Rect(0f, 40f, 100f, 90f))
 
         assertTrue(distance.segments.isEmpty())
