@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.thernal.console.inspector.ConsoleInspector
 import io.thernal.console.inspector.ui.engine.InspectorEngine
+import io.thernal.console.inspector.ui.engine.InspectorMeasure
 import io.thernal.console.inspector.ui.engine.InspectorQueries
 import io.thernal.console.inspector.ui.engine.tree.InspectorSnapshot
 import io.thernal.console.inspector.ui.view.inspector.TreeRows
@@ -27,6 +28,8 @@ internal class InspectorViewModel : ViewModel(), StateHolder, IntentHandler<Insp
             is InspectorIntent.SelectPage -> state.page.set(intent.page)
             is InspectorIntent.SelectNode -> selectNode(intent.key)
             InspectorIntent.SelectParent -> selectParent()
+            InspectorIntent.MeasureFromSelected -> InspectorMeasure.setAnchor(InspectorEngine.selectedKey.value)
+            InspectorIntent.ClearAnchor -> InspectorMeasure.setAnchor(null)
             is InspectorIntent.ToggleCollapsed -> toggleCollapsed(intent.key)
             is InspectorIntent.SetQuery -> setQuery(intent.query)
         }
@@ -80,7 +83,12 @@ internal class InspectorViewModel : ViewModel(), StateHolder, IntentHandler<Insp
 
     private fun observeDetails() {
         viewModelScope.launch {
-            combine(InspectorEngine.snapshot, InspectorEngine.selectedKey, InspectorEngine.nodeCounts) { _, _, _ ->
+            combine(
+                InspectorEngine.snapshot,
+                InspectorEngine.selectedKey,
+                InspectorEngine.nodeCounts,
+                InspectorMeasure.anchorKey,
+            ) { _, _, _, _ ->
                 InspectorQueries.selectedNode()?.let(InspectorQueries::detailsOf)
             }.collect { state.details.set(it) }
         }

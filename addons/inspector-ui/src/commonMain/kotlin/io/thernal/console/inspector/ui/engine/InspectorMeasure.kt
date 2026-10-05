@@ -5,8 +5,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * Two-point measuring on top of inspect mode. The first tap sets an anchor; taps and drags after that choose the
- * second item, which is the engine's normal selection. Tapping the anchor again lets the next tap set a new one.
+ * Two-point measuring. The anchor is the first item; the engine's normal selection is the second, and the overlay and
+ * the details show the distance between them. The anchor is set by tapping while [isMeasuring] in inspect mode (see
+ * `InspectorPicker`), or from the details of the selected node in the tab.
  */
 internal object InspectorMeasure {
     private val _isMeasuring = MutableStateFlow(false)
@@ -15,43 +16,13 @@ internal object InspectorMeasure {
     private val _anchorKey = MutableStateFlow<Any?>(null)
     val anchorKey: StateFlow<Any?> = _anchorKey.asStateFlow()
 
+    /** Turning measuring off also drops the anchor it set. */
     fun setMeasuring(isMeasuring: Boolean) {
         _isMeasuring.value = isMeasuring
         if (!isMeasuring) _anchorKey.value = null
     }
 
-    /**
-     * Routes a pick while measuring and says what the selection becomes. [isPress] is a fresh touch, as opposed to a
-     * finger moving on.
-     */
-    fun route(
-        hitKey: Any?,
-        isPress: Boolean,
-    ): Pick {
-        val anchor = _anchorKey.value
-        return when {
-            anchor == null && isPress -> {
-                _anchorKey.value = hitKey
-                Pick.Select(hitKey)
-            }
-
-            anchor == null -> Pick.Keep
-
-            isPress && hitKey == anchor -> {
-                _anchorKey.value = null
-                Pick.Select(null)
-            }
-
-            else -> Pick.Select(hitKey)
-        }
-    }
-
-    /** What a pick does to the selection while measuring. */
-    sealed interface Pick {
-        /** Leave the selection as it is. */
-        data object Keep : Pick
-
-        /** Select [key], or clear the selection when it is null. */
-        data class Select(val key: Any?) : Pick
+    fun setAnchor(key: Any?) {
+        _anchorKey.value = key
     }
 }

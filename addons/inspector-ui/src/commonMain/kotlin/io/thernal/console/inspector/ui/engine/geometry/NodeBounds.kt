@@ -1,6 +1,7 @@
 package io.thernal.console.inspector.ui.engine.geometry
 
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.LayoutInfo
 import androidx.compose.ui.layout.boundsInWindow
 
@@ -20,3 +21,19 @@ internal fun boundsOf(layout: LayoutInfo): Rect? {
         layout.takeIf { it.isAttached && it.isPlaced }?.coordinates?.boundsInWindow()
     }.getOrNull()?.takeIf { it.width > 0f && it.height > 0f }
 }
+
+/**
+ * Window bounds of a placed layout node's frame, read through [frame] from `frameCoordinatesOf`. Falls back to the
+ * content box when there is no frame or its coordinates went stale after the modifier chain changed.
+ */
+internal fun frameBoundsOf(
+    layout: LayoutInfo,
+    frame: LayoutCoordinates?,
+): Rect? {
+    val content = boundsOf(layout) ?: return null
+    return frame?.let(::windowBounds)?.takeIf { it.width > 0f && it.height > 0f } ?: content
+}
+
+/** Window bounds of attached coordinates, `null` once they are detached. */
+internal fun windowBounds(coordinates: LayoutCoordinates): Rect? =
+    runCatching { coordinates.takeIf { it.isAttached }?.boundsInWindow() }.getOrNull()

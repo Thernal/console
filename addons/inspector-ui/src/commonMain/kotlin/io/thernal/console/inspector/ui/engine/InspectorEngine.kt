@@ -2,11 +2,8 @@ package io.thernal.console.inspector.ui.engine
 
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.tooling.CompositionData
-import androidx.compose.ui.geometry.Offset
 import io.thernal.console.inspector.ConsoleInspector
 import io.thernal.console.inspector.InspectorCommand
-import io.thernal.console.inspector.ui.engine.geometry.outerBoundsOf
-import io.thernal.console.inspector.ui.engine.geometry.pickRect
 import io.thernal.console.inspector.ui.engine.recomposition.InspectorEvent
 import io.thernal.console.inspector.ui.engine.recomposition.InspectorTiming
 import io.thernal.console.inspector.ui.engine.recomposition.RecompositionCounts
@@ -99,13 +96,16 @@ internal object InspectorEngine {
         }
     }
 
-    /** Leaving inspect mode drops the pick too, unless the caller is about to show its details. */
+    /**
+     * Leaving inspect mode drops the pick too, unless the caller is about to show its details, and ends measuring.
+     * An anchor set from the tab outside measuring stays.
+     */
     fun setInspectMode(
         isActive: Boolean,
         keepSelection: Boolean = false,
     ) {
         _inspectMode.value = isActive
-        if (!isActive) InspectorMeasure.setMeasuring(false)
+        if (!isActive && InspectorMeasure.isMeasuring.value) InspectorMeasure.setMeasuring(false)
         if (!isActive && !keepSelection) _selectedKey.value = null
     }
 
@@ -138,32 +138,6 @@ internal object InspectorEngine {
         val gap = maxOf(MIN_AUTO_REFRESH_GAP, built.buildMicros.microseconds * BUILD_COST_FACTOR)
         nextAutoRefreshMillis = nowMillis() + gap.inWholeMilliseconds
         publishCounts()
-    }
-
-    /** Selects the smallest visible node whose bounds contain [point] (window coordinates). */
-    fun selectAt(
-        point: Offset,
-        isPress: Boolean = true,
-    ): InspectorNode? {
-        refresh(force = true)
-        // Picking reaches every component, Text and Icon included: the framework filter only thins out the tree.
-        val snapshot = _snapshot.value
-        val bounds = snapshot.liveBounds()
-        val hit = snapshot.visibleNodes(hideFramework = false)
-            .mapNotNull { node ->
-                val content = bounds[node.id] ?: return@mapNotNull null
-                val area = pickRect(content, point) { node.primaryLayout?.let(::outerBoundsOf) }
-                if (area.contains(point)) node to area else null
-            }
-            .minWithOrNull(compareBy({ it.second.width * it.second.height }, { -it.first.depth }))
-            ?.first
-        if (InspectorMeasure.isMeasuring.value) {
-            val pick = InspectorMeasure.route(hit?.key, isPress)
-            if (pick is InspectorMeasure.Pick.Select) _selectedKey.value = pick.key
-        } else {
-            _selectedKey.value = hit?.key
-        }
-        return hit
     }
 
     fun reasonOf(key: Any): String? {

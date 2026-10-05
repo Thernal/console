@@ -11,10 +11,12 @@ internal fun NodeDetails.toText(): String {
         sizeDp?.let { appendLine("Size: $it") }
         positionDp?.let { appendLine("Position: $it") }
         padding?.let { appendLine("Padding: $it") }
+        margin?.let { appendLine("Margin: $it") }
         boundsPx?.let { appendLine("Bounds (px): $it") }
         appendLine("Recompositions: ${recompositionText()}")
         skippedPasses?.let { appendLine("Skipped: $it") }
         lastReason?.let { appendLine("Last reason: $it") }
+        distanceFromAnchor?.let { appendLine("Distance from $anchorName: $it") }
         if (modifiers.isNotEmpty()) appendLine("Modifiers: ${modifiers.joinToString(" | ")}")
         if (parameterNames.isNotEmpty()) appendLine("Parameters: ${parameterNames.joinToString()}")
         if (slotValues.isNotEmpty()) appendLine("Slot values: ${slotValues.joinToString(" | ")}")

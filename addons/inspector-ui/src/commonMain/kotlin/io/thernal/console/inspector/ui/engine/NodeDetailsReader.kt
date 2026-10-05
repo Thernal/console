@@ -7,7 +7,8 @@ import androidx.compose.runtime.tooling.parseSourceInformation
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.LayoutInfo
 import androidx.compose.ui.platform.InspectableValue
-import io.thernal.console.inspector.ui.engine.geometry.readNodePadding
+import io.thernal.console.inspector.ui.engine.geometry.measureDistance
+import io.thernal.console.inspector.ui.engine.geometry.readNodeBox
 import io.thernal.console.inspector.ui.engine.tree.InspectorNode
 import io.thernal.console.inspector.ui.engine.tree.InspectorSnapshot
 import kotlin.math.roundToInt
@@ -28,9 +29,18 @@ internal object NodeDetailsReader {
         ownRecompositions: Int,
         skippedPasses: Int?,
         lastReason: String?,
+        anchor: InspectorNode?,
+        anchorBounds: Rect?,
     ): NodeDetails {
         val layout = node.primaryLayout
         val density = layout?.density?.density
+        val box = layout?.let(::readNodeBox)
+        val isAnchor = anchor != null && anchor.key == node.key
+        val distance = if (isAnchor || bounds == null || anchorBounds == null || density == null) {
+            null
+        } else {
+            measureDistance(anchorBounds, bounds).describe(density)
+        }
         val parent = snapshot.nodes.getOrNull(node.parentId)
         val info = node.group.sourceInfo?.let { parseSourceInformation(it) }
         return NodeDetails(
@@ -40,7 +50,8 @@ internal object NodeDetailsReader {
             boundsPx = bounds?.let(::formatRect),
             sizePx = bounds?.let { "${it.width.roundToInt()} × ${it.height.roundToInt()} px" },
             sizeDp = bounds?.let { rect -> density?.let { "${dp(rect.width, it)} × ${dp(rect.height, it)} dp" } },
-            padding = layout?.let(::readNodePadding)?.let { padding -> density?.let(padding::describe) },
+            padding = box?.padding?.let { padding -> density?.let(padding::describe) },
+            margin = box?.margin?.let { margin -> density?.let(margin::describe) },
             positionDp = bounds?.let { rect -> density?.let { "(${dp(rect.left, it)}, ${dp(rect.top, it)}) dp" } },
             density = layout?.density?.let { "${it.density}x · font ${it.fontScale}x" },
             layoutDirection = layout?.layoutDirection?.name,
@@ -51,6 +62,9 @@ internal object NodeDetailsReader {
             modifiers = layout?.let(::readModifiers).orEmpty(),
             parameterNames = info?.parameters?.mapNotNull { it.name }.orEmpty(),
             slotValues = node.group.data.take(MAX_SLOT_VALUES).map { shortValue(it) },
+            isAnchor = isAnchor,
+            anchorName = anchor?.name,
+            distanceFromAnchor = distance,
         )
     }
 

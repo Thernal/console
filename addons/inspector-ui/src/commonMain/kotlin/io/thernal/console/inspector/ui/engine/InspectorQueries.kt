@@ -12,14 +12,18 @@ internal object InspectorQueries {
 
     fun detailsOf(node: InspectorNode): NodeDetails {
         val snapshot = InspectorEngine.snapshot.value
+        val bounds = snapshot.liveBounds()
+        val anchor = snapshot.nodeByKey(InspectorMeasure.anchorKey.value)
         return NodeDetailsReader.read(
             snapshot = snapshot,
             node = node,
-            bounds = snapshot.liveBounds()[node.id],
+            bounds = bounds[node.id],
             recompositions = InspectorEngine.nodeCounts.value[node.id] ?: 0,
             ownRecompositions = InspectorEngine.ownNodeCounts.value[node.id] ?: 0,
             skippedPasses = if (canReadSkips) InspectorEngine.skippedCounts.value[node.id] ?: 0 else null,
             lastReason = InspectorEngine.reasonOf(node.key),
+            anchor = anchor,
+            anchorBounds = anchor?.let { bounds[it.id] },
         )
     }
 

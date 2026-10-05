@@ -12,7 +12,8 @@ import androidx.compose.ui.text.drawText
 import io.thernal.console.inspector.ui.engine.geometry.DistanceSegment
 import io.thernal.console.inspector.ui.engine.geometry.insetSegments
 import io.thernal.console.inspector.ui.engine.geometry.measureDistance
-import io.thernal.console.inspector.ui.engine.geometry.readNodePadding
+import io.thernal.console.inspector.ui.engine.geometry.NodePadding
+import io.thernal.console.inspector.ui.engine.geometry.readNodeBox
 import io.thernal.console.inspector.ui.engine.tree.InspectorNode
 import kotlin.math.roundToInt
 
@@ -117,18 +118,29 @@ private fun DrawScope.drawSelection(
     val heightDp = (bounds.height / density).roundToInt()
     val sizeLabel = "${node.name}  $widthDp×$heightDp dp"
     drawTag(sizeLabel, Offset(bounds.left, bounds.bottom), alignRight = false, style, measurer)
-    if (scene.config.showMeasurements) node.primaryLayout?.let { drawPadding(it, style, measurer) }
+    if (scene.config.showMeasurements) node.primaryLayout?.let { drawBox(it, style, measurer) }
     if (scene.config.showMeasurements && scene.anchor == null) {
         scene.parentBounds(node, liveBounds)?.let { drawMeasurements(bounds, it, style, measurer) }
     }
 }
 
-private fun DrawScope.drawPadding(
+/** Padding inside the selected frame, and the fainter margin around it. */
+private fun DrawScope.drawBox(
     layout: LayoutInfo,
     style: InspectorDrawStyle,
     measurer: TextMeasurer,
 ) {
-    val padding = readNodePadding(layout) ?: return
+    val box = readNodeBox(layout) ?: return
+    box.margin?.let { drawPadding(it, MARGIN_ALPHA, style, measurer) }
+    box.padding?.let { drawPadding(it, PADDING_ALPHA, style, measurer) }
+}
+
+private fun DrawScope.drawPadding(
+    padding: NodePadding,
+    alpha: Float,
+    style: InspectorDrawStyle,
+    measurer: TextMeasurer,
+) {
     padding.rings.forEach { ring ->
         val topBand = Rect(ring.outer.left, ring.outer.top, ring.outer.right, ring.inner.top)
         val bottomBand = Rect(ring.outer.left, ring.inner.bottom, ring.outer.right, ring.outer.bottom)
@@ -142,7 +154,7 @@ private fun DrawScope.drawPadding(
         )
         sides.forEach { (_, band) ->
             if (band.width > 0f && band.height > 0f) {
-                drawRect(style.padding.copy(alpha = PADDING_ALPHA), band.topLeft, band.size)
+                drawRect(style.padding.copy(alpha = alpha), band.topLeft, band.size)
             }
         }
         sides.forEach { (px, band) ->
@@ -195,6 +207,7 @@ private const val HEAT_ALPHA = 0.35f
 private const val FLASH_ALPHA = 0.55f
 private const val SELECTION_ALPHA = 0.25f
 private const val PADDING_ALPHA = 0.35f
+private const val MARGIN_ALPHA = 0.15f
 private const val LABEL_BACKGROUND_ALPHA = 0.85f
 private const val STROKE_PX = 1f
 private const val SELECTION_STROKE_PX = 3f

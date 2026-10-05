@@ -68,17 +68,24 @@ No code required: the **Inspector** tab appears and the overlay is installed aut
 On JVM desktop, call `enableInspectorSourceInformation()` (`io.thernal.console.inspector.ui`) before creating the window, otherwise
 composable names are missing for the root composition.
 
-- **Framework components:** tapping picks the smallest component under the finger, `Text`, `Icon` and `Box` included, so
-  you can measure the gap between two texts. *Details* has *Select parent* to go up to the composable that uses them.
-  The *framework filter* in Settings only thins out the tree, bounds and labels. Plain `Layout` calls are named after
+- **Picking, step by step:** like a design tool, a tap picks the outermost component under the finger (screen-filling
+  roots and same-sized wrappers are skipped), and tapping inside the selection again steps one level in, down to
+  `Text`, `Icon` and `Box`. Tapping beside the selection picks on its level. Dragging picks the smallest component under
+  the finger right away. A mouse picks by clicking; hovering picks nothing. *Details* has *Select parent* to go back up.
+- **Framework components:** picking reaches every component; with the *framework filter* on, the steps skip hidden
+  framework wrappers but still end on the `Text` or `Icon` under the finger. The filter only thins out the tree, bounds
+  and labels. Plain `Layout` calls are named after
   the composable that uses them (`BasicText`, `Box`). Items that share an edge read `Touching · 0 dp`.
-- **Padding:** the selected component's own `Modifier.padding` is drawn as an amber band with its size in dp, and the
-  *Details* tab lists it (`top 18 · left 18 · right 18 · bottom 18 dp`). It is read from where each padding modifier sits in
-  the chain, so stacked paddings and RTL are right. The selection box itself is the content, without its padding, but tapping the
-  padding still picks that component, not its parent.
+- **Frame, padding and margin:** a component's box is its frame, the edge you see: the first background, border,
+  shadow or clip in its modifier chain. Padding after that is *inside* the frame and padding before it is margin, so
+  `Modifier.background(...).padding(16.dp)` is framed at the background and gaps between cards are measured
+  border to border. With nothing drawn, every padding counts as inside. The selected component's padding is drawn as an
+  amber band inside its frame and its margin as a fainter one outside, with sizes in dp, and *Details* lists both
+  (`top 18 · left 18 · right 18 · bottom 18 dp`). They are read from where each padding modifier sits in the chain, so
+  stacked paddings and RTL are right. Tapping a margin still picks that component, not its parent.
 - **Tab:** *Tree* (search, collapse), *Details* (source, size in dp and px, parent, modifiers,
-  parameters, recomposition count and last reason), *Recompositions* (ranking and composition timing).
-  Actions: inspect, freeze, refresh, copy the tree, reset statistics.
+  parameters, recomposition count and last reason, distance from the measuring anchor), *Recompositions* (ranking,
+  composition timing and reset). Actions: inspect, freeze, refresh, copy the tree.
 - **Quick controls:** the inspector is in the floating dock as a tab by default; turn off *Show quick controls* in Settings to remove it.
   Its controls are icon-only buttons (long press shows the name) grouped as *Actions* (inspect, measure, freeze, tree), *Overlay* (bounds, labels, counters, heatmap, flash on recomposition,
   reset) and *Environment* (font scale, RTL). While you pick, the dock turns amber; fold it and it becomes a pill with **Details** and
@@ -93,10 +100,13 @@ composable names are missing for the root composition.
   counter on Android and the iOS simulator (20 recompositions counted as 20, 20 skips as 20 skips, on both). A scope
   that recomposes before the first tree read counts as its first pass. The skip flag is a Compose internal: if a Compose
   version changes it, the read switches itself off and every pass counts, so the numbers include skips again.
-- **Measure:** the ruler button in the dock turns inspect mode into a two-point ruler. The first tap sets a green anchor;
-  tapping or dragging over another item then draws the distance between them in dp, and the dock row repeats it
+- **Measure:** the ruler button in the dock turns inspect mode into a two-point ruler. The first tap sets a green anchor
+  and tapping inside it steps the anchor in; tapping another item then picks the second one on the anchor's level (tap
+  again to step in, or drag) and draws the distance between them in dp, and the dock row repeats it
   (`↔ 24 · ↕ 12 dp`). Side by side or stacked items show the gap between their facing edges, diagonal ones an L of two
-  gaps, and an item inside the other shows its four insets. Tap the anchor again to choose a new one.
+  gaps, and an item inside the other shows its four insets. Turn the ruler off and on to choose a new anchor.
+  In the tab, *Measure from here* in *Details* makes the selected composable the anchor; select another one in the
+  tree and *Details* shows the distance (the overlay draws it too). *Clear anchor* removes it.
 - **Inspect mode:** closes the console, then tap or drag over the app to pick a component. The overlay
   shows its bounds, size and the distance to its parent; **Details** reopens the tab.
 - **Settings** (Settings tab, persisted): enable, quick controls, recomposition tracking, flash highlight and duration,
