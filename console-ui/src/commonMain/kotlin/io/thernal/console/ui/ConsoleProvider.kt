@@ -16,9 +16,14 @@ import io.thernal.console.api.addon.ConsoleTab
 import io.thernal.console.api.navigation.ConsoleNavigator
 import io.thernal.console.api.navigation.ConsoleRoute
 import io.thernal.console.api.navigation.LocalConsoleNavigator
-import io.thernal.console.api.addon.ConsoleOverlays
+import io.thernal.console.api.addon.ConsoleContentWrappers
+import io.thernal.console.api.addon.ConsoleOverlayLayer
 import io.thernal.console.api.ui.LocalLogRenderer
 import io.thernal.console.ui.addon.DispatchLogRenderer
+import io.thernal.console.ui.addon.WrappedContent
+import io.thernal.console.ui.dock.ConsoleDockHost
+import io.thernal.console.ui.dock.ConsoleOverlayLayerHost
+import io.thernal.console.ui.dock.LegacyOverlayHost
 import io.thernal.console.ui.autoinit.installPlatformAddons
 import io.thernal.console.api.trigger.ConsoleTrigger
 import io.thernal.console.api.trigger.Swipe
@@ -73,9 +78,12 @@ fun ConsoleProvider(
                         }
                     },
             ) {
-                content()
+                WrappedContent(wrappers = ConsoleContentWrappers.wrappers, content = content)
 
-                ConsoleOverlays.overlays.forEach { overlay -> overlay() }
+                ConsoleOverlayLayerHost(ConsoleOverlayLayer.Backdrop)
+                ConsoleOverlayLayerHost(ConsoleOverlayLayer.Capture)
+                LegacyOverlayHost()
+                ConsoleDockHost()
 
                 AnimatedVisibility(
                     visible = consoleVisible.value,

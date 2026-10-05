@@ -50,6 +50,73 @@ No code required. The stepper control appears inside the console automatically o
 
 ---
 
+## UI inspector
+
+Inspects the running Compose UI from inside the console: the composable tree, bounds, sizes and
+modifiers, tap-to-select on the app, and recomposition tracking with counters, flashes and a heatmap.
+Works on Android, iOS and JVM; everything is read through Compose's tooling APIs, so no per-platform
+code is needed.
+
+```kotlin
+// debug
+implementation("io.github.thernal:console-inspector-ui:<version>")
+// release — no-op stub with the same API, no UI overhead
+implementation("io.github.thernal:console-inspector-core-noop:<version>")
+```
+
+No code required: the **Inspector** tab appears and the overlay is installed automatically.
+On JVM desktop, call `enableInspectorSourceInformation()` (`io.thernal.console.inspector.ui`) before creating the window, otherwise
+composable names are missing for the root composition.
+
+- **Framework components:** tapping picks the smallest component under the finger, `Text`, `Icon` and `Box` included, so
+  you can measure the gap between two texts. *Details* has *Select parent* to go up to the composable that uses them.
+  The *framework filter* in Settings only thins out the tree, bounds and labels. Plain `Layout` calls are named after
+  the composable that uses them (`BasicText`, `Box`). Items that share an edge read `Touching · 0 dp`.
+- **Padding:** the selected component's own `Modifier.padding` is drawn as an amber band with its size in dp, and the
+  *Details* tab lists it (`top 18 · left 18 · right 18 · bottom 18 dp`). It is read from where each padding modifier sits in
+  the chain, so stacked paddings and RTL are right. The selection box itself is the content, without its padding, but tapping the
+  padding still picks that component, not its parent.
+- **Tab:** *Tree* (search, collapse), *Details* (source, size in dp and px, parent, modifiers,
+  parameters, recomposition count and last reason), *Recompositions* (ranking and composition timing).
+  Actions: inspect, freeze, refresh, copy the tree, reset statistics.
+- **Quick controls:** the inspector is in the floating dock as a tab by default; turn off *Show quick controls* in Settings to remove it.
+  Its controls are icon-only buttons (long press shows the name) grouped as *Actions* (inspect, measure, freeze, tree), *Overlay* (bounds, labels, counters, heatmap, flash on recomposition,
+  reset) and *Environment* (font scale, RTL). While you pick, the dock turns amber; fold it and it becomes a pill with **Details** and
+  **Exit**, which stays on screen even when floating widgets are hidden. The dock never folds by itself.
+- **Recomposition counts:** a scope's first pass is its initial composition and is not counted. Scopes without a
+  group identity (most of them) are matched to their composable through the scope object in the slot table, so they are
+  counted too. A pass where the parent recomposed but the composable's parameters had not changed is a **skip**: the
+  function did not run. Skips are not counted as recompositions (they never flash or heat the heatmap) and are listed
+  separately as *Skipped* in *Details*, the same split Android Studio makes. *Details* shows the composable's own count,
+  and `20 own · 40 with framework below` when hidden framework components under it (a `Text`) recomposed as well; the
+  heatmap and the ×N tags use the larger number so lambda-driven updates are not lost. Checked against a `SideEffect`
+  counter on Android and the iOS simulator (20 recompositions counted as 20, 20 skips as 20 skips, on both). A scope
+  that recomposes before the first tree read counts as its first pass. The skip flag is a Compose internal: if a Compose
+  version changes it, the read switches itself off and every pass counts, so the numbers include skips again.
+- **Measure:** the ruler button in the dock turns inspect mode into a two-point ruler. The first tap sets a green anchor;
+  tapping or dragging over another item then draws the distance between them in dp, and the dock row repeats it
+  (`↔ 24 · ↕ 12 dp`). Side by side or stacked items show the gap between their facing edges, diagonal ones an L of two
+  gaps, and an item inside the other shows its four insets. Tap the anchor again to choose a new one.
+- **Inspect mode:** closes the console, then tap or drag over the app to pick a component. The overlay
+  shows its bounds, size and the distance to its parent; **Details** reopens the tab.
+- **Settings** (Settings tab, persisted): enable, quick controls, recomposition tracking, flash highlight and duration,
+  heatmap and threshold, counters, bounds, labels, measurements, framework filter and app source
+  filters, auto-refresh, and font scale / layout direction overrides.
+
+```kotlin
+// Programmatic control, same API in the no-op artifact
+ConsoleInspector.updateConfig { copy(showBounds = true, showRecompositionCounters = true) }
+ConsoleInspector.dispatch(InspectorCommand.ResetStats)
+```
+
+Notes: composition timings only count passes that ran app composables, so the inspector's own UI never
+inflates them. Names and source positions need the slot-table source information, which the addon switches
+on at install time (debug only). Library composables on iOS have no parameter names. Hidden
+"framework" composables are matched by a built-in list of file names; set app source filters to
+define app code precisely.
+
+---
+
 ## Network
 
 Captures HTTP traffic and renders it in the log list with method, status code, URL, headers, body, and round-trip duration. Tap any entry to see the full request/response detail.

@@ -14,6 +14,7 @@ kotlin {
             api(projects.consoleRuntime)
             api(projects.addons.crashReportCore)
             api(projects.addons.detailsCore)
+            api(projects.addons.inspectorCore)
             api(projects.addons.networkCore)
         }
     }

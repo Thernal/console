@@ -31,6 +31,11 @@ object Typography {
         fontWeight = FontWeight.Medium,
         letterSpacing = 0.1.sp,
     )
+    val label03 = TextStyle(
+        fontSize = 10.sp,
+        lineHeight = 13.sp,
+        fontWeight = FontWeight.Medium,
+    )
 
     // Title — section başlıkları, AppBar
     val title01 = TextStyle(
