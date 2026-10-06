@@ -3,11 +3,13 @@ package io.thernal.console.designsystem.components.core.navigationbar
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +28,7 @@ import io.thernal.console.designsystem.foundation.theme.LocalDsTextStyle
 import io.thernal.console.designsystem.foundation.theme.Theme
 
 @Composable
-fun RowScope.DsNavigationBarItem(
+fun DsNavigationBarItem(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -35,6 +37,10 @@ fun RowScope.DsNavigationBarItem(
     label: @Composable () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    LaunchedEffect(selected) {
+        if (selected) bringIntoViewRequester.bringIntoView()
+    }
     val contentColor = when {
         !enabled -> Theme.colors.content04
         selected -> Theme.colors.primary01
@@ -43,7 +49,7 @@ fun RowScope.DsNavigationBarItem(
 
     Column(
         modifier = modifier
-            .weight(1f)
+            .bringIntoViewRequester(bringIntoViewRequester)
             .selectable(
                 selected = selected,
                 enabled = enabled,
@@ -52,7 +58,10 @@ fun RowScope.DsNavigationBarItem(
                 indication = PressableIndication(),
                 onClick = onClick,
             )
-            .padding(vertical = Theme.dimens.dp4),
+            .padding(
+                horizontal = Theme.dimens.dp8,
+                vertical = Theme.dimens.dp4,
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(
             space = Theme.dimens.dp2,
