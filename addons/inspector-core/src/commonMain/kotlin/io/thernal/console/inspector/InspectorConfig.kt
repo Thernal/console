@@ -12,7 +12,7 @@ data class InspectorConfig(
     val enabled: Boolean = true,
     val showQuickControls: Boolean = true,
     val trackRecompositions: Boolean = true,
-    val highlightRecompositions: Boolean = true,
+    val highlightRecompositions: Boolean = false,
     val highlightDurationMillis: Int = DEFAULT_HIGHLIGHT_DURATION_MILLIS,
     val showHeatmap: Boolean = false,
     val heatmapThreshold: Int = DEFAULT_HEATMAP_THRESHOLD,

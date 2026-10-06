@@ -91,7 +91,7 @@ Section **Inspector** (`id = "inspector"`), bound to `ConsoleInspector.config`:
 | `enabled` | The whole inspector; the app UI is unaffected either way | `true` |
 | `showQuickControls` | Keep the inspector in the floating dock | `true` |
 | `trackRecompositions` | Count recompositions and record their reason | `true` |
-| `highlightRecompositions` / `highlightDurationMillis` | Flash a composable when it recomposes, for 100–5000 ms | `true` / `600` |
+| `highlightRecompositions` / `highlightDurationMillis` | Flash a composable when it recomposes, for 100–5000 ms | `false` / `600` |
 | `showHeatmap` / `heatmapThreshold` | Tint by count, blue to red; the count that is fully hot (1–1000) | `false` / `30` |
 | `showRecompositionCounters` | ×N tags | `false` |
 | `showBounds` / `showLabels` | Frames and names of every component | `false` |
