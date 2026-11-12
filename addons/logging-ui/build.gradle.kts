@@ -10,6 +10,7 @@ kotlin {
             implementation(projects.consoleRuntime)
             implementation(projects.designsystem.components)
             implementation(projects.addons.settingsApi)
+            implementation(projects.addons.agentApi)
             // UI
             implementation(libs.compose.foundation)
             implementation(libs.compose.material.icons.extended)
