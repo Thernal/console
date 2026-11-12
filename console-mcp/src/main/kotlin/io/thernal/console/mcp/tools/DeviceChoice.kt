@@ -31,13 +31,25 @@ sealed interface DeviceChoice {
                 offering.filter { it.connected }.ifEmpty { offering }
             } else {
                 offering.filter { it.info.id == argument }
-                    .ifEmpty { offering.filter { it.info.name.contains(argument, ignoreCase = true) } }
+                    .ifEmpty {
+                        offering.filter {
+                            it.info.name.contains(
+                                argument,
+                                ignoreCase = true,
+                            )
+                        }.preferConnected()
+                    }
             }
             return when (matches.size) {
                 1 -> Found(matches.single())
                 0 -> Problem("No device matches \"$argument\".\n${describe(offering)}")
                 else -> Problem("Several devices match; pass `device` (an id or part of a name).\n${describe(matches)}")
             }
+        }
+
+        /** A name can match an app that left and one that is still here; the connected ones win. */
+        private fun List<HubDevice>.preferConnected(): List<HubDevice> {
+            return filter { it.connected }.ifEmpty { this }
         }
 
         fun describe(devices: List<HubDevice>): String {
@@ -48,7 +60,8 @@ sealed interface DeviceChoice {
                     .joinToString().ifEmpty { "nothing yet" }
                 val actions = if (device.manifest.actions) "on" else "off"
                 val app = info.app ?: "unknown app"
-                "- ${info.name} · ${info.platform} ${info.os} · $app · $state · id ${info.id}\n" +
+                val runs = if (device.runs > 1) " · run ${device.runs} (restarted)" else ""
+                "- ${info.name} · ${info.platform} ${info.os} · $app · $state$runs · id ${info.id}\n" +
                     "  offers: $offers · actions $actions"
             }
         }

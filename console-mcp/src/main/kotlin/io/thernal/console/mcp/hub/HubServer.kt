@@ -103,7 +103,11 @@ class HubServer(
             }
 
             "record" -> deviceId?.let {
-                store.addRecord(deviceId = it, record = json.decodeFromJsonElement(HubRecord.serializer(), message))
+                store.addRecord(
+                    deviceId = it,
+                    link = link,
+                    record = json.decodeFromJsonElement(HubRecord.serializer(), message),
+                )
             }
 
             "result" -> {

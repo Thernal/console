@@ -32,9 +32,13 @@ The tool list follows the connected apps:
 | `<feed>_get` | Same feed | `device`, `id` (a record id or its `#seq`) |
 | `<feed>_wait` | Same feed | The filters of `<feed>`, plus `timeout_seconds` (default 10, max 60); `after` defaults to the newest seq |
 
-`device` is an id or part of a device name, and may be left out when only one connected app offers the tool. Feed
+`device` is an id or part of a device name, and may be left out when only one connected app offers the tool; when a
+name matches an app that left and one that is connected, the connected one wins. Feed
 tools stay listed after their app disconnects; its tools and actions do not. Actions appear only while the app's
 *Allow actions* setting is on, and their description starts with `[Action: changes the app]`.
+
+An Android or iOS app that restarts (after a crash, say) stays the same device: its feeds read on across the restart,
+with a record of kind `Restart` (tag `console`) where the new run starts, and `devices` shows the run number.
 
 When an app connects, registers more, or turns actions on or off, the server sends `notifications/tools/list_changed`,
 and the agent reads the new list. The server's instructions also carry each section's `about` line, so the agent knows
