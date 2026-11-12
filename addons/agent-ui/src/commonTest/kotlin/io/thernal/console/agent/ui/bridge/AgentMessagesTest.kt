@@ -62,13 +62,21 @@ class AgentMessagesTest {
     }
 
     @Test
-    fun `hello carries the protocol version and the device`() {
-        val device = AgentDevice(id = "d1", name = "Pixel", platform = "Android", osVersion = "16", appId = null)
+    fun `hello carries the protocol version and the device with its run`() {
+        val device = AgentDevice(
+            id = "d1",
+            runId = "r1",
+            name = "Pixel",
+            platform = "Android",
+            osVersion = "16",
+            appId = null,
+        )
 
         val json = parse(AgentMessages.hello(device))
 
         assertEquals(AgentMessages.PROTOCOL_VERSION, json.getValue("protocol").jsonPrimitive.int)
         assertEquals(JsonNull, json.getValue("device").jsonObject.getValue("app"))
+        assertEquals("r1", json.getValue("device").jsonObject.getValue("run").jsonPrimitive.content)
     }
 
     private fun parse(text: String): JsonObject {

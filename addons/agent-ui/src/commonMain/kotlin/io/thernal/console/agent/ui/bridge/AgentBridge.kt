@@ -68,8 +68,8 @@ internal class AgentBridge(
     private var cachedRedactor: Pair<Set<String>, AgentRedactor>? = null
 
     @OptIn(ExperimentalUuidApi::class)
-    private val deviceId = Uuid.random().toString()
-    private val platformDevice by lazy { readAgentDevice(deviceId) }
+    private val runId = Uuid.random().toString()
+    private val platformDevice by lazy { readAgentDevice(runId) }
 
     fun start() {
         scope.launch {

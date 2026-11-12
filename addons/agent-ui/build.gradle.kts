@@ -9,12 +9,9 @@ kotlin {
             api(projects.addons.agentApi)
             api(projects.consoleUi)
             implementation(projects.addons.settingsApi)
+            implementation(projects.consoleIo)
             implementation(libs.ktor.network)
             implementation(libs.kotlinx.serialization.json)
-        }
-        // Only the Android device reader needs it, for the app's package name.
-        androidMain.dependencies {
-            implementation(projects.consoleIo)
         }
     }
 }

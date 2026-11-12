@@ -4,10 +4,11 @@ private const val OS_NAME = "os.name"
 private const val OS_VERSION = "os.version"
 private const val JAVA_COMMAND = "sun.java.command"
 
-internal actual fun readAgentDevice(id: String): AgentDevice {
+internal actual fun readAgentDevice(runId: String): AgentDevice {
     val osName = System.getProperty(OS_NAME).orEmpty()
     return AgentDevice(
-        id = id,
+        id = runId,
+        runId = runId,
         name = "Desktop ($osName)",
         platform = "JVM",
         osVersion = System.getProperty(OS_VERSION).orEmpty(),

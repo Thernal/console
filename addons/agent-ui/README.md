@@ -85,7 +85,7 @@ Hub to app: `call`.
 | `bridge/AgentRedactor` | Masks sensitive values in text and fields. |
 | `bridge/AgentArguments` | Validates a call's arguments: required values, ranges, options. |
 | `bridge/AgentCallHandler` | Runs one call and builds its result. |
-| `device/AgentDevice` | Device name, platform, OS version and app id per platform. |
+| `device/AgentDevice` | Device id, run id, name, platform, OS version and app id per platform. The device id is kept in the app's storage on Android and iOS (`device/StoredDeviceId`), so a restarted app is the same device to the hub; on JVM it is new per process, since two copies of a desktop app can run side by side. The run id is new per process. |
 
 Dependencies, in this module only: `ktor-network` for the raw TCP socket (the catalog's ktor) and
 `kotlinx-serialization-json` for the JSON element API (no compiler plugin).

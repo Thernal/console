@@ -27,6 +27,7 @@ internal object AgentMessages {
     fun hello(device: AgentDevice): String {
         val deviceJson = obj(
             "id" to JsonPrimitive(device.id),
+            "run" to JsonPrimitive(device.runId),
             "name" to JsonPrimitive(device.name),
             "platform" to JsonPrimitive(device.platform),
             "os" to JsonPrimitive(device.osVersion),

@@ -6,11 +6,12 @@ import platform.UIKit.UIDevice
 
 private const val SIMULATOR_NAME_KEY = "SIMULATOR_DEVICE_NAME"
 
-internal actual fun readAgentDevice(id: String): AgentDevice {
+internal actual fun readAgentDevice(runId: String): AgentDevice {
     val device = UIDevice.currentDevice
     val simulatorName = NSProcessInfo.processInfo.environment[SIMULATOR_NAME_KEY] as? String
     return AgentDevice(
-        id = id,
+        id = storedDeviceId() ?: runId,
+        runId = runId,
         name = simulatorName?.let { "$it (Simulator)" } ?: device.name,
         platform = "iOS",
         osVersion = device.systemVersion,
