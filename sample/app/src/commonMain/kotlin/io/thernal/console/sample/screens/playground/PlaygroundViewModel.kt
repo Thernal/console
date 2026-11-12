@@ -78,16 +78,18 @@ class PlaygroundViewModel : ViewModel() {
     }
 
     // Emits a synthetic network log with a minified JSON body so the detail view's JSON
-    // pretty-printing can be shown without depending on a live response.
+    // pretty-printing can be shown without depending on a live response. The request carries a
+    // demo key, token and Authorization header: an AI agent reading it through the agent bridge
+    // gets them as [redacted].
     fun logUnformattedJson() {
         val groupId = "json-demo-${jsonDemoCounter++}"
-        val url = "https://api.example.com/v1/echo"
+        val url = "https://api.example.com/v1/echo?api_key=$DEMO_API_KEY"
 
         Console.notify {
             NetworkLog.Request(
                 method = "POST",
                 url = url,
-                headers = jsonHeaders(DEMO_REQUEST_JSON),
+                headers = jsonHeaders(DEMO_REQUEST_JSON) + ("Authorization" to "Bearer $DEMO_BEARER"),
                 body = DEMO_REQUEST_JSON,
                 groupId = groupId,
             )
@@ -134,7 +136,10 @@ class PlaygroundViewModel : ViewModel() {
 
         private const val DEMO_REQUEST_JSON =
             """{"title":"console sample post","body":"unformatted single-line json",""" +
-                """"userId":42,"tags":["network","json"]}"""
+                """"userId":42,"token":"demo-token-456","tags":["network","json"]}"""
+
+        private const val DEMO_API_KEY = "demo-key-123"
+        private const val DEMO_BEARER = "demo-bearer-789"
 
         private const val DEMO_RESPONSE_JSON =
             """{"id":42,"name":"Console Sample","active":true,""" +
