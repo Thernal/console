@@ -1,0 +1,31 @@
+// The MCP SDK needs Ktor 3.5.x while the library modules pin Ktor 3.1.3 for consumers, so the desktop tool lives in
+// its own build. It shares the repo's version catalog (like build-logic); its own libraries are the `mcp-` entries.
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
+    application
+}
+
+group = "io.github.thernal"
+
+kotlin {
+    jvmToolchain(libs.versions.jvm.get().toInt())
+}
+
+dependencies {
+    implementation(libs.mcp.kotlin.sdk.server)
+    implementation(libs.mcp.ktor.network)
+    implementation(libs.kotlin.logging.jvm)
+    implementation(libs.slf4j.nop)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlinx.coroutines.test)
+}
+
+application {
+    applicationName = "console-mcp"
+    mainClass.set("io.thernal.console.mcp.MainKt")
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
