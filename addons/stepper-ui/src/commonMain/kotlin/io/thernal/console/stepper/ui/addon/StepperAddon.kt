@@ -2,6 +2,9 @@
 
 package io.thernal.console.stepper.ui.addon
 
+import io.thernal.console.agent.AgentRegistry
+import io.thernal.console.stepper.ui.agent.StepperAgentGuard
+import io.thernal.console.stepper.ui.agent.stepperAgentEntries
 import io.thernal.console.stepper.ui.stepper.Stepper
 import io.thernal.console.stepper.ui.dock.StepperDockWidget
 import io.thernal.console.core.ConsoleInternalApi
@@ -18,6 +21,8 @@ object StepperAddon : ConsoleAddon {
     override fun onInstall() {
         Console.addObserver(Stepper)
         SettingsRegistry.register(stepperSettingsSection())
+        AgentRegistry.register(stepperAgentEntries())
+        StepperAgentGuard.start()
     }
 
     override fun tab(): ConsoleTab = StepperTab
