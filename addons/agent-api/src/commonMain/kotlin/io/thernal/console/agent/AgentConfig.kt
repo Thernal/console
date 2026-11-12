@@ -27,6 +27,8 @@ data class AgentConfig(
     }
 
     companion object {
+        /** Id of the agent's own Settings section. Agents cannot change it, so they cannot widen what they may do. */
+        const val SETTINGS_SECTION_ID = "agent"
         const val DEFAULT_HUB_HOST = "127.0.0.1"
         const val DEFAULT_HUB_PORT = 47_474
         const val MIN_PORT = 1
