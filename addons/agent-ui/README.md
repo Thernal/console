@@ -5,12 +5,15 @@ The agent bridge: carries what the addons registered in [`agent-api`](../agent-a
 other MCP client) can read the app's logs and state and, when allowed, act on it. The bridge captures nothing itself;
 each addon decides what it shares.
 
+It comes with `console-bundle-ui`. With hand-picked modules, add it to debug builds:
+
 ```kotlin
 debugImplementation("io.github.thernal:console-agent-ui:<version>")
 ```
 
-No code required: the addon installs itself on Android, iOS and JVM. It is not part of `console-bundle-ui`; add it on
-purpose, to debug builds only.
+No code required: the addon installs itself on Android, iOS and JVM. To leave it out, exclude `console-agent-ui` from
+the bundle, or turn off *Share with AI agents* in the Settings tab. Setting up the hub on your machine:
+[`console-mcp`](../../console-mcp/README.md#set-up).
 
 ---
 

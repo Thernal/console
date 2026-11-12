@@ -5,20 +5,20 @@ Desktop side of the Console agent bridge: an MCP server (stdio) for AI coding ag
 and feeds the app's addons registered in [`console-agent-api`](../addons/agent-api/README.md); the hub keeps feed
 records on the Mac, so they stay readable after the app crashed or was killed.
 
-## Build
+## Set up
+
+Part of setting up Console: an app with `console-bundle-ui` (or `console-agent-ui`) in its debug build connects to the
+hub on its own, so the hub is all there is to install. From a clone of this repository:
 
 ```bash
 ./gradlew -p console-mcp installDist
 # → console-mcp/build/install/console-mcp/bin/console-mcp [--port 47474]
-```
-
-## Use with Claude Code
-
-```bash
 claude mcp add console -- "$PWD/console-mcp/build/install/console-mcp/bin/console-mcp"
 ```
 
-Any MCP client that starts a stdio server works the same way.
+Any MCP client that starts a stdio server works the same way. Then run the app (on Android, `adb reverse tcp:47474
+tcp:47474` first) and ask the agent to call `devices`. Not wanted: `claude mcp remove console`, and exclude
+`console-agent-ui` from the app (see the [agent bridge](../addons/agent-ui/README.md)).
 
 ## Tools
 

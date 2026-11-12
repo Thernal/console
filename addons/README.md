@@ -12,7 +12,7 @@ own README with setup, settings and architecture; this page is the index plus a 
 | [Crash reports](crash-report-ui/README.md) | `console-crash-report-ui`, `-crash-report-core` | Streams logs to disk and keeps crash sessions to inspect after relaunch. |
 | [UI inspector](inspector-ui/README.md) | `console-inspector-ui`, `-inspector-core`, `-inspector-core-noop` | Composable tree, picking, measuring, padding, recomposition counts and heatmap. |
 | [Settings](settings-ui/README.md) | `console-settings-ui`, [`-settings-api`](settings-api/README.md), `-settings-api-noop` | The **Settings** tab and the persisted per-addon settings every other addon registers into. |
-| [Agent](agent-ui/README.md) | `console-agent-ui`, [`-agent-api`](agent-api/README.md), `-agent-api-noop` | Shares what addons register (tools, feeds, actions) with AI coding agents over MCP, through the [`console-mcp`](../console-mcp/README.md) hub. Not in `console-bundle-ui`. |
+| [Agent](agent-ui/README.md) | `console-agent-ui`, [`-agent-api`](agent-api/README.md), `-agent-api-noop` | Shares what addons register (tools, feeds, actions) with AI coding agents over MCP, through the [`console-mcp`](../console-mcp/README.md) hub. In `console-bundle-ui`; exclude `console-agent-ui` to leave it out. |
 
 Every `-ui` artifact installs itself on Android, iOS and JVM; no `install()` call is needed. Addons with a public
 facade ship a `-noop` artifact with the same API for release builds; addons without one (stepper, network, crash
