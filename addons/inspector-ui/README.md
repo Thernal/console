@@ -101,8 +101,35 @@ Section **Inspector** (`id = "inspector"`), bound to `ConsoleInspector.config`:
 | `autoRefreshSeconds` | Rebuild the tree periodically (0–60, 0 = manual) | `0` |
 | `fontScale` / `layoutDirection` | Environment overrides | follow system / app |
 
-Without `appSourceTags`, framework composables are recognised by a built-in list of Compose file names and by
-lower-case names (`remember*`, `collectAsState`). Library composables on iOS have no parameter names.
+Without `appSourceTags`, framework composables are recognised by a built-in list of Compose file names (a platform
+variant such as `BasicText.android.kt` counts as `BasicText.kt`) and by lower-case names (`remember*`,
+`collectAsState`). Library composables on iOS have no parameter names.
+
+## Agent
+
+With [`console-agent-ui`](../agent-ui/README.md) installed, the addon shares the screen's composable tree with an AI
+coding agent (section `inspector`), so it can check a layout after a code change without a screenshot, try RTL and
+large fonts, and find recomposition hot spots.
+
+| Tool | Kind | What it does |
+|------|------|--------------|
+| `ui_tree(query, depth, framework, limit)` | Tool | One line per node: `#12 CartRow (Cart.kt) @16,320 360×56 "Total" ×3`, i.e. id, composable, source file, bounds (`x,y w×h` in dp), texts and recompositions, indented by depth. Framework nodes are hidden as in the tab unless `framework = true`; `query` keeps the nodes whose name or file contains it with everything inside them; at most `limit` lines (150 by default). |
+| `ui_node(id)` | Tool | One node in full, as the tab's details show it: size, position and pixel bounds, padding, margin, modifiers, parameters, slot values, recompositions and the last reason, plus its texts, test tags, the nodes it sits in and its children. |
+| `ui_find(text, limit)` | Tool | Nodes whose name, source file, text or `testTag` contains the text, each with the nodes it sits in. |
+| `recompositions(limit)` | Tool | The most recomposed nodes since the last reset, with the last reason, and the composition timings. |
+| `ui_font_scale(scale)` | Action | Scales the app's fonts over the system's (`Small` … `Huge`), or `default`. |
+| `ui_layout_direction(direction)` | Action | Forces `ltr` or `rtl`, or `system`. |
+| `recompositions_reset` | Action | Resets the counts and timings. |
+
+Every read rebuilds the tree on the main thread first, so it shows the screen as it is now. Ids are kept per node, so
+a node keeps its id across calls while its composable stays on screen; `ui_tree`, `ui_find` and `ui_node` share them.
+Texts come from the slot table (values that can change, such as a price) and, on Android, from the semantics tree, so
+a literal `Text("Total")` shows there too; on iOS and desktop the semantics tree is internal to Compose and literals
+do not show. Overrides from the actions are not saved. While the inspector is off (`enabled`), lists, dialogs and
+other sub-compositions are missing from the tree, and the answers say so.
+
+After changing a padding in `CartRow.kt`, for example: `ui_find("Total")` → `ui_node(id)` shows the new padding;
+`ui_layout_direction("rtl")` → `ui_tree(query = "CartRow")` shows mirrored bounds.
 
 ## Architecture
 
@@ -123,7 +150,7 @@ Recomposer ─► RecompositionObserver ─Channel─► InspectorEngine (main t
 The addon plugs into Console through four `ConsoleAddon` hooks (`addon/InspectorAddon`): a **content wrapper**
 (`InspectorHost`), two **layered overlays** (`Backdrop` draws, `Capture` takes touches; both follow the dock widget's
 visibility), the **tab** and the **dock widget**. `onInstall` switches on slot-table source information and registers
-the settings section.
+the settings section and the agent entries.
 
 ### Packages (`io.thernal.console.inspector.ui`)
 
@@ -136,6 +163,7 @@ the settings section.
 | `engine/recomposition` | `RecompositionObserver` observes every running `Recomposer` and only enqueues events, since callbacks arrive on composition threads. `ScopeSkip` reads the runtime's internal skip flag; `RecompositionCounts` keeps per-scope counts, moves the counts of scopes that left the tree onto their node, and credits hidden framework nodes to the app composable above them. |
 | `overlay` | `InspectorBackdrop` / `InspectorDrawLayer` / `DrawInspectorScene` draw on one `Canvas`, redrawn every frame (`FrameTick`) only while there is something live to draw, capped at 600 nodes and 150 labels. `InspectorCapture` / `InspectorPickLayer` swallow pointer input while inspecting. |
 | `dock` | The widget (status *Attention* while picking), its chip panel, the folded-dock quick action and the summary line. |
+| `agent` | The agent entries (`InspectorAgentEntries`), the reads they run on the main thread (`InspectorAgentReads`, `UiTreeReader`), ids kept per node key (`InspectorAgentIds`), the text of the answers, and `PlatformSemantics`, which reads the semantics tree's texts where the platform shares it (Android). |
 | `view/inspector`, `navigation` | The tab: `InspectorViewModel` combines the engine flows into tree rows, details and ranking; `TreeExporter` produces the copied text. |
 
 ### Keeping the numbers honest
