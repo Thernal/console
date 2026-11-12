@@ -27,6 +27,14 @@ matter whether the app or the agent session starts first.
 
 Several apps can connect to one hub at once; the agent picks one with the `device` argument.
 
+## What the addons share
+
+Each addon registers its own entries; installing it is enough.
+
+| Addon | Section | Tools |
+|-------|---------|-------|
+| [Logs](../logging-ui/README.md#agent) | `logging` | `logs` feed, `logs_summary`, action `logs_write` |
+
 ## Settings
 
 Section **Agent** in the Settings tab (order 60), bound to `ConsoleAgent.config`:
