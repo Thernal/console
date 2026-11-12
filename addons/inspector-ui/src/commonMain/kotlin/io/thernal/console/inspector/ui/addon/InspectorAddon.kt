@@ -2,6 +2,8 @@
 
 package io.thernal.console.inspector.ui.addon
 
+import io.thernal.console.agent.AgentRegistry
+import io.thernal.console.inspector.ui.agent.inspectorAgentEntries
 import io.thernal.console.api.addon.ConsoleAddon
 import io.thernal.console.api.addon.ConsoleContentWrapper
 import io.thernal.console.api.addon.ConsoleDockWidget
@@ -22,6 +24,7 @@ object InspectorAddon : ConsoleAddon {
     override fun onInstall() {
         enableInspectorSourceInformation()
         SettingsRegistry.register(inspectorSettingsSection())
+        AgentRegistry.register(inspectorAgentEntries())
     }
 
     override fun tab(): ConsoleTab = InspectorTab

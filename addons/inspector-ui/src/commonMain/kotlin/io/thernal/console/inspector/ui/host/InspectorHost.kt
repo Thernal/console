@@ -2,6 +2,8 @@
 
 package io.thernal.console.inspector.ui.host
 
+import io.thernal.console.inspector.ui.agent.currentSemanticsRoot
+import io.thernal.console.inspector.ui.agent.keepSemanticsRoot
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.InternalComposeApi
@@ -34,7 +36,11 @@ internal fun InspectorHost(content: @Composable () -> Unit) {
     val baseDirection = LocalLayoutDirection.current
 
     val compositionData = currentComposer.compositionData
-    SideEffect { InspectorEngine.rootData = compositionData }
+    val semanticsRoot = currentSemanticsRoot()
+    SideEffect {
+        InspectorEngine.rootData = compositionData
+        keepSemanticsRoot(semanticsRoot)
+    }
     LaunchedEffect(Unit) { InspectorEngine.run() }
 
     val density = remember(baseDensity, config.fontScale) {
