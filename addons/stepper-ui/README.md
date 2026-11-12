@@ -45,6 +45,27 @@ Section **Stepper** (`id = "stepper"`), backed by `Stepper.config`:
 
 `paused` is forced off while `enabled` is off, so a paused pipeline always has a visible resume control.
 
+## Agent
+
+With [`console-agent-ui`](../agent-ui/README.md) installed, the addon lets an AI coding agent run an async flow step by
+step (section `stepper`): pause on a tag, read the UI and the app's state while the flow is held, let it go, repeat.
+
+| Tool | Kind | What it does |
+|------|------|--------------|
+| `stepper_state(wait_seconds)` | Tool | On or off, paused, the rules, whether an agent paused it, and the log held now (id, level, tag, first line). With `wait_seconds`, waits up to that long for a log to be held when none is. |
+| `stepper_events`, `_get`, `_wait` | Feed | `Held: …` when the stepper holds a log and `Released: …` when it lets it go (kinds `Held`, `Released`), with the log's level, tag and `log_id`. |
+| `stepper_pause(tags, level, auto_resume_seconds)` | Action | Turns the stepper on and holds at logs with these tags (comma-separated) at this level or above; every log when neither is given. `auto_resume_seconds` is one of the settings' delays. |
+| `stepper_next(wait_seconds)` | Action | Lets the held log go, waits up to `wait_seconds` (3 by default) for the next one, and names both. |
+| `stepper_resume` | Action | Stops holding and lets everything go; the stepper stays on with its rules. |
+
+A pause made by `stepper_pause` ends by itself when the link to the hub drops (the agent's session ended, or the hub
+stopped), so an agent never leaves the app held. A pause made in the app is left alone. None of the actions logs
+through Console, since such a log would wait behind the held one.
+
+A checkout test, for example: `stepper_pause(tags = "Checkout")`, tap *Place order*, `stepper_state(wait_seconds = 5)`
+→ held at `Validating cart`; read the screen; `stepper_next` → held at `Reserved 2 items`; `details` shows the order;
+`stepper_resume`.
+
 ## Architecture
 
 ```
@@ -60,7 +81,8 @@ Console.notify ─► processMutex ─► processors ─► observers … Steppe
 |-------|------|
 | `stepper/Stepper` | Process-wide `LogObserver` and intent handler. Holds `Config` and `State` (`steppedEvents`, `pendingLogs`, `blockedLogId`, `blockedTag`). |
 | `Stepper.emit` | When enabled, paused and the event matches, it parks on a `CompletableDeferred` (with an optional `withTimeoutOrNull` for auto-resume). `next()`, resuming or disabling completes it. |
-| `addon/StepperAddon` | Adds `Stepper` to `Console`, registers the settings section; contributes `StepperTab`, `StepperNavGraph` and `StepperDockWidget`. |
+| `addon/StepperAddon` | Adds `Stepper` to `Console`, registers the settings section and the agent entries, starts `StepperAgentGuard`; contributes `StepperTab`, `StepperNavGraph` and `StepperDockWidget`. |
+| `agent/*` | The agent entries (`StepperAgentEntries`), the `stepper_events` records (`StepperEvents`), the answers' text, and `StepperAgentGuard`, which ends an agent's pause when the hub disconnects. |
 | `dock/*` | `StepperDockWidget` maps the state to `Idle` / `Active` / `Attention`; `StepperPanel` and `StepperQuickAction` dispatch `StepperIntent`s. |
 | `view/caught`, `view/logdetail` | The tab's list and the detail of one held event. |
 

@@ -38,6 +38,7 @@ Each addon registers its own entries; installing it is enough.
 | [Crash reports](../crash-report-ui/README.md#agent) | `crash-report` | `crashes` feed, `crash_sessions`, `crash_session`, actions `crash_delete`, `crash_clear` |
 | [Details](../details-ui/README.md#agent) | `details` | `details`, `details_changes` feed |
 | [Settings](../settings-ui/README.md#agent) | `settings` | `settings`, actions `settings_set`, `settings_reset`; the `agent` section is read-only |
+| [Stepper](../stepper-ui/README.md#agent) | `stepper` | `stepper_state`, `stepper_events` feed, actions `stepper_pause`, `stepper_next`, `stepper_resume` |
 | Floating dock (this addon) | `dock` | `dock_state`, actions `dock_move`, `dock_minimize`, `dock_select` |
 
 ### Floating dock
