@@ -26,6 +26,14 @@ class SourceNamingTest {
     }
 
     @Test
+    fun `platform variants of library files count as framework without tags`() {
+        val name = "BackgroundTextMeasurement"
+        assertTrue(isFrameworkNode(name = name, file = "BasicText.android.kt", appTags = emptySet()))
+        assertTrue(isFrameworkNode(name = "Anything", file = "LazyList.skiko.kt", appTags = emptySet()))
+        assertFalse(isFrameworkNode(name = "CartRow", file = "CartRow.android.kt", appTags = emptySet()))
+    }
+
+    @Test
     fun `unknown upper-case composables count as app code without tags`() {
         assertFalse(isFrameworkNode(name = "HomeScreen", file = "HomeScreen.kt", appTags = emptySet()))
     }
