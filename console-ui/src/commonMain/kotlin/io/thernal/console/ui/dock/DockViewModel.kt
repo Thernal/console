@@ -1,5 +1,6 @@
 package io.thernal.console.ui.dock
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.IntSize
 import androidx.lifecycle.ViewModel
 import io.thernal.console.ui.core.IntentHandler
@@ -14,7 +15,20 @@ internal class DockViewModel : ViewModel(), StateHolder, IntentHandler<DockInten
 
             is DockIntent.SetMinimized -> state.isMinimized.set(intent.isMinimized)
 
-            is DockIntent.SizeChanged -> moveWithin(0f, 0f, intent.newSize, intent.maxWidthPx, intent.maxHeightPx)
+            is DockIntent.SizeChanged -> resize(intent.newSize, intent.maxWidthPx, intent.maxHeightPx)
+
+            is DockIntent.MoveTo -> placeAt(
+                offset = offsetFor(
+                    edge = intent.edge,
+                    verticalFraction = intent.vertical.fraction,
+                    size = state.size.value,
+                    maxWidth = intent.maxWidthPx,
+                    maxHeight = intent.maxHeightPx,
+                ),
+                size = state.size.value,
+                maxWidthPx = intent.maxWidthPx,
+                maxHeightPx = intent.maxHeightPx,
+            )
 
             DockIntent.DragStarted -> state.isDragging.set(true)
 
@@ -38,10 +52,29 @@ internal class DockViewModel : ViewModel(), StateHolder, IntentHandler<DockInten
         maxWidthPx: Float,
         maxHeightPx: Float,
     ) {
+        placeAt(Offset(state.offsetX.value + dx, state.offsetY.value + dy), size, maxWidthPx, maxHeightPx)
+    }
+
+    private fun resize(
+        size: IntSize,
+        maxWidthPx: Float,
+        maxHeightPx: Float,
+    ) {
+        val current = Offset(state.offsetX.value, state.offsetY.value)
+        val offset = resizedOffset(current, state.size.value, size, maxWidthPx, maxHeightPx)
+        placeAt(offset, size, maxWidthPx, maxHeightPx)
+    }
+
+    private fun placeAt(
+        offset: Offset,
+        size: IntSize,
+        maxWidthPx: Float,
+        maxHeightPx: Float,
+    ) {
         snapshot {
             state.size.set(size)
-            state.offsetX.set((state.offsetX.value + dx).coerceIn(-(maxWidthPx - size.width).coerceAtLeast(0f), 0f))
-            state.offsetY.set((state.offsetY.value + dy).coerceIn(0f, (maxHeightPx - size.height).coerceAtLeast(0f)))
+            state.offsetX.set(offset.x.coerceIn(-travel(maxWidthPx, size.width), 0f))
+            state.offsetY.set(offset.y.coerceIn(0f, travel(maxHeightPx, size.height)))
         }
     }
 
