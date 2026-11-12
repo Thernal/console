@@ -34,6 +34,7 @@ Each addon registers its own entries; installing it is enough.
 | Addon | Section | Tools |
 |-------|---------|-------|
 | [Logs](../logging-ui/README.md#agent) | `logging` | `logs` feed, `logs_summary`, action `logs_write` |
+| [Network](../network-ui/README.md#agent) | `network` | `network` feed, `network_hosts`; network logs in every log feed |
 
 ## Settings
 
