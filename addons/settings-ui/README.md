@@ -40,6 +40,21 @@ One file per section, `console-settings/<sectionId>.settings`, on `console-io`'s
 - Keys the section no longer declares are dropped on the next write; a value that fails to decode, or a file with an
   unknown header, is ignored without crashing.
 
+## Agent
+
+With [`console-agent-ui`](../agent-ui/README.md) installed, the addon shares every registered section with an AI coding
+agent (section `settings`), so no addon needs config tools of its own:
+
+| Tool | Kind | What it does |
+|------|------|--------------|
+| `settings` | Tool | Each section, then one line per entry: `key = value`, title, what it takes (`true or false`, `number 1..10000`, `one of …`, `tags separated by commas`) and whether another entry disables it. `section` narrows it to one. Custom sections are listed by title only. |
+| `settings_set` | Action | Sets one entry from text: `settings_set(section = "logging", key = "maxLogCount", value = "500")`. It goes through the section's `update` and `SettingsStore.persist`, like a row of the tab: the tab shows it at once and it survives a relaunch. A value out of range, an unknown option or key, and a disabled entry are refused with the reason. |
+| `settings_reset` | Action | One section, or every section, back to the code defaults (the override file deleted, like *Reset all*). |
+
+The agent's own section (`AgentConfig.SETTINGS_SECTION_ID`, `agent`) is read-only for agents: `settings_set` refuses
+it and a reset without a section leaves it alone, so an agent cannot widen what it may do. Before a test run an agent
+can, for example, turn on the stepper or the recomposition heatmap, and `settings_reset` afterwards.
+
 ## Architecture
 
 ```
@@ -55,7 +70,7 @@ SettingsViewModel ◄── SettingsRegistry.sections ──► SettingsView (ro
 
 | Piece | Role |
 |-------|------|
-| `addon/SettingsAddon` | `onInstall` attaches `SettingsStore` as the registry's consumer, then registers the dock and General sections. Contributes `SettingsTab` (order `Int.MAX_VALUE`). |
-| `store/SettingsStore` | Restores overrides on registration, persists a row change, implements *Reset all*. |
+| `addon/SettingsAddon` | `onInstall` attaches `SettingsStore` as the registry's consumer, then registers the dock and General sections and the agent entries (`agent/SettingsAgentEntries`). Contributes `SettingsTab` (order `Int.MAX_VALUE`). |
+| `store/SettingsStore` | Restores overrides on registration, persists a row change, implements *Reset all* and the agent's one-section reset. |
 | `store/SettingsFileFormat` | Encodes and decodes the versioned `key=value` file. |
 | `view/settings/*` | `SettingsViewModel` collects `SettingsRegistry.sections`; `SettingsContent` filters by the query and renders one row composable per `EntryKind`. |
