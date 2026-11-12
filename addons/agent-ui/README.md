@@ -36,6 +36,7 @@ Each addon registers its own entries; installing it is enough.
 | [Logs](../logging-ui/README.md#agent) | `logging` | `logs` feed, `logs_summary`, action `logs_write` |
 | [Network](../network-ui/README.md#agent) | `network` | `network` feed, `network_hosts`; network logs in every log feed |
 | [Crash reports](../crash-report-ui/README.md#agent) | `crash-report` | `crashes` feed, `crash_sessions`, `crash_session`, actions `crash_delete`, `crash_clear` |
+| [Details](../details-ui/README.md#agent) | `details` | `details`, `details_changes` feed |
 
 ## Settings
 
