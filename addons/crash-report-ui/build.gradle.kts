@@ -11,6 +11,7 @@ kotlin {
             implementation(projects.consoleIo)
             implementation(projects.consoleRuntime)
             implementation(projects.addons.settingsApi)
+            implementation(projects.addons.agentApi)
             implementation(projects.addons.networkCore)
             implementation(projects.designsystem.components)
             implementation(libs.jetbrains.navigation3.ui)
@@ -18,6 +19,7 @@ kotlin {
             implementation(libs.jetbrains.lifecycle.viewmodel.compose)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material.icons.extended)
+            implementation(libs.kotlinx.datetime)
         }
     }
 }

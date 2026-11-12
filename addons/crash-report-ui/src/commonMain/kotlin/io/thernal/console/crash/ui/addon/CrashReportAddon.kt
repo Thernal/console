@@ -2,6 +2,8 @@
 
 package io.thernal.console.crash.ui.addon
 
+import io.thernal.console.agent.AgentRegistry
+import io.thernal.console.crash.ui.agent.crashAgentEntries
 import io.thernal.console.api.addon.ConsoleAddon
 import io.thernal.console.api.addon.ConsoleNavGraph
 import io.thernal.console.api.addon.ConsoleTab
@@ -39,6 +41,7 @@ object CrashReportAddon : ConsoleAddon {
         installCrashHandler(CrashCapture::onUncaught)
         installLifecycleTracking(::onLifecycleStateChanged)
         SettingsRegistry.register(crashReportSettingsSection())
+        AgentRegistry.register(crashAgentEntries())
     }
 
     override fun tab(): ConsoleTab = CrashReportTab
