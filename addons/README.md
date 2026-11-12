@@ -12,6 +12,7 @@ own README with setup, settings and architecture; this page is the index plus a 
 | [Crash reports](crash-report-ui/README.md) | `console-crash-report-ui`, `-crash-report-core` | Streams logs to disk and keeps crash sessions to inspect after relaunch. |
 | [UI inspector](inspector-ui/README.md) | `console-inspector-ui`, `-inspector-core`, `-inspector-core-noop` | Composable tree, picking, measuring, padding, recomposition counts and heatmap. |
 | [Settings](settings-ui/README.md) | `console-settings-ui`, [`-settings-api`](settings-api/README.md), `-settings-api-noop` | The **Settings** tab and the persisted per-addon settings every other addon registers into. |
+| [Agent](agent-ui/README.md) | `console-agent-ui`, [`-agent-api`](agent-api/README.md), `-agent-api-noop` | Shares what addons register (tools, feeds, actions) with AI coding agents over MCP, through the [`console-mcp`](../console-mcp/README.md) hub. Not in `console-bundle-ui`. |
 
 Every `-ui` artifact installs itself on Android, iOS and JVM; no `install()` call is needed. Addons with a public
 facade ship a `-noop` artifact with the same API for release builds; addons without one (stepper, network, crash
@@ -21,7 +22,8 @@ Module READMEs: [crash-report-core](crash-report-core/README.md) ·
 [details-core](details-core/README.md) · [details-core-noop](details-core-noop/README.md) ·
 [inspector-core](inspector-core/README.md) · [inspector-core-noop](inspector-core-noop/README.md) ·
 [network-core](network-core/README.md) · [network-ktor](network-ktor/README.md) ·
-[network-okhttp](network-okhttp/README.md) · [settings-api-noop](settings-api-noop/README.md)
+[network-okhttp](network-okhttp/README.md) · [settings-api-noop](settings-api-noop/README.md) ·
+[agent-api-noop](agent-api-noop/README.md)
 
 ---
 
@@ -62,6 +64,7 @@ object MyAddon : ConsoleAddon {
         LogRendererRegistry.register<MyLog>(MyLogRenderer)   // render MyLog in the Logs tab
         Console.addObserver(MyObserver)                      // only addons that capture logs (needs console-runtime)
         SettingsRegistry.register(mySettingsSection())       // optional, see settings-api
+        AgentRegistry.register(myAgentEntries())             // optional, see agent-api
     }
 
     override fun tab(): ConsoleTab = MyTab                   // a screen in the console nav bar

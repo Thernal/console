@@ -56,7 +56,7 @@ Operations ("clear all", "reset") are not settings entries: they stay in the add
 custom section (below).
 
 Section `order` values used by first-party addons: Logging 10, Stepper 20, Crash Report 30, Network 40, Floating
-widgets 50, Inspector 50, General last.
+widgets 50, Inspector 50, Agent 60, General last.
 
 ## Escape hatch
 

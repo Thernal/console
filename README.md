@@ -562,6 +562,9 @@ Each addon has its own README with setup, settings and architecture; start from 
 | `io.github.thernal:console-settings-api:<version>` | Settings registration contract — `SettingsSection`, entry DSL, `SettingsRegistry` |
 | `io.github.thernal:console-settings-api-noop:<version>` | No-op stub for production builds |
 | `io.github.thernal:console-settings-ui:<version>` | Settings tab — persisted per-addon overrides, entry renderers, General section |
+| `io.github.thernal:console-agent-api:<version>` | Agent sharing contract — `agentEntries` DSL (tools, actions, feeds, redaction), `AgentRegistry`, `ConsoleAgent` |
+| `io.github.thernal:console-agent-api-noop:<version>` | No-op stub for production builds |
+| `io.github.thernal:console-agent-ui:<version>` | Agent bridge — streams the registry to the `console-mcp` hub for AI coding agents (debug only, not in the bundle) |
 
 ---
 
