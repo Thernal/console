@@ -68,6 +68,10 @@ Discover which `build-logic` convention plugins exist and how a module applies t
 auto-discovered). Match a neighboring module of the same kind.
 
 - Use type-safe project accessors (`projects.xxx`), never `project(":xxx")`.
+- Every published module keeps its public API in `api/` (`io.thernal.console.abi`, applied by
+  `io.thernal.console.publish`). A failing `checkKotlinAbi` means the API changed: when the change is intended, run
+  `./gradlew updateKotlinAbi` on macOS (every target compiles there) and commit the dumps with the change; a break
+  also gets `!` in the commit type and a line in `CHANGELOG.md`.
 
 ## Architecture & module placement
 
@@ -182,6 +186,14 @@ suggestion.
 - **Commits are attributed to the user only. Do not add `Co-Authored-By` for the assistant and do
   not add "generated with" trailers.**
 - Present the planned split (`<prefix>: <message>` + files per commit) before committing.
+
+## Releases
+
+- A change worth telling someone who uses Console goes under `## Unreleased` in `CHANGELOG.md` (what changed for
+  them, not how the code does it); the release renames the section to its version. README → Releases has the steps.
+- Ask before pushing a `release/v*` tag: it publishes to Maven Central, which cannot be taken back.
+- `console-mcp` carries Console's version. When a message between the app and the hub changes, raise
+  `AgentMessages.PROTOCOL_VERSION` (`console-agent-ui`) and `HubProtocol` (`console-mcp`) together.
 
 ## Detekt
 

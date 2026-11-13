@@ -637,6 +637,27 @@ Each addon has its own README with setup, settings and architecture; start from 
 
 ---
 
+## Releases
+
+What is new in each release: [CHANGELOG.md](CHANGELOG.md).
+
+<details>
+<summary><b>Cutting a release (for maintainers)</b></summary>
+
+A change worth telling goes under `## Unreleased` in `CHANGELOG.md` with the change itself. To release, one commit,
+`chore(release): <version>`, sets `VERSION` in `gradle.properties` and `console` in `gradle/libs.versions.toml`, and
+renames `## Unreleased` to `## <version> — <date>`. Then push the tag `release/v<version>`: `release.yml` checks that
+the tag, both versions and the changelog section agree, publishes the libraries and the settings plugin to Maven
+Central, builds `console-mcp` beside them, and makes the GitHub release, its notes the changelog section and then the
+commits since the release before (`.github/release-notes.sh`), with `console-mcp.zip` attached. A version with a
+suffix (`1.0.0-rc.1`) is a pre-release. `release-notes.yml`, run by hand, writes the notes of releases already made
+again after their section changed.
+
+CI (`ci.yml`) runs Detekt, the builds and the tests on every pull request, and checks the public API: every published
+module keeps it in `api/`, and after an intended change `./gradlew updateKotlinAbi` writes it again.
+
+</details>
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
