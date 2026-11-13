@@ -35,6 +35,11 @@ tasks.jar {
     }
 }
 
+// The name a release attaches, with no version in it, so the latest release's link stays the same.
+tasks.distZip {
+    archiveFileName.set("console-mcp.zip")
+}
+
 tasks.test {
     useJUnitPlatform()
 }
