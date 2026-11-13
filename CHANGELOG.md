@@ -5,7 +5,7 @@ What is new in each release of Console. A release's notes on GitHub are its sect
 for someone using Console, not for someone reading the code; the commits follow anyway. Releases before 1.0.0-rc.1
 have their notes on their GitHub releases only.
 
-## Unreleased
+## 1.0.0-rc.1 — 2026-11-13
 
 - **AI coding agents read the running app.** The agent addon (`console-agent-api`, `console-agent-ui`, both in
   `console-bundle-ui`) shares what each addon sees with Claude Code or any MCP client, through `console-mcp`, a hub on
