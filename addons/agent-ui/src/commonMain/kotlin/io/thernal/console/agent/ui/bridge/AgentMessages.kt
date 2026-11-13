@@ -17,6 +17,7 @@ import kotlinx.serialization.json.JsonPrimitive
  * the shared tools change, `record` per feed entry, `result` per answered call. Hub → app: `call`.
  */
 internal object AgentMessages {
+    /** Raised only when a message changes, together with `HubProtocol` in `console-mcp`, which reads it from `hello`. */
     const val PROTOCOL_VERSION = 2
     const val TYPE_CALL = "call"
     private const val TYPE_HELLO = "hello"

@@ -15,6 +15,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.longOrNull
@@ -90,8 +91,10 @@ class HubServer(
         when (message["type"]?.jsonPrimitive?.contentOrNull) {
             "hello" -> {
                 val info = json.decodeFromJsonElement(HubDeviceInfo.serializer(), message.getValue("device"))
+                val protocol = message["protocol"]?.jsonPrimitive?.intOrNull
                 deviceId?.let { store.disconnect(deviceId = it, link = link) }
-                store.connect(info = info, address = address, link = link)
+                store.connect(info = info, address = address, link = link, protocol = protocol)
+                HubProtocol.problem(protocol)?.let { System.err.println("console-mcp: ${info.name}: $it") }
                 return info.id
             }
 

@@ -61,8 +61,8 @@ sealed interface DeviceChoice {
                 val actions = if (device.manifest.actions) "on" else "off"
                 val app = info.app ?: "unknown app"
                 val runs = if (device.runs > 1) " · run ${device.runs} (restarted)" else ""
-                "- ${info.name} · ${info.platform} ${info.os} · $app · $state$runs · id ${info.id}\n" +
-                    "  offers: $offers · actions $actions"
+                val detail = device.problem?.let { "not usable: $it" } ?: "offers: $offers · actions $actions"
+                "- ${info.name} · ${info.platform} ${info.os} · $app · $state$runs · id ${info.id}\n  $detail"
             }
         }
     }
