@@ -1,0 +1,377 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:console-api>
+final enum class io.thernal.console.api.addon/ConsoleDockEdge : kotlin/Enum<io.thernal.console.api.addon/ConsoleDockEdge> { // io.thernal.console.api.addon/ConsoleDockEdge|null[0]
+    enum entry Left // io.thernal.console.api.addon/ConsoleDockEdge.Left|null[0]
+    enum entry Right // io.thernal.console.api.addon/ConsoleDockEdge.Right|null[0]
+
+    final val entries // io.thernal.console.api.addon/ConsoleDockEdge.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.api.addon/ConsoleDockEdge> // io.thernal.console.api.addon/ConsoleDockEdge.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.api.addon/ConsoleDockEdge // io.thernal.console.api.addon/ConsoleDockEdge.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.api.addon/ConsoleDockEdge> // io.thernal.console.api.addon/ConsoleDockEdge.values|values#static(){}[0]
+}
+
+final enum class io.thernal.console.api.addon/ConsoleDockStatus : kotlin/Enum<io.thernal.console.api.addon/ConsoleDockStatus> { // io.thernal.console.api.addon/ConsoleDockStatus|null[0]
+    enum entry Active // io.thernal.console.api.addon/ConsoleDockStatus.Active|null[0]
+    enum entry Attention // io.thernal.console.api.addon/ConsoleDockStatus.Attention|null[0]
+    enum entry Idle // io.thernal.console.api.addon/ConsoleDockStatus.Idle|null[0]
+
+    final val entries // io.thernal.console.api.addon/ConsoleDockStatus.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.api.addon/ConsoleDockStatus> // io.thernal.console.api.addon/ConsoleDockStatus.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.api.addon/ConsoleDockStatus // io.thernal.console.api.addon/ConsoleDockStatus.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.api.addon/ConsoleDockStatus> // io.thernal.console.api.addon/ConsoleDockStatus.values|values#static(){}[0]
+}
+
+final enum class io.thernal.console.api.addon/ConsoleDockVertical : kotlin/Enum<io.thernal.console.api.addon/ConsoleDockVertical> { // io.thernal.console.api.addon/ConsoleDockVertical|null[0]
+    enum entry Bottom // io.thernal.console.api.addon/ConsoleDockVertical.Bottom|null[0]
+    enum entry Center // io.thernal.console.api.addon/ConsoleDockVertical.Center|null[0]
+    enum entry Top // io.thernal.console.api.addon/ConsoleDockVertical.Top|null[0]
+
+    final val entries // io.thernal.console.api.addon/ConsoleDockVertical.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.api.addon/ConsoleDockVertical> // io.thernal.console.api.addon/ConsoleDockVertical.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val fraction // io.thernal.console.api.addon/ConsoleDockVertical.fraction|{}fraction[0]
+        final fun <get-fraction>(): kotlin/Float // io.thernal.console.api.addon/ConsoleDockVertical.fraction.<get-fraction>|<get-fraction>(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.api.addon/ConsoleDockVertical // io.thernal.console.api.addon/ConsoleDockVertical.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.api.addon/ConsoleDockVertical> // io.thernal.console.api.addon/ConsoleDockVertical.values|values#static(){}[0]
+}
+
+final enum class io.thernal.console.api.addon/ConsoleOverlayLayer : kotlin/Enum<io.thernal.console.api.addon/ConsoleOverlayLayer> { // io.thernal.console.api.addon/ConsoleOverlayLayer|null[0]
+    enum entry Backdrop // io.thernal.console.api.addon/ConsoleOverlayLayer.Backdrop|null[0]
+    enum entry Capture // io.thernal.console.api.addon/ConsoleOverlayLayer.Capture|null[0]
+
+    final val entries // io.thernal.console.api.addon/ConsoleOverlayLayer.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.api.addon/ConsoleOverlayLayer> // io.thernal.console.api.addon/ConsoleOverlayLayer.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.api.addon/ConsoleOverlayLayer // io.thernal.console.api.addon/ConsoleOverlayLayer.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.api.addon/ConsoleOverlayLayer> // io.thernal.console.api.addon/ConsoleOverlayLayer.values|values#static(){}[0]
+}
+
+final enum class io.thernal.console.api.trigger/Corner : kotlin/Enum<io.thernal.console.api.trigger/Corner> { // io.thernal.console.api.trigger/Corner|null[0]
+    enum entry BottomLeft // io.thernal.console.api.trigger/Corner.BottomLeft|null[0]
+    enum entry BottomRight // io.thernal.console.api.trigger/Corner.BottomRight|null[0]
+    enum entry TopLeft // io.thernal.console.api.trigger/Corner.TopLeft|null[0]
+    enum entry TopRight // io.thernal.console.api.trigger/Corner.TopRight|null[0]
+
+    final val entries // io.thernal.console.api.trigger/Corner.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.api.trigger/Corner> // io.thernal.console.api.trigger/Corner.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.api.trigger/Corner // io.thernal.console.api.trigger/Corner.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.api.trigger/Corner> // io.thernal.console.api.trigger/Corner.values|values#static(){}[0]
+}
+
+final enum class io.thernal.console.api.trigger/KeyModifier : kotlin/Enum<io.thernal.console.api.trigger/KeyModifier> { // io.thernal.console.api.trigger/KeyModifier|null[0]
+    enum entry Alt // io.thernal.console.api.trigger/KeyModifier.Alt|null[0]
+    enum entry Ctrl // io.thernal.console.api.trigger/KeyModifier.Ctrl|null[0]
+    enum entry Meta // io.thernal.console.api.trigger/KeyModifier.Meta|null[0]
+    enum entry Shift // io.thernal.console.api.trigger/KeyModifier.Shift|null[0]
+
+    final val entries // io.thernal.console.api.trigger/KeyModifier.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.api.trigger/KeyModifier> // io.thernal.console.api.trigger/KeyModifier.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.api.trigger/KeyModifier // io.thernal.console.api.trigger/KeyModifier.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.api.trigger/KeyModifier> // io.thernal.console.api.trigger/KeyModifier.values|values#static(){}[0]
+}
+
+final enum class io.thernal.console.api.trigger/Swipe : kotlin/Enum<io.thernal.console.api.trigger/Swipe> { // io.thernal.console.api.trigger/Swipe|null[0]
+    enum entry DOWN // io.thernal.console.api.trigger/Swipe.DOWN|null[0]
+    enum entry LEFT // io.thernal.console.api.trigger/Swipe.LEFT|null[0]
+    enum entry RIGHT // io.thernal.console.api.trigger/Swipe.RIGHT|null[0]
+    enum entry UP // io.thernal.console.api.trigger/Swipe.UP|null[0]
+
+    final val entries // io.thernal.console.api.trigger/Swipe.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.api.trigger/Swipe> // io.thernal.console.api.trigger/Swipe.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.api.trigger/Swipe // io.thernal.console.api.trigger/Swipe.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.api.trigger/Swipe> // io.thernal.console.api.trigger/Swipe.values|values#static(){}[0]
+}
+
+abstract fun interface io.thernal.console.api.trigger/ConsoleTrigger { // io.thernal.console.api.trigger/ConsoleTrigger|null[0]
+    abstract fun (androidx.compose.ui/Modifier).attach(kotlin/Function0<kotlin/Unit>): androidx.compose.ui/Modifier // io.thernal.console.api.trigger/ConsoleTrigger.attach|attach@androidx.compose.ui.Modifier(kotlin.Function0<kotlin.Unit>){}[0]
+
+    final object Companion // io.thernal.console.api.trigger/ConsoleTrigger.Companion|null[0]
+}
+
+abstract interface io.thernal.console.api.addon/ConsoleAddon { // io.thernal.console.api.addon/ConsoleAddon|null[0]
+    open fun contentWrapper(): kotlin/Function3<kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>? // io.thernal.console.api.addon/ConsoleAddon.contentWrapper|contentWrapper(){}[0]
+    open fun dockWidget(): io.thernal.console.api.addon/ConsoleDockWidget? // io.thernal.console.api.addon/ConsoleAddon.dockWidget|dockWidget(){}[0]
+    open fun install() // io.thernal.console.api.addon/ConsoleAddon.install|install(){}[0]
+    open fun navGraph(): io.thernal.console.api.addon/ConsoleNavGraph? // io.thernal.console.api.addon/ConsoleAddon.navGraph|navGraph(){}[0]
+    open fun onInstall() // io.thernal.console.api.addon/ConsoleAddon.onInstall|onInstall(){}[0]
+    open fun overlay(): kotlin/Function3<androidx.compose.foundation.layout/BoxScope, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>? // io.thernal.console.api.addon/ConsoleAddon.overlay|overlay(){}[0]
+    open fun overlays(): kotlin.collections/List<io.thernal.console.api.addon/ConsoleOverlay> // io.thernal.console.api.addon/ConsoleAddon.overlays|overlays(){}[0]
+    open fun tab(): io.thernal.console.api.addon/ConsoleTab? // io.thernal.console.api.addon/ConsoleAddon.tab|tab(){}[0]
+}
+
+abstract interface io.thernal.console.api.addon/ConsoleDockWidget { // io.thernal.console.api.addon/ConsoleDockWidget|null[0]
+    abstract val icon // io.thernal.console.api.addon/ConsoleDockWidget.icon|{}icon[0]
+        abstract fun <get-icon>(): androidx.compose.ui.graphics.vector/ImageVector // io.thernal.console.api.addon/ConsoleDockWidget.icon.<get-icon>|<get-icon>(){}[0]
+    abstract val id // io.thernal.console.api.addon/ConsoleDockWidget.id|{}id[0]
+        abstract fun <get-id>(): kotlin/String // io.thernal.console.api.addon/ConsoleDockWidget.id.<get-id>|<get-id>(){}[0]
+    abstract val title // io.thernal.console.api.addon/ConsoleDockWidget.title|{}title[0]
+        abstract fun <get-title>(): kotlin/String // io.thernal.console.api.addon/ConsoleDockWidget.title.<get-title>|<get-title>(){}[0]
+    open val order // io.thernal.console.api.addon/ConsoleDockWidget.order|{}order[0]
+        open fun <get-order>(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockWidget.order.<get-order>|<get-order>(){}[0]
+
+    abstract fun Panel(androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.api.addon/ConsoleDockWidget.Panel|Panel(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    open fun QuickAction(androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.api.addon/ConsoleDockWidget.QuickAction|QuickAction(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    open fun isAvailable(androidx.compose.runtime/Composer?, kotlin/Int): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockWidget.isAvailable|isAvailable(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    open fun status(androidx.compose.runtime/Composer?, kotlin/Int): io.thernal.console.api.addon/ConsoleDockStatus // io.thernal.console.api.addon/ConsoleDockWidget.status|status(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    open fun summary(androidx.compose.runtime/Composer?, kotlin/Int): kotlin/String? // io.thernal.console.api.addon/ConsoleDockWidget.summary|summary(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
+abstract interface io.thernal.console.api.addon/ConsoleNavGraph { // io.thernal.console.api.addon/ConsoleNavGraph|null[0]
+    abstract fun (androidx.navigation3.runtime/EntryProviderScope<androidx.navigation3.runtime/NavKey>).routes() // io.thernal.console.api.addon/ConsoleNavGraph.routes|routes@androidx.navigation3.runtime.EntryProviderScope<androidx.navigation3.runtime.NavKey>(){}[0]
+}
+
+abstract interface io.thernal.console.api.addon/ConsoleTab { // io.thernal.console.api.addon/ConsoleTab|null[0]
+    abstract val icon // io.thernal.console.api.addon/ConsoleTab.icon|{}icon[0]
+        abstract fun <get-icon>(): androidx.compose.ui.graphics.vector/ImageVector // io.thernal.console.api.addon/ConsoleTab.icon.<get-icon>|<get-icon>(){}[0]
+    abstract val title // io.thernal.console.api.addon/ConsoleTab.title|{}title[0]
+        abstract fun <get-title>(): kotlin/String // io.thernal.console.api.addon/ConsoleTab.title.<get-title>|<get-title>(){}[0]
+    open val order // io.thernal.console.api.addon/ConsoleTab.order|{}order[0]
+        open fun <get-order>(): kotlin/Int // io.thernal.console.api.addon/ConsoleTab.order.<get-order>|<get-order>(){}[0]
+
+    abstract fun Content(androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.api.addon/ConsoleTab.Content|Content(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    open fun Actions(androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.api.addon/ConsoleTab.Actions|Actions(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
+abstract interface io.thernal.console.api.navigation/ConsoleNavigator { // io.thernal.console.api.navigation/ConsoleNavigator|null[0]
+    abstract fun close() // io.thernal.console.api.navigation/ConsoleNavigator.close|close(){}[0]
+    abstract fun openTab(io.thernal.console.api.addon/ConsoleTab? = ...) // io.thernal.console.api.navigation/ConsoleNavigator.openTab|openTab(io.thernal.console.api.addon.ConsoleTab?){}[0]
+    abstract fun pop() // io.thernal.console.api.navigation/ConsoleNavigator.pop|pop(){}[0]
+    abstract fun push(androidx.navigation3.runtime/NavKey) // io.thernal.console.api.navigation/ConsoleNavigator.push|push(androidx.navigation3.runtime.NavKey){}[0]
+}
+
+abstract interface io.thernal.console.api.ui/LogRenderer { // io.thernal.console.api.ui/LogRenderer|null[0]
+    abstract fun Detail(io.thernal.console.core.log/Log, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.api.ui/LogRenderer.Detail|Detail(io.thernal.console.core.log.Log;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    abstract fun Item(io.thernal.console.core.log/Log, androidx.compose.ui/Modifier, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.api.ui/LogRenderer.Item|Item(io.thernal.console.core.log.Log;androidx.compose.ui.Modifier;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
+sealed interface io.thernal.console.api.addon/ConsoleDockCommand { // io.thernal.console.api.addon/ConsoleDockCommand|null[0]
+    final class MoveTo : io.thernal.console.api.addon/ConsoleDockCommand { // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo|null[0]
+        constructor <init>(io.thernal.console.api.addon/ConsoleDockEdge, io.thernal.console.api.addon/ConsoleDockVertical) // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.<init>|<init>(io.thernal.console.api.addon.ConsoleDockEdge;io.thernal.console.api.addon.ConsoleDockVertical){}[0]
+
+        final val edge // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.edge|{}edge[0]
+            final fun <get-edge>(): io.thernal.console.api.addon/ConsoleDockEdge // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.edge.<get-edge>|<get-edge>(){}[0]
+        final val vertical // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.vertical|{}vertical[0]
+            final fun <get-vertical>(): io.thernal.console.api.addon/ConsoleDockVertical // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.vertical.<get-vertical>|<get-vertical>(){}[0]
+
+        final fun component1(): io.thernal.console.api.addon/ConsoleDockEdge // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.component1|component1(){}[0]
+        final fun component2(): io.thernal.console.api.addon/ConsoleDockVertical // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.component2|component2(){}[0]
+        final fun copy(io.thernal.console.api.addon/ConsoleDockEdge = ..., io.thernal.console.api.addon/ConsoleDockVertical = ...): io.thernal.console.api.addon/ConsoleDockCommand.MoveTo // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.copy|copy(io.thernal.console.api.addon.ConsoleDockEdge;io.thernal.console.api.addon.ConsoleDockVertical){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.api.addon/ConsoleDockCommand.MoveTo.toString|toString(){}[0]
+    }
+
+    final class SelectWidget : io.thernal.console.api.addon/ConsoleDockCommand { // io.thernal.console.api.addon/ConsoleDockCommand.SelectWidget|null[0]
+        constructor <init>(kotlin/String) // io.thernal.console.api.addon/ConsoleDockCommand.SelectWidget.<init>|<init>(kotlin.String){}[0]
+
+        final val widgetId // io.thernal.console.api.addon/ConsoleDockCommand.SelectWidget.widgetId|{}widgetId[0]
+            final fun <get-widgetId>(): kotlin/String // io.thernal.console.api.addon/ConsoleDockCommand.SelectWidget.widgetId.<get-widgetId>|<get-widgetId>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.api.addon/ConsoleDockCommand.SelectWidget.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): io.thernal.console.api.addon/ConsoleDockCommand.SelectWidget // io.thernal.console.api.addon/ConsoleDockCommand.SelectWidget.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockCommand.SelectWidget.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockCommand.SelectWidget.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.api.addon/ConsoleDockCommand.SelectWidget.toString|toString(){}[0]
+    }
+
+    final class SetMinimized : io.thernal.console.api.addon/ConsoleDockCommand { // io.thernal.console.api.addon/ConsoleDockCommand.SetMinimized|null[0]
+        constructor <init>(kotlin/Boolean) // io.thernal.console.api.addon/ConsoleDockCommand.SetMinimized.<init>|<init>(kotlin.Boolean){}[0]
+
+        final val isMinimized // io.thernal.console.api.addon/ConsoleDockCommand.SetMinimized.isMinimized|{}isMinimized[0]
+            final fun <get-isMinimized>(): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockCommand.SetMinimized.isMinimized.<get-isMinimized>|<get-isMinimized>(){}[0]
+
+        final fun component1(): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockCommand.SetMinimized.component1|component1(){}[0]
+        final fun copy(kotlin/Boolean = ...): io.thernal.console.api.addon/ConsoleDockCommand.SetMinimized // io.thernal.console.api.addon/ConsoleDockCommand.SetMinimized.copy|copy(kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockCommand.SetMinimized.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockCommand.SetMinimized.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.api.addon/ConsoleDockCommand.SetMinimized.toString|toString(){}[0]
+    }
+}
+
+sealed interface io.thernal.console.api.navigation/ConsoleRoute : androidx.navigation3.runtime/NavKey { // io.thernal.console.api.navigation/ConsoleRoute|null[0]
+    final class LogDetail : io.thernal.console.api.navigation/ConsoleRoute { // io.thernal.console.api.navigation/ConsoleRoute.LogDetail|null[0]
+        constructor <init>(kotlin/String, kotlin/String = ...) // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+        final val groupId // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.groupId|{}groupId[0]
+            final fun <get-groupId>(): kotlin/String // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.groupId.<get-groupId>|<get-groupId>(){}[0]
+        final val logId // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.logId|{}logId[0]
+            final fun <get-logId>(): kotlin/String // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.logId.<get-logId>|<get-logId>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.component1|component1(){}[0]
+        final fun component2(): kotlin/String // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ...): io.thernal.console.api.navigation/ConsoleRoute.LogDetail // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.copy|copy(kotlin.String;kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.api.navigation/ConsoleRoute.LogDetail.toString|toString(){}[0]
+    }
+
+    final object Main : io.thernal.console.api.navigation/ConsoleRoute { // io.thernal.console.api.navigation/ConsoleRoute.Main|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.api.navigation/ConsoleRoute.Main.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.api.navigation/ConsoleRoute.Main.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.api.navigation/ConsoleRoute.Main.toString|toString(){}[0]
+    }
+
+    final object Stub : io.thernal.console.api.navigation/ConsoleRoute { // io.thernal.console.api.navigation/ConsoleRoute.Stub|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.api.navigation/ConsoleRoute.Stub.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.api.navigation/ConsoleRoute.Stub.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.api.navigation/ConsoleRoute.Stub.toString|toString(){}[0]
+    }
+}
+
+final class io.thernal.console.api.addon/ConsoleDockConfig { // io.thernal.console.api.addon/ConsoleDockConfig|null[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin.collections/Set<kotlin/String> = ...) // io.thernal.console.api.addon/ConsoleDockConfig.<init>|<init>(kotlin.Boolean;kotlin.collections.Set<kotlin.String>){}[0]
+
+    final val hiddenWidgetIds // io.thernal.console.api.addon/ConsoleDockConfig.hiddenWidgetIds|{}hiddenWidgetIds[0]
+        final fun <get-hiddenWidgetIds>(): kotlin.collections/Set<kotlin/String> // io.thernal.console.api.addon/ConsoleDockConfig.hiddenWidgetIds.<get-hiddenWidgetIds>|<get-hiddenWidgetIds>(){}[0]
+    final val isVisible // io.thernal.console.api.addon/ConsoleDockConfig.isVisible|{}isVisible[0]
+        final fun <get-isVisible>(): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockConfig.isVisible.<get-isVisible>|<get-isVisible>(){}[0]
+
+    final fun component1(): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockConfig.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/Set<kotlin/String> // io.thernal.console.api.addon/ConsoleDockConfig.component2|component2(){}[0]
+    final fun copy(kotlin/Boolean = ..., kotlin.collections/Set<kotlin/String> = ...): io.thernal.console.api.addon/ConsoleDockConfig // io.thernal.console.api.addon/ConsoleDockConfig.copy|copy(kotlin.Boolean;kotlin.collections.Set<kotlin.String>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockConfig.hashCode|hashCode(){}[0]
+    final fun shows(kotlin/String?, kotlin/Boolean): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockConfig.shows|shows(kotlin.String?;kotlin.Boolean){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.api.addon/ConsoleDockConfig.toString|toString(){}[0]
+}
+
+final class io.thernal.console.api.addon/ConsoleDockLayout { // io.thernal.console.api.addon/ConsoleDockLayout|null[0]
+    constructor <init>(io.thernal.console.api.addon/ConsoleDockEdge, kotlin/Float, kotlin/Boolean, kotlin/String?, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Boolean = ...) // io.thernal.console.api.addon/ConsoleDockLayout.<init>|<init>(io.thernal.console.api.addon.ConsoleDockEdge;kotlin.Float;kotlin.Boolean;kotlin.String?;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Boolean){}[0]
+
+    final val edge // io.thernal.console.api.addon/ConsoleDockLayout.edge|{}edge[0]
+        final fun <get-edge>(): io.thernal.console.api.addon/ConsoleDockEdge // io.thernal.console.api.addon/ConsoleDockLayout.edge.<get-edge>|<get-edge>(){}[0]
+    final val height // io.thernal.console.api.addon/ConsoleDockLayout.height|{}height[0]
+        final fun <get-height>(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockLayout.height.<get-height>|<get-height>(){}[0]
+    final val isMinimized // io.thernal.console.api.addon/ConsoleDockLayout.isMinimized|{}isMinimized[0]
+        final fun <get-isMinimized>(): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockLayout.isMinimized.<get-isMinimized>|<get-isMinimized>(){}[0]
+    final val isMoving // io.thernal.console.api.addon/ConsoleDockLayout.isMoving|{}isMoving[0]
+        final fun <get-isMoving>(): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockLayout.isMoving.<get-isMoving>|<get-isMoving>(){}[0]
+    final val left // io.thernal.console.api.addon/ConsoleDockLayout.left|{}left[0]
+        final fun <get-left>(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockLayout.left.<get-left>|<get-left>(){}[0]
+    final val selectedWidgetId // io.thernal.console.api.addon/ConsoleDockLayout.selectedWidgetId|{}selectedWidgetId[0]
+        final fun <get-selectedWidgetId>(): kotlin/String? // io.thernal.console.api.addon/ConsoleDockLayout.selectedWidgetId.<get-selectedWidgetId>|<get-selectedWidgetId>(){}[0]
+    final val top // io.thernal.console.api.addon/ConsoleDockLayout.top|{}top[0]
+        final fun <get-top>(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockLayout.top.<get-top>|<get-top>(){}[0]
+    final val verticalFraction // io.thernal.console.api.addon/ConsoleDockLayout.verticalFraction|{}verticalFraction[0]
+        final fun <get-verticalFraction>(): kotlin/Float // io.thernal.console.api.addon/ConsoleDockLayout.verticalFraction.<get-verticalFraction>|<get-verticalFraction>(){}[0]
+    final val width // io.thernal.console.api.addon/ConsoleDockLayout.width|{}width[0]
+        final fun <get-width>(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockLayout.width.<get-width>|<get-width>(){}[0]
+
+    final fun component1(): io.thernal.console.api.addon/ConsoleDockEdge // io.thernal.console.api.addon/ConsoleDockLayout.component1|component1(){}[0]
+    final fun component2(): kotlin/Float // io.thernal.console.api.addon/ConsoleDockLayout.component2|component2(){}[0]
+    final fun component3(): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockLayout.component3|component3(){}[0]
+    final fun component4(): kotlin/String? // io.thernal.console.api.addon/ConsoleDockLayout.component4|component4(){}[0]
+    final fun component5(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockLayout.component5|component5(){}[0]
+    final fun component6(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockLayout.component6|component6(){}[0]
+    final fun component7(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockLayout.component7|component7(){}[0]
+    final fun component8(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockLayout.component8|component8(){}[0]
+    final fun component9(): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockLayout.component9|component9(){}[0]
+    final fun copy(io.thernal.console.api.addon/ConsoleDockEdge = ..., kotlin/Float = ..., kotlin/Boolean = ..., kotlin/String? = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Boolean = ...): io.thernal.console.api.addon/ConsoleDockLayout // io.thernal.console.api.addon/ConsoleDockLayout.copy|copy(io.thernal.console.api.addon.ConsoleDockEdge;kotlin.Float;kotlin.Boolean;kotlin.String?;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.api.addon/ConsoleDockLayout.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.api.addon/ConsoleDockLayout.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.api.addon/ConsoleDockLayout.toString|toString(){}[0]
+}
+
+final class io.thernal.console.api.addon/ConsoleOverlay { // io.thernal.console.api.addon/ConsoleOverlay|null[0]
+    constructor <init>(io.thernal.console.api.addon/ConsoleOverlayLayer, kotlin/Int = ..., kotlin/String? = ..., kotlin/Function3<androidx.compose.foundation.layout/BoxScope, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>) // io.thernal.console.api.addon/ConsoleOverlay.<init>|<init>(io.thernal.console.api.addon.ConsoleOverlayLayer;kotlin.Int;kotlin.String?;kotlin.Function3<androidx.compose.foundation.layout.BoxScope,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
+
+    final val content // io.thernal.console.api.addon/ConsoleOverlay.content|{}content[0]
+        final fun <get-content>(): kotlin/Function3<androidx.compose.foundation.layout/BoxScope, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit> // io.thernal.console.api.addon/ConsoleOverlay.content.<get-content>|<get-content>(){}[0]
+    final val layer // io.thernal.console.api.addon/ConsoleOverlay.layer|{}layer[0]
+        final fun <get-layer>(): io.thernal.console.api.addon/ConsoleOverlayLayer // io.thernal.console.api.addon/ConsoleOverlay.layer.<get-layer>|<get-layer>(){}[0]
+    final val order // io.thernal.console.api.addon/ConsoleOverlay.order|{}order[0]
+        final fun <get-order>(): kotlin/Int // io.thernal.console.api.addon/ConsoleOverlay.order.<get-order>|<get-order>(){}[0]
+    final val widgetId // io.thernal.console.api.addon/ConsoleOverlay.widgetId|{}widgetId[0]
+        final fun <get-widgetId>(): kotlin/String? // io.thernal.console.api.addon/ConsoleOverlay.widgetId.<get-widgetId>|<get-widgetId>(){}[0]
+}
+
+final object io.thernal.console.api.addon/ConsoleContentWrappers { // io.thernal.console.api.addon/ConsoleContentWrappers|null[0]
+    final val wrappers // io.thernal.console.api.addon/ConsoleContentWrappers.wrappers|{}wrappers[0]
+        final fun <get-wrappers>(): kotlin.collections/List<kotlin/Function3<kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>> // io.thernal.console.api.addon/ConsoleContentWrappers.wrappers.<get-wrappers>|<get-wrappers>(){}[0]
+}
+
+final object io.thernal.console.api.addon/ConsoleDock { // io.thernal.console.api.addon/ConsoleDock|null[0]
+    final val commands // io.thernal.console.api.addon/ConsoleDock.commands|{}commands[0]
+        final fun <get-commands>(): kotlinx.coroutines.flow/SharedFlow<io.thernal.console.api.addon/ConsoleDockCommand> // io.thernal.console.api.addon/ConsoleDock.commands.<get-commands>|<get-commands>(){}[0]
+    final val config // io.thernal.console.api.addon/ConsoleDock.config|{}config[0]
+        final fun <get-config>(): kotlinx.coroutines.flow/StateFlow<io.thernal.console.api.addon/ConsoleDockConfig> // io.thernal.console.api.addon/ConsoleDock.config.<get-config>|<get-config>(){}[0]
+    final val layout // io.thernal.console.api.addon/ConsoleDock.layout|{}layout[0]
+        final fun <get-layout>(): kotlinx.coroutines.flow/StateFlow<io.thernal.console.api.addon/ConsoleDockLayout?> // io.thernal.console.api.addon/ConsoleDock.layout.<get-layout>|<get-layout>(){}[0]
+    final val widgets // io.thernal.console.api.addon/ConsoleDock.widgets|{}widgets[0]
+        final fun <get-widgets>(): kotlin.collections/List<io.thernal.console.api.addon/ConsoleDockWidget> // io.thernal.console.api.addon/ConsoleDock.widgets.<get-widgets>|<get-widgets>(){}[0]
+
+    final fun dispatch(io.thernal.console.api.addon/ConsoleDockCommand) // io.thernal.console.api.addon/ConsoleDock.dispatch|dispatch(io.thernal.console.api.addon.ConsoleDockCommand){}[0]
+    final fun updateConfig(io.thernal.console.api.addon/ConsoleDockConfig) // io.thernal.console.api.addon/ConsoleDock.updateConfig|updateConfig(io.thernal.console.api.addon.ConsoleDockConfig){}[0]
+    final fun updateConfig(kotlin/Function1<io.thernal.console.api.addon/ConsoleDockConfig, io.thernal.console.api.addon/ConsoleDockConfig>) // io.thernal.console.api.addon/ConsoleDock.updateConfig|updateConfig(kotlin.Function1<io.thernal.console.api.addon.ConsoleDockConfig,io.thernal.console.api.addon.ConsoleDockConfig>){}[0]
+}
+
+final object io.thernal.console.api.addon/ConsoleNavigation { // io.thernal.console.api.addon/ConsoleNavigation|null[0]
+    final val graphs // io.thernal.console.api.addon/ConsoleNavigation.graphs|{}graphs[0]
+        final fun <get-graphs>(): kotlin.collections/List<io.thernal.console.api.addon/ConsoleNavGraph> // io.thernal.console.api.addon/ConsoleNavigation.graphs.<get-graphs>|<get-graphs>(){}[0]
+    final val tabs // io.thernal.console.api.addon/ConsoleNavigation.tabs|{}tabs[0]
+        final fun <get-tabs>(): kotlin.collections/List<io.thernal.console.api.addon/ConsoleTab> // io.thernal.console.api.addon/ConsoleNavigation.tabs.<get-tabs>|<get-tabs>(){}[0]
+}
+
+final object io.thernal.console.api.addon/ConsoleOverlays { // io.thernal.console.api.addon/ConsoleOverlays|null[0]
+    final val overlays // io.thernal.console.api.addon/ConsoleOverlays.overlays|{}overlays[0]
+        final fun <get-overlays>(): kotlin.collections/List<kotlin/Function3<androidx.compose.foundation.layout/BoxScope, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>> // io.thernal.console.api.addon/ConsoleOverlays.overlays.<get-overlays>|<get-overlays>(){}[0]
+
+    final fun layer(io.thernal.console.api.addon/ConsoleOverlayLayer): kotlin.collections/List<io.thernal.console.api.addon/ConsoleOverlay> // io.thernal.console.api.addon/ConsoleOverlays.layer|layer(io.thernal.console.api.addon.ConsoleOverlayLayer){}[0]
+}
+
+final object io.thernal.console.api.ui/LogRendererRegistry { // io.thernal.console.api.ui/LogRendererRegistry|null[0]
+    final fun find(io.thernal.console.core.log/Log): io.thernal.console.api.ui/LogRenderer? // io.thernal.console.api.ui/LogRendererRegistry.find|find(io.thernal.console.core.log.Log){}[0]
+}
+
+final object io.thernal.console.api.ui/NoOpLogRenderer : io.thernal.console.api.ui/LogRenderer { // io.thernal.console.api.ui/NoOpLogRenderer|null[0]
+    final fun Detail(io.thernal.console.core.log/Log, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.api.ui/NoOpLogRenderer.Detail|Detail(io.thernal.console.core.log.Log;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final fun Item(io.thernal.console.core.log/Log, androidx.compose.ui/Modifier, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.api.ui/NoOpLogRenderer.Item|Item(io.thernal.console.core.log.Log;androidx.compose.ui.Modifier;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
+final val io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleContentWrappers$stableprop // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleContentWrappers$stableprop|#static{}io_thernal_console_api_addon_ConsoleContentWrappers$stableprop[0]
+final val io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDock$stableprop // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDock$stableprop|#static{}io_thernal_console_api_addon_ConsoleDock$stableprop[0]
+final val io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_MoveTo$stableprop // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_MoveTo$stableprop|#static{}io_thernal_console_api_addon_ConsoleDockCommand_MoveTo$stableprop[0]
+final val io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_SelectWidget$stableprop // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_SelectWidget$stableprop|#static{}io_thernal_console_api_addon_ConsoleDockCommand_SelectWidget$stableprop[0]
+final val io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_SetMinimized$stableprop // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_SetMinimized$stableprop|#static{}io_thernal_console_api_addon_ConsoleDockCommand_SetMinimized$stableprop[0]
+final val io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockConfig$stableprop // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockConfig$stableprop|#static{}io_thernal_console_api_addon_ConsoleDockConfig$stableprop[0]
+final val io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockLayout$stableprop // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockLayout$stableprop|#static{}io_thernal_console_api_addon_ConsoleDockLayout$stableprop[0]
+final val io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleNavigation$stableprop // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleNavigation$stableprop|#static{}io_thernal_console_api_addon_ConsoleNavigation$stableprop[0]
+final val io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleOverlay$stableprop // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleOverlay$stableprop|#static{}io_thernal_console_api_addon_ConsoleOverlay$stableprop[0]
+final val io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleOverlays$stableprop // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleOverlays$stableprop|#static{}io_thernal_console_api_addon_ConsoleOverlays$stableprop[0]
+final val io.thernal.console.api.navigation/LocalConsoleNavigator // io.thernal.console.api.navigation/LocalConsoleNavigator|{}LocalConsoleNavigator[0]
+    final fun <get-LocalConsoleNavigator>(): androidx.compose.runtime/ProvidableCompositionLocal<io.thernal.console.api.navigation/ConsoleNavigator> // io.thernal.console.api.navigation/LocalConsoleNavigator.<get-LocalConsoleNavigator>|<get-LocalConsoleNavigator>(){}[0]
+final val io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_LogDetail$stableprop // io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_LogDetail$stableprop|#static{}io_thernal_console_api_navigation_ConsoleRoute_LogDetail$stableprop[0]
+final val io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_Main$stableprop // io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_Main$stableprop|#static{}io_thernal_console_api_navigation_ConsoleRoute_Main$stableprop[0]
+final val io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_Stub$stableprop // io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_Stub$stableprop|#static{}io_thernal_console_api_navigation_ConsoleRoute_Stub$stableprop[0]
+final val io.thernal.console.api.ui/LocalLogRenderer // io.thernal.console.api.ui/LocalLogRenderer|{}LocalLogRenderer[0]
+    final fun <get-LocalLogRenderer>(): androidx.compose.runtime/ProvidableCompositionLocal<io.thernal.console.api.ui/LogRenderer> // io.thernal.console.api.ui/LocalLogRenderer.<get-LocalLogRenderer>|<get-LocalLogRenderer>(){}[0]
+final val io.thernal.console.api.ui/io_thernal_console_api_ui_LogRendererRegistry$stableprop // io.thernal.console.api.ui/io_thernal_console_api_ui_LogRendererRegistry$stableprop|#static{}io_thernal_console_api_ui_LogRendererRegistry$stableprop[0]
+final val io.thernal.console.api.ui/io_thernal_console_api_ui_NoOpLogRenderer$stableprop // io.thernal.console.api.ui/io_thernal_console_api_ui_NoOpLogRenderer$stableprop|#static{}io_thernal_console_api_ui_NoOpLogRenderer$stableprop[0]
+
+final fun io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleContentWrappers$stableprop_getter(): kotlin/Int // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleContentWrappers$stableprop_getter|io_thernal_console_api_addon_ConsoleContentWrappers$stableprop_getter(){}[0]
+final fun io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDock$stableprop_getter(): kotlin/Int // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDock$stableprop_getter|io_thernal_console_api_addon_ConsoleDock$stableprop_getter(){}[0]
+final fun io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_MoveTo$stableprop_getter(): kotlin/Int // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_MoveTo$stableprop_getter|io_thernal_console_api_addon_ConsoleDockCommand_MoveTo$stableprop_getter(){}[0]
+final fun io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_SelectWidget$stableprop_getter(): kotlin/Int // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_SelectWidget$stableprop_getter|io_thernal_console_api_addon_ConsoleDockCommand_SelectWidget$stableprop_getter(){}[0]
+final fun io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_SetMinimized$stableprop_getter(): kotlin/Int // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockCommand_SetMinimized$stableprop_getter|io_thernal_console_api_addon_ConsoleDockCommand_SetMinimized$stableprop_getter(){}[0]
+final fun io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockConfig$stableprop_getter(): kotlin/Int // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockConfig$stableprop_getter|io_thernal_console_api_addon_ConsoleDockConfig$stableprop_getter(){}[0]
+final fun io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockLayout$stableprop_getter(): kotlin/Int // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleDockLayout$stableprop_getter|io_thernal_console_api_addon_ConsoleDockLayout$stableprop_getter(){}[0]
+final fun io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleNavigation$stableprop_getter(): kotlin/Int // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleNavigation$stableprop_getter|io_thernal_console_api_addon_ConsoleNavigation$stableprop_getter(){}[0]
+final fun io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleOverlay$stableprop_getter(): kotlin/Int // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleOverlay$stableprop_getter|io_thernal_console_api_addon_ConsoleOverlay$stableprop_getter(){}[0]
+final fun io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleOverlays$stableprop_getter(): kotlin/Int // io.thernal.console.api.addon/io_thernal_console_api_addon_ConsoleOverlays$stableprop_getter|io_thernal_console_api_addon_ConsoleOverlays$stableprop_getter(){}[0]
+final fun io.thernal.console.api.autoinit/consoleAddonInit(kotlin/Function0<kotlin/Unit>): kotlin/Any // io.thernal.console.api.autoinit/consoleAddonInit|consoleAddonInit(kotlin.Function0<kotlin.Unit>){}[0]
+final fun io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_LogDetail$stableprop_getter(): kotlin/Int // io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_LogDetail$stableprop_getter|io_thernal_console_api_navigation_ConsoleRoute_LogDetail$stableprop_getter(){}[0]
+final fun io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_Main$stableprop_getter(): kotlin/Int // io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_Main$stableprop_getter|io_thernal_console_api_navigation_ConsoleRoute_Main$stableprop_getter(){}[0]
+final fun io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_Stub$stableprop_getter(): kotlin/Int // io.thernal.console.api.navigation/io_thernal_console_api_navigation_ConsoleRoute_Stub$stableprop_getter|io_thernal_console_api_navigation_ConsoleRoute_Stub$stableprop_getter(){}[0]
+final fun io.thernal.console.api.ui/io_thernal_console_api_ui_LogRendererRegistry$stableprop_getter(): kotlin/Int // io.thernal.console.api.ui/io_thernal_console_api_ui_LogRendererRegistry$stableprop_getter|io_thernal_console_api_ui_LogRendererRegistry$stableprop_getter(){}[0]
+final fun io.thernal.console.api.ui/io_thernal_console_api_ui_NoOpLogRenderer$stableprop_getter(): kotlin/Int // io.thernal.console.api.ui/io_thernal_console_api_ui_NoOpLogRenderer$stableprop_getter|io_thernal_console_api_ui_NoOpLogRenderer$stableprop_getter(){}[0]

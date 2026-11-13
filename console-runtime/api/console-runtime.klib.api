@@ -1,0 +1,37 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:console-runtime>
+final class io.thernal.console.runtime.console/Console : io.thernal.console.core/ConsoleScope { // io.thernal.console.runtime.console/Console|null[0]
+    final val isSealed // io.thernal.console.runtime.console/Console.isSealed|{}isSealed[0]
+        final fun <get-isSealed>(): kotlin/Boolean // io.thernal.console.runtime.console/Console.isSealed.<get-isSealed>|<get-isSealed>(){}[0]
+
+    final var isEnabled // io.thernal.console.runtime.console/Console.isEnabled|{}isEnabled[0]
+        final fun <get-isEnabled>(): kotlin/Boolean // io.thernal.console.runtime.console/Console.isEnabled.<get-isEnabled>|<get-isEnabled>(){}[0]
+        final fun <set-isEnabled>(kotlin/Boolean) // io.thernal.console.runtime.console/Console.isEnabled.<set-isEnabled>|<set-isEnabled>(kotlin.Boolean){}[0]
+
+    final fun blockingNotify(kotlin/Function0<io.thernal.console.core.log/Log>) // io.thernal.console.runtime.console/Console.blockingNotify|blockingNotify(kotlin.Function0<io.thernal.console.core.log.Log>){}[0]
+    final fun notify(kotlin/Function0<io.thernal.console.core.log/Log>) // io.thernal.console.runtime.console/Console.notify|notify(kotlin.Function0<io.thernal.console.core.log.Log>){}[0]
+    final fun seal() // io.thernal.console.runtime.console/Console.seal|seal(){}[0]
+    final fun setProcessors(kotlin.collections/List<io.thernal.console.core/LogProcessor>) // io.thernal.console.runtime.console/Console.setProcessors|setProcessors(kotlin.collections.List<io.thernal.console.core.LogProcessor>){}[0]
+    final suspend fun asyncNotify(kotlin/Function0<io.thernal.console.core.log/Log>) // io.thernal.console.runtime.console/Console.asyncNotify|asyncNotify(kotlin.Function0<io.thernal.console.core.log.Log>){}[0]
+
+    final object Companion : io.thernal.console.core/ConsoleScope { // io.thernal.console.runtime.console/Console.Companion|null[0]
+        final val isSealed // io.thernal.console.runtime.console/Console.Companion.isSealed|{}isSealed[0]
+            final fun <get-isSealed>(): kotlin/Boolean // io.thernal.console.runtime.console/Console.Companion.isSealed.<get-isSealed>|<get-isSealed>(){}[0]
+
+        final var isEnabled // io.thernal.console.runtime.console/Console.Companion.isEnabled|{}isEnabled[0]
+            final fun <get-isEnabled>(): kotlin/Boolean // io.thernal.console.runtime.console/Console.Companion.isEnabled.<get-isEnabled>|<get-isEnabled>(){}[0]
+            final fun <set-isEnabled>(kotlin/Boolean) // io.thernal.console.runtime.console/Console.Companion.isEnabled.<set-isEnabled>|<set-isEnabled>(kotlin.Boolean){}[0]
+
+        final fun blockingNotify(kotlin/Function0<io.thernal.console.core.log/Log>) // io.thernal.console.runtime.console/Console.Companion.blockingNotify|blockingNotify(kotlin.Function0<io.thernal.console.core.log.Log>){}[0]
+        final fun notify(kotlin/Function0<io.thernal.console.core.log/Log>) // io.thernal.console.runtime.console/Console.Companion.notify|notify(kotlin.Function0<io.thernal.console.core.log.Log>){}[0]
+        final fun seal() // io.thernal.console.runtime.console/Console.Companion.seal|seal(){}[0]
+        final fun setProcessors(kotlin.collections/List<io.thernal.console.core/LogProcessor>) // io.thernal.console.runtime.console/Console.Companion.setProcessors|setProcessors(kotlin.collections.List<io.thernal.console.core.LogProcessor>){}[0]
+        final suspend fun asyncNotify(kotlin/Function0<io.thernal.console.core.log/Log>) // io.thernal.console.runtime.console/Console.Companion.asyncNotify|asyncNotify(kotlin.Function0<io.thernal.console.core.log.Log>){}[0]
+    }
+}

@@ -1,0 +1,92 @@
+public final class io/thernal/console/inspector/ConsoleInspector {
+	public static final field INSTANCE Lio/thernal/console/inspector/ConsoleInspector;
+	public final fun dispatch (Lio/thernal/console/inspector/InspectorCommand;)V
+	public final fun getCommands ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun getConfig ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun updateConfig (Lio/thernal/console/inspector/InspectorConfig;)V
+	public final fun updateConfig (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/thernal/console/inspector/InspectorCommand : java/lang/Enum {
+	public static final field ClearSelection Lio/thernal/console/inspector/InspectorCommand;
+	public static final field Refresh Lio/thernal/console/inspector/InspectorCommand;
+	public static final field ResetStats Lio/thernal/console/inspector/InspectorCommand;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/thernal/console/inspector/InspectorCommand;
+	public static fun values ()[Lio/thernal/console/inspector/InspectorCommand;
+}
+
+public final class io/thernal/console/inspector/InspectorConfig {
+	public static final field Companion Lio/thernal/console/inspector/InspectorConfig$Companion;
+	public static final field DEFAULT_HEATMAP_THRESHOLD I
+	public static final field DEFAULT_HIGHLIGHT_DURATION_MILLIS I
+	public static final field MAX_AUTO_REFRESH_SECONDS I
+	public static final field MAX_HEATMAP_THRESHOLD I
+	public static final field MAX_HIGHLIGHT_DURATION_MILLIS I
+	public static final field MIN_HEATMAP_THRESHOLD I
+	public static final field MIN_HIGHLIGHT_DURATION_MILLIS I
+	public fun <init> ()V
+	public fun <init> (ZZZZIZIZZZZZLjava/util/Set;ILio/thernal/console/inspector/InspectorFontScale;Lio/thernal/console/inspector/InspectorLayoutDirection;)V
+	public synthetic fun <init> (ZZZZIZIZZZZZLjava/util/Set;ILio/thernal/console/inspector/InspectorFontScale;Lio/thernal/console/inspector/InspectorLayoutDirection;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component10 ()Z
+	public final fun component11 ()Z
+	public final fun component12 ()Z
+	public final fun component13 ()Ljava/util/Set;
+	public final fun component14 ()I
+	public final fun component15 ()Lio/thernal/console/inspector/InspectorFontScale;
+	public final fun component16 ()Lio/thernal/console/inspector/InspectorLayoutDirection;
+	public final fun component2 ()Z
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()I
+	public final fun component6 ()Z
+	public final fun component7 ()I
+	public final fun component8 ()Z
+	public final fun component9 ()Z
+	public final fun copy (ZZZZIZIZZZZZLjava/util/Set;ILio/thernal/console/inspector/InspectorFontScale;Lio/thernal/console/inspector/InspectorLayoutDirection;)Lio/thernal/console/inspector/InspectorConfig;
+	public static synthetic fun copy$default (Lio/thernal/console/inspector/InspectorConfig;ZZZZIZIZZZZZLjava/util/Set;ILio/thernal/console/inspector/InspectorFontScale;Lio/thernal/console/inspector/InspectorLayoutDirection;ILjava/lang/Object;)Lio/thernal/console/inspector/InspectorConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAppSourceTags ()Ljava/util/Set;
+	public final fun getAutoRefreshSeconds ()I
+	public final fun getEnabled ()Z
+	public final fun getFontScale ()Lio/thernal/console/inspector/InspectorFontScale;
+	public final fun getHeatmapThreshold ()I
+	public final fun getHideFrameworkNodes ()Z
+	public final fun getHighlightDurationMillis ()I
+	public final fun getHighlightRecompositions ()Z
+	public final fun getLayoutDirection ()Lio/thernal/console/inspector/InspectorLayoutDirection;
+	public final fun getShowBounds ()Z
+	public final fun getShowHeatmap ()Z
+	public final fun getShowLabels ()Z
+	public final fun getShowMeasurements ()Z
+	public final fun getShowQuickControls ()Z
+	public final fun getShowRecompositionCounters ()Z
+	public final fun getTrackRecompositions ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/inspector/InspectorConfig$Companion {
+}
+
+public final class io/thernal/console/inspector/InspectorFontScale : java/lang/Enum {
+	public static final field Huge Lio/thernal/console/inspector/InspectorFontScale;
+	public static final field Large Lio/thernal/console/inspector/InspectorFontScale;
+	public static final field Larger Lio/thernal/console/inspector/InspectorFontScale;
+	public static final field Largest Lio/thernal/console/inspector/InspectorFontScale;
+	public static final field Small Lio/thernal/console/inspector/InspectorFontScale;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getFactor ()F
+	public static fun valueOf (Ljava/lang/String;)Lio/thernal/console/inspector/InspectorFontScale;
+	public static fun values ()[Lio/thernal/console/inspector/InspectorFontScale;
+}
+
+public final class io/thernal/console/inspector/InspectorLayoutDirection : java/lang/Enum {
+	public static final field Ltr Lio/thernal/console/inspector/InspectorLayoutDirection;
+	public static final field Rtl Lio/thernal/console/inspector/InspectorLayoutDirection;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/thernal/console/inspector/InspectorLayoutDirection;
+	public static fun values ()[Lio/thernal/console/inspector/InspectorLayoutDirection;
+}
+

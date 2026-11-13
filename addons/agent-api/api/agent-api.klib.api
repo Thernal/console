@@ -1,0 +1,315 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:agent-api>
+abstract interface io.thernal.console.agent/AgentEntriesScope { // io.thernal.console.agent/AgentEntriesScope|null[0]
+    abstract fun <#A1: io.thernal.console.core.log/Log> describe(kotlin.reflect/KClass<#A1>, kotlin/Function1<#A1, kotlin/String>, kotlin/Function1<#A1, kotlin/String?>, kotlin/Function1<#A1, kotlin.collections/Map<kotlin/String, kotlin/String>>) // io.thernal.console.agent/AgentEntriesScope.describe|describe(kotlin.reflect.KClass<0:0>;kotlin.Function1<0:0,kotlin.String>;kotlin.Function1<0:0,kotlin.String?>;kotlin.Function1<0:0,kotlin.collections.Map<kotlin.String,kotlin.String>>){0§<io.thernal.console.core.log.Log>}[0]
+    abstract fun action(kotlin/String, kotlin/String, kotlin/Function1<io.thernal.console.agent/AgentToolScope, kotlin/Unit>) // io.thernal.console.agent/AgentEntriesScope.action|action(kotlin.String;kotlin.String;kotlin.Function1<io.thernal.console.agent.AgentToolScope,kotlin.Unit>){}[0]
+    abstract fun feed(kotlin/String, kotlin/String, kotlinx.coroutines.flow/Flow<io.thernal.console.agent/AgentRecord>) // io.thernal.console.agent/AgentEntriesScope.feed|feed(kotlin.String;kotlin.String;kotlinx.coroutines.flow.Flow<io.thernal.console.agent.AgentRecord>){}[0]
+    abstract fun logFeed(kotlin/String, kotlin/String, kotlinx.coroutines.flow/Flow<io.thernal.console.core.log/Log>) // io.thernal.console.agent/AgentEntriesScope.logFeed|logFeed(kotlin.String;kotlin.String;kotlinx.coroutines.flow.Flow<io.thernal.console.core.log.Log>){}[0]
+    abstract fun redact(kotlin/Array<out kotlin/String>...) // io.thernal.console.agent/AgentEntriesScope.redact|redact(kotlin.Array<out|kotlin.String>...){}[0]
+    abstract fun tool(kotlin/String, kotlin/String, kotlin/Function1<io.thernal.console.agent/AgentToolScope, kotlin/Unit>) // io.thernal.console.agent/AgentEntriesScope.tool|tool(kotlin.String;kotlin.String;kotlin.Function1<io.thernal.console.agent.AgentToolScope,kotlin.Unit>){}[0]
+}
+
+abstract interface io.thernal.console.agent/AgentToolScope { // io.thernal.console.agent/AgentToolScope|null[0]
+    abstract fun choice(kotlin/String, kotlin/String, kotlin.collections/List<kotlin/String>, kotlin/String): io.thernal.console.agent/AgentArg<kotlin/String> // io.thernal.console.agent/AgentToolScope.choice|choice(kotlin.String;kotlin.String;kotlin.collections.List<kotlin.String>;kotlin.String){}[0]
+    abstract fun int(kotlin/String, kotlin/String, kotlin/Int, kotlin/Int = ..., kotlin/Int = ...): io.thernal.console.agent/AgentArg<kotlin/Int> // io.thernal.console.agent/AgentToolScope.int|int(kotlin.String;kotlin.String;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+    abstract fun optionalChoice(kotlin/String, kotlin/String, kotlin.collections/List<kotlin/String>): io.thernal.console.agent/AgentArg<kotlin/String?> // io.thernal.console.agent/AgentToolScope.optionalChoice|optionalChoice(kotlin.String;kotlin.String;kotlin.collections.List<kotlin.String>){}[0]
+    abstract fun optionalInt(kotlin/String, kotlin/String, kotlin/Int = ..., kotlin/Int = ...): io.thernal.console.agent/AgentArg<kotlin/Int?> // io.thernal.console.agent/AgentToolScope.optionalInt|optionalInt(kotlin.String;kotlin.String;kotlin.Int;kotlin.Int){}[0]
+    abstract fun optionalText(kotlin/String, kotlin/String): io.thernal.console.agent/AgentArg<kotlin/String?> // io.thernal.console.agent/AgentToolScope.optionalText|optionalText(kotlin.String;kotlin.String){}[0]
+    abstract fun run(kotlin.coroutines/SuspendFunction1<io.thernal.console.agent/AgentCall, kotlin/String>) // io.thernal.console.agent/AgentToolScope.run|run(kotlin.coroutines.SuspendFunction1<io.thernal.console.agent.AgentCall,kotlin.String>){}[0]
+    abstract fun text(kotlin/String, kotlin/String): io.thernal.console.agent/AgentArg<kotlin/String> // io.thernal.console.agent/AgentToolScope.text|text(kotlin.String;kotlin.String){}[0]
+    abstract fun text(kotlin/String, kotlin/String, kotlin/String): io.thernal.console.agent/AgentArg<kotlin/String> // io.thernal.console.agent/AgentToolScope.text|text(kotlin.String;kotlin.String;kotlin.String){}[0]
+    abstract fun toggle(kotlin/String, kotlin/String, kotlin/Boolean = ...): io.thernal.console.agent/AgentArg<kotlin/Boolean> // io.thernal.console.agent/AgentToolScope.toggle|toggle(kotlin.String;kotlin.String;kotlin.Boolean){}[0]
+}
+
+sealed interface io.thernal.console.agent/AgentConnection { // io.thernal.console.agent/AgentConnection|null[0]
+    final class Connected : io.thernal.console.agent/AgentConnection { // io.thernal.console.agent/AgentConnection.Connected|null[0]
+        constructor <init>(kotlin/String) // io.thernal.console.agent/AgentConnection.Connected.<init>|<init>(kotlin.String){}[0]
+
+        final val hubAddress // io.thernal.console.agent/AgentConnection.Connected.hubAddress|{}hubAddress[0]
+            final fun <get-hubAddress>(): kotlin/String // io.thernal.console.agent/AgentConnection.Connected.hubAddress.<get-hubAddress>|<get-hubAddress>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.agent/AgentConnection.Connected.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): io.thernal.console.agent/AgentConnection.Connected // io.thernal.console.agent/AgentConnection.Connected.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.agent/AgentConnection.Connected.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.agent/AgentConnection.Connected.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.agent/AgentConnection.Connected.toString|toString(){}[0]
+    }
+
+    final object Disabled : io.thernal.console.agent/AgentConnection { // io.thernal.console.agent/AgentConnection.Disabled|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.agent/AgentConnection.Disabled.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.agent/AgentConnection.Disabled.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.agent/AgentConnection.Disabled.toString|toString(){}[0]
+    }
+
+    final object Searching : io.thernal.console.agent/AgentConnection { // io.thernal.console.agent/AgentConnection.Searching|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.agent/AgentConnection.Searching.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.agent/AgentConnection.Searching.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.agent/AgentConnection.Searching.toString|toString(){}[0]
+    }
+}
+
+sealed interface io.thernal.console.agent/AgentParam { // io.thernal.console.agent/AgentParam|null[0]
+    abstract val description // io.thernal.console.agent/AgentParam.description|{}description[0]
+        abstract fun <get-description>(): kotlin/String // io.thernal.console.agent/AgentParam.description.<get-description>|<get-description>(){}[0]
+    abstract val isRequired // io.thernal.console.agent/AgentParam.isRequired|{}isRequired[0]
+        abstract fun <get-isRequired>(): kotlin/Boolean // io.thernal.console.agent/AgentParam.isRequired.<get-isRequired>|<get-isRequired>(){}[0]
+    abstract val key // io.thernal.console.agent/AgentParam.key|{}key[0]
+        abstract fun <get-key>(): kotlin/String // io.thernal.console.agent/AgentParam.key.<get-key>|<get-key>(){}[0]
+
+    final class Choice : io.thernal.console.agent/AgentParam { // io.thernal.console.agent/AgentParam.Choice|null[0]
+        constructor <init>(kotlin/String, kotlin/String, kotlin/Boolean, kotlin.collections/List<kotlin/String>, kotlin/String?) // io.thernal.console.agent/AgentParam.Choice.<init>|<init>(kotlin.String;kotlin.String;kotlin.Boolean;kotlin.collections.List<kotlin.String>;kotlin.String?){}[0]
+
+        final val default // io.thernal.console.agent/AgentParam.Choice.default|{}default[0]
+            final fun <get-default>(): kotlin/String? // io.thernal.console.agent/AgentParam.Choice.default.<get-default>|<get-default>(){}[0]
+        final val description // io.thernal.console.agent/AgentParam.Choice.description|{}description[0]
+            final fun <get-description>(): kotlin/String // io.thernal.console.agent/AgentParam.Choice.description.<get-description>|<get-description>(){}[0]
+        final val isRequired // io.thernal.console.agent/AgentParam.Choice.isRequired|{}isRequired[0]
+            final fun <get-isRequired>(): kotlin/Boolean // io.thernal.console.agent/AgentParam.Choice.isRequired.<get-isRequired>|<get-isRequired>(){}[0]
+        final val key // io.thernal.console.agent/AgentParam.Choice.key|{}key[0]
+            final fun <get-key>(): kotlin/String // io.thernal.console.agent/AgentParam.Choice.key.<get-key>|<get-key>(){}[0]
+        final val options // io.thernal.console.agent/AgentParam.Choice.options|{}options[0]
+            final fun <get-options>(): kotlin.collections/List<kotlin/String> // io.thernal.console.agent/AgentParam.Choice.options.<get-options>|<get-options>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.agent/AgentParam.Choice.component1|component1(){}[0]
+        final fun component2(): kotlin/String // io.thernal.console.agent/AgentParam.Choice.component2|component2(){}[0]
+        final fun component3(): kotlin/Boolean // io.thernal.console.agent/AgentParam.Choice.component3|component3(){}[0]
+        final fun component4(): kotlin.collections/List<kotlin/String> // io.thernal.console.agent/AgentParam.Choice.component4|component4(){}[0]
+        final fun component5(): kotlin/String? // io.thernal.console.agent/AgentParam.Choice.component5|component5(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/Boolean = ..., kotlin.collections/List<kotlin/String> = ..., kotlin/String? = ...): io.thernal.console.agent/AgentParam.Choice // io.thernal.console.agent/AgentParam.Choice.copy|copy(kotlin.String;kotlin.String;kotlin.Boolean;kotlin.collections.List<kotlin.String>;kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.agent/AgentParam.Choice.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.agent/AgentParam.Choice.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.agent/AgentParam.Choice.toString|toString(){}[0]
+    }
+
+    final class Integer : io.thernal.console.agent/AgentParam { // io.thernal.console.agent/AgentParam.Integer|null[0]
+        constructor <init>(kotlin/String, kotlin/String, kotlin/Boolean, kotlin/Int?, kotlin/Int, kotlin/Int) // io.thernal.console.agent/AgentParam.Integer.<init>|<init>(kotlin.String;kotlin.String;kotlin.Boolean;kotlin.Int?;kotlin.Int;kotlin.Int){}[0]
+
+        final val default // io.thernal.console.agent/AgentParam.Integer.default|{}default[0]
+            final fun <get-default>(): kotlin/Int? // io.thernal.console.agent/AgentParam.Integer.default.<get-default>|<get-default>(){}[0]
+        final val description // io.thernal.console.agent/AgentParam.Integer.description|{}description[0]
+            final fun <get-description>(): kotlin/String // io.thernal.console.agent/AgentParam.Integer.description.<get-description>|<get-description>(){}[0]
+        final val isRequired // io.thernal.console.agent/AgentParam.Integer.isRequired|{}isRequired[0]
+            final fun <get-isRequired>(): kotlin/Boolean // io.thernal.console.agent/AgentParam.Integer.isRequired.<get-isRequired>|<get-isRequired>(){}[0]
+        final val key // io.thernal.console.agent/AgentParam.Integer.key|{}key[0]
+            final fun <get-key>(): kotlin/String // io.thernal.console.agent/AgentParam.Integer.key.<get-key>|<get-key>(){}[0]
+        final val max // io.thernal.console.agent/AgentParam.Integer.max|{}max[0]
+            final fun <get-max>(): kotlin/Int // io.thernal.console.agent/AgentParam.Integer.max.<get-max>|<get-max>(){}[0]
+        final val min // io.thernal.console.agent/AgentParam.Integer.min|{}min[0]
+            final fun <get-min>(): kotlin/Int // io.thernal.console.agent/AgentParam.Integer.min.<get-min>|<get-min>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.agent/AgentParam.Integer.component1|component1(){}[0]
+        final fun component2(): kotlin/String // io.thernal.console.agent/AgentParam.Integer.component2|component2(){}[0]
+        final fun component3(): kotlin/Boolean // io.thernal.console.agent/AgentParam.Integer.component3|component3(){}[0]
+        final fun component4(): kotlin/Int? // io.thernal.console.agent/AgentParam.Integer.component4|component4(){}[0]
+        final fun component5(): kotlin/Int // io.thernal.console.agent/AgentParam.Integer.component5|component5(){}[0]
+        final fun component6(): kotlin/Int // io.thernal.console.agent/AgentParam.Integer.component6|component6(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/Boolean = ..., kotlin/Int? = ..., kotlin/Int = ..., kotlin/Int = ...): io.thernal.console.agent/AgentParam.Integer // io.thernal.console.agent/AgentParam.Integer.copy|copy(kotlin.String;kotlin.String;kotlin.Boolean;kotlin.Int?;kotlin.Int;kotlin.Int){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.agent/AgentParam.Integer.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.agent/AgentParam.Integer.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.agent/AgentParam.Integer.toString|toString(){}[0]
+    }
+
+    final class Text : io.thernal.console.agent/AgentParam { // io.thernal.console.agent/AgentParam.Text|null[0]
+        constructor <init>(kotlin/String, kotlin/String, kotlin/Boolean, kotlin/String?) // io.thernal.console.agent/AgentParam.Text.<init>|<init>(kotlin.String;kotlin.String;kotlin.Boolean;kotlin.String?){}[0]
+
+        final val default // io.thernal.console.agent/AgentParam.Text.default|{}default[0]
+            final fun <get-default>(): kotlin/String? // io.thernal.console.agent/AgentParam.Text.default.<get-default>|<get-default>(){}[0]
+        final val description // io.thernal.console.agent/AgentParam.Text.description|{}description[0]
+            final fun <get-description>(): kotlin/String // io.thernal.console.agent/AgentParam.Text.description.<get-description>|<get-description>(){}[0]
+        final val isRequired // io.thernal.console.agent/AgentParam.Text.isRequired|{}isRequired[0]
+            final fun <get-isRequired>(): kotlin/Boolean // io.thernal.console.agent/AgentParam.Text.isRequired.<get-isRequired>|<get-isRequired>(){}[0]
+        final val key // io.thernal.console.agent/AgentParam.Text.key|{}key[0]
+            final fun <get-key>(): kotlin/String // io.thernal.console.agent/AgentParam.Text.key.<get-key>|<get-key>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.agent/AgentParam.Text.component1|component1(){}[0]
+        final fun component2(): kotlin/String // io.thernal.console.agent/AgentParam.Text.component2|component2(){}[0]
+        final fun component3(): kotlin/Boolean // io.thernal.console.agent/AgentParam.Text.component3|component3(){}[0]
+        final fun component4(): kotlin/String? // io.thernal.console.agent/AgentParam.Text.component4|component4(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/Boolean = ..., kotlin/String? = ...): io.thernal.console.agent/AgentParam.Text // io.thernal.console.agent/AgentParam.Text.copy|copy(kotlin.String;kotlin.String;kotlin.Boolean;kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.agent/AgentParam.Text.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.agent/AgentParam.Text.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.agent/AgentParam.Text.toString|toString(){}[0]
+    }
+
+    final class Toggle : io.thernal.console.agent/AgentParam { // io.thernal.console.agent/AgentParam.Toggle|null[0]
+        constructor <init>(kotlin/String, kotlin/String, kotlin/Boolean) // io.thernal.console.agent/AgentParam.Toggle.<init>|<init>(kotlin.String;kotlin.String;kotlin.Boolean){}[0]
+
+        final val default // io.thernal.console.agent/AgentParam.Toggle.default|{}default[0]
+            final fun <get-default>(): kotlin/Boolean // io.thernal.console.agent/AgentParam.Toggle.default.<get-default>|<get-default>(){}[0]
+        final val description // io.thernal.console.agent/AgentParam.Toggle.description|{}description[0]
+            final fun <get-description>(): kotlin/String // io.thernal.console.agent/AgentParam.Toggle.description.<get-description>|<get-description>(){}[0]
+        final val isRequired // io.thernal.console.agent/AgentParam.Toggle.isRequired|{}isRequired[0]
+            final fun <get-isRequired>(): kotlin/Boolean // io.thernal.console.agent/AgentParam.Toggle.isRequired.<get-isRequired>|<get-isRequired>(){}[0]
+        final val key // io.thernal.console.agent/AgentParam.Toggle.key|{}key[0]
+            final fun <get-key>(): kotlin/String // io.thernal.console.agent/AgentParam.Toggle.key.<get-key>|<get-key>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.agent/AgentParam.Toggle.component1|component1(){}[0]
+        final fun component2(): kotlin/String // io.thernal.console.agent/AgentParam.Toggle.component2|component2(){}[0]
+        final fun component3(): kotlin/Boolean // io.thernal.console.agent/AgentParam.Toggle.component3|component3(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/Boolean = ...): io.thernal.console.agent/AgentParam.Toggle // io.thernal.console.agent/AgentParam.Toggle.copy|copy(kotlin.String;kotlin.String;kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.agent/AgentParam.Toggle.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.agent/AgentParam.Toggle.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.agent/AgentParam.Toggle.toString|toString(){}[0]
+    }
+}
+
+final class <#A: io.thernal.console.core.log/Log> io.thernal.console.agent/AgentLogFormat { // io.thernal.console.agent/AgentLogFormat|null[0]
+    final val type // io.thernal.console.agent/AgentLogFormat.type|{}type[0]
+        final fun <get-type>(): kotlin.reflect/KClass<#A> // io.thernal.console.agent/AgentLogFormat.type.<get-type>|<get-type>(){}[0]
+}
+
+final class <#A: kotlin/Any?> io.thernal.console.agent/AgentArg { // io.thernal.console.agent/AgentArg|null[0]
+    final val param // io.thernal.console.agent/AgentArg.param|{}param[0]
+        final fun <get-param>(): io.thernal.console.agent/AgentParam // io.thernal.console.agent/AgentArg.param.<get-param>|<get-param>(){}[0]
+
+    final fun <#A1: kotlin/Any?> map(kotlin/Function1<#A, #A1>): io.thernal.console.agent/AgentArg<#A1> // io.thernal.console.agent/AgentArg.map|map(kotlin.Function1<1:0,0:0>){0§<kotlin.Any?>}[0]
+}
+
+final class io.thernal.console.agent/AgentCall { // io.thernal.console.agent/AgentCall|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/Any?>) // io.thernal.console.agent/AgentCall.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.Any?>){}[0]
+
+    final fun <#A1: kotlin/Any?> get(io.thernal.console.agent/AgentArg<#A1>): #A1 // io.thernal.console.agent/AgentCall.get|get(io.thernal.console.agent.AgentArg<0:0>){0§<kotlin.Any?>}[0]
+}
+
+final class io.thernal.console.agent/AgentConfig { // io.thernal.console.agent/AgentConfig|null[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/String = ..., kotlin/Int = ..., kotlin/String? = ..., kotlin/Int = ...) // io.thernal.console.agent/AgentConfig.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.String;kotlin.Int;kotlin.String?;kotlin.Int){}[0]
+
+    final val deviceName // io.thernal.console.agent/AgentConfig.deviceName|{}deviceName[0]
+        final fun <get-deviceName>(): kotlin/String? // io.thernal.console.agent/AgentConfig.deviceName.<get-deviceName>|<get-deviceName>(){}[0]
+    final val enableActions // io.thernal.console.agent/AgentConfig.enableActions|{}enableActions[0]
+        final fun <get-enableActions>(): kotlin/Boolean // io.thernal.console.agent/AgentConfig.enableActions.<get-enableActions>|<get-enableActions>(){}[0]
+    final val enabled // io.thernal.console.agent/AgentConfig.enabled|{}enabled[0]
+        final fun <get-enabled>(): kotlin/Boolean // io.thernal.console.agent/AgentConfig.enabled.<get-enabled>|<get-enabled>(){}[0]
+    final val historySize // io.thernal.console.agent/AgentConfig.historySize|{}historySize[0]
+        final fun <get-historySize>(): kotlin/Int // io.thernal.console.agent/AgentConfig.historySize.<get-historySize>|<get-historySize>(){}[0]
+    final val hubHost // io.thernal.console.agent/AgentConfig.hubHost|{}hubHost[0]
+        final fun <get-hubHost>(): kotlin/String // io.thernal.console.agent/AgentConfig.hubHost.<get-hubHost>|<get-hubHost>(){}[0]
+    final val hubPort // io.thernal.console.agent/AgentConfig.hubPort|{}hubPort[0]
+        final fun <get-hubPort>(): kotlin/Int // io.thernal.console.agent/AgentConfig.hubPort.<get-hubPort>|<get-hubPort>(){}[0]
+
+    final fun component1(): kotlin/Boolean // io.thernal.console.agent/AgentConfig.component1|component1(){}[0]
+    final fun component2(): kotlin/Boolean // io.thernal.console.agent/AgentConfig.component2|component2(){}[0]
+    final fun component3(): kotlin/String // io.thernal.console.agent/AgentConfig.component3|component3(){}[0]
+    final fun component4(): kotlin/Int // io.thernal.console.agent/AgentConfig.component4|component4(){}[0]
+    final fun component5(): kotlin/String? // io.thernal.console.agent/AgentConfig.component5|component5(){}[0]
+    final fun component6(): kotlin/Int // io.thernal.console.agent/AgentConfig.component6|component6(){}[0]
+    final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/String = ..., kotlin/Int = ..., kotlin/String? = ..., kotlin/Int = ...): io.thernal.console.agent/AgentConfig // io.thernal.console.agent/AgentConfig.copy|copy(kotlin.Boolean;kotlin.Boolean;kotlin.String;kotlin.Int;kotlin.String?;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.agent/AgentConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.agent/AgentConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.agent/AgentConfig.toString|toString(){}[0]
+
+    final object Companion { // io.thernal.console.agent/AgentConfig.Companion|null[0]
+        final const val DEFAULT_HISTORY_SIZE // io.thernal.console.agent/AgentConfig.Companion.DEFAULT_HISTORY_SIZE|{}DEFAULT_HISTORY_SIZE[0]
+            final fun <get-DEFAULT_HISTORY_SIZE>(): kotlin/Int // io.thernal.console.agent/AgentConfig.Companion.DEFAULT_HISTORY_SIZE.<get-DEFAULT_HISTORY_SIZE>|<get-DEFAULT_HISTORY_SIZE>(){}[0]
+        final const val DEFAULT_HUB_HOST // io.thernal.console.agent/AgentConfig.Companion.DEFAULT_HUB_HOST|{}DEFAULT_HUB_HOST[0]
+            final fun <get-DEFAULT_HUB_HOST>(): kotlin/String // io.thernal.console.agent/AgentConfig.Companion.DEFAULT_HUB_HOST.<get-DEFAULT_HUB_HOST>|<get-DEFAULT_HUB_HOST>(){}[0]
+        final const val DEFAULT_HUB_PORT // io.thernal.console.agent/AgentConfig.Companion.DEFAULT_HUB_PORT|{}DEFAULT_HUB_PORT[0]
+            final fun <get-DEFAULT_HUB_PORT>(): kotlin/Int // io.thernal.console.agent/AgentConfig.Companion.DEFAULT_HUB_PORT.<get-DEFAULT_HUB_PORT>|<get-DEFAULT_HUB_PORT>(){}[0]
+        final const val MAX_HISTORY_SIZE // io.thernal.console.agent/AgentConfig.Companion.MAX_HISTORY_SIZE|{}MAX_HISTORY_SIZE[0]
+            final fun <get-MAX_HISTORY_SIZE>(): kotlin/Int // io.thernal.console.agent/AgentConfig.Companion.MAX_HISTORY_SIZE.<get-MAX_HISTORY_SIZE>|<get-MAX_HISTORY_SIZE>(){}[0]
+        final const val MAX_PORT // io.thernal.console.agent/AgentConfig.Companion.MAX_PORT|{}MAX_PORT[0]
+            final fun <get-MAX_PORT>(): kotlin/Int // io.thernal.console.agent/AgentConfig.Companion.MAX_PORT.<get-MAX_PORT>|<get-MAX_PORT>(){}[0]
+        final const val MIN_HISTORY_SIZE // io.thernal.console.agent/AgentConfig.Companion.MIN_HISTORY_SIZE|{}MIN_HISTORY_SIZE[0]
+            final fun <get-MIN_HISTORY_SIZE>(): kotlin/Int // io.thernal.console.agent/AgentConfig.Companion.MIN_HISTORY_SIZE.<get-MIN_HISTORY_SIZE>|<get-MIN_HISTORY_SIZE>(){}[0]
+        final const val MIN_PORT // io.thernal.console.agent/AgentConfig.Companion.MIN_PORT|{}MIN_PORT[0]
+            final fun <get-MIN_PORT>(): kotlin/Int // io.thernal.console.agent/AgentConfig.Companion.MIN_PORT.<get-MIN_PORT>|<get-MIN_PORT>(){}[0]
+        final const val SETTINGS_SECTION_ID // io.thernal.console.agent/AgentConfig.Companion.SETTINGS_SECTION_ID|{}SETTINGS_SECTION_ID[0]
+            final fun <get-SETTINGS_SECTION_ID>(): kotlin/String // io.thernal.console.agent/AgentConfig.Companion.SETTINGS_SECTION_ID.<get-SETTINGS_SECTION_ID>|<get-SETTINGS_SECTION_ID>(){}[0]
+    }
+}
+
+final class io.thernal.console.agent/AgentEntries { // io.thernal.console.agent/AgentEntries|null[0]
+    final val about // io.thernal.console.agent/AgentEntries.about|{}about[0]
+        final fun <get-about>(): kotlin/String // io.thernal.console.agent/AgentEntries.about.<get-about>|<get-about>(){}[0]
+    final val feeds // io.thernal.console.agent/AgentEntries.feeds|{}feeds[0]
+        final fun <get-feeds>(): kotlin.collections/List<io.thernal.console.agent/AgentFeed> // io.thernal.console.agent/AgentEntries.feeds.<get-feeds>|<get-feeds>(){}[0]
+    final val id // io.thernal.console.agent/AgentEntries.id|{}id[0]
+        final fun <get-id>(): kotlin/String // io.thernal.console.agent/AgentEntries.id.<get-id>|<get-id>(){}[0]
+    final val logFormats // io.thernal.console.agent/AgentEntries.logFormats|{}logFormats[0]
+        final fun <get-logFormats>(): kotlin.collections/List<io.thernal.console.agent/AgentLogFormat<*>> // io.thernal.console.agent/AgentEntries.logFormats.<get-logFormats>|<get-logFormats>(){}[0]
+    final val redactedKeys // io.thernal.console.agent/AgentEntries.redactedKeys|{}redactedKeys[0]
+        final fun <get-redactedKeys>(): kotlin.collections/Set<kotlin/String> // io.thernal.console.agent/AgentEntries.redactedKeys.<get-redactedKeys>|<get-redactedKeys>(){}[0]
+    final val title // io.thernal.console.agent/AgentEntries.title|{}title[0]
+        final fun <get-title>(): kotlin/String // io.thernal.console.agent/AgentEntries.title.<get-title>|<get-title>(){}[0]
+    final val tools // io.thernal.console.agent/AgentEntries.tools|{}tools[0]
+        final fun <get-tools>(): kotlin.collections/List<io.thernal.console.agent/AgentTool> // io.thernal.console.agent/AgentEntries.tools.<get-tools>|<get-tools>(){}[0]
+}
+
+final class io.thernal.console.agent/AgentFeed { // io.thernal.console.agent/AgentFeed|null[0]
+    final val description // io.thernal.console.agent/AgentFeed.description|{}description[0]
+        final fun <get-description>(): kotlin/String // io.thernal.console.agent/AgentFeed.description.<get-description>|<get-description>(){}[0]
+    final val name // io.thernal.console.agent/AgentFeed.name|{}name[0]
+        final fun <get-name>(): kotlin/String // io.thernal.console.agent/AgentFeed.name.<get-name>|<get-name>(){}[0]
+    final val records // io.thernal.console.agent/AgentFeed.records|{}records[0]
+        final fun <get-records>(): kotlinx.coroutines.flow/Flow<io.thernal.console.agent/AgentRecord> // io.thernal.console.agent/AgentFeed.records.<get-records>|<get-records>(){}[0]
+}
+
+final class io.thernal.console.agent/AgentRecord { // io.thernal.console.agent/AgentRecord|null[0]
+    constructor <init>(kotlin/String, kotlin/Long, kotlin/String, kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ...) // io.thernal.console.agent/AgentRecord.<init>|<init>(kotlin.String;kotlin.Long;kotlin.String;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+    final val detail // io.thernal.console.agent/AgentRecord.detail|{}detail[0]
+        final fun <get-detail>(): kotlin/String? // io.thernal.console.agent/AgentRecord.detail.<get-detail>|<get-detail>(){}[0]
+    final val fields // io.thernal.console.agent/AgentRecord.fields|{}fields[0]
+        final fun <get-fields>(): kotlin.collections/Map<kotlin/String, kotlin/String> // io.thernal.console.agent/AgentRecord.fields.<get-fields>|<get-fields>(){}[0]
+    final val id // io.thernal.console.agent/AgentRecord.id|{}id[0]
+        final fun <get-id>(): kotlin/String // io.thernal.console.agent/AgentRecord.id.<get-id>|<get-id>(){}[0]
+    final val kind // io.thernal.console.agent/AgentRecord.kind|{}kind[0]
+        final fun <get-kind>(): kotlin/String? // io.thernal.console.agent/AgentRecord.kind.<get-kind>|<get-kind>(){}[0]
+    final val level // io.thernal.console.agent/AgentRecord.level|{}level[0]
+        final fun <get-level>(): kotlin/String? // io.thernal.console.agent/AgentRecord.level.<get-level>|<get-level>(){}[0]
+    final val summary // io.thernal.console.agent/AgentRecord.summary|{}summary[0]
+        final fun <get-summary>(): kotlin/String // io.thernal.console.agent/AgentRecord.summary.<get-summary>|<get-summary>(){}[0]
+    final val tag // io.thernal.console.agent/AgentRecord.tag|{}tag[0]
+        final fun <get-tag>(): kotlin/String? // io.thernal.console.agent/AgentRecord.tag.<get-tag>|<get-tag>(){}[0]
+    final val timeMillis // io.thernal.console.agent/AgentRecord.timeMillis|{}timeMillis[0]
+        final fun <get-timeMillis>(): kotlin/Long // io.thernal.console.agent/AgentRecord.timeMillis.<get-timeMillis>|<get-timeMillis>(){}[0]
+
+    final fun component1(): kotlin/String // io.thernal.console.agent/AgentRecord.component1|component1(){}[0]
+    final fun component2(): kotlin/Long // io.thernal.console.agent/AgentRecord.component2|component2(){}[0]
+    final fun component3(): kotlin/String // io.thernal.console.agent/AgentRecord.component3|component3(){}[0]
+    final fun component4(): kotlin/String? // io.thernal.console.agent/AgentRecord.component4|component4(){}[0]
+    final fun component5(): kotlin/String? // io.thernal.console.agent/AgentRecord.component5|component5(){}[0]
+    final fun component6(): kotlin/String? // io.thernal.console.agent/AgentRecord.component6|component6(){}[0]
+    final fun component7(): kotlin/String? // io.thernal.console.agent/AgentRecord.component7|component7(){}[0]
+    final fun component8(): kotlin.collections/Map<kotlin/String, kotlin/String> // io.thernal.console.agent/AgentRecord.component8|component8(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/Long = ..., kotlin/String = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ...): io.thernal.console.agent/AgentRecord // io.thernal.console.agent/AgentRecord.copy|copy(kotlin.String;kotlin.Long;kotlin.String;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.agent/AgentRecord.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.agent/AgentRecord.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.agent/AgentRecord.toString|toString(){}[0]
+}
+
+final class io.thernal.console.agent/AgentTool { // io.thernal.console.agent/AgentTool|null[0]
+    final val description // io.thernal.console.agent/AgentTool.description|{}description[0]
+        final fun <get-description>(): kotlin/String // io.thernal.console.agent/AgentTool.description.<get-description>|<get-description>(){}[0]
+    final val isAction // io.thernal.console.agent/AgentTool.isAction|{}isAction[0]
+        final fun <get-isAction>(): kotlin/Boolean // io.thernal.console.agent/AgentTool.isAction.<get-isAction>|<get-isAction>(){}[0]
+    final val name // io.thernal.console.agent/AgentTool.name|{}name[0]
+        final fun <get-name>(): kotlin/String // io.thernal.console.agent/AgentTool.name.<get-name>|<get-name>(){}[0]
+    final val params // io.thernal.console.agent/AgentTool.params|{}params[0]
+        final fun <get-params>(): kotlin.collections/List<io.thernal.console.agent/AgentParam> // io.thernal.console.agent/AgentTool.params.<get-params>|<get-params>(){}[0]
+}
+
+final object io.thernal.console.agent/AgentRegistry { // io.thernal.console.agent/AgentRegistry|null[0]
+    final val entries // io.thernal.console.agent/AgentRegistry.entries|{}entries[0]
+        final fun <get-entries>(): kotlinx.coroutines.flow/StateFlow<kotlin.collections/List<io.thernal.console.agent/AgentEntries>> // io.thernal.console.agent/AgentRegistry.entries.<get-entries>|<get-entries>(){}[0]
+}
+
+final object io.thernal.console.agent/ConsoleAgent { // io.thernal.console.agent/ConsoleAgent|null[0]
+    final val config // io.thernal.console.agent/ConsoleAgent.config|{}config[0]
+        final fun <get-config>(): kotlinx.coroutines.flow/StateFlow<io.thernal.console.agent/AgentConfig> // io.thernal.console.agent/ConsoleAgent.config.<get-config>|<get-config>(){}[0]
+    final val connection // io.thernal.console.agent/ConsoleAgent.connection|{}connection[0]
+        final fun <get-connection>(): kotlinx.coroutines.flow/StateFlow<io.thernal.console.agent/AgentConnection> // io.thernal.console.agent/ConsoleAgent.connection.<get-connection>|<get-connection>(){}[0]
+
+    final fun updateConfig(io.thernal.console.agent/AgentConfig) // io.thernal.console.agent/ConsoleAgent.updateConfig|updateConfig(io.thernal.console.agent.AgentConfig){}[0]
+    final fun updateConfig(kotlin/Function1<io.thernal.console.agent/AgentConfig, io.thernal.console.agent/AgentConfig>) // io.thernal.console.agent/ConsoleAgent.updateConfig|updateConfig(kotlin.Function1<io.thernal.console.agent.AgentConfig,io.thernal.console.agent.AgentConfig>){}[0]
+}
+
+final fun io.thernal.console.agent/agentEntries(kotlin/String, kotlin/String, kotlin/String, kotlin/Function1<io.thernal.console.agent/AgentEntriesScope, kotlin/Unit>): io.thernal.console.agent/AgentEntries // io.thernal.console.agent/agentEntries|agentEntries(kotlin.String;kotlin.String;kotlin.String;kotlin.Function1<io.thernal.console.agent.AgentEntriesScope,kotlin.Unit>){}[0]
+final inline fun <#A: reified io.thernal.console.core.log/Log> (io.thernal.console.agent/AgentEntriesScope).io.thernal.console.agent/describe(noinline kotlin/Function1<#A, kotlin/String> = ..., noinline kotlin/Function1<#A, kotlin/String?> = ..., noinline kotlin/Function1<#A, kotlin.collections/Map<kotlin/String, kotlin/String>> = ...) // io.thernal.console.agent/describe|describe@io.thernal.console.agent.AgentEntriesScope(kotlin.Function1<0:0,kotlin.String>;kotlin.Function1<0:0,kotlin.String?>;kotlin.Function1<0:0,kotlin.collections.Map<kotlin.String,kotlin.String>>){0§<io.thernal.console.core.log.Log>}[0]
+final inline fun <#A: reified kotlin/Enum<#A>> (io.thernal.console.agent/AgentToolScope).io.thernal.console.agent/enum(kotlin/String, kotlin/String, #A): io.thernal.console.agent/AgentArg<#A> // io.thernal.console.agent/enum|enum@io.thernal.console.agent.AgentToolScope(kotlin.String;kotlin.String;0:0){0§<kotlin.Enum<0:0>>}[0]

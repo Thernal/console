@@ -1,0 +1,22 @@
+public final class io/thernal/console/ui/ConsoleProviderKt {
+	public static final fun ConsoleProvider (ZLio/thernal/console/api/trigger/ConsoleTrigger;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/thernal/console/ui/trigger/ConsoleTriggerStubsKt {
+	public static final fun any (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;[Lio/thernal/console/api/trigger/ConsoleTrigger;)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static final fun doubleTap (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static final fun keyboardShortcut-KChvXf4 (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;JLjava/util/Set;)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static synthetic fun keyboardShortcut-KChvXf4$default (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;JLjava/util/Set;ILjava/lang/Object;)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static final fun longPress-HG0u8IE (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;J)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static synthetic fun longPress-HG0u8IE$default (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;JILjava/lang/Object;)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static final fun multiFingerTap (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;I)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static synthetic fun multiFingerTap$default (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;IILjava/lang/Object;)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static final fun none (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static final fun shake (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;F)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static synthetic fun shake$default (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;FILjava/lang/Object;)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static final fun swipeSequence (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;[Lio/thernal/console/api/trigger/Swipe;F)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static synthetic fun swipeSequence$default (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;[Lio/thernal/console/api/trigger/Swipe;FILjava/lang/Object;)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static final fun tapCorner (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;Lio/thernal/console/api/trigger/Corner;IF)Lio/thernal/console/api/trigger/ConsoleTrigger;
+	public static synthetic fun tapCorner$default (Lio/thernal/console/api/trigger/ConsoleTrigger$Companion;Lio/thernal/console/api/trigger/Corner;IFILjava/lang/Object;)Lio/thernal/console/api/trigger/ConsoleTrigger;
+}
+

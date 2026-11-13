@@ -1,0 +1,34 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:details-ui>
+final class io.thernal.console.details.ui.view.details.model/DetailsState : io.thernal.console.ui.core/ViewState { // io.thernal.console.details.ui.view.details.model/DetailsState|null[0]
+    constructor <init>() // io.thernal.console.details.ui.view.details.model/DetailsState.<init>|<init>(){}[0]
+
+    final val details // io.thernal.console.details.ui.view.details.model/DetailsState.details|{}details[0]
+        final fun <get-details>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/Map<kotlin/String, kotlin/String>> // io.thernal.console.details.ui.view.details.model/DetailsState.details.<get-details>|<get-details>(){}[0]
+}
+
+final class io.thernal.console.details.ui.view.details.model/DetailsViewModel : androidx.lifecycle/ViewModel, io.thernal.console.ui.core/StateHolder { // io.thernal.console.details.ui.view.details.model/DetailsViewModel|null[0]
+    constructor <init>() // io.thernal.console.details.ui.view.details.model/DetailsViewModel.<init>|<init>(){}[0]
+
+    final val state // io.thernal.console.details.ui.view.details.model/DetailsViewModel.state|{}state[0]
+        final fun <get-state>(): io.thernal.console.details.ui.view.details.model/DetailsState // io.thernal.console.details.ui.view.details.model/DetailsViewModel.state.<get-state>|<get-state>(){}[0]
+}
+
+final object io.thernal.console.details.ui.addon/ConsoleDetailsAddon : io.thernal.console.api.addon/ConsoleAddon { // io.thernal.console.details.ui.addon/ConsoleDetailsAddon|null[0]
+    final fun onInstall() // io.thernal.console.details.ui.addon/ConsoleDetailsAddon.onInstall|onInstall(){}[0]
+    final fun tab(): io.thernal.console.api.addon/ConsoleTab // io.thernal.console.details.ui.addon/ConsoleDetailsAddon.tab|tab(){}[0]
+}
+
+final val io.thernal.console.details.ui.addon/io_thernal_console_details_ui_addon_ConsoleDetailsAddon$stableprop // io.thernal.console.details.ui.addon/io_thernal_console_details_ui_addon_ConsoleDetailsAddon$stableprop|#static{}io_thernal_console_details_ui_addon_ConsoleDetailsAddon$stableprop[0]
+final val io.thernal.console.details.ui.view.details.model/io_thernal_console_details_ui_view_details_model_DetailsState$stableprop // io.thernal.console.details.ui.view.details.model/io_thernal_console_details_ui_view_details_model_DetailsState$stableprop|#static{}io_thernal_console_details_ui_view_details_model_DetailsState$stableprop[0]
+final val io.thernal.console.details.ui.view.details.model/io_thernal_console_details_ui_view_details_model_DetailsViewModel$stableprop // io.thernal.console.details.ui.view.details.model/io_thernal_console_details_ui_view_details_model_DetailsViewModel$stableprop|#static{}io_thernal_console_details_ui_view_details_model_DetailsViewModel$stableprop[0]
+
+final fun io.thernal.console.details.ui.addon/io_thernal_console_details_ui_addon_ConsoleDetailsAddon$stableprop_getter(): kotlin/Int // io.thernal.console.details.ui.addon/io_thernal_console_details_ui_addon_ConsoleDetailsAddon$stableprop_getter|io_thernal_console_details_ui_addon_ConsoleDetailsAddon$stableprop_getter(){}[0]
+final fun io.thernal.console.details.ui.view.details.model/io_thernal_console_details_ui_view_details_model_DetailsState$stableprop_getter(): kotlin/Int // io.thernal.console.details.ui.view.details.model/io_thernal_console_details_ui_view_details_model_DetailsState$stableprop_getter|io_thernal_console_details_ui_view_details_model_DetailsState$stableprop_getter(){}[0]
+final fun io.thernal.console.details.ui.view.details.model/io_thernal_console_details_ui_view_details_model_DetailsViewModel$stableprop_getter(): kotlin/Int // io.thernal.console.details.ui.view.details.model/io_thernal_console_details_ui_view_details_model_DetailsViewModel$stableprop_getter|io_thernal_console_details_ui_view_details_model_DetailsViewModel$stableprop_getter(){}[0]

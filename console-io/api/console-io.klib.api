@@ -1,0 +1,25 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:console-io>
+abstract interface io.thernal.console.io/AppendSink { // io.thernal.console.io/AppendSink|null[0]
+    abstract fun append(kotlin/ByteArray): kotlin/Boolean // io.thernal.console.io/AppendSink.append|append(kotlin.ByteArray){}[0]
+    abstract fun close() // io.thernal.console.io/AppendSink.close|close(){}[0]
+}
+
+final object io.thernal.console.io/ConsoleFileSystem { // io.thernal.console.io/ConsoleFileSystem|null[0]
+    final fun baseDirectoryPath(kotlin/String): kotlin/String? // io.thernal.console.io/ConsoleFileSystem.baseDirectoryPath|baseDirectoryPath(kotlin.String){}[0]
+    final fun delete(kotlin/String): kotlin/Boolean // io.thernal.console.io/ConsoleFileSystem.delete|delete(kotlin.String){}[0]
+    final fun ensureDirectory(kotlin/String): kotlin/Boolean // io.thernal.console.io/ConsoleFileSystem.ensureDirectory|ensureDirectory(kotlin.String){}[0]
+    final fun exists(kotlin/String): kotlin/Boolean // io.thernal.console.io/ConsoleFileSystem.exists|exists(kotlin.String){}[0]
+    final fun listFileNames(kotlin/String): kotlin.collections/List<kotlin/String> // io.thernal.console.io/ConsoleFileSystem.listFileNames|listFileNames(kotlin.String){}[0]
+    final fun openAppend(kotlin/String): io.thernal.console.io/AppendSink? // io.thernal.console.io/ConsoleFileSystem.openAppend|openAppend(kotlin.String){}[0]
+    final fun readBytes(kotlin/String): kotlin/ByteArray? // io.thernal.console.io/ConsoleFileSystem.readBytes|readBytes(kotlin.String){}[0]
+    final fun rename(kotlin/String, kotlin/String): kotlin/Boolean // io.thernal.console.io/ConsoleFileSystem.rename|rename(kotlin.String;kotlin.String){}[0]
+    final fun temporaryDirectoryPath(): kotlin/String // io.thernal.console.io/ConsoleFileSystem.temporaryDirectoryPath|temporaryDirectoryPath(){}[0]
+    final fun writeAtomically(kotlin/String, kotlin/ByteArray): kotlin/Boolean // io.thernal.console.io/ConsoleFileSystem.writeAtomically|writeAtomically(kotlin.String;kotlin.ByteArray){}[0]
+}

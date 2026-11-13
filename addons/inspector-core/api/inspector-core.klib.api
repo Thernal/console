@@ -1,0 +1,132 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:inspector-core>
+final enum class io.thernal.console.inspector/InspectorCommand : kotlin/Enum<io.thernal.console.inspector/InspectorCommand> { // io.thernal.console.inspector/InspectorCommand|null[0]
+    enum entry ClearSelection // io.thernal.console.inspector/InspectorCommand.ClearSelection|null[0]
+    enum entry Refresh // io.thernal.console.inspector/InspectorCommand.Refresh|null[0]
+    enum entry ResetStats // io.thernal.console.inspector/InspectorCommand.ResetStats|null[0]
+
+    final val entries // io.thernal.console.inspector/InspectorCommand.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.inspector/InspectorCommand> // io.thernal.console.inspector/InspectorCommand.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.inspector/InspectorCommand // io.thernal.console.inspector/InspectorCommand.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.inspector/InspectorCommand> // io.thernal.console.inspector/InspectorCommand.values|values#static(){}[0]
+}
+
+final enum class io.thernal.console.inspector/InspectorFontScale : kotlin/Enum<io.thernal.console.inspector/InspectorFontScale> { // io.thernal.console.inspector/InspectorFontScale|null[0]
+    enum entry Huge // io.thernal.console.inspector/InspectorFontScale.Huge|null[0]
+    enum entry Large // io.thernal.console.inspector/InspectorFontScale.Large|null[0]
+    enum entry Larger // io.thernal.console.inspector/InspectorFontScale.Larger|null[0]
+    enum entry Largest // io.thernal.console.inspector/InspectorFontScale.Largest|null[0]
+    enum entry Small // io.thernal.console.inspector/InspectorFontScale.Small|null[0]
+
+    final val entries // io.thernal.console.inspector/InspectorFontScale.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.inspector/InspectorFontScale> // io.thernal.console.inspector/InspectorFontScale.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val factor // io.thernal.console.inspector/InspectorFontScale.factor|{}factor[0]
+        final fun <get-factor>(): kotlin/Float // io.thernal.console.inspector/InspectorFontScale.factor.<get-factor>|<get-factor>(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.inspector/InspectorFontScale // io.thernal.console.inspector/InspectorFontScale.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.inspector/InspectorFontScale> // io.thernal.console.inspector/InspectorFontScale.values|values#static(){}[0]
+}
+
+final enum class io.thernal.console.inspector/InspectorLayoutDirection : kotlin/Enum<io.thernal.console.inspector/InspectorLayoutDirection> { // io.thernal.console.inspector/InspectorLayoutDirection|null[0]
+    enum entry Ltr // io.thernal.console.inspector/InspectorLayoutDirection.Ltr|null[0]
+    enum entry Rtl // io.thernal.console.inspector/InspectorLayoutDirection.Rtl|null[0]
+
+    final val entries // io.thernal.console.inspector/InspectorLayoutDirection.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.inspector/InspectorLayoutDirection> // io.thernal.console.inspector/InspectorLayoutDirection.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.inspector/InspectorLayoutDirection // io.thernal.console.inspector/InspectorLayoutDirection.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.inspector/InspectorLayoutDirection> // io.thernal.console.inspector/InspectorLayoutDirection.values|values#static(){}[0]
+}
+
+final class io.thernal.console.inspector/InspectorConfig { // io.thernal.console.inspector/InspectorConfig|null[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Int = ..., kotlin/Boolean = ..., kotlin/Int = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin/Int = ..., io.thernal.console.inspector/InspectorFontScale? = ..., io.thernal.console.inspector/InspectorLayoutDirection? = ...) // io.thernal.console.inspector/InspectorConfig.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Int;kotlin.Boolean;kotlin.Int;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.collections.Set<kotlin.String>;kotlin.Int;io.thernal.console.inspector.InspectorFontScale?;io.thernal.console.inspector.InspectorLayoutDirection?){}[0]
+
+    final val appSourceTags // io.thernal.console.inspector/InspectorConfig.appSourceTags|{}appSourceTags[0]
+        final fun <get-appSourceTags>(): kotlin.collections/Set<kotlin/String> // io.thernal.console.inspector/InspectorConfig.appSourceTags.<get-appSourceTags>|<get-appSourceTags>(){}[0]
+    final val autoRefreshSeconds // io.thernal.console.inspector/InspectorConfig.autoRefreshSeconds|{}autoRefreshSeconds[0]
+        final fun <get-autoRefreshSeconds>(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.autoRefreshSeconds.<get-autoRefreshSeconds>|<get-autoRefreshSeconds>(){}[0]
+    final val enabled // io.thernal.console.inspector/InspectorConfig.enabled|{}enabled[0]
+        final fun <get-enabled>(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.enabled.<get-enabled>|<get-enabled>(){}[0]
+    final val fontScale // io.thernal.console.inspector/InspectorConfig.fontScale|{}fontScale[0]
+        final fun <get-fontScale>(): io.thernal.console.inspector/InspectorFontScale? // io.thernal.console.inspector/InspectorConfig.fontScale.<get-fontScale>|<get-fontScale>(){}[0]
+    final val heatmapThreshold // io.thernal.console.inspector/InspectorConfig.heatmapThreshold|{}heatmapThreshold[0]
+        final fun <get-heatmapThreshold>(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.heatmapThreshold.<get-heatmapThreshold>|<get-heatmapThreshold>(){}[0]
+    final val hideFrameworkNodes // io.thernal.console.inspector/InspectorConfig.hideFrameworkNodes|{}hideFrameworkNodes[0]
+        final fun <get-hideFrameworkNodes>(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.hideFrameworkNodes.<get-hideFrameworkNodes>|<get-hideFrameworkNodes>(){}[0]
+    final val highlightDurationMillis // io.thernal.console.inspector/InspectorConfig.highlightDurationMillis|{}highlightDurationMillis[0]
+        final fun <get-highlightDurationMillis>(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.highlightDurationMillis.<get-highlightDurationMillis>|<get-highlightDurationMillis>(){}[0]
+    final val highlightRecompositions // io.thernal.console.inspector/InspectorConfig.highlightRecompositions|{}highlightRecompositions[0]
+        final fun <get-highlightRecompositions>(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.highlightRecompositions.<get-highlightRecompositions>|<get-highlightRecompositions>(){}[0]
+    final val layoutDirection // io.thernal.console.inspector/InspectorConfig.layoutDirection|{}layoutDirection[0]
+        final fun <get-layoutDirection>(): io.thernal.console.inspector/InspectorLayoutDirection? // io.thernal.console.inspector/InspectorConfig.layoutDirection.<get-layoutDirection>|<get-layoutDirection>(){}[0]
+    final val showBounds // io.thernal.console.inspector/InspectorConfig.showBounds|{}showBounds[0]
+        final fun <get-showBounds>(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.showBounds.<get-showBounds>|<get-showBounds>(){}[0]
+    final val showHeatmap // io.thernal.console.inspector/InspectorConfig.showHeatmap|{}showHeatmap[0]
+        final fun <get-showHeatmap>(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.showHeatmap.<get-showHeatmap>|<get-showHeatmap>(){}[0]
+    final val showLabels // io.thernal.console.inspector/InspectorConfig.showLabels|{}showLabels[0]
+        final fun <get-showLabels>(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.showLabels.<get-showLabels>|<get-showLabels>(){}[0]
+    final val showMeasurements // io.thernal.console.inspector/InspectorConfig.showMeasurements|{}showMeasurements[0]
+        final fun <get-showMeasurements>(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.showMeasurements.<get-showMeasurements>|<get-showMeasurements>(){}[0]
+    final val showQuickControls // io.thernal.console.inspector/InspectorConfig.showQuickControls|{}showQuickControls[0]
+        final fun <get-showQuickControls>(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.showQuickControls.<get-showQuickControls>|<get-showQuickControls>(){}[0]
+    final val showRecompositionCounters // io.thernal.console.inspector/InspectorConfig.showRecompositionCounters|{}showRecompositionCounters[0]
+        final fun <get-showRecompositionCounters>(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.showRecompositionCounters.<get-showRecompositionCounters>|<get-showRecompositionCounters>(){}[0]
+    final val trackRecompositions // io.thernal.console.inspector/InspectorConfig.trackRecompositions|{}trackRecompositions[0]
+        final fun <get-trackRecompositions>(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.trackRecompositions.<get-trackRecompositions>|<get-trackRecompositions>(){}[0]
+
+    final fun component1(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.component1|component1(){}[0]
+    final fun component10(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.component10|component10(){}[0]
+    final fun component11(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.component11|component11(){}[0]
+    final fun component12(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.component12|component12(){}[0]
+    final fun component13(): kotlin.collections/Set<kotlin/String> // io.thernal.console.inspector/InspectorConfig.component13|component13(){}[0]
+    final fun component14(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.component14|component14(){}[0]
+    final fun component15(): io.thernal.console.inspector/InspectorFontScale? // io.thernal.console.inspector/InspectorConfig.component15|component15(){}[0]
+    final fun component16(): io.thernal.console.inspector/InspectorLayoutDirection? // io.thernal.console.inspector/InspectorConfig.component16|component16(){}[0]
+    final fun component2(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.component2|component2(){}[0]
+    final fun component3(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.component3|component3(){}[0]
+    final fun component4(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.component4|component4(){}[0]
+    final fun component5(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.component5|component5(){}[0]
+    final fun component6(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.component6|component6(){}[0]
+    final fun component7(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.component7|component7(){}[0]
+    final fun component8(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.component8|component8(){}[0]
+    final fun component9(): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.component9|component9(){}[0]
+    final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Int = ..., kotlin/Boolean = ..., kotlin/Int = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin/Int = ..., io.thernal.console.inspector/InspectorFontScale? = ..., io.thernal.console.inspector/InspectorLayoutDirection? = ...): io.thernal.console.inspector/InspectorConfig // io.thernal.console.inspector/InspectorConfig.copy|copy(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Int;kotlin.Boolean;kotlin.Int;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.collections.Set<kotlin.String>;kotlin.Int;io.thernal.console.inspector.InspectorFontScale?;io.thernal.console.inspector.InspectorLayoutDirection?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.inspector/InspectorConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.inspector/InspectorConfig.toString|toString(){}[0]
+
+    final object Companion { // io.thernal.console.inspector/InspectorConfig.Companion|null[0]
+        final const val DEFAULT_HEATMAP_THRESHOLD // io.thernal.console.inspector/InspectorConfig.Companion.DEFAULT_HEATMAP_THRESHOLD|{}DEFAULT_HEATMAP_THRESHOLD[0]
+            final fun <get-DEFAULT_HEATMAP_THRESHOLD>(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.Companion.DEFAULT_HEATMAP_THRESHOLD.<get-DEFAULT_HEATMAP_THRESHOLD>|<get-DEFAULT_HEATMAP_THRESHOLD>(){}[0]
+        final const val DEFAULT_HIGHLIGHT_DURATION_MILLIS // io.thernal.console.inspector/InspectorConfig.Companion.DEFAULT_HIGHLIGHT_DURATION_MILLIS|{}DEFAULT_HIGHLIGHT_DURATION_MILLIS[0]
+            final fun <get-DEFAULT_HIGHLIGHT_DURATION_MILLIS>(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.Companion.DEFAULT_HIGHLIGHT_DURATION_MILLIS.<get-DEFAULT_HIGHLIGHT_DURATION_MILLIS>|<get-DEFAULT_HIGHLIGHT_DURATION_MILLIS>(){}[0]
+        final const val MAX_AUTO_REFRESH_SECONDS // io.thernal.console.inspector/InspectorConfig.Companion.MAX_AUTO_REFRESH_SECONDS|{}MAX_AUTO_REFRESH_SECONDS[0]
+            final fun <get-MAX_AUTO_REFRESH_SECONDS>(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.Companion.MAX_AUTO_REFRESH_SECONDS.<get-MAX_AUTO_REFRESH_SECONDS>|<get-MAX_AUTO_REFRESH_SECONDS>(){}[0]
+        final const val MAX_HEATMAP_THRESHOLD // io.thernal.console.inspector/InspectorConfig.Companion.MAX_HEATMAP_THRESHOLD|{}MAX_HEATMAP_THRESHOLD[0]
+            final fun <get-MAX_HEATMAP_THRESHOLD>(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.Companion.MAX_HEATMAP_THRESHOLD.<get-MAX_HEATMAP_THRESHOLD>|<get-MAX_HEATMAP_THRESHOLD>(){}[0]
+        final const val MAX_HIGHLIGHT_DURATION_MILLIS // io.thernal.console.inspector/InspectorConfig.Companion.MAX_HIGHLIGHT_DURATION_MILLIS|{}MAX_HIGHLIGHT_DURATION_MILLIS[0]
+            final fun <get-MAX_HIGHLIGHT_DURATION_MILLIS>(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.Companion.MAX_HIGHLIGHT_DURATION_MILLIS.<get-MAX_HIGHLIGHT_DURATION_MILLIS>|<get-MAX_HIGHLIGHT_DURATION_MILLIS>(){}[0]
+        final const val MIN_HEATMAP_THRESHOLD // io.thernal.console.inspector/InspectorConfig.Companion.MIN_HEATMAP_THRESHOLD|{}MIN_HEATMAP_THRESHOLD[0]
+            final fun <get-MIN_HEATMAP_THRESHOLD>(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.Companion.MIN_HEATMAP_THRESHOLD.<get-MIN_HEATMAP_THRESHOLD>|<get-MIN_HEATMAP_THRESHOLD>(){}[0]
+        final const val MIN_HIGHLIGHT_DURATION_MILLIS // io.thernal.console.inspector/InspectorConfig.Companion.MIN_HIGHLIGHT_DURATION_MILLIS|{}MIN_HIGHLIGHT_DURATION_MILLIS[0]
+            final fun <get-MIN_HIGHLIGHT_DURATION_MILLIS>(): kotlin/Int // io.thernal.console.inspector/InspectorConfig.Companion.MIN_HIGHLIGHT_DURATION_MILLIS.<get-MIN_HIGHLIGHT_DURATION_MILLIS>|<get-MIN_HIGHLIGHT_DURATION_MILLIS>(){}[0]
+    }
+}
+
+final object io.thernal.console.inspector/ConsoleInspector { // io.thernal.console.inspector/ConsoleInspector|null[0]
+    final val commands // io.thernal.console.inspector/ConsoleInspector.commands|{}commands[0]
+        final fun <get-commands>(): kotlinx.coroutines.flow/SharedFlow<io.thernal.console.inspector/InspectorCommand> // io.thernal.console.inspector/ConsoleInspector.commands.<get-commands>|<get-commands>(){}[0]
+    final val config // io.thernal.console.inspector/ConsoleInspector.config|{}config[0]
+        final fun <get-config>(): kotlinx.coroutines.flow/StateFlow<io.thernal.console.inspector/InspectorConfig> // io.thernal.console.inspector/ConsoleInspector.config.<get-config>|<get-config>(){}[0]
+
+    final fun dispatch(io.thernal.console.inspector/InspectorCommand) // io.thernal.console.inspector/ConsoleInspector.dispatch|dispatch(io.thernal.console.inspector.InspectorCommand){}[0]
+    final fun updateConfig(io.thernal.console.inspector/InspectorConfig) // io.thernal.console.inspector/ConsoleInspector.updateConfig|updateConfig(io.thernal.console.inspector.InspectorConfig){}[0]
+    final fun updateConfig(kotlin/Function1<io.thernal.console.inspector/InspectorConfig, io.thernal.console.inspector/InspectorConfig>) // io.thernal.console.inspector/ConsoleInspector.updateConfig|updateConfig(kotlin.Function1<io.thernal.console.inspector.InspectorConfig,io.thernal.console.inspector.InspectorConfig>){}[0]
+}

@@ -1,0 +1,248 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:console-ui>
+abstract interface <#A: io.thernal.console.ui.core/ViewEffect> io.thernal.console.ui.core/EffectHandler { // io.thernal.console.ui.core/EffectHandler|null[0]
+    abstract val channel // io.thernal.console.ui.core/EffectHandler.channel|{}channel[0]
+        abstract fun <get-channel>(): io.thernal.console.ui.core/EffectHandler.EffectChannel<#A> // io.thernal.console.ui.core/EffectHandler.channel.<get-channel>|<get-channel>(){}[0]
+
+    open fun (androidx.lifecycle/ViewModel).EffectChannel(): io.thernal.console.ui.core/EffectHandler.EffectChannel<#A> // io.thernal.console.ui.core/EffectHandler.EffectChannel|EffectChannel@androidx.lifecycle.ViewModel(){}[0]
+    open fun (androidx.lifecycle/ViewModel).launchEffect(#A) // io.thernal.console.ui.core/EffectHandler.launchEffect|launchEffect@androidx.lifecycle.ViewModel(1:0){}[0]
+    open fun OnEffectUpdate(kotlin.coroutines/SuspendFunction2<kotlinx.coroutines/CoroutineScope, #A, kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.ui.core/EffectHandler.OnEffectUpdate|OnEffectUpdate(kotlin.coroutines.SuspendFunction2<kotlinx.coroutines.CoroutineScope,1:0,kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    open fun OnEffectUpdate(kotlin.coroutines/SuspendFunction2<kotlinx.coroutines/CoroutineScope, #A, kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // io.thernal.console.ui.core/EffectHandler.OnEffectUpdate|OnEffectUpdate(kotlin.coroutines.SuspendFunction2<kotlinx.coroutines.CoroutineScope,1:0,kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+
+    final class <#A1: io.thernal.console.ui.core/ViewEffect> EffectChannel : kotlin/AutoCloseable { // io.thernal.console.ui.core/EffectHandler.EffectChannel|null[0]
+        final val effects // io.thernal.console.ui.core/EffectHandler.EffectChannel.effects|{}effects[0]
+            final fun <get-effects>(): kotlinx.coroutines.flow/Flow<#A1> // io.thernal.console.ui.core/EffectHandler.EffectChannel.effects.<get-effects>|<get-effects>(){}[0]
+
+        final fun close() // io.thernal.console.ui.core/EffectHandler.EffectChannel.close|close(){}[0]
+    }
+
+    final class ComposeDefaultImpls { // io.thernal.console.ui.core/EffectHandler.ComposeDefaultImpls|null[0]
+        final fun OnEffectUpdate$default(kotlin.coroutines/SuspendFunction2<kotlinx.coroutines/CoroutineScope, #A, kotlin/Unit>?, io.thernal.console.ui.core/EffectHandler<#A>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // io.thernal.console.ui.core/EffectHandler.ComposeDefaultImpls.OnEffectUpdate$default|OnEffectUpdate$default#static(kotlin.coroutines.SuspendFunction2<kotlinx.coroutines.CoroutineScope,2:0,kotlin.Unit>?;io.thernal.console.ui.core.EffectHandler<2:0>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+    }
+}
+
+abstract interface <#A: io.thernal.console.ui.core/ViewIntent> io.thernal.console.ui.core/IntentHandler { // io.thernal.console.ui.core/IntentHandler|null[0]
+    abstract val handler // io.thernal.console.ui.core/IntentHandler.handler|{}handler[0]
+        abstract fun <get-handler>(): io.thernal.console.ui.core/IntentHandler.Handler<#A> // io.thernal.console.ui.core/IntentHandler.handler.<get-handler>|<get-handler>(){}[0]
+
+    open fun dispatch(#A) // io.thernal.console.ui.core/IntentHandler.dispatch|dispatch(1:0){}[0]
+    open fun onIntentUpdate(kotlin/Function1<#A, kotlin/Unit>): io.thernal.console.ui.core/IntentHandler.Handler<#A> // io.thernal.console.ui.core/IntentHandler.onIntentUpdate|onIntentUpdate(kotlin.Function1<1:0,kotlin.Unit>){}[0]
+
+    final class <#A1: io.thernal.console.ui.core/ViewIntent> Handler // io.thernal.console.ui.core/IntentHandler.Handler|null[0]
+}
+
+abstract interface io.thernal.console.ui.core/StateHolder { // io.thernal.console.ui.core/StateHolder|null[0]
+    open fun <#A1: kotlin/Any?> (io.thernal.console.ui.core/ViewState.StateField<#A1>).getValue(kotlin/Any?, kotlin.reflect/KProperty<*>): #A1 // io.thernal.console.ui.core/StateHolder.getValue|getValue@io.thernal.console.ui.core.ViewState.StateField<0:0>(kotlin.Any?;kotlin.reflect.KProperty<*>){0§<kotlin.Any?>}[0]
+    open fun <#A1: kotlin/Any?> (io.thernal.console.ui.core/ViewState.StateField<#A1>).set(#A1) // io.thernal.console.ui.core/StateHolder.set|set@io.thernal.console.ui.core.ViewState.StateField<0:0>(0:0){0§<kotlin.Any?>}[0]
+    open fun <#A1: kotlin/Any?> (io.thernal.console.ui.core/ViewState.StateField<#A1>).update(kotlin/Function1<#A1, #A1>) // io.thernal.console.ui.core/StateHolder.update|update@io.thernal.console.ui.core.ViewState.StateField<0:0>(kotlin.Function1<0:0,0:0>){0§<kotlin.Any?>}[0]
+    open fun snapshot(kotlin/Function0<kotlin/Unit>) // io.thernal.console.ui.core/StateHolder.snapshot|snapshot(kotlin.Function0<kotlin.Unit>){}[0]
+}
+
+abstract interface io.thernal.console.ui.core/ViewEffect // io.thernal.console.ui.core/ViewEffect|null[0]
+
+abstract interface io.thernal.console.ui.core/ViewIntent // io.thernal.console.ui.core/ViewIntent|null[0]
+
+sealed interface io.thernal.console.ui.logdetail.model/LogDetailIntent : io.thernal.console.ui.core/ViewIntent { // io.thernal.console.ui.logdetail.model/LogDetailIntent|null[0]
+    final class SelectPage : io.thernal.console.ui.logdetail.model/LogDetailIntent { // io.thernal.console.ui.logdetail.model/LogDetailIntent.SelectPage|null[0]
+        constructor <init>(kotlin/Int) // io.thernal.console.ui.logdetail.model/LogDetailIntent.SelectPage.<init>|<init>(kotlin.Int){}[0]
+
+        final val pageIndex // io.thernal.console.ui.logdetail.model/LogDetailIntent.SelectPage.pageIndex|{}pageIndex[0]
+            final fun <get-pageIndex>(): kotlin/Int // io.thernal.console.ui.logdetail.model/LogDetailIntent.SelectPage.pageIndex.<get-pageIndex>|<get-pageIndex>(){}[0]
+
+        final fun component1(): kotlin/Int // io.thernal.console.ui.logdetail.model/LogDetailIntent.SelectPage.component1|component1(){}[0]
+        final fun copy(kotlin/Int = ...): io.thernal.console.ui.logdetail.model/LogDetailIntent.SelectPage // io.thernal.console.ui.logdetail.model/LogDetailIntent.SelectPage.copy|copy(kotlin.Int){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.ui.logdetail.model/LogDetailIntent.SelectPage.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.ui.logdetail.model/LogDetailIntent.SelectPage.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.ui.logdetail.model/LogDetailIntent.SelectPage.toString|toString(){}[0]
+    }
+
+    final class SetQuery : io.thernal.console.ui.logdetail.model/LogDetailIntent { // io.thernal.console.ui.logdetail.model/LogDetailIntent.SetQuery|null[0]
+        constructor <init>(androidx.compose.ui.text.input/TextFieldValue) // io.thernal.console.ui.logdetail.model/LogDetailIntent.SetQuery.<init>|<init>(androidx.compose.ui.text.input.TextFieldValue){}[0]
+
+        final val query // io.thernal.console.ui.logdetail.model/LogDetailIntent.SetQuery.query|{}query[0]
+            final fun <get-query>(): androidx.compose.ui.text.input/TextFieldValue // io.thernal.console.ui.logdetail.model/LogDetailIntent.SetQuery.query.<get-query>|<get-query>(){}[0]
+
+        final fun component1(): androidx.compose.ui.text.input/TextFieldValue // io.thernal.console.ui.logdetail.model/LogDetailIntent.SetQuery.component1|component1(){}[0]
+        final fun copy(androidx.compose.ui.text.input/TextFieldValue = ...): io.thernal.console.ui.logdetail.model/LogDetailIntent.SetQuery // io.thernal.console.ui.logdetail.model/LogDetailIntent.SetQuery.copy|copy(androidx.compose.ui.text.input.TextFieldValue){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.ui.logdetail.model/LogDetailIntent.SetQuery.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.ui.logdetail.model/LogDetailIntent.SetQuery.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.ui.logdetail.model/LogDetailIntent.SetQuery.toString|toString(){}[0]
+    }
+}
+
+sealed interface io.thernal.console.ui.view.console.model/ConsoleIntent : io.thernal.console.ui.core/ViewIntent { // io.thernal.console.ui.view.console.model/ConsoleIntent|null[0]
+    final class RequestTab : io.thernal.console.ui.view.console.model/ConsoleIntent { // io.thernal.console.ui.view.console.model/ConsoleIntent.RequestTab|null[0]
+        constructor <init>(io.thernal.console.api.addon/ConsoleTab?) // io.thernal.console.ui.view.console.model/ConsoleIntent.RequestTab.<init>|<init>(io.thernal.console.api.addon.ConsoleTab?){}[0]
+
+        final val tab // io.thernal.console.ui.view.console.model/ConsoleIntent.RequestTab.tab|{}tab[0]
+            final fun <get-tab>(): io.thernal.console.api.addon/ConsoleTab? // io.thernal.console.ui.view.console.model/ConsoleIntent.RequestTab.tab.<get-tab>|<get-tab>(){}[0]
+
+        final fun component1(): io.thernal.console.api.addon/ConsoleTab? // io.thernal.console.ui.view.console.model/ConsoleIntent.RequestTab.component1|component1(){}[0]
+        final fun copy(io.thernal.console.api.addon/ConsoleTab? = ...): io.thernal.console.ui.view.console.model/ConsoleIntent.RequestTab // io.thernal.console.ui.view.console.model/ConsoleIntent.RequestTab.copy|copy(io.thernal.console.api.addon.ConsoleTab?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.ui.view.console.model/ConsoleIntent.RequestTab.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.ui.view.console.model/ConsoleIntent.RequestTab.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.ui.view.console.model/ConsoleIntent.RequestTab.toString|toString(){}[0]
+    }
+
+    final class SelectTab : io.thernal.console.ui.view.console.model/ConsoleIntent { // io.thernal.console.ui.view.console.model/ConsoleIntent.SelectTab|null[0]
+        constructor <init>(kotlin/Int) // io.thernal.console.ui.view.console.model/ConsoleIntent.SelectTab.<init>|<init>(kotlin.Int){}[0]
+
+        final val index // io.thernal.console.ui.view.console.model/ConsoleIntent.SelectTab.index|{}index[0]
+            final fun <get-index>(): kotlin/Int // io.thernal.console.ui.view.console.model/ConsoleIntent.SelectTab.index.<get-index>|<get-index>(){}[0]
+
+        final fun component1(): kotlin/Int // io.thernal.console.ui.view.console.model/ConsoleIntent.SelectTab.component1|component1(){}[0]
+        final fun copy(kotlin/Int = ...): io.thernal.console.ui.view.console.model/ConsoleIntent.SelectTab // io.thernal.console.ui.view.console.model/ConsoleIntent.SelectTab.copy|copy(kotlin.Int){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.ui.view.console.model/ConsoleIntent.SelectTab.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.ui.view.console.model/ConsoleIntent.SelectTab.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.ui.view.console.model/ConsoleIntent.SelectTab.toString|toString(){}[0]
+    }
+}
+
+abstract class io.thernal.console.ui.core/ViewState { // io.thernal.console.ui.core/ViewState|null[0]
+    constructor <init>() // io.thernal.console.ui.core/ViewState.<init>|<init>(){}[0]
+
+    final fun <#A1: kotlin/Any?> field(#A1): io.thernal.console.ui.core/ViewState.StateField<#A1> // io.thernal.console.ui.core/ViewState.field|field(0:0){0§<kotlin.Any?>}[0]
+
+    final class <#A1: kotlin/Any?> StateField : androidx.compose.runtime/State<#A1> { // io.thernal.console.ui.core/ViewState.StateField|null[0]
+        final val value // io.thernal.console.ui.core/ViewState.StateField.value|{}value[0]
+            final fun <get-value>(): #A1 // io.thernal.console.ui.core/ViewState.StateField.value.<get-value>|<get-value>(){}[0]
+    }
+}
+
+final class <#A: io.thernal.console.ui.core/ViewState> io.thernal.console.ui.core/PreviewStateHolder { // io.thernal.console.ui.core/PreviewStateHolder|null[0]
+    final val state // io.thernal.console.ui.core/PreviewStateHolder.state|{}state[0]
+        final fun <get-state>(): #A // io.thernal.console.ui.core/PreviewStateHolder.state.<get-state>|<get-state>(){}[0]
+
+    final fun <#A1: kotlin/Any?> (io.thernal.console.ui.core/ViewState.StateField<#A1>).set(#A1) // io.thernal.console.ui.core/PreviewStateHolder.set|set@io.thernal.console.ui.core.ViewState.StateField<0:0>(0:0){0§<kotlin.Any?>}[0]
+}
+
+final class io.thernal.console.ui.logdetail.model/LogDetailState : io.thernal.console.ui.core/ViewState { // io.thernal.console.ui.logdetail.model/LogDetailState|null[0]
+    constructor <init>() // io.thernal.console.ui.logdetail.model/LogDetailState.<init>|<init>(){}[0]
+
+    final val activeLog // io.thernal.console.ui.logdetail.model/LogDetailState.activeLog|{}activeLog[0]
+        final fun <get-activeLog>(): androidx.compose.runtime/State<io.thernal.console.core.log/Log?> // io.thernal.console.ui.logdetail.model/LogDetailState.activeLog.<get-activeLog>|<get-activeLog>(){}[0]
+    final val isInitialized // io.thernal.console.ui.logdetail.model/LogDetailState.isInitialized|{}isInitialized[0]
+        final fun <get-isInitialized>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Boolean> // io.thernal.console.ui.logdetail.model/LogDetailState.isInitialized.<get-isInitialized>|<get-isInitialized>(){}[0]
+    final val logs // io.thernal.console.ui.logdetail.model/LogDetailState.logs|{}logs[0]
+        final fun <get-logs>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/List<io.thernal.console.core.log/Log>> // io.thernal.console.ui.logdetail.model/LogDetailState.logs.<get-logs>|<get-logs>(){}[0]
+    final val searchQuery // io.thernal.console.ui.logdetail.model/LogDetailState.searchQuery|{}searchQuery[0]
+        final fun <get-searchQuery>(): io.thernal.console.ui.core/ViewState.StateField<androidx.compose.ui.text.input/TextFieldValue> // io.thernal.console.ui.logdetail.model/LogDetailState.searchQuery.<get-searchQuery>|<get-searchQuery>(){}[0]
+    final val selectedPageIndex // io.thernal.console.ui.logdetail.model/LogDetailState.selectedPageIndex|{}selectedPageIndex[0]
+        final fun <get-selectedPageIndex>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Int> // io.thernal.console.ui.logdetail.model/LogDetailState.selectedPageIndex.<get-selectedPageIndex>|<get-selectedPageIndex>(){}[0]
+    final val showSearch // io.thernal.console.ui.logdetail.model/LogDetailState.showSearch|{}showSearch[0]
+        final fun <get-showSearch>(): androidx.compose.runtime/State<kotlin/Boolean> // io.thernal.console.ui.logdetail.model/LogDetailState.showSearch.<get-showSearch>|<get-showSearch>(){}[0]
+    final val showTabs // io.thernal.console.ui.logdetail.model/LogDetailState.showTabs|{}showTabs[0]
+        final fun <get-showTabs>(): androidx.compose.runtime/State<kotlin/Boolean> // io.thernal.console.ui.logdetail.model/LogDetailState.showTabs.<get-showTabs>|<get-showTabs>(){}[0]
+}
+
+final class io.thernal.console.ui.logdetail.model/LogGroup { // io.thernal.console.ui.logdetail.model/LogGroup|null[0]
+    constructor <init>(kotlin.collections/List<io.thernal.console.core.log/Log>, kotlin/Int) // io.thernal.console.ui.logdetail.model/LogGroup.<init>|<init>(kotlin.collections.List<io.thernal.console.core.log.Log>;kotlin.Int){}[0]
+
+    final val initialPageIndex // io.thernal.console.ui.logdetail.model/LogGroup.initialPageIndex|{}initialPageIndex[0]
+        final fun <get-initialPageIndex>(): kotlin/Int // io.thernal.console.ui.logdetail.model/LogGroup.initialPageIndex.<get-initialPageIndex>|<get-initialPageIndex>(){}[0]
+    final val logs // io.thernal.console.ui.logdetail.model/LogGroup.logs|{}logs[0]
+        final fun <get-logs>(): kotlin.collections/List<io.thernal.console.core.log/Log> // io.thernal.console.ui.logdetail.model/LogGroup.logs.<get-logs>|<get-logs>(){}[0]
+
+    final fun component1(): kotlin.collections/List<io.thernal.console.core.log/Log> // io.thernal.console.ui.logdetail.model/LogGroup.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // io.thernal.console.ui.logdetail.model/LogGroup.component2|component2(){}[0]
+    final fun copy(kotlin.collections/List<io.thernal.console.core.log/Log> = ..., kotlin/Int = ...): io.thernal.console.ui.logdetail.model/LogGroup // io.thernal.console.ui.logdetail.model/LogGroup.copy|copy(kotlin.collections.List<io.thernal.console.core.log.Log>;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.ui.logdetail.model/LogGroup.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.ui.logdetail.model/LogGroup.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.ui.logdetail.model/LogGroup.toString|toString(){}[0]
+}
+
+final class io.thernal.console.ui.view.console.model/ConsoleState : io.thernal.console.ui.core/ViewState { // io.thernal.console.ui.view.console.model/ConsoleState|null[0]
+    constructor <init>() // io.thernal.console.ui.view.console.model/ConsoleState.<init>|<init>(){}[0]
+
+    final val selectedIndex // io.thernal.console.ui.view.console.model/ConsoleState.selectedIndex|{}selectedIndex[0]
+        final fun <get-selectedIndex>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Int> // io.thernal.console.ui.view.console.model/ConsoleState.selectedIndex.<get-selectedIndex>|<get-selectedIndex>(){}[0]
+}
+
+final class io.thernal.console.ui.view.console.model/ConsoleViewModel : androidx.lifecycle/ViewModel, io.thernal.console.ui.core/IntentHandler<io.thernal.console.ui.view.console.model/ConsoleIntent>, io.thernal.console.ui.core/StateHolder { // io.thernal.console.ui.view.console.model/ConsoleViewModel|null[0]
+    constructor <init>() // io.thernal.console.ui.view.console.model/ConsoleViewModel.<init>|<init>(){}[0]
+
+    final val handler // io.thernal.console.ui.view.console.model/ConsoleViewModel.handler|{}handler[0]
+        final fun <get-handler>(): io.thernal.console.ui.core/IntentHandler.Handler<io.thernal.console.ui.view.console.model/ConsoleIntent> // io.thernal.console.ui.view.console.model/ConsoleViewModel.handler.<get-handler>|<get-handler>(){}[0]
+    final val state // io.thernal.console.ui.view.console.model/ConsoleViewModel.state|{}state[0]
+        final fun <get-state>(): io.thernal.console.ui.view.console.model/ConsoleState // io.thernal.console.ui.view.console.model/ConsoleViewModel.state.<get-state>|<get-state>(){}[0]
+}
+
+final val io.thernal.console.ui.common.extensions/HmsFormat // io.thernal.console.ui.common.extensions/HmsFormat|{}HmsFormat[0]
+    final fun <get-HmsFormat>(): kotlinx.datetime.format/DateTimeFormat<kotlinx.datetime/LocalTime> // io.thernal.console.ui.common.extensions/HmsFormat.<get-HmsFormat>|<get-HmsFormat>(){}[0]
+final val io.thernal.console.ui.common/LocalSearchQuery // io.thernal.console.ui.common/LocalSearchQuery|{}LocalSearchQuery[0]
+    final fun <get-LocalSearchQuery>(): androidx.compose.runtime/ProvidableCompositionLocal<androidx.compose.runtime/State<kotlin/String>> // io.thernal.console.ui.common/LocalSearchQuery.<get-LocalSearchQuery>|<get-LocalSearchQuery>(){}[0]
+final val io.thernal.console.ui.core/io_thernal_console_ui_core_EffectHandler_EffectChannel$stableprop // io.thernal.console.ui.core/io_thernal_console_ui_core_EffectHandler_EffectChannel$stableprop|#static{}io_thernal_console_ui_core_EffectHandler_EffectChannel$stableprop[0]
+final val io.thernal.console.ui.core/io_thernal_console_ui_core_IntentHandler_Handler$stableprop // io.thernal.console.ui.core/io_thernal_console_ui_core_IntentHandler_Handler$stableprop|#static{}io_thernal_console_ui_core_IntentHandler_Handler$stableprop[0]
+final val io.thernal.console.ui.core/io_thernal_console_ui_core_PreviewStateHolder$stableprop // io.thernal.console.ui.core/io_thernal_console_ui_core_PreviewStateHolder$stableprop|#static{}io_thernal_console_ui_core_PreviewStateHolder$stableprop[0]
+final val io.thernal.console.ui.core/io_thernal_console_ui_core_ViewState$stableprop // io.thernal.console.ui.core/io_thernal_console_ui_core_ViewState$stableprop|#static{}io_thernal_console_ui_core_ViewState$stableprop[0]
+final val io.thernal.console.ui.core/io_thernal_console_ui_core_ViewState_StateField$stableprop // io.thernal.console.ui.core/io_thernal_console_ui_core_ViewState_StateField$stableprop|#static{}io_thernal_console_ui_core_ViewState_StateField$stableprop[0]
+final val io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_DragEnded$stableprop // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_DragEnded$stableprop|#static{}io_thernal_console_ui_dock_DockIntent_DragEnded$stableprop[0]
+final val io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_DragStarted$stableprop // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_DragStarted$stableprop|#static{}io_thernal_console_ui_dock_DockIntent_DragStarted$stableprop[0]
+final val io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_Dragged$stableprop // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_Dragged$stableprop|#static{}io_thernal_console_ui_dock_DockIntent_Dragged$stableprop[0]
+final val io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_MoveTo$stableprop // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_MoveTo$stableprop|#static{}io_thernal_console_ui_dock_DockIntent_MoveTo$stableprop[0]
+final val io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SelectWidget$stableprop // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SelectWidget$stableprop|#static{}io_thernal_console_ui_dock_DockIntent_SelectWidget$stableprop[0]
+final val io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SetMinimized$stableprop // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SetMinimized$stableprop|#static{}io_thernal_console_ui_dock_DockIntent_SetMinimized$stableprop[0]
+final val io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SizeChanged$stableprop // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SizeChanged$stableprop|#static{}io_thernal_console_ui_dock_DockIntent_SizeChanged$stableprop[0]
+final val io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailIntent_SelectPage$stableprop // io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailIntent_SelectPage$stableprop|#static{}io_thernal_console_ui_logdetail_model_LogDetailIntent_SelectPage$stableprop[0]
+final val io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailIntent_SetQuery$stableprop // io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailIntent_SetQuery$stableprop|#static{}io_thernal_console_ui_logdetail_model_LogDetailIntent_SetQuery$stableprop[0]
+final val io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailState$stableprop // io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailState$stableprop|#static{}io_thernal_console_ui_logdetail_model_LogDetailState$stableprop[0]
+final val io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogGroup$stableprop // io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogGroup$stableprop|#static{}io_thernal_console_ui_logdetail_model_LogGroup$stableprop[0]
+final val io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleIntent_RequestTab$stableprop // io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleIntent_RequestTab$stableprop|#static{}io_thernal_console_ui_view_console_model_ConsoleIntent_RequestTab$stableprop[0]
+final val io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleIntent_SelectTab$stableprop // io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleIntent_SelectTab$stableprop|#static{}io_thernal_console_ui_view_console_model_ConsoleIntent_SelectTab$stableprop[0]
+final val io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleState$stableprop // io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleState$stableprop|#static{}io_thernal_console_ui_view_console_model_ConsoleState$stableprop[0]
+final val io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleViewModel$stableprop // io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleViewModel$stableprop|#static{}io_thernal_console_ui_view_console_model_ConsoleViewModel$stableprop[0]
+
+final fun (io.thernal.console.api.trigger/ConsoleTrigger.Companion).io.thernal.console.ui.trigger/any(kotlin/Array<out io.thernal.console.api.trigger/ConsoleTrigger>...): io.thernal.console.api.trigger/ConsoleTrigger // io.thernal.console.ui.trigger/any|any@io.thernal.console.api.trigger.ConsoleTrigger.Companion(kotlin.Array<out|io.thernal.console.api.trigger.ConsoleTrigger>...){}[0]
+final fun (io.thernal.console.api.trigger/ConsoleTrigger.Companion).io.thernal.console.ui.trigger/doubleTap(): io.thernal.console.api.trigger/ConsoleTrigger // io.thernal.console.ui.trigger/doubleTap|doubleTap@io.thernal.console.api.trigger.ConsoleTrigger.Companion(){}[0]
+final fun (io.thernal.console.api.trigger/ConsoleTrigger.Companion).io.thernal.console.ui.trigger/keyboardShortcut(androidx.compose.ui.input.key/Key, kotlin.collections/Set<io.thernal.console.api.trigger/KeyModifier> = ...): io.thernal.console.api.trigger/ConsoleTrigger // io.thernal.console.ui.trigger/keyboardShortcut|keyboardShortcut@io.thernal.console.api.trigger.ConsoleTrigger.Companion(androidx.compose.ui.input.key.Key;kotlin.collections.Set<io.thernal.console.api.trigger.KeyModifier>){}[0]
+final fun (io.thernal.console.api.trigger/ConsoleTrigger.Companion).io.thernal.console.ui.trigger/longPress(kotlin.time/Duration = ...): io.thernal.console.api.trigger/ConsoleTrigger // io.thernal.console.ui.trigger/longPress|longPress@io.thernal.console.api.trigger.ConsoleTrigger.Companion(kotlin.time.Duration){}[0]
+final fun (io.thernal.console.api.trigger/ConsoleTrigger.Companion).io.thernal.console.ui.trigger/multiFingerTap(kotlin/Int = ...): io.thernal.console.api.trigger/ConsoleTrigger // io.thernal.console.ui.trigger/multiFingerTap|multiFingerTap@io.thernal.console.api.trigger.ConsoleTrigger.Companion(kotlin.Int){}[0]
+final fun (io.thernal.console.api.trigger/ConsoleTrigger.Companion).io.thernal.console.ui.trigger/none(): io.thernal.console.api.trigger/ConsoleTrigger // io.thernal.console.ui.trigger/none|none@io.thernal.console.api.trigger.ConsoleTrigger.Companion(){}[0]
+final fun (io.thernal.console.api.trigger/ConsoleTrigger.Companion).io.thernal.console.ui.trigger/shake(kotlin/Float = ...): io.thernal.console.api.trigger/ConsoleTrigger // io.thernal.console.ui.trigger/shake|shake@io.thernal.console.api.trigger.ConsoleTrigger.Companion(kotlin.Float){}[0]
+final fun (io.thernal.console.api.trigger/ConsoleTrigger.Companion).io.thernal.console.ui.trigger/swipeSequence(kotlin/Array<out io.thernal.console.api.trigger/Swipe>..., kotlin/Float = ...): io.thernal.console.api.trigger/ConsoleTrigger // io.thernal.console.ui.trigger/swipeSequence|swipeSequence@io.thernal.console.api.trigger.ConsoleTrigger.Companion(kotlin.Array<out|io.thernal.console.api.trigger.Swipe>...;kotlin.Float){}[0]
+final fun (io.thernal.console.api.trigger/ConsoleTrigger.Companion).io.thernal.console.ui.trigger/tapCorner(io.thernal.console.api.trigger/Corner, kotlin/Int = ..., kotlin/Float = ...): io.thernal.console.api.trigger/ConsoleTrigger // io.thernal.console.ui.trigger/tapCorner|tapCorner@io.thernal.console.api.trigger.ConsoleTrigger.Companion(io.thernal.console.api.trigger.Corner;kotlin.Int;kotlin.Float){}[0]
+final fun (io.thernal.console.core.log/Log).io.thernal.console.ui.common/logAccentColor(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.ui.graphics/Color // io.thernal.console.ui.common/logAccentColor|logAccentColor@io.thernal.console.core.log.Log(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun (io.thernal.console.core.log/Log).io.thernal.console.ui.common/logAccentColor(io.thernal.console.designsystem.foundation.theme/ThemeColors): androidx.compose.ui.graphics/Color // io.thernal.console.ui.common/logAccentColor|logAccentColor@io.thernal.console.core.log.Log(io.thernal.console.designsystem.foundation.theme.ThemeColors){}[0]
+final fun (io.thernal.console.core.log/LogLevel).io.thernal.console.ui.common/themeColor(io.thernal.console.designsystem.foundation.theme/ThemeColors): androidx.compose.ui.graphics/Color // io.thernal.console.ui.common/themeColor|themeColor@io.thernal.console.core.log.LogLevel(io.thernal.console.designsystem.foundation.theme.ThemeColors){}[0]
+final fun (kotlin.time/Instant).io.thernal.console.ui.common.extensions/toHms(kotlinx.datetime/TimeZone = ...): kotlin/String // io.thernal.console.ui.common.extensions/toHms|toHms@kotlin.time.Instant(kotlinx.datetime.TimeZone){}[0]
+final fun (kotlin/String).io.thernal.console.ui.common/highlight(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): androidx.compose.ui.text/AnnotatedString // io.thernal.console.ui.common/highlight|highlight@kotlin.String(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun (kotlin/String).io.thernal.console.ui.common/toTextClipEntry(): androidx.compose.ui.platform/ClipEntry // io.thernal.console.ui.common/toTextClipEntry|toTextClipEntry@kotlin.String(){}[0]
+final fun <#A: io.thernal.console.ui.core/ViewState> (#A).io.thernal.console.ui.core/preview(kotlin/Function1<io.thernal.console.ui.core/PreviewStateHolder<#A>, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int): #A // io.thernal.console.ui.core/preview|preview@0:0(kotlin.Function1<io.thernal.console.ui.core.PreviewStateHolder<0:0>,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){0§<io.thernal.console.ui.core.ViewState>}[0]
+final fun io.thernal.console.ui.common/tagAccentColor(kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.ui.graphics/Color // io.thernal.console.ui.common/tagAccentColor|tagAccentColor(kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun io.thernal.console.ui.core/io_thernal_console_ui_core_EffectHandler_EffectChannel$stableprop_getter(): kotlin/Int // io.thernal.console.ui.core/io_thernal_console_ui_core_EffectHandler_EffectChannel$stableprop_getter|io_thernal_console_ui_core_EffectHandler_EffectChannel$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.core/io_thernal_console_ui_core_IntentHandler_Handler$stableprop_getter(): kotlin/Int // io.thernal.console.ui.core/io_thernal_console_ui_core_IntentHandler_Handler$stableprop_getter|io_thernal_console_ui_core_IntentHandler_Handler$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.core/io_thernal_console_ui_core_PreviewStateHolder$stableprop_getter(): kotlin/Int // io.thernal.console.ui.core/io_thernal_console_ui_core_PreviewStateHolder$stableprop_getter|io_thernal_console_ui_core_PreviewStateHolder$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.core/io_thernal_console_ui_core_ViewState$stableprop_getter(): kotlin/Int // io.thernal.console.ui.core/io_thernal_console_ui_core_ViewState$stableprop_getter|io_thernal_console_ui_core_ViewState$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.core/io_thernal_console_ui_core_ViewState_StateField$stableprop_getter(): kotlin/Int // io.thernal.console.ui.core/io_thernal_console_ui_core_ViewState_StateField$stableprop_getter|io_thernal_console_ui_core_ViewState_StateField$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_DragEnded$stableprop_getter(): kotlin/Int // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_DragEnded$stableprop_getter|io_thernal_console_ui_dock_DockIntent_DragEnded$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_DragStarted$stableprop_getter(): kotlin/Int // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_DragStarted$stableprop_getter|io_thernal_console_ui_dock_DockIntent_DragStarted$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_Dragged$stableprop_getter(): kotlin/Int // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_Dragged$stableprop_getter|io_thernal_console_ui_dock_DockIntent_Dragged$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_MoveTo$stableprop_getter(): kotlin/Int // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_MoveTo$stableprop_getter|io_thernal_console_ui_dock_DockIntent_MoveTo$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SelectWidget$stableprop_getter(): kotlin/Int // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SelectWidget$stableprop_getter|io_thernal_console_ui_dock_DockIntent_SelectWidget$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SetMinimized$stableprop_getter(): kotlin/Int // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SetMinimized$stableprop_getter|io_thernal_console_ui_dock_DockIntent_SetMinimized$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SizeChanged$stableprop_getter(): kotlin/Int // io.thernal.console.ui.dock/io_thernal_console_ui_dock_DockIntent_SizeChanged$stableprop_getter|io_thernal_console_ui_dock_DockIntent_SizeChanged$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.logdetail.components/LogDetailPager(androidx.compose.foundation.pager/PagerState, androidx.compose.runtime/State<kotlin.collections/List<io.thernal.console.core.log/Log>>, io.thernal.console.api.ui/LogRenderer, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.ui.logdetail.components/LogDetailPager|LogDetailPager(androidx.compose.foundation.pager.PagerState;androidx.compose.runtime.State<kotlin.collections.List<io.thernal.console.core.log.Log>>;io.thernal.console.api.ui.LogRenderer;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun io.thernal.console.ui.logdetail.components/LogDetailSearchField(androidx.compose.runtime/State<androidx.compose.ui.text.input/TextFieldValue>, kotlin/Function1<androidx.compose.ui.text.input/TextFieldValue, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.ui.logdetail.components/LogDetailSearchField|LogDetailSearchField(androidx.compose.runtime.State<androidx.compose.ui.text.input.TextFieldValue>;kotlin.Function1<androidx.compose.ui.text.input.TextFieldValue,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun io.thernal.console.ui.logdetail.components/LogDetailTabs(io.thernal.console.designsystem.components.core.tabview/DsTabState, androidx.compose.runtime/State<kotlin.collections/List<io.thernal.console.core.log/Log>>, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.ui.logdetail.components/LogDetailTabs|LogDetailTabs(io.thernal.console.designsystem.components.core.tabview.DsTabState;androidx.compose.runtime.State<kotlin.collections.List<io.thernal.console.core.log.Log>>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun io.thernal.console.ui.logdetail.components/LogMeta(io.thernal.console.core.log/Log, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.ui.logdetail.components/LogMeta|LogMeta(io.thernal.console.core.log.Log;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailIntent_SelectPage$stableprop_getter(): kotlin/Int // io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailIntent_SelectPage$stableprop_getter|io_thernal_console_ui_logdetail_model_LogDetailIntent_SelectPage$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailIntent_SetQuery$stableprop_getter(): kotlin/Int // io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailIntent_SetQuery$stableprop_getter|io_thernal_console_ui_logdetail_model_LogDetailIntent_SetQuery$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailState$stableprop_getter(): kotlin/Int // io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogDetailState$stableprop_getter|io_thernal_console_ui_logdetail_model_LogDetailState$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogGroup$stableprop_getter(): kotlin/Int // io.thernal.console.ui.logdetail.model/io_thernal_console_ui_logdetail_model_LogGroup$stableprop_getter|io_thernal_console_ui_logdetail_model_LogGroup$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.logdetail.model/rememberLogDetailTabState(io.thernal.console.ui.logdetail.model/LogDetailState, androidx.compose.runtime/Composer?, kotlin/Int): io.thernal.console.designsystem.components.core.tabview/DsTabState? // io.thernal.console.ui.logdetail.model/rememberLogDetailTabState|rememberLogDetailTabState(io.thernal.console.ui.logdetail.model.LogDetailState;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun io.thernal.console.ui.logdetail.model/resolveLogGroup(kotlin.collections/List<io.thernal.console.core.log/Log>, kotlin/String): io.thernal.console.ui.logdetail.model/LogGroup // io.thernal.console.ui.logdetail.model/resolveLogGroup|resolveLogGroup(kotlin.collections.List<io.thernal.console.core.log.Log>;kotlin.String){}[0]
+final fun io.thernal.console.ui.logdetail/LogDetailContent(io.thernal.console.ui.logdetail.model/LogDetailState, kotlin/Function1<io.thernal.console.ui.logdetail.model/LogDetailIntent, kotlin/Unit>, kotlin/Function0<kotlin/Unit>, io.thernal.console.api.ui/LogRenderer, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.ui.logdetail/LogDetailContent|LogDetailContent(io.thernal.console.ui.logdetail.model.LogDetailState;kotlin.Function1<io.thernal.console.ui.logdetail.model.LogDetailIntent,kotlin.Unit>;kotlin.Function0<kotlin.Unit>;io.thernal.console.api.ui.LogRenderer;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun io.thernal.console.ui.view.console.components/ConsoleNavigationBar(kotlin.collections/List<io.thernal.console.api.addon/ConsoleTab>, androidx.compose.runtime/State<kotlin/Int>, kotlin/Function1<io.thernal.console.ui.view.console.model/ConsoleIntent, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.ui.view.console.components/ConsoleNavigationBar|ConsoleNavigationBar(kotlin.collections.List<io.thernal.console.api.addon.ConsoleTab>;androidx.compose.runtime.State<kotlin.Int>;kotlin.Function1<io.thernal.console.ui.view.console.model.ConsoleIntent,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleIntent_RequestTab$stableprop_getter(): kotlin/Int // io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleIntent_RequestTab$stableprop_getter|io_thernal_console_ui_view_console_model_ConsoleIntent_RequestTab$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleIntent_SelectTab$stableprop_getter(): kotlin/Int // io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleIntent_SelectTab$stableprop_getter|io_thernal_console_ui_view_console_model_ConsoleIntent_SelectTab$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleState$stableprop_getter(): kotlin/Int // io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleState$stableprop_getter|io_thernal_console_ui_view_console_model_ConsoleState$stableprop_getter(){}[0]
+final fun io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleViewModel$stableprop_getter(): kotlin/Int // io.thernal.console.ui.view.console.model/io_thernal_console_ui_view_console_model_ConsoleViewModel$stableprop_getter|io_thernal_console_ui_view_console_model_ConsoleViewModel$stableprop_getter(){}[0]
+final fun io.thernal.console.ui/ConsoleProvider(kotlin/Boolean, io.thernal.console.api.trigger/ConsoleTrigger?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // io.thernal.console.ui/ConsoleProvider|ConsoleProvider(kotlin.Boolean;io.thernal.console.api.trigger.ConsoleTrigger?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (androidx.compose.runtime/State<#A>).io.thernal.console.ui.core/derive(crossinline kotlin/Function1<#A, #B>): androidx.compose.runtime/State<#B> // io.thernal.console.ui.core/derive|derive@androidx.compose.runtime.State<0:0>(kotlin.Function1<0:0,0:1>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (androidx.compose.runtime/State<#A>).io.thernal.console.ui.core/select(crossinline kotlin/Function1<#A, #B>, androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.runtime/State<#B> // io.thernal.console.ui.core/select|select@androidx.compose.runtime.State<0:0>(kotlin.Function1<0:0,0:1>;androidx.compose.runtime.Composer?;kotlin.Int){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]

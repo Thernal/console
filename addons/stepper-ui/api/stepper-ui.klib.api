@@ -1,0 +1,324 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:stepper-ui>
+final enum class io.thernal.console.stepper.ui.stepper/AutoResumeDelay : kotlin/Enum<io.thernal.console.stepper.ui.stepper/AutoResumeDelay> { // io.thernal.console.stepper.ui.stepper/AutoResumeDelay|null[0]
+    enum entry Five // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.Five|null[0]
+    enum entry Ten // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.Ten|null[0]
+    enum entry Thirty // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.Thirty|null[0]
+    enum entry Three // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.Three|null[0]
+
+    final val entries // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.stepper.ui.stepper/AutoResumeDelay> // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val seconds // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.seconds|{}seconds[0]
+        final fun <get-seconds>(): kotlin/Int // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.seconds.<get-seconds>|<get-seconds>(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.stepper.ui.stepper/AutoResumeDelay // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.stepper.ui.stepper/AutoResumeDelay> // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.values|values#static(){}[0]
+
+    final object Companion { // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.Companion|null[0]
+        final fun fromSecondsOrNull(kotlin/Int?): io.thernal.console.stepper.ui.stepper/AutoResumeDelay? // io.thernal.console.stepper.ui.stepper/AutoResumeDelay.Companion.fromSecondsOrNull|fromSecondsOrNull(kotlin.Int?){}[0]
+    }
+}
+
+sealed interface io.thernal.console.stepper.ui.stepper/StepperIntent : io.thernal.console.ui.core/ViewIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent|null[0]
+    final class AddPauseTag : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.AddPauseTag|null[0]
+        constructor <init>(kotlin/String) // io.thernal.console.stepper.ui.stepper/StepperIntent.AddPauseTag.<init>|<init>(kotlin.String){}[0]
+
+        final val tag // io.thernal.console.stepper.ui.stepper/StepperIntent.AddPauseTag.tag|{}tag[0]
+            final fun <get-tag>(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.AddPauseTag.tag.<get-tag>|<get-tag>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.AddPauseTag.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): io.thernal.console.stepper.ui.stepper/StepperIntent.AddPauseTag // io.thernal.console.stepper.ui.stepper/StepperIntent.AddPauseTag.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.AddPauseTag.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.AddPauseTag.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.AddPauseTag.toString|toString(){}[0]
+    }
+
+    final class RemovePauseTag : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.RemovePauseTag|null[0]
+        constructor <init>(kotlin/String) // io.thernal.console.stepper.ui.stepper/StepperIntent.RemovePauseTag.<init>|<init>(kotlin.String){}[0]
+
+        final val tag // io.thernal.console.stepper.ui.stepper/StepperIntent.RemovePauseTag.tag|{}tag[0]
+            final fun <get-tag>(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.RemovePauseTag.tag.<get-tag>|<get-tag>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.RemovePauseTag.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): io.thernal.console.stepper.ui.stepper/StepperIntent.RemovePauseTag // io.thernal.console.stepper.ui.stepper/StepperIntent.RemovePauseTag.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.RemovePauseTag.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.RemovePauseTag.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.RemovePauseTag.toString|toString(){}[0]
+    }
+
+    final class SetAutoResumeSeconds : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.SetAutoResumeSeconds|null[0]
+        constructor <init>(kotlin/Int?) // io.thernal.console.stepper.ui.stepper/StepperIntent.SetAutoResumeSeconds.<init>|<init>(kotlin.Int?){}[0]
+
+        final val seconds // io.thernal.console.stepper.ui.stepper/StepperIntent.SetAutoResumeSeconds.seconds|{}seconds[0]
+            final fun <get-seconds>(): kotlin/Int? // io.thernal.console.stepper.ui.stepper/StepperIntent.SetAutoResumeSeconds.seconds.<get-seconds>|<get-seconds>(){}[0]
+
+        final fun component1(): kotlin/Int? // io.thernal.console.stepper.ui.stepper/StepperIntent.SetAutoResumeSeconds.component1|component1(){}[0]
+        final fun copy(kotlin/Int? = ...): io.thernal.console.stepper.ui.stepper/StepperIntent.SetAutoResumeSeconds // io.thernal.console.stepper.ui.stepper/StepperIntent.SetAutoResumeSeconds.copy|copy(kotlin.Int?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetAutoResumeSeconds.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.SetAutoResumeSeconds.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.SetAutoResumeSeconds.toString|toString(){}[0]
+    }
+
+    final class SetEnabled : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.SetEnabled|null[0]
+        constructor <init>(kotlin/Boolean) // io.thernal.console.stepper.ui.stepper/StepperIntent.SetEnabled.<init>|<init>(kotlin.Boolean){}[0]
+
+        final val isEnabled // io.thernal.console.stepper.ui.stepper/StepperIntent.SetEnabled.isEnabled|{}isEnabled[0]
+            final fun <get-isEnabled>(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetEnabled.isEnabled.<get-isEnabled>|<get-isEnabled>(){}[0]
+
+        final fun component1(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetEnabled.component1|component1(){}[0]
+        final fun copy(kotlin/Boolean = ...): io.thernal.console.stepper.ui.stepper/StepperIntent.SetEnabled // io.thernal.console.stepper.ui.stepper/StepperIntent.SetEnabled.copy|copy(kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetEnabled.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.SetEnabled.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.SetEnabled.toString|toString(){}[0]
+    }
+
+    final class SetPauseOnLevelAtLeast : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnLevelAtLeast|null[0]
+        constructor <init>(io.thernal.console.core.log/LogLevel?) // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnLevelAtLeast.<init>|<init>(io.thernal.console.core.log.LogLevel?){}[0]
+
+        final val level // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnLevelAtLeast.level|{}level[0]
+            final fun <get-level>(): io.thernal.console.core.log/LogLevel? // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnLevelAtLeast.level.<get-level>|<get-level>(){}[0]
+
+        final fun component1(): io.thernal.console.core.log/LogLevel? // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnLevelAtLeast.component1|component1(){}[0]
+        final fun copy(io.thernal.console.core.log/LogLevel? = ...): io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnLevelAtLeast // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnLevelAtLeast.copy|copy(io.thernal.console.core.log.LogLevel?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnLevelAtLeast.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnLevelAtLeast.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnLevelAtLeast.toString|toString(){}[0]
+    }
+
+    final class SetPauseOnMatch : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnMatch|null[0]
+        constructor <init>(kotlin/Boolean) // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnMatch.<init>|<init>(kotlin.Boolean){}[0]
+
+        final val shouldPauseOnMatch // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnMatch.shouldPauseOnMatch|{}shouldPauseOnMatch[0]
+            final fun <get-shouldPauseOnMatch>(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnMatch.shouldPauseOnMatch.<get-shouldPauseOnMatch>|<get-shouldPauseOnMatch>(){}[0]
+
+        final fun component1(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnMatch.component1|component1(){}[0]
+        final fun copy(kotlin/Boolean = ...): io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnMatch // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnMatch.copy|copy(kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnMatch.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnMatch.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPauseOnMatch.toString|toString(){}[0]
+    }
+
+    final class SetPaused : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPaused|null[0]
+        constructor <init>(kotlin/Boolean) // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPaused.<init>|<init>(kotlin.Boolean){}[0]
+
+        final val isPaused // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPaused.isPaused|{}isPaused[0]
+            final fun <get-isPaused>(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPaused.isPaused.<get-isPaused>|<get-isPaused>(){}[0]
+
+        final fun component1(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPaused.component1|component1(){}[0]
+        final fun copy(kotlin/Boolean = ...): io.thernal.console.stepper.ui.stepper/StepperIntent.SetPaused // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPaused.copy|copy(kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPaused.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPaused.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.SetPaused.toString|toString(){}[0]
+    }
+
+    final object ClearSteppedEvents : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.ClearSteppedEvents|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.ClearSteppedEvents.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.ClearSteppedEvents.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.ClearSteppedEvents.toString|toString(){}[0]
+    }
+
+    final object Next : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.Next|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.Next.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.Next.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.Next.toString|toString(){}[0]
+    }
+
+    final object ToggleEnabled : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.ToggleEnabled|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.ToggleEnabled.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.ToggleEnabled.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.ToggleEnabled.toString|toString(){}[0]
+    }
+
+    final object TogglePaused : io.thernal.console.stepper.ui.stepper/StepperIntent { // io.thernal.console.stepper.ui.stepper/StepperIntent.TogglePaused|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/StepperIntent.TogglePaused.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/StepperIntent.TogglePaused.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/StepperIntent.TogglePaused.toString|toString(){}[0]
+    }
+}
+
+final class io.thernal.console.stepper.ui.navigation/SteppedLogRoute : androidx.navigation3.runtime/NavKey { // io.thernal.console.stepper.ui.navigation/SteppedLogRoute|null[0]
+    constructor <init>(kotlin/String) // io.thernal.console.stepper.ui.navigation/SteppedLogRoute.<init>|<init>(kotlin.String){}[0]
+
+    final val logId // io.thernal.console.stepper.ui.navigation/SteppedLogRoute.logId|{}logId[0]
+        final fun <get-logId>(): kotlin/String // io.thernal.console.stepper.ui.navigation/SteppedLogRoute.logId.<get-logId>|<get-logId>(){}[0]
+
+    final fun component1(): kotlin/String // io.thernal.console.stepper.ui.navigation/SteppedLogRoute.component1|component1(){}[0]
+    final fun copy(kotlin/String = ...): io.thernal.console.stepper.ui.navigation/SteppedLogRoute // io.thernal.console.stepper.ui.navigation/SteppedLogRoute.copy|copy(kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.navigation/SteppedLogRoute.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.navigation/SteppedLogRoute.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.stepper.ui.navigation/SteppedLogRoute.toString|toString(){}[0]
+}
+
+final class io.thernal.console.stepper.ui.view.caught.model/StepperCaughtState : io.thernal.console.ui.core/ViewState { // io.thernal.console.stepper.ui.view.caught.model/StepperCaughtState|null[0]
+    constructor <init>() // io.thernal.console.stepper.ui.view.caught.model/StepperCaughtState.<init>|<init>(){}[0]
+
+    final val steppedEvents // io.thernal.console.stepper.ui.view.caught.model/StepperCaughtState.steppedEvents|{}steppedEvents[0]
+        final fun <get-steppedEvents>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/List<io.thernal.console.core.log/Log>> // io.thernal.console.stepper.ui.view.caught.model/StepperCaughtState.steppedEvents.<get-steppedEvents>|<get-steppedEvents>(){}[0]
+}
+
+final class io.thernal.console.stepper.ui.view.caught.model/StepperCaughtViewModel : androidx.lifecycle/ViewModel, io.thernal.console.ui.core/StateHolder { // io.thernal.console.stepper.ui.view.caught.model/StepperCaughtViewModel|null[0]
+    constructor <init>() // io.thernal.console.stepper.ui.view.caught.model/StepperCaughtViewModel.<init>|<init>(){}[0]
+
+    final val state // io.thernal.console.stepper.ui.view.caught.model/StepperCaughtViewModel.state|{}state[0]
+        final fun <get-state>(): io.thernal.console.stepper.ui.view.caught.model/StepperCaughtState // io.thernal.console.stepper.ui.view.caught.model/StepperCaughtViewModel.state.<get-state>|<get-state>(){}[0]
+}
+
+final class io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState : io.thernal.console.ui.core/ViewState { // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState|null[0]
+    constructor <init>() // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.<init>|<init>(){}[0]
+
+    final val blockedLogId // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.blockedLogId|{}blockedLogId[0]
+        final fun <get-blockedLogId>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/String?> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.blockedLogId.<get-blockedLogId>|<get-blockedLogId>(){}[0]
+    final val blockedTag // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.blockedTag|{}blockedTag[0]
+        final fun <get-blockedTag>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/String?> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.blockedTag.<get-blockedTag>|<get-blockedTag>(){}[0]
+    final val canStep // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.canStep|{}canStep[0]
+        final fun <get-canStep>(): androidx.compose.runtime/State<kotlin/Boolean> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.canStep.<get-canStep>|<get-canStep>(){}[0]
+    final val caughtCount // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.caughtCount|{}caughtCount[0]
+        final fun <get-caughtCount>(): androidx.compose.runtime/State<kotlin/Int> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.caughtCount.<get-caughtCount>|<get-caughtCount>(){}[0]
+    final val currentLog // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.currentLog|{}currentLog[0]
+        final fun <get-currentLog>(): androidx.compose.runtime/State<io.thernal.console.core.log/Log?> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.currentLog.<get-currentLog>|<get-currentLog>(){}[0]
+    final val displayTag // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.displayTag|{}displayTag[0]
+        final fun <get-displayTag>(): androidx.compose.runtime/State<kotlin/String?> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.displayTag.<get-displayTag>|<get-displayTag>(){}[0]
+    final val isEnabled // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.isEnabled|{}isEnabled[0]
+        final fun <get-isEnabled>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Boolean> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.isEnabled.<get-isEnabled>|<get-isEnabled>(){}[0]
+    final val isPaused // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.isPaused|{}isPaused[0]
+        final fun <get-isPaused>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Boolean> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.isPaused.<get-isPaused>|<get-isPaused>(){}[0]
+    final val pendingLogs // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.pendingLogs|{}pendingLogs[0]
+        final fun <get-pendingLogs>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Int> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.pendingLogs.<get-pendingLogs>|<get-pendingLogs>(){}[0]
+    final val statusText // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.statusText|{}statusText[0]
+        final fun <get-statusText>(): androidx.compose.runtime/State<kotlin/String> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.statusText.<get-statusText>|<get-statusText>(){}[0]
+    final val steppedEvents // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.steppedEvents|{}steppedEvents[0]
+        final fun <get-steppedEvents>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/List<io.thernal.console.core.log/Log>> // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState.steppedEvents.<get-steppedEvents>|<get-steppedEvents>(){}[0]
+}
+
+final class io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayViewModel : androidx.lifecycle/ViewModel, io.thernal.console.ui.core/StateHolder { // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayViewModel|null[0]
+    constructor <init>() // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayViewModel.<init>|<init>(){}[0]
+
+    final val state // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayViewModel.state|{}state[0]
+        final fun <get-state>(): io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayState // io.thernal.console.stepper.ui.view.overlay.model/StepperOverlayViewModel.state.<get-state>|<get-state>(){}[0]
+}
+
+final object io.thernal.console.stepper.ui.addon/StepperAddon : io.thernal.console.api.addon/ConsoleAddon { // io.thernal.console.stepper.ui.addon/StepperAddon|null[0]
+    final fun dockWidget(): io.thernal.console.api.addon/ConsoleDockWidget // io.thernal.console.stepper.ui.addon/StepperAddon.dockWidget|dockWidget(){}[0]
+    final fun navGraph(): io.thernal.console.api.addon/ConsoleNavGraph // io.thernal.console.stepper.ui.addon/StepperAddon.navGraph|navGraph(){}[0]
+    final fun onInstall() // io.thernal.console.stepper.ui.addon/StepperAddon.onInstall|onInstall(){}[0]
+    final fun tab(): io.thernal.console.api.addon/ConsoleTab // io.thernal.console.stepper.ui.addon/StepperAddon.tab|tab(){}[0]
+}
+
+final object io.thernal.console.stepper.ui.stepper/Stepper : io.thernal.console.core/LogObserver, io.thernal.console.ui.core/IntentHandler<io.thernal.console.stepper.ui.stepper/StepperIntent> { // io.thernal.console.stepper.ui.stepper/Stepper|null[0]
+    final val config // io.thernal.console.stepper.ui.stepper/Stepper.config|{}config[0]
+        final fun <get-config>(): kotlinx.coroutines.flow/StateFlow<io.thernal.console.stepper.ui.stepper/Stepper.Config> // io.thernal.console.stepper.ui.stepper/Stepper.config.<get-config>|<get-config>(){}[0]
+    final val handler // io.thernal.console.stepper.ui.stepper/Stepper.handler|{}handler[0]
+        final fun <get-handler>(): io.thernal.console.ui.core/IntentHandler.Handler<io.thernal.console.stepper.ui.stepper/StepperIntent> // io.thernal.console.stepper.ui.stepper/Stepper.handler.<get-handler>|<get-handler>(){}[0]
+    final val state // io.thernal.console.stepper.ui.stepper/Stepper.state|{}state[0]
+        final fun <get-state>(): kotlinx.coroutines.flow/StateFlow<io.thernal.console.stepper.ui.stepper/Stepper.State> // io.thernal.console.stepper.ui.stepper/Stepper.state.<get-state>|<get-state>(){}[0]
+
+    final fun clearSteppedEvents() // io.thernal.console.stepper.ui.stepper/Stepper.clearSteppedEvents|clearSteppedEvents(){}[0]
+    final fun next() // io.thernal.console.stepper.ui.stepper/Stepper.next|next(){}[0]
+    final fun updateConfig(io.thernal.console.stepper.ui.stepper/Stepper.Config) // io.thernal.console.stepper.ui.stepper/Stepper.updateConfig|updateConfig(io.thernal.console.stepper.ui.stepper.Stepper.Config){}[0]
+    final fun updateConfig(kotlin/Function1<io.thernal.console.stepper.ui.stepper/Stepper.Config, io.thernal.console.stepper.ui.stepper/Stepper.Config>) // io.thernal.console.stepper.ui.stepper/Stepper.updateConfig|updateConfig(kotlin.Function1<io.thernal.console.stepper.ui.stepper.Stepper.Config,io.thernal.console.stepper.ui.stepper.Stepper.Config>){}[0]
+    final suspend fun emit(io.thernal.console.core.log/Log) // io.thernal.console.stepper.ui.stepper/Stepper.emit|emit(io.thernal.console.core.log.Log){}[0]
+
+    final class Config { // io.thernal.console.stepper.ui.stepper/Stepper.Config|null[0]
+        constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin.collections/Set<kotlin/String> = ..., io.thernal.console.core.log/LogLevel? = ..., kotlin/Int? = ..., kotlin/Int = ...) // io.thernal.console.stepper.ui.stepper/Stepper.Config.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.collections.Set<kotlin.String>;io.thernal.console.core.log.LogLevel?;kotlin.Int?;kotlin.Int){}[0]
+
+        final val autoResumeSeconds // io.thernal.console.stepper.ui.stepper/Stepper.Config.autoResumeSeconds|{}autoResumeSeconds[0]
+            final fun <get-autoResumeSeconds>(): kotlin/Int? // io.thernal.console.stepper.ui.stepper/Stepper.Config.autoResumeSeconds.<get-autoResumeSeconds>|<get-autoResumeSeconds>(){}[0]
+        final val enabled // io.thernal.console.stepper.ui.stepper/Stepper.Config.enabled|{}enabled[0]
+            final fun <get-enabled>(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/Stepper.Config.enabled.<get-enabled>|<get-enabled>(){}[0]
+        final val maxSteppedEventCount // io.thernal.console.stepper.ui.stepper/Stepper.Config.maxSteppedEventCount|{}maxSteppedEventCount[0]
+            final fun <get-maxSteppedEventCount>(): kotlin/Int // io.thernal.console.stepper.ui.stepper/Stepper.Config.maxSteppedEventCount.<get-maxSteppedEventCount>|<get-maxSteppedEventCount>(){}[0]
+        final val overlayVisible // io.thernal.console.stepper.ui.stepper/Stepper.Config.overlayVisible|{}overlayVisible[0]
+            final fun <get-overlayVisible>(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/Stepper.Config.overlayVisible.<get-overlayVisible>|<get-overlayVisible>(){}[0]
+        final val pauseOnLevelAtLeast // io.thernal.console.stepper.ui.stepper/Stepper.Config.pauseOnLevelAtLeast|{}pauseOnLevelAtLeast[0]
+            final fun <get-pauseOnLevelAtLeast>(): io.thernal.console.core.log/LogLevel? // io.thernal.console.stepper.ui.stepper/Stepper.Config.pauseOnLevelAtLeast.<get-pauseOnLevelAtLeast>|<get-pauseOnLevelAtLeast>(){}[0]
+        final val pauseOnMatch // io.thernal.console.stepper.ui.stepper/Stepper.Config.pauseOnMatch|{}pauseOnMatch[0]
+            final fun <get-pauseOnMatch>(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/Stepper.Config.pauseOnMatch.<get-pauseOnMatch>|<get-pauseOnMatch>(){}[0]
+        final val pauseOnTags // io.thernal.console.stepper.ui.stepper/Stepper.Config.pauseOnTags|{}pauseOnTags[0]
+            final fun <get-pauseOnTags>(): kotlin.collections/Set<kotlin/String> // io.thernal.console.stepper.ui.stepper/Stepper.Config.pauseOnTags.<get-pauseOnTags>|<get-pauseOnTags>(){}[0]
+        final val paused // io.thernal.console.stepper.ui.stepper/Stepper.Config.paused|{}paused[0]
+            final fun <get-paused>(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/Stepper.Config.paused.<get-paused>|<get-paused>(){}[0]
+
+        final fun component1(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/Stepper.Config.component1|component1(){}[0]
+        final fun component2(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/Stepper.Config.component2|component2(){}[0]
+        final fun component3(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/Stepper.Config.component3|component3(){}[0]
+        final fun component4(): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/Stepper.Config.component4|component4(){}[0]
+        final fun component5(): kotlin.collections/Set<kotlin/String> // io.thernal.console.stepper.ui.stepper/Stepper.Config.component5|component5(){}[0]
+        final fun component6(): io.thernal.console.core.log/LogLevel? // io.thernal.console.stepper.ui.stepper/Stepper.Config.component6|component6(){}[0]
+        final fun component7(): kotlin/Int? // io.thernal.console.stepper.ui.stepper/Stepper.Config.component7|component7(){}[0]
+        final fun component8(): kotlin/Int // io.thernal.console.stepper.ui.stepper/Stepper.Config.component8|component8(){}[0]
+        final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin.collections/Set<kotlin/String> = ..., io.thernal.console.core.log/LogLevel? = ..., kotlin/Int? = ..., kotlin/Int = ...): io.thernal.console.stepper.ui.stepper/Stepper.Config // io.thernal.console.stepper.ui.stepper/Stepper.Config.copy|copy(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.collections.Set<kotlin.String>;io.thernal.console.core.log.LogLevel?;kotlin.Int?;kotlin.Int){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/Stepper.Config.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/Stepper.Config.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/Stepper.Config.toString|toString(){}[0]
+    }
+
+    final class State { // io.thernal.console.stepper.ui.stepper/Stepper.State|null[0]
+        constructor <init>(kotlin.collections/List<io.thernal.console.core.log/Log> = ..., kotlin/Int = ..., kotlin/String? = ..., kotlin/String? = ...) // io.thernal.console.stepper.ui.stepper/Stepper.State.<init>|<init>(kotlin.collections.List<io.thernal.console.core.log.Log>;kotlin.Int;kotlin.String?;kotlin.String?){}[0]
+
+        final val blockedLogId // io.thernal.console.stepper.ui.stepper/Stepper.State.blockedLogId|{}blockedLogId[0]
+            final fun <get-blockedLogId>(): kotlin/String? // io.thernal.console.stepper.ui.stepper/Stepper.State.blockedLogId.<get-blockedLogId>|<get-blockedLogId>(){}[0]
+        final val blockedTag // io.thernal.console.stepper.ui.stepper/Stepper.State.blockedTag|{}blockedTag[0]
+            final fun <get-blockedTag>(): kotlin/String? // io.thernal.console.stepper.ui.stepper/Stepper.State.blockedTag.<get-blockedTag>|<get-blockedTag>(){}[0]
+        final val pendingLogs // io.thernal.console.stepper.ui.stepper/Stepper.State.pendingLogs|{}pendingLogs[0]
+            final fun <get-pendingLogs>(): kotlin/Int // io.thernal.console.stepper.ui.stepper/Stepper.State.pendingLogs.<get-pendingLogs>|<get-pendingLogs>(){}[0]
+        final val steppedEvents // io.thernal.console.stepper.ui.stepper/Stepper.State.steppedEvents|{}steppedEvents[0]
+            final fun <get-steppedEvents>(): kotlin.collections/List<io.thernal.console.core.log/Log> // io.thernal.console.stepper.ui.stepper/Stepper.State.steppedEvents.<get-steppedEvents>|<get-steppedEvents>(){}[0]
+
+        final fun component1(): kotlin.collections/List<io.thernal.console.core.log/Log> // io.thernal.console.stepper.ui.stepper/Stepper.State.component1|component1(){}[0]
+        final fun component2(): kotlin/Int // io.thernal.console.stepper.ui.stepper/Stepper.State.component2|component2(){}[0]
+        final fun component3(): kotlin/String? // io.thernal.console.stepper.ui.stepper/Stepper.State.component3|component3(){}[0]
+        final fun component4(): kotlin/String? // io.thernal.console.stepper.ui.stepper/Stepper.State.component4|component4(){}[0]
+        final fun copy(kotlin.collections/List<io.thernal.console.core.log/Log> = ..., kotlin/Int = ..., kotlin/String? = ..., kotlin/String? = ...): io.thernal.console.stepper.ui.stepper/Stepper.State // io.thernal.console.stepper.ui.stepper/Stepper.State.copy|copy(kotlin.collections.List<io.thernal.console.core.log.Log>;kotlin.Int;kotlin.String?;kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.stepper.ui.stepper/Stepper.State.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.stepper.ui.stepper/Stepper.State.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.stepper.ui.stepper/Stepper.State.toString|toString(){}[0]
+    }
+}
+
+final val io.thernal.console.stepper.ui.addon/io_thernal_console_stepper_ui_addon_StepperAddon$stableprop // io.thernal.console.stepper.ui.addon/io_thernal_console_stepper_ui_addon_StepperAddon$stableprop|#static{}io_thernal_console_stepper_ui_addon_StepperAddon$stableprop[0]
+final val io.thernal.console.stepper.ui.navigation/io_thernal_console_stepper_ui_navigation_SteppedLogRoute$stableprop // io.thernal.console.stepper.ui.navigation/io_thernal_console_stepper_ui_navigation_SteppedLogRoute$stableprop|#static{}io_thernal_console_stepper_ui_navigation_SteppedLogRoute$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper$stableprop|#static{}io_thernal_console_stepper_ui_stepper_Stepper$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_AddPauseTag$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_AddPauseTag$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_AddPauseTag$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_ClearSteppedEvents$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_ClearSteppedEvents$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_ClearSteppedEvents$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_Next$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_Next$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_Next$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_RemovePauseTag$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_RemovePauseTag$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_RemovePauseTag$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetAutoResumeSeconds$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetAutoResumeSeconds$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_SetAutoResumeSeconds$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetEnabled$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetEnabled$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_SetEnabled$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnLevelAtLeast$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnLevelAtLeast$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnLevelAtLeast$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnMatch$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnMatch$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnMatch$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPaused$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPaused$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_SetPaused$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_ToggleEnabled$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_ToggleEnabled$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_ToggleEnabled$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_TogglePaused$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_TogglePaused$stableprop|#static{}io_thernal_console_stepper_ui_stepper_StepperIntent_TogglePaused$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper_Config$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper_Config$stableprop|#static{}io_thernal_console_stepper_ui_stepper_Stepper_Config$stableprop[0]
+final val io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper_State$stableprop // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper_State$stableprop|#static{}io_thernal_console_stepper_ui_stepper_Stepper_State$stableprop[0]
+final val io.thernal.console.stepper.ui.view.caught.model/io_thernal_console_stepper_ui_view_caught_model_StepperCaughtState$stableprop // io.thernal.console.stepper.ui.view.caught.model/io_thernal_console_stepper_ui_view_caught_model_StepperCaughtState$stableprop|#static{}io_thernal_console_stepper_ui_view_caught_model_StepperCaughtState$stableprop[0]
+final val io.thernal.console.stepper.ui.view.caught.model/io_thernal_console_stepper_ui_view_caught_model_StepperCaughtViewModel$stableprop // io.thernal.console.stepper.ui.view.caught.model/io_thernal_console_stepper_ui_view_caught_model_StepperCaughtViewModel$stableprop|#static{}io_thernal_console_stepper_ui_view_caught_model_StepperCaughtViewModel$stableprop[0]
+final val io.thernal.console.stepper.ui.view.overlay.model/io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayState$stableprop // io.thernal.console.stepper.ui.view.overlay.model/io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayState$stableprop|#static{}io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayState$stableprop[0]
+final val io.thernal.console.stepper.ui.view.overlay.model/io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayViewModel$stableprop // io.thernal.console.stepper.ui.view.overlay.model/io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayViewModel$stableprop|#static{}io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayViewModel$stableprop[0]
+
+final fun io.thernal.console.stepper.ui.addon/io_thernal_console_stepper_ui_addon_StepperAddon$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.addon/io_thernal_console_stepper_ui_addon_StepperAddon$stableprop_getter|io_thernal_console_stepper_ui_addon_StepperAddon$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.navigation/io_thernal_console_stepper_ui_navigation_SteppedLogRoute$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.navigation/io_thernal_console_stepper_ui_navigation_SteppedLogRoute$stableprop_getter|io_thernal_console_stepper_ui_navigation_SteppedLogRoute$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper$stableprop_getter|io_thernal_console_stepper_ui_stepper_Stepper$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_AddPauseTag$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_AddPauseTag$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_AddPauseTag$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_ClearSteppedEvents$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_ClearSteppedEvents$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_ClearSteppedEvents$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_Next$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_Next$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_Next$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_RemovePauseTag$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_RemovePauseTag$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_RemovePauseTag$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetAutoResumeSeconds$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetAutoResumeSeconds$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_SetAutoResumeSeconds$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetEnabled$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetEnabled$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_SetEnabled$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnLevelAtLeast$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnLevelAtLeast$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnLevelAtLeast$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnMatch$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnMatch$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_SetPauseOnMatch$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPaused$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_SetPaused$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_SetPaused$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_ToggleEnabled$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_ToggleEnabled$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_ToggleEnabled$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_TogglePaused$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_StepperIntent_TogglePaused$stableprop_getter|io_thernal_console_stepper_ui_stepper_StepperIntent_TogglePaused$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper_Config$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper_Config$stableprop_getter|io_thernal_console_stepper_ui_stepper_Stepper_Config$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper_State$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.stepper/io_thernal_console_stepper_ui_stepper_Stepper_State$stableprop_getter|io_thernal_console_stepper_ui_stepper_Stepper_State$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.view.caught.model/io_thernal_console_stepper_ui_view_caught_model_StepperCaughtState$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.view.caught.model/io_thernal_console_stepper_ui_view_caught_model_StepperCaughtState$stableprop_getter|io_thernal_console_stepper_ui_view_caught_model_StepperCaughtState$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.view.caught.model/io_thernal_console_stepper_ui_view_caught_model_StepperCaughtViewModel$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.view.caught.model/io_thernal_console_stepper_ui_view_caught_model_StepperCaughtViewModel$stableprop_getter|io_thernal_console_stepper_ui_view_caught_model_StepperCaughtViewModel$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.view.overlay.model/io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayState$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.view.overlay.model/io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayState$stableprop_getter|io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayState$stableprop_getter(){}[0]
+final fun io.thernal.console.stepper.ui.view.overlay.model/io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayViewModel$stableprop_getter(): kotlin/Int // io.thernal.console.stepper.ui.view.overlay.model/io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayViewModel$stableprop_getter|io_thernal_console_stepper_ui_view_overlay_model_StepperOverlayViewModel$stableprop_getter(){}[0]

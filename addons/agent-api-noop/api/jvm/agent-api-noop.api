@@ -1,0 +1,148 @@
+public final class io/thernal/console/agent/AgentArg {
+	public final fun map (Lkotlin/jvm/functions/Function1;)Lio/thernal/console/agent/AgentArg;
+}
+
+public final class io/thernal/console/agent/AgentCall {
+	public fun <init> (Ljava/util/Map;)V
+	public final fun get (Lio/thernal/console/agent/AgentArg;)Ljava/lang/Object;
+}
+
+public final class io/thernal/console/agent/AgentConfig {
+	public static final field Companion Lio/thernal/console/agent/AgentConfig$Companion;
+	public static final field DEFAULT_HISTORY_SIZE I
+	public static final field DEFAULT_HUB_HOST Ljava/lang/String;
+	public static final field DEFAULT_HUB_PORT I
+	public static final field MAX_HISTORY_SIZE I
+	public static final field MAX_PORT I
+	public static final field MIN_HISTORY_SIZE I
+	public static final field MIN_PORT I
+	public static final field SETTINGS_SECTION_ID Ljava/lang/String;
+	public fun <init> ()V
+	public fun <init> (ZZLjava/lang/String;ILjava/lang/String;I)V
+	public synthetic fun <init> (ZZLjava/lang/String;ILjava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Z
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()I
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()I
+	public final fun copy (ZZLjava/lang/String;ILjava/lang/String;I)Lio/thernal/console/agent/AgentConfig;
+	public static synthetic fun copy$default (Lio/thernal/console/agent/AgentConfig;ZZLjava/lang/String;ILjava/lang/String;IILjava/lang/Object;)Lio/thernal/console/agent/AgentConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeviceName ()Ljava/lang/String;
+	public final fun getEnableActions ()Z
+	public final fun getEnabled ()Z
+	public final fun getHistorySize ()I
+	public final fun getHubHost ()Ljava/lang/String;
+	public final fun getHubPort ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/agent/AgentConfig$Companion {
+}
+
+public abstract interface class io/thernal/console/agent/AgentConnection {
+}
+
+public final class io/thernal/console/agent/AgentConnection$Connected : io/thernal/console/agent/AgentConnection {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/thernal/console/agent/AgentConnection$Connected;
+	public static synthetic fun copy$default (Lio/thernal/console/agent/AgentConnection$Connected;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/agent/AgentConnection$Connected;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHubAddress ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/agent/AgentConnection$Disabled : io/thernal/console/agent/AgentConnection {
+	public static final field INSTANCE Lio/thernal/console/agent/AgentConnection$Disabled;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/agent/AgentConnection$Searching : io/thernal/console/agent/AgentConnection {
+	public static final field INSTANCE Lio/thernal/console/agent/AgentConnection$Searching;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/agent/AgentEntries {
+}
+
+public final class io/thernal/console/agent/AgentEntriesBuilderKt {
+	public static final fun agentEntries (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lio/thernal/console/agent/AgentEntries;
+}
+
+public abstract interface class io/thernal/console/agent/AgentEntriesScope {
+	public abstract fun action (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun describe (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun feed (Ljava/lang/String;Ljava/lang/String;Lkotlinx/coroutines/flow/Flow;)V
+	public abstract fun logFeed (Ljava/lang/String;Ljava/lang/String;Lkotlinx/coroutines/flow/Flow;)V
+	public abstract fun redact ([Ljava/lang/String;)V
+	public abstract fun tool (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/thernal/console/agent/AgentRecord {
+	public fun <init> (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()J
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lio/thernal/console/agent/AgentRecord;
+	public static synthetic fun copy$default (Lio/thernal/console/agent/AgentRecord;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/thernal/console/agent/AgentRecord;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDetail ()Ljava/lang/String;
+	public final fun getFields ()Ljava/util/Map;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getKind ()Ljava/lang/String;
+	public final fun getLevel ()Ljava/lang/String;
+	public final fun getSummary ()Ljava/lang/String;
+	public final fun getTag ()Ljava/lang/String;
+	public final fun getTimeMillis ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/agent/AgentRegistry {
+	public static final field INSTANCE Lio/thernal/console/agent/AgentRegistry;
+	public final fun getEntries ()Lkotlinx/coroutines/flow/StateFlow;
+}
+
+public abstract interface class io/thernal/console/agent/AgentToolScope {
+	public abstract fun choice (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;)Lio/thernal/console/agent/AgentArg;
+	public abstract fun int (Ljava/lang/String;Ljava/lang/String;III)Lio/thernal/console/agent/AgentArg;
+	public static synthetic fun int$default (Lio/thernal/console/agent/AgentToolScope;Ljava/lang/String;Ljava/lang/String;IIIILjava/lang/Object;)Lio/thernal/console/agent/AgentArg;
+	public abstract fun optionalChoice (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lio/thernal/console/agent/AgentArg;
+	public abstract fun optionalInt (Ljava/lang/String;Ljava/lang/String;II)Lio/thernal/console/agent/AgentArg;
+	public static synthetic fun optionalInt$default (Lio/thernal/console/agent/AgentToolScope;Ljava/lang/String;Ljava/lang/String;IIILjava/lang/Object;)Lio/thernal/console/agent/AgentArg;
+	public abstract fun optionalText (Ljava/lang/String;Ljava/lang/String;)Lio/thernal/console/agent/AgentArg;
+	public abstract fun run (Lkotlin/jvm/functions/Function2;)V
+	public abstract fun text (Ljava/lang/String;Ljava/lang/String;)Lio/thernal/console/agent/AgentArg;
+	public abstract fun text (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lio/thernal/console/agent/AgentArg;
+	public abstract fun toggle (Ljava/lang/String;Ljava/lang/String;Z)Lio/thernal/console/agent/AgentArg;
+	public static synthetic fun toggle$default (Lio/thernal/console/agent/AgentToolScope;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lio/thernal/console/agent/AgentArg;
+}
+
+public final class io/thernal/console/agent/AgentToolScope$DefaultImpls {
+	public static synthetic fun int$default (Lio/thernal/console/agent/AgentToolScope;Ljava/lang/String;Ljava/lang/String;IIIILjava/lang/Object;)Lio/thernal/console/agent/AgentArg;
+	public static synthetic fun optionalInt$default (Lio/thernal/console/agent/AgentToolScope;Ljava/lang/String;Ljava/lang/String;IIILjava/lang/Object;)Lio/thernal/console/agent/AgentArg;
+	public static synthetic fun toggle$default (Lio/thernal/console/agent/AgentToolScope;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lio/thernal/console/agent/AgentArg;
+}
+
+public final class io/thernal/console/agent/ConsoleAgent {
+	public static final field INSTANCE Lio/thernal/console/agent/ConsoleAgent;
+	public final fun getConfig ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun getConnection ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun updateConfig (Lio/thernal/console/agent/AgentConfig;)V
+	public final fun updateConfig (Lkotlin/jvm/functions/Function1;)V
+}
+

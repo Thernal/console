@@ -1,0 +1,189 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:crash-report-ui>
+final enum class io.thernal.console.crash.ui.config/CrashBodyPolicy : kotlin/Enum<io.thernal.console.crash.ui.config/CrashBodyPolicy> { // io.thernal.console.crash.ui.config/CrashBodyPolicy|null[0]
+    enum entry Full // io.thernal.console.crash.ui.config/CrashBodyPolicy.Full|null[0]
+    enum entry None // io.thernal.console.crash.ui.config/CrashBodyPolicy.None|null[0]
+    enum entry Truncated // io.thernal.console.crash.ui.config/CrashBodyPolicy.Truncated|null[0]
+
+    final val entries // io.thernal.console.crash.ui.config/CrashBodyPolicy.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.crash.ui.config/CrashBodyPolicy> // io.thernal.console.crash.ui.config/CrashBodyPolicy.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.crash.ui.config/CrashBodyPolicy // io.thernal.console.crash.ui.config/CrashBodyPolicy.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.crash.ui.config/CrashBodyPolicy> // io.thernal.console.crash.ui.config/CrashBodyPolicy.values|values#static(){}[0]
+}
+
+final enum class io.thernal.console.crash.ui.session/CrashSessionClass : kotlin/Enum<io.thernal.console.crash.ui.session/CrashSessionClass> { // io.thernal.console.crash.ui.session/CrashSessionClass|null[0]
+    enum entry Confirmed // io.thernal.console.crash.ui.session/CrashSessionClass.Confirmed|null[0]
+    enum entry Probable // io.thernal.console.crash.ui.session/CrashSessionClass.Probable|null[0]
+    enum entry Safe // io.thernal.console.crash.ui.session/CrashSessionClass.Safe|null[0]
+
+    final val entries // io.thernal.console.crash.ui.session/CrashSessionClass.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.crash.ui.session/CrashSessionClass> // io.thernal.console.crash.ui.session/CrashSessionClass.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.crash.ui.session/CrashSessionClass // io.thernal.console.crash.ui.session/CrashSessionClass.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.crash.ui.session/CrashSessionClass> // io.thernal.console.crash.ui.session/CrashSessionClass.values|values#static(){}[0]
+}
+
+final class io.thernal.console.crash.ui.config/CrashReportConfig { // io.thernal.console.crash.ui.config/CrashReportConfig|null[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., io.thernal.console.core.log/LogLevel? = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin.collections/Set<kotlin/String> = ..., io.thernal.console.crash.ui.config/CrashBodyPolicy = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Function1<io.thernal.console.core.log/Log, io.thernal.console.core.log/Log?>? = ...) // io.thernal.console.crash.ui.config/CrashReportConfig.<init>|<init>(kotlin.Boolean;kotlin.Boolean;io.thernal.console.core.log.LogLevel?;kotlin.collections.Set<kotlin.String>;kotlin.collections.Set<kotlin.String>;io.thernal.console.crash.ui.config.CrashBodyPolicy;kotlin.Int;kotlin.Int;kotlin.Function1<io.thernal.console.core.log.Log,io.thernal.console.core.log.Log?>?){}[0]
+
+    final val bodyPolicy // io.thernal.console.crash.ui.config/CrashReportConfig.bodyPolicy|{}bodyPolicy[0]
+        final fun <get-bodyPolicy>(): io.thernal.console.crash.ui.config/CrashBodyPolicy // io.thernal.console.crash.ui.config/CrashReportConfig.bodyPolicy.<get-bodyPolicy>|<get-bodyPolicy>(){}[0]
+    final val excludeTags // io.thernal.console.crash.ui.config/CrashReportConfig.excludeTags|{}excludeTags[0]
+        final fun <get-excludeTags>(): kotlin.collections/Set<kotlin/String> // io.thernal.console.crash.ui.config/CrashReportConfig.excludeTags.<get-excludeTags>|<get-excludeTags>(){}[0]
+    final val includeTags // io.thernal.console.crash.ui.config/CrashReportConfig.includeTags|{}includeTags[0]
+        final fun <get-includeTags>(): kotlin.collections/Set<kotlin/String> // io.thernal.console.crash.ui.config/CrashReportConfig.includeTags.<get-includeTags>|<get-includeTags>(){}[0]
+    final val maxBodySize // io.thernal.console.crash.ui.config/CrashReportConfig.maxBodySize|{}maxBodySize[0]
+        final fun <get-maxBodySize>(): kotlin/Int // io.thernal.console.crash.ui.config/CrashReportConfig.maxBodySize.<get-maxBodySize>|<get-maxBodySize>(){}[0]
+    final val maxSessions // io.thernal.console.crash.ui.config/CrashReportConfig.maxSessions|{}maxSessions[0]
+        final fun <get-maxSessions>(): kotlin/Int // io.thernal.console.crash.ui.config/CrashReportConfig.maxSessions.<get-maxSessions>|<get-maxSessions>(){}[0]
+    final val persistLevelAtLeast // io.thernal.console.crash.ui.config/CrashReportConfig.persistLevelAtLeast|{}persistLevelAtLeast[0]
+        final fun <get-persistLevelAtLeast>(): io.thernal.console.core.log/LogLevel? // io.thernal.console.crash.ui.config/CrashReportConfig.persistLevelAtLeast.<get-persistLevelAtLeast>|<get-persistLevelAtLeast>(){}[0]
+    final val persistOnMatch // io.thernal.console.crash.ui.config/CrashReportConfig.persistOnMatch|{}persistOnMatch[0]
+        final fun <get-persistOnMatch>(): kotlin/Boolean // io.thernal.console.crash.ui.config/CrashReportConfig.persistOnMatch.<get-persistOnMatch>|<get-persistOnMatch>(){}[0]
+    final val redactor // io.thernal.console.crash.ui.config/CrashReportConfig.redactor|{}redactor[0]
+        final fun <get-redactor>(): kotlin/Function1<io.thernal.console.core.log/Log, io.thernal.console.core.log/Log?>? // io.thernal.console.crash.ui.config/CrashReportConfig.redactor.<get-redactor>|<get-redactor>(){}[0]
+    final val showSafeSessions // io.thernal.console.crash.ui.config/CrashReportConfig.showSafeSessions|{}showSafeSessions[0]
+        final fun <get-showSafeSessions>(): kotlin/Boolean // io.thernal.console.crash.ui.config/CrashReportConfig.showSafeSessions.<get-showSafeSessions>|<get-showSafeSessions>(){}[0]
+
+    final fun component1(): kotlin/Boolean // io.thernal.console.crash.ui.config/CrashReportConfig.component1|component1(){}[0]
+    final fun component2(): kotlin/Boolean // io.thernal.console.crash.ui.config/CrashReportConfig.component2|component2(){}[0]
+    final fun component3(): io.thernal.console.core.log/LogLevel? // io.thernal.console.crash.ui.config/CrashReportConfig.component3|component3(){}[0]
+    final fun component4(): kotlin.collections/Set<kotlin/String> // io.thernal.console.crash.ui.config/CrashReportConfig.component4|component4(){}[0]
+    final fun component5(): kotlin.collections/Set<kotlin/String> // io.thernal.console.crash.ui.config/CrashReportConfig.component5|component5(){}[0]
+    final fun component6(): io.thernal.console.crash.ui.config/CrashBodyPolicy // io.thernal.console.crash.ui.config/CrashReportConfig.component6|component6(){}[0]
+    final fun component7(): kotlin/Int // io.thernal.console.crash.ui.config/CrashReportConfig.component7|component7(){}[0]
+    final fun component8(): kotlin/Int // io.thernal.console.crash.ui.config/CrashReportConfig.component8|component8(){}[0]
+    final fun component9(): kotlin/Function1<io.thernal.console.core.log/Log, io.thernal.console.core.log/Log?>? // io.thernal.console.crash.ui.config/CrashReportConfig.component9|component9(){}[0]
+    final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., io.thernal.console.core.log/LogLevel? = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin.collections/Set<kotlin/String> = ..., io.thernal.console.crash.ui.config/CrashBodyPolicy = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Function1<io.thernal.console.core.log/Log, io.thernal.console.core.log/Log?>? = ...): io.thernal.console.crash.ui.config/CrashReportConfig // io.thernal.console.crash.ui.config/CrashReportConfig.copy|copy(kotlin.Boolean;kotlin.Boolean;io.thernal.console.core.log.LogLevel?;kotlin.collections.Set<kotlin.String>;kotlin.collections.Set<kotlin.String>;io.thernal.console.crash.ui.config.CrashBodyPolicy;kotlin.Int;kotlin.Int;kotlin.Function1<io.thernal.console.core.log.Log,io.thernal.console.core.log.Log?>?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.crash.ui.config/CrashReportConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.crash.ui.config/CrashReportConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.crash.ui.config/CrashReportConfig.toString|toString(){}[0]
+
+    final object Companion { // io.thernal.console.crash.ui.config/CrashReportConfig.Companion|null[0]
+        final const val DEFAULT_MAX_BODY_SIZE // io.thernal.console.crash.ui.config/CrashReportConfig.Companion.DEFAULT_MAX_BODY_SIZE|{}DEFAULT_MAX_BODY_SIZE[0]
+            final fun <get-DEFAULT_MAX_BODY_SIZE>(): kotlin/Int // io.thernal.console.crash.ui.config/CrashReportConfig.Companion.DEFAULT_MAX_BODY_SIZE.<get-DEFAULT_MAX_BODY_SIZE>|<get-DEFAULT_MAX_BODY_SIZE>(){}[0]
+        final const val DEFAULT_MAX_SESSIONS // io.thernal.console.crash.ui.config/CrashReportConfig.Companion.DEFAULT_MAX_SESSIONS|{}DEFAULT_MAX_SESSIONS[0]
+            final fun <get-DEFAULT_MAX_SESSIONS>(): kotlin/Int // io.thernal.console.crash.ui.config/CrashReportConfig.Companion.DEFAULT_MAX_SESSIONS.<get-DEFAULT_MAX_SESSIONS>|<get-DEFAULT_MAX_SESSIONS>(){}[0]
+    }
+}
+
+final class io.thernal.console.crash.ui.navigation/CrashSessionLogRoute : androidx.navigation3.runtime/NavKey { // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute|null[0]
+    constructor <init>(kotlin/String, kotlin/String) // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+    final val logId // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.logId|{}logId[0]
+        final fun <get-logId>(): kotlin/String // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.logId.<get-logId>|<get-logId>(){}[0]
+    final val sessionId // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.sessionId|{}sessionId[0]
+        final fun <get-sessionId>(): kotlin/String // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.sessionId.<get-sessionId>|<get-sessionId>(){}[0]
+
+    final fun component1(): kotlin/String // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.component1|component1(){}[0]
+    final fun component2(): kotlin/String // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ...): io.thernal.console.crash.ui.navigation/CrashSessionLogRoute // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.copy|copy(kotlin.String;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.crash.ui.navigation/CrashSessionLogRoute.toString|toString(){}[0]
+}
+
+final class io.thernal.console.crash.ui.navigation/CrashSessionRoute : androidx.navigation3.runtime/NavKey { // io.thernal.console.crash.ui.navigation/CrashSessionRoute|null[0]
+    constructor <init>(kotlin/String) // io.thernal.console.crash.ui.navigation/CrashSessionRoute.<init>|<init>(kotlin.String){}[0]
+
+    final val sessionId // io.thernal.console.crash.ui.navigation/CrashSessionRoute.sessionId|{}sessionId[0]
+        final fun <get-sessionId>(): kotlin/String // io.thernal.console.crash.ui.navigation/CrashSessionRoute.sessionId.<get-sessionId>|<get-sessionId>(){}[0]
+
+    final fun component1(): kotlin/String // io.thernal.console.crash.ui.navigation/CrashSessionRoute.component1|component1(){}[0]
+    final fun copy(kotlin/String = ...): io.thernal.console.crash.ui.navigation/CrashSessionRoute // io.thernal.console.crash.ui.navigation/CrashSessionRoute.copy|copy(kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.crash.ui.navigation/CrashSessionRoute.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.crash.ui.navigation/CrashSessionRoute.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.crash.ui.navigation/CrashSessionRoute.toString|toString(){}[0]
+}
+
+final class io.thernal.console.crash.ui.session/CrashSessionSummary { // io.thernal.console.crash.ui.session/CrashSessionSummary|null[0]
+    constructor <init>(kotlin/String, kotlin/Long, io.thernal.console.crash.ui.session/CrashSessionClass, kotlin/String?, kotlin/Long?) // io.thernal.console.crash.ui.session/CrashSessionSummary.<init>|<init>(kotlin.String;kotlin.Long;io.thernal.console.crash.ui.session.CrashSessionClass;kotlin.String?;kotlin.Long?){}[0]
+
+    final val classification // io.thernal.console.crash.ui.session/CrashSessionSummary.classification|{}classification[0]
+        final fun <get-classification>(): io.thernal.console.crash.ui.session/CrashSessionClass // io.thernal.console.crash.ui.session/CrashSessionSummary.classification.<get-classification>|<get-classification>(){}[0]
+    final val crashedAtMs // io.thernal.console.crash.ui.session/CrashSessionSummary.crashedAtMs|{}crashedAtMs[0]
+        final fun <get-crashedAtMs>(): kotlin/Long? // io.thernal.console.crash.ui.session/CrashSessionSummary.crashedAtMs.<get-crashedAtMs>|<get-crashedAtMs>(){}[0]
+    final val id // io.thernal.console.crash.ui.session/CrashSessionSummary.id|{}id[0]
+        final fun <get-id>(): kotlin/String // io.thernal.console.crash.ui.session/CrashSessionSummary.id.<get-id>|<get-id>(){}[0]
+    final val startedAtMs // io.thernal.console.crash.ui.session/CrashSessionSummary.startedAtMs|{}startedAtMs[0]
+        final fun <get-startedAtMs>(): kotlin/Long // io.thernal.console.crash.ui.session/CrashSessionSummary.startedAtMs.<get-startedAtMs>|<get-startedAtMs>(){}[0]
+    final val summary // io.thernal.console.crash.ui.session/CrashSessionSummary.summary|{}summary[0]
+        final fun <get-summary>(): kotlin/String? // io.thernal.console.crash.ui.session/CrashSessionSummary.summary.<get-summary>|<get-summary>(){}[0]
+
+    final fun component1(): kotlin/String // io.thernal.console.crash.ui.session/CrashSessionSummary.component1|component1(){}[0]
+    final fun component2(): kotlin/Long // io.thernal.console.crash.ui.session/CrashSessionSummary.component2|component2(){}[0]
+    final fun component3(): io.thernal.console.crash.ui.session/CrashSessionClass // io.thernal.console.crash.ui.session/CrashSessionSummary.component3|component3(){}[0]
+    final fun component4(): kotlin/String? // io.thernal.console.crash.ui.session/CrashSessionSummary.component4|component4(){}[0]
+    final fun component5(): kotlin/Long? // io.thernal.console.crash.ui.session/CrashSessionSummary.component5|component5(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/Long = ..., io.thernal.console.crash.ui.session/CrashSessionClass = ..., kotlin/String? = ..., kotlin/Long? = ...): io.thernal.console.crash.ui.session/CrashSessionSummary // io.thernal.console.crash.ui.session/CrashSessionSummary.copy|copy(kotlin.String;kotlin.Long;io.thernal.console.crash.ui.session.CrashSessionClass;kotlin.String?;kotlin.Long?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.crash.ui.session/CrashSessionSummary.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.crash.ui.session/CrashSessionSummary.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.crash.ui.session/CrashSessionSummary.toString|toString(){}[0]
+}
+
+final class io.thernal.console.crash.ui.view.detail.model/CrashSessionDetailState : io.thernal.console.ui.core/ViewState { // io.thernal.console.crash.ui.view.detail.model/CrashSessionDetailState|null[0]
+    constructor <init>() // io.thernal.console.crash.ui.view.detail.model/CrashSessionDetailState.<init>|<init>(){}[0]
+
+    final val isLoaded // io.thernal.console.crash.ui.view.detail.model/CrashSessionDetailState.isLoaded|{}isLoaded[0]
+        final fun <get-isLoaded>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Boolean> // io.thernal.console.crash.ui.view.detail.model/CrashSessionDetailState.isLoaded.<get-isLoaded>|<get-isLoaded>(){}[0]
+    final val logs // io.thernal.console.crash.ui.view.detail.model/CrashSessionDetailState.logs|{}logs[0]
+        final fun <get-logs>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/List<io.thernal.console.core.log/Log>> // io.thernal.console.crash.ui.view.detail.model/CrashSessionDetailState.logs.<get-logs>|<get-logs>(){}[0]
+}
+
+final class io.thernal.console.crash.ui.view.sessions.model/CrashSessionsState : io.thernal.console.ui.core/ViewState { // io.thernal.console.crash.ui.view.sessions.model/CrashSessionsState|null[0]
+    constructor <init>() // io.thernal.console.crash.ui.view.sessions.model/CrashSessionsState.<init>|<init>(){}[0]
+
+    final val sessions // io.thernal.console.crash.ui.view.sessions.model/CrashSessionsState.sessions|{}sessions[0]
+        final fun <get-sessions>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/List<io.thernal.console.crash.ui.session/CrashSessionSummary>> // io.thernal.console.crash.ui.view.sessions.model/CrashSessionsState.sessions.<get-sessions>|<get-sessions>(){}[0]
+    final val showSafeSessions // io.thernal.console.crash.ui.view.sessions.model/CrashSessionsState.showSafeSessions|{}showSafeSessions[0]
+        final fun <get-showSafeSessions>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Boolean> // io.thernal.console.crash.ui.view.sessions.model/CrashSessionsState.showSafeSessions.<get-showSafeSessions>|<get-showSafeSessions>(){}[0]
+    final val visibleSessions // io.thernal.console.crash.ui.view.sessions.model/CrashSessionsState.visibleSessions|{}visibleSessions[0]
+        final fun <get-visibleSessions>(): androidx.compose.runtime/State<kotlin.collections/List<io.thernal.console.crash.ui.session/CrashSessionSummary>> // io.thernal.console.crash.ui.view.sessions.model/CrashSessionsState.visibleSessions.<get-visibleSessions>|<get-visibleSessions>(){}[0]
+}
+
+final object io.thernal.console.crash.ui.addon/CrashReportAddon : io.thernal.console.api.addon/ConsoleAddon { // io.thernal.console.crash.ui.addon/CrashReportAddon|null[0]
+    final fun navGraph(): io.thernal.console.api.addon/ConsoleNavGraph // io.thernal.console.crash.ui.addon/CrashReportAddon.navGraph|navGraph(){}[0]
+    final fun onInstall() // io.thernal.console.crash.ui.addon/CrashReportAddon.onInstall|onInstall(){}[0]
+    final fun tab(): io.thernal.console.api.addon/ConsoleTab // io.thernal.console.crash.ui.addon/CrashReportAddon.tab|tab(){}[0]
+}
+
+final object io.thernal.console.crash.ui/CrashReports { // io.thernal.console.crash.ui/CrashReports|null[0]
+    final val config // io.thernal.console.crash.ui/CrashReports.config|{}config[0]
+        final fun <get-config>(): kotlinx.coroutines.flow/StateFlow<io.thernal.console.crash.ui.config/CrashReportConfig> // io.thernal.console.crash.ui/CrashReports.config.<get-config>|<get-config>(){}[0]
+    final val sessions // io.thernal.console.crash.ui/CrashReports.sessions|{}sessions[0]
+        final fun <get-sessions>(): kotlinx.coroutines.flow/StateFlow<kotlin.collections/List<io.thernal.console.crash.ui.session/CrashSessionSummary>> // io.thernal.console.crash.ui/CrashReports.sessions.<get-sessions>|<get-sessions>(){}[0]
+
+    final fun clearAll() // io.thernal.console.crash.ui/CrashReports.clearAll|clearAll(){}[0]
+    final fun delete(kotlin/String) // io.thernal.console.crash.ui/CrashReports.delete|delete(kotlin.String){}[0]
+    final fun open(kotlin/String): io.thernal.console.crash/CrashSession? // io.thernal.console.crash.ui/CrashReports.open|open(kotlin.String){}[0]
+    final fun refreshSessions() // io.thernal.console.crash.ui/CrashReports.refreshSessions|refreshSessions(){}[0]
+    final fun share(kotlin/String): kotlin/String? // io.thernal.console.crash.ui/CrashReports.share|share(kotlin.String){}[0]
+    final fun updateConfig(kotlin/Function1<io.thernal.console.crash.ui.config/CrashReportConfig, io.thernal.console.crash.ui.config/CrashReportConfig>) // io.thernal.console.crash.ui/CrashReports.updateConfig|updateConfig(kotlin.Function1<io.thernal.console.crash.ui.config.CrashReportConfig,io.thernal.console.crash.ui.config.CrashReportConfig>){}[0]
+}
+
+final val io.thernal.console.crash.ui.addon/io_thernal_console_crash_ui_addon_CrashReportAddon$stableprop // io.thernal.console.crash.ui.addon/io_thernal_console_crash_ui_addon_CrashReportAddon$stableprop|#static{}io_thernal_console_crash_ui_addon_CrashReportAddon$stableprop[0]
+final val io.thernal.console.crash.ui.config/io_thernal_console_crash_ui_config_CrashReportConfig$stableprop // io.thernal.console.crash.ui.config/io_thernal_console_crash_ui_config_CrashReportConfig$stableprop|#static{}io_thernal_console_crash_ui_config_CrashReportConfig$stableprop[0]
+final val io.thernal.console.crash.ui.navigation/io_thernal_console_crash_ui_navigation_CrashSessionLogRoute$stableprop // io.thernal.console.crash.ui.navigation/io_thernal_console_crash_ui_navigation_CrashSessionLogRoute$stableprop|#static{}io_thernal_console_crash_ui_navigation_CrashSessionLogRoute$stableprop[0]
+final val io.thernal.console.crash.ui.navigation/io_thernal_console_crash_ui_navigation_CrashSessionRoute$stableprop // io.thernal.console.crash.ui.navigation/io_thernal_console_crash_ui_navigation_CrashSessionRoute$stableprop|#static{}io_thernal_console_crash_ui_navigation_CrashSessionRoute$stableprop[0]
+final val io.thernal.console.crash.ui.session/io_thernal_console_crash_ui_session_CrashSessionSummary$stableprop // io.thernal.console.crash.ui.session/io_thernal_console_crash_ui_session_CrashSessionSummary$stableprop|#static{}io_thernal_console_crash_ui_session_CrashSessionSummary$stableprop[0]
+final val io.thernal.console.crash.ui.view.detail.model/io_thernal_console_crash_ui_view_detail_model_CrashSessionDetailState$stableprop // io.thernal.console.crash.ui.view.detail.model/io_thernal_console_crash_ui_view_detail_model_CrashSessionDetailState$stableprop|#static{}io_thernal_console_crash_ui_view_detail_model_CrashSessionDetailState$stableprop[0]
+final val io.thernal.console.crash.ui.view.sessions.model/io_thernal_console_crash_ui_view_sessions_model_CrashSessionsIntent_Delete$stableprop // io.thernal.console.crash.ui.view.sessions.model/io_thernal_console_crash_ui_view_sessions_model_CrashSessionsIntent_Delete$stableprop|#static{}io_thernal_console_crash_ui_view_sessions_model_CrashSessionsIntent_Delete$stableprop[0]
+final val io.thernal.console.crash.ui.view.sessions.model/io_thernal_console_crash_ui_view_sessions_model_CrashSessionsState$stableprop // io.thernal.console.crash.ui.view.sessions.model/io_thernal_console_crash_ui_view_sessions_model_CrashSessionsState$stableprop|#static{}io_thernal_console_crash_ui_view_sessions_model_CrashSessionsState$stableprop[0]
+final val io.thernal.console.crash.ui/io_thernal_console_crash_ui_CrashReports$stableprop // io.thernal.console.crash.ui/io_thernal_console_crash_ui_CrashReports$stableprop|#static{}io_thernal_console_crash_ui_CrashReports$stableprop[0]
+
+final fun io.thernal.console.crash.ui.addon/io_thernal_console_crash_ui_addon_CrashReportAddon$stableprop_getter(): kotlin/Int // io.thernal.console.crash.ui.addon/io_thernal_console_crash_ui_addon_CrashReportAddon$stableprop_getter|io_thernal_console_crash_ui_addon_CrashReportAddon$stableprop_getter(){}[0]
+final fun io.thernal.console.crash.ui.config/io_thernal_console_crash_ui_config_CrashReportConfig$stableprop_getter(): kotlin/Int // io.thernal.console.crash.ui.config/io_thernal_console_crash_ui_config_CrashReportConfig$stableprop_getter|io_thernal_console_crash_ui_config_CrashReportConfig$stableprop_getter(){}[0]
+final fun io.thernal.console.crash.ui.navigation/io_thernal_console_crash_ui_navigation_CrashSessionLogRoute$stableprop_getter(): kotlin/Int // io.thernal.console.crash.ui.navigation/io_thernal_console_crash_ui_navigation_CrashSessionLogRoute$stableprop_getter|io_thernal_console_crash_ui_navigation_CrashSessionLogRoute$stableprop_getter(){}[0]
+final fun io.thernal.console.crash.ui.navigation/io_thernal_console_crash_ui_navigation_CrashSessionRoute$stableprop_getter(): kotlin/Int // io.thernal.console.crash.ui.navigation/io_thernal_console_crash_ui_navigation_CrashSessionRoute$stableprop_getter|io_thernal_console_crash_ui_navigation_CrashSessionRoute$stableprop_getter(){}[0]
+final fun io.thernal.console.crash.ui.session/io_thernal_console_crash_ui_session_CrashSessionSummary$stableprop_getter(): kotlin/Int // io.thernal.console.crash.ui.session/io_thernal_console_crash_ui_session_CrashSessionSummary$stableprop_getter|io_thernal_console_crash_ui_session_CrashSessionSummary$stableprop_getter(){}[0]
+final fun io.thernal.console.crash.ui.view.detail.model/io_thernal_console_crash_ui_view_detail_model_CrashSessionDetailState$stableprop_getter(): kotlin/Int // io.thernal.console.crash.ui.view.detail.model/io_thernal_console_crash_ui_view_detail_model_CrashSessionDetailState$stableprop_getter|io_thernal_console_crash_ui_view_detail_model_CrashSessionDetailState$stableprop_getter(){}[0]
+final fun io.thernal.console.crash.ui.view.sessions.model/io_thernal_console_crash_ui_view_sessions_model_CrashSessionsIntent_Delete$stableprop_getter(): kotlin/Int // io.thernal.console.crash.ui.view.sessions.model/io_thernal_console_crash_ui_view_sessions_model_CrashSessionsIntent_Delete$stableprop_getter|io_thernal_console_crash_ui_view_sessions_model_CrashSessionsIntent_Delete$stableprop_getter(){}[0]
+final fun io.thernal.console.crash.ui.view.sessions.model/io_thernal_console_crash_ui_view_sessions_model_CrashSessionsState$stableprop_getter(): kotlin/Int // io.thernal.console.crash.ui.view.sessions.model/io_thernal_console_crash_ui_view_sessions_model_CrashSessionsState$stableprop_getter|io_thernal_console_crash_ui_view_sessions_model_CrashSessionsState$stableprop_getter(){}[0]
+final fun io.thernal.console.crash.ui/io_thernal_console_crash_ui_CrashReports$stableprop_getter(): kotlin/Int // io.thernal.console.crash.ui/io_thernal_console_crash_ui_CrashReports$stableprop_getter|io_thernal_console_crash_ui_CrashReports$stableprop_getter(){}[0]

@@ -1,0 +1,10 @@
+public final class io/thernal/console/network/ktor/ConsoleNetworkKtorConfig {
+	public fun <init> ()V
+	public final fun getSensitiveHeaders ()Lio/thernal/console/network/SensitiveHeaders;
+	public final fun setSensitiveHeaders (Lio/thernal/console/network/SensitiveHeaders;)V
+}
+
+public final class io/thernal/console/network/ktor/ConsoleNetworkKtorPluginKt {
+	public static final fun getConsoleNetworkKtorPlugin ()Lio/ktor/client/plugins/api/ClientPlugin;
+}
+

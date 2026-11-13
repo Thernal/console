@@ -1,0 +1,106 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:crash-report-core>
+abstract interface <#A: io.thernal.console.core.log/Log> io.thernal.console.crash/LogCodec { // io.thernal.console.crash/LogCodec|null[0]
+    abstract fun decode(io.thernal.console.crash/LogEnvelope, kotlin.collections/Map<kotlin/String, kotlin/String>): #A? // io.thernal.console.crash/LogCodec.decode|decode(io.thernal.console.crash.LogEnvelope;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    abstract fun encode(#A): kotlin.collections/Map<kotlin/String, kotlin/String> // io.thernal.console.crash/LogCodec.encode|encode(1:0){}[0]
+}
+
+final class io.thernal.console.crash/CrashSession { // io.thernal.console.crash/CrashSession|null[0]
+    constructor <init>(io.thernal.console.crash/CrashSessionHeader, kotlin.collections/List<io.thernal.console.core.log/Log>) // io.thernal.console.crash/CrashSession.<init>|<init>(io.thernal.console.crash.CrashSessionHeader;kotlin.collections.List<io.thernal.console.core.log.Log>){}[0]
+
+    final val header // io.thernal.console.crash/CrashSession.header|{}header[0]
+        final fun <get-header>(): io.thernal.console.crash/CrashSessionHeader // io.thernal.console.crash/CrashSession.header.<get-header>|<get-header>(){}[0]
+    final val logs // io.thernal.console.crash/CrashSession.logs|{}logs[0]
+        final fun <get-logs>(): kotlin.collections/List<io.thernal.console.core.log/Log> // io.thernal.console.crash/CrashSession.logs.<get-logs>|<get-logs>(){}[0]
+
+    final fun component1(): io.thernal.console.crash/CrashSessionHeader // io.thernal.console.crash/CrashSession.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/List<io.thernal.console.core.log/Log> // io.thernal.console.crash/CrashSession.component2|component2(){}[0]
+    final fun copy(io.thernal.console.crash/CrashSessionHeader = ..., kotlin.collections/List<io.thernal.console.core.log/Log> = ...): io.thernal.console.crash/CrashSession // io.thernal.console.crash/CrashSession.copy|copy(io.thernal.console.crash.CrashSessionHeader;kotlin.collections.List<io.thernal.console.core.log.Log>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.crash/CrashSession.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.crash/CrashSession.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.crash/CrashSession.toString|toString(){}[0]
+}
+
+final class io.thernal.console.crash/CrashSessionHeader { // io.thernal.console.crash/CrashSessionHeader|null[0]
+    constructor <init>(kotlin/String, kotlin/Long, kotlin/String) // io.thernal.console.crash/CrashSessionHeader.<init>|<init>(kotlin.String;kotlin.Long;kotlin.String){}[0]
+
+    final val crashedAt // io.thernal.console.crash/CrashSessionHeader.crashedAt|{}crashedAt[0]
+        final fun <get-crashedAt>(): kotlin/Long // io.thernal.console.crash/CrashSessionHeader.crashedAt.<get-crashedAt>|<get-crashedAt>(){}[0]
+    final val id // io.thernal.console.crash/CrashSessionHeader.id|{}id[0]
+        final fun <get-id>(): kotlin/String // io.thernal.console.crash/CrashSessionHeader.id.<get-id>|<get-id>(){}[0]
+    final val summary // io.thernal.console.crash/CrashSessionHeader.summary|{}summary[0]
+        final fun <get-summary>(): kotlin/String // io.thernal.console.crash/CrashSessionHeader.summary.<get-summary>|<get-summary>(){}[0]
+
+    final fun component1(): kotlin/String // io.thernal.console.crash/CrashSessionHeader.component1|component1(){}[0]
+    final fun component2(): kotlin/Long // io.thernal.console.crash/CrashSessionHeader.component2|component2(){}[0]
+    final fun component3(): kotlin/String // io.thernal.console.crash/CrashSessionHeader.component3|component3(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/Long = ..., kotlin/String = ...): io.thernal.console.crash/CrashSessionHeader // io.thernal.console.crash/CrashSessionHeader.copy|copy(kotlin.String;kotlin.Long;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.crash/CrashSessionHeader.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.crash/CrashSessionHeader.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.crash/CrashSessionHeader.toString|toString(){}[0]
+}
+
+final class io.thernal.console.crash/LogEnvelope { // io.thernal.console.crash/LogEnvelope|null[0]
+    constructor <init>(kotlin/String, kotlin/String, kotlin/Long, kotlin/String, kotlin/String?, kotlin/String, kotlin/String?, kotlin.collections/Map<kotlin/String, kotlin/String> = ...) // io.thernal.console.crash/LogEnvelope.<init>|<init>(kotlin.String;kotlin.String;kotlin.Long;kotlin.String;kotlin.String?;kotlin.String;kotlin.String?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+    final val groupId // io.thernal.console.crash/LogEnvelope.groupId|{}groupId[0]
+        final fun <get-groupId>(): kotlin/String? // io.thernal.console.crash/LogEnvelope.groupId.<get-groupId>|<get-groupId>(){}[0]
+    final val id // io.thernal.console.crash/LogEnvelope.id|{}id[0]
+        final fun <get-id>(): kotlin/String // io.thernal.console.crash/LogEnvelope.id.<get-id>|<get-id>(){}[0]
+    final val level // io.thernal.console.crash/LogEnvelope.level|{}level[0]
+        final fun <get-level>(): kotlin/String // io.thernal.console.crash/LogEnvelope.level.<get-level>|<get-level>(){}[0]
+    final val message // io.thernal.console.crash/LogEnvelope.message|{}message[0]
+        final fun <get-message>(): kotlin/String // io.thernal.console.crash/LogEnvelope.message.<get-message>|<get-message>(){}[0]
+    final val payload // io.thernal.console.crash/LogEnvelope.payload|{}payload[0]
+        final fun <get-payload>(): kotlin.collections/Map<kotlin/String, kotlin/String> // io.thernal.console.crash/LogEnvelope.payload.<get-payload>|<get-payload>(){}[0]
+    final val tag // io.thernal.console.crash/LogEnvelope.tag|{}tag[0]
+        final fun <get-tag>(): kotlin/String? // io.thernal.console.crash/LogEnvelope.tag.<get-tag>|<get-tag>(){}[0]
+    final val timestamp // io.thernal.console.crash/LogEnvelope.timestamp|{}timestamp[0]
+        final fun <get-timestamp>(): kotlin/Long // io.thernal.console.crash/LogEnvelope.timestamp.<get-timestamp>|<get-timestamp>(){}[0]
+    final val type // io.thernal.console.crash/LogEnvelope.type|{}type[0]
+        final fun <get-type>(): kotlin/String // io.thernal.console.crash/LogEnvelope.type.<get-type>|<get-type>(){}[0]
+
+    final fun component1(): kotlin/String // io.thernal.console.crash/LogEnvelope.component1|component1(){}[0]
+    final fun component2(): kotlin/String // io.thernal.console.crash/LogEnvelope.component2|component2(){}[0]
+    final fun component3(): kotlin/Long // io.thernal.console.crash/LogEnvelope.component3|component3(){}[0]
+    final fun component4(): kotlin/String // io.thernal.console.crash/LogEnvelope.component4|component4(){}[0]
+    final fun component5(): kotlin/String? // io.thernal.console.crash/LogEnvelope.component5|component5(){}[0]
+    final fun component6(): kotlin/String // io.thernal.console.crash/LogEnvelope.component6|component6(){}[0]
+    final fun component7(): kotlin/String? // io.thernal.console.crash/LogEnvelope.component7|component7(){}[0]
+    final fun component8(): kotlin.collections/Map<kotlin/String, kotlin/String> // io.thernal.console.crash/LogEnvelope.component8|component8(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/Long = ..., kotlin/String = ..., kotlin/String? = ..., kotlin/String = ..., kotlin/String? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ...): io.thernal.console.crash/LogEnvelope // io.thernal.console.crash/LogEnvelope.copy|copy(kotlin.String;kotlin.String;kotlin.Long;kotlin.String;kotlin.String?;kotlin.String;kotlin.String?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.crash/LogEnvelope.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.crash/LogEnvelope.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.crash/LogEnvelope.toString|toString(){}[0]
+}
+
+final object io.thernal.console.crash/CrashSessionSerializer { // io.thernal.console.crash/CrashSessionSerializer|null[0]
+    final fun deserialize(kotlin/ByteArray): io.thernal.console.crash/CrashSession? // io.thernal.console.crash/CrashSessionSerializer.deserialize|deserialize(kotlin.ByteArray){}[0]
+    final fun encodeRecord(io.thernal.console.core.log/Log): kotlin/ByteArray // io.thernal.console.crash/CrashSessionSerializer.encodeRecord|encodeRecord(io.thernal.console.core.log.Log){}[0]
+    final fun encodeStreamPrefix(io.thernal.console.crash/CrashSessionHeader): kotlin/ByteArray // io.thernal.console.crash/CrashSessionSerializer.encodeStreamPrefix|encodeStreamPrefix(io.thernal.console.crash.CrashSessionHeader){}[0]
+    final fun parseHeader(kotlin/ByteArray): io.thernal.console.crash/CrashSessionHeader? // io.thernal.console.crash/CrashSessionSerializer.parseHeader|parseHeader(kotlin.ByteArray){}[0]
+    final fun serialize(io.thernal.console.crash/CrashSession): kotlin/ByteArray // io.thernal.console.crash/CrashSessionSerializer.serialize|serialize(io.thernal.console.crash.CrashSession){}[0]
+}
+
+final object io.thernal.console.crash/LogCodecRegistry { // io.thernal.console.crash/LogCodecRegistry|null[0]
+    final class Encoder { // io.thernal.console.crash/LogCodecRegistry.Encoder|null[0]
+        final val codec // io.thernal.console.crash/LogCodecRegistry.Encoder.codec|{}codec[0]
+            final fun <get-codec>(): io.thernal.console.crash/LogCodec<io.thernal.console.core.log/Log> // io.thernal.console.crash/LogCodecRegistry.Encoder.codec.<get-codec>|<get-codec>(){}[0]
+        final val discriminator // io.thernal.console.crash/LogCodecRegistry.Encoder.discriminator|{}discriminator[0]
+            final fun <get-discriminator>(): kotlin/String // io.thernal.console.crash/LogCodecRegistry.Encoder.discriminator.<get-discriminator>|<get-discriminator>(){}[0]
+    }
+}
+
+final const val io.thernal.console.crash/BASIC_DISCRIMINATOR // io.thernal.console.crash/BASIC_DISCRIMINATOR|{}BASIC_DISCRIMINATOR[0]
+    final fun <get-BASIC_DISCRIMINATOR>(): kotlin/String // io.thernal.console.crash/BASIC_DISCRIMINATOR.<get-BASIC_DISCRIMINATOR>|<get-BASIC_DISCRIMINATOR>(){}[0]
+final const val io.thernal.console.crash/CRASH_FORMAT_VERSION // io.thernal.console.crash/CRASH_FORMAT_VERSION|{}CRASH_FORMAT_VERSION[0]
+    final fun <get-CRASH_FORMAT_VERSION>(): kotlin/Int // io.thernal.console.crash/CRASH_FORMAT_VERSION.<get-CRASH_FORMAT_VERSION>|<get-CRASH_FORMAT_VERSION>(){}[0]
+
+final fun (io.thernal.console.core.log/Log).io.thernal.console.crash/toEnvelope(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ...): io.thernal.console.crash/LogEnvelope // io.thernal.console.crash/toEnvelope|toEnvelope@io.thernal.console.core.log.Log(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+final fun (io.thernal.console.crash/LogEnvelope).io.thernal.console.crash/toBasicLog(): io.thernal.console.core.log/BasicLog // io.thernal.console.crash/toBasicLog|toBasicLog@io.thernal.console.crash.LogEnvelope(){}[0]

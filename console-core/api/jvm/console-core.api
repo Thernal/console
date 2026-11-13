@@ -1,0 +1,81 @@
+public abstract interface annotation class io/thernal/console/core/ConsoleInternalApi : java/lang/annotation/Annotation {
+}
+
+public abstract interface class io/thernal/console/core/ConsoleScope {
+	public abstract fun asyncNotify (Lkotlin/jvm/functions/Function0;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun blockingNotify (Lkotlin/jvm/functions/Function0;)V
+	public abstract fun notify (Lkotlin/jvm/functions/Function0;)V
+	public abstract fun setProcessors (Ljava/util/List;)V
+}
+
+public abstract interface class io/thernal/console/core/LogObserver {
+	public abstract fun emit (Lio/thernal/console/core/log/Log;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class io/thernal/console/core/LogProcessor {
+	public abstract fun process (Lio/thernal/console/core/log/Log;)Lio/thernal/console/core/log/Log;
+}
+
+public final class io/thernal/console/core/log/BasicLog : io/thernal/console/core/log/Log {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/thernal/console/core/log/LogLevel;Ljava/lang/String;Lkotlin/time/Instant;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lio/thernal/console/core/log/LogLevel;Ljava/lang/String;Lkotlin/time/Instant;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lio/thernal/console/core/log/LogLevel;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Lkotlin/time/Instant;
+	public final fun component6 ()Ljava/lang/String;
+	public fun contains (Ljava/lang/String;)Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lio/thernal/console/core/log/LogLevel;Ljava/lang/String;Lkotlin/time/Instant;Ljava/lang/String;)Lio/thernal/console/core/log/BasicLog;
+	public static synthetic fun copy$default (Lio/thernal/console/core/log/BasicLog;Ljava/lang/String;Ljava/lang/String;Lio/thernal/console/core/log/LogLevel;Ljava/lang/String;Lkotlin/time/Instant;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/core/log/BasicLog;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getGroupId ()Ljava/lang/String;
+	public fun getId ()Ljava/lang/String;
+	public fun getLevel ()Lio/thernal/console/core/log/LogLevel;
+	public fun getMessage ()Ljava/lang/String;
+	public fun getTab ()Ljava/lang/String;
+	public fun getTag ()Ljava/lang/String;
+	public fun getTimestamp ()Lkotlin/time/Instant;
+	public fun hashCode ()I
+	public fun toShareText ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class io/thernal/console/core/log/Log {
+	public static final field Companion Lio/thernal/console/core/log/Log$Companion;
+	public fun contains (Ljava/lang/String;)Z
+	public abstract fun getGroupId ()Ljava/lang/String;
+	public abstract fun getId ()Ljava/lang/String;
+	public abstract fun getLevel ()Lio/thernal/console/core/log/LogLevel;
+	public abstract fun getMessage ()Ljava/lang/String;
+	public fun getTab ()Ljava/lang/String;
+	public abstract fun getTag ()Ljava/lang/String;
+	public abstract fun getTimestamp ()Lkotlin/time/Instant;
+	public fun toShareText ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/core/log/Log$Companion {
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lio/thernal/console/core/log/LogLevel;Ljava/lang/String;)Lio/thernal/console/core/log/Log;
+	public static synthetic fun invoke$default (Lio/thernal/console/core/log/Log$Companion;Ljava/lang/String;Ljava/lang/String;Lio/thernal/console/core/log/LogLevel;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/core/log/Log;
+}
+
+public final class io/thernal/console/core/log/Log$DefaultImpls {
+	public static fun contains (Lio/thernal/console/core/log/Log;Ljava/lang/String;)Z
+	public static fun getTab (Lio/thernal/console/core/log/Log;)Ljava/lang/String;
+	public static fun toShareText (Lio/thernal/console/core/log/Log;)Ljava/lang/String;
+}
+
+public final class io/thernal/console/core/log/LogLevel : java/lang/Enum {
+	public static final field Debug Lio/thernal/console/core/log/LogLevel;
+	public static final field Error Lio/thernal/console/core/log/LogLevel;
+	public static final field Fatal Lio/thernal/console/core/log/LogLevel;
+	public static final field Info Lio/thernal/console/core/log/LogLevel;
+	public static final field None Lio/thernal/console/core/log/LogLevel;
+	public static final field Success Lio/thernal/console/core/log/LogLevel;
+	public static final field Verbose Lio/thernal/console/core/log/LogLevel;
+	public static final field Warning Lio/thernal/console/core/log/LogLevel;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/thernal/console/core/log/LogLevel;
+	public static fun values ()[Lio/thernal/console/core/log/LogLevel;
+}
+

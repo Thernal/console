@@ -1,0 +1,18 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:network-ktor>
+final class io.thernal.console.network.ktor/ConsoleNetworkKtorConfig { // io.thernal.console.network.ktor/ConsoleNetworkKtorConfig|null[0]
+    constructor <init>() // io.thernal.console.network.ktor/ConsoleNetworkKtorConfig.<init>|<init>(){}[0]
+
+    final var sensitiveHeaders // io.thernal.console.network.ktor/ConsoleNetworkKtorConfig.sensitiveHeaders|{}sensitiveHeaders[0]
+        final fun <get-sensitiveHeaders>(): io.thernal.console.network/SensitiveHeaders // io.thernal.console.network.ktor/ConsoleNetworkKtorConfig.sensitiveHeaders.<get-sensitiveHeaders>|<get-sensitiveHeaders>(){}[0]
+        final fun <set-sensitiveHeaders>(io.thernal.console.network/SensitiveHeaders) // io.thernal.console.network.ktor/ConsoleNetworkKtorConfig.sensitiveHeaders.<set-sensitiveHeaders>|<set-sensitiveHeaders>(io.thernal.console.network.SensitiveHeaders){}[0]
+}
+
+final val io.thernal.console.network.ktor/ConsoleNetworkKtorPlugin // io.thernal.console.network.ktor/ConsoleNetworkKtorPlugin|{}ConsoleNetworkKtorPlugin[0]
+    final fun <get-ConsoleNetworkKtorPlugin>(): io.ktor.client.plugins.api/ClientPlugin<io.thernal.console.network.ktor/ConsoleNetworkKtorConfig> // io.thernal.console.network.ktor/ConsoleNetworkKtorPlugin.<get-ConsoleNetworkKtorPlugin>|<get-ConsoleNetworkKtorPlugin>(){}[0]
