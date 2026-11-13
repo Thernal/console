@@ -1,0 +1,272 @@
+public final class io/thernal/console/stepper/ui/addon/StepperAddon : io/thernal/console/api/addon/ConsoleAddon {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/stepper/ui/addon/StepperAddon;
+	public fun contentWrapper ()Lkotlin/jvm/functions/Function3;
+	public fun dockWidget ()Lio/thernal/console/api/addon/ConsoleDockWidget;
+	public fun install ()V
+	public fun navGraph ()Lio/thernal/console/api/addon/ConsoleNavGraph;
+	public fun onInstall ()V
+	public fun overlay ()Lkotlin/jvm/functions/Function3;
+	public fun overlays ()Ljava/util/List;
+	public fun tab ()Lio/thernal/console/api/addon/ConsoleTab;
+}
+
+public final class io/thernal/console/stepper/ui/navigation/ComposableSingletons$StepperNavGraphKt {
+	public static final field INSTANCE Lio/thernal/console/stepper/ui/navigation/ComposableSingletons$StepperNavGraphKt;
+	public fun <init> ()V
+	public final fun getLambda$392000316$io_github_thernal_stepper_ui ()Lkotlin/jvm/functions/Function3;
+}
+
+public final class io/thernal/console/stepper/ui/navigation/SteppedLogRoute : androidx/navigation3/runtime/NavKey {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/thernal/console/stepper/ui/navigation/SteppedLogRoute;
+	public static synthetic fun copy$default (Lio/thernal/console/stepper/ui/navigation/SteppedLogRoute;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/stepper/ui/navigation/SteppedLogRoute;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLogId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/AutoResumeDelay : java/lang/Enum {
+	public static final field Companion Lio/thernal/console/stepper/ui/stepper/AutoResumeDelay$Companion;
+	public static final field Five Lio/thernal/console/stepper/ui/stepper/AutoResumeDelay;
+	public static final field Ten Lio/thernal/console/stepper/ui/stepper/AutoResumeDelay;
+	public static final field Thirty Lio/thernal/console/stepper/ui/stepper/AutoResumeDelay;
+	public static final field Three Lio/thernal/console/stepper/ui/stepper/AutoResumeDelay;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getSeconds ()I
+	public static fun valueOf (Ljava/lang/String;)Lio/thernal/console/stepper/ui/stepper/AutoResumeDelay;
+	public static fun values ()[Lio/thernal/console/stepper/ui/stepper/AutoResumeDelay;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/AutoResumeDelay$Companion {
+	public final fun fromSecondsOrNull (Ljava/lang/Integer;)Lio/thernal/console/stepper/ui/stepper/AutoResumeDelay;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/Stepper : io/thernal/console/core/LogObserver, io/thernal/console/ui/core/IntentHandler {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/stepper/ui/stepper/Stepper;
+	public final fun clearSteppedEvents ()V
+	public fun dispatch (Lio/thernal/console/stepper/ui/stepper/StepperIntent;)V
+	public synthetic fun dispatch (Lio/thernal/console/ui/core/ViewIntent;)V
+	public fun emit (Lio/thernal/console/core/log/Log;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getConfig ()Lkotlinx/coroutines/flow/StateFlow;
+	public fun getHandler ()Lio/thernal/console/ui/core/IntentHandler$Handler;
+	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun next ()V
+	public fun onIntentUpdate (Lkotlin/jvm/functions/Function1;)Lio/thernal/console/ui/core/IntentHandler$Handler;
+	public final fun updateConfig (Lio/thernal/console/stepper/ui/stepper/Stepper$Config;)V
+	public final fun updateConfig (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/thernal/console/stepper/ui/stepper/Stepper$Config {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (ZZZZLjava/util/Set;Lio/thernal/console/core/log/LogLevel;Ljava/lang/Integer;I)V
+	public synthetic fun <init> (ZZZZLjava/util/Set;Lio/thernal/console/core/log/LogLevel;Ljava/lang/Integer;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Z
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Ljava/util/Set;
+	public final fun component6 ()Lio/thernal/console/core/log/LogLevel;
+	public final fun component7 ()Ljava/lang/Integer;
+	public final fun component8 ()I
+	public final fun copy (ZZZZLjava/util/Set;Lio/thernal/console/core/log/LogLevel;Ljava/lang/Integer;I)Lio/thernal/console/stepper/ui/stepper/Stepper$Config;
+	public static synthetic fun copy$default (Lio/thernal/console/stepper/ui/stepper/Stepper$Config;ZZZZLjava/util/Set;Lio/thernal/console/core/log/LogLevel;Ljava/lang/Integer;IILjava/lang/Object;)Lio/thernal/console/stepper/ui/stepper/Stepper$Config;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAutoResumeSeconds ()Ljava/lang/Integer;
+	public final fun getEnabled ()Z
+	public final fun getMaxSteppedEventCount ()I
+	public final fun getOverlayVisible ()Z
+	public final fun getPauseOnLevelAtLeast ()Lio/thernal/console/core/log/LogLevel;
+	public final fun getPauseOnMatch ()Z
+	public final fun getPauseOnTags ()Ljava/util/Set;
+	public final fun getPaused ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/Stepper$State {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;ILjava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/List;ILjava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()I
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/util/List;ILjava/lang/String;Ljava/lang/String;)Lio/thernal/console/stepper/ui/stepper/Stepper$State;
+	public static synthetic fun copy$default (Lio/thernal/console/stepper/ui/stepper/Stepper$State;Ljava/util/List;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/stepper/ui/stepper/Stepper$State;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBlockedLogId ()Ljava/lang/String;
+	public final fun getBlockedTag ()Ljava/lang/String;
+	public final fun getPendingLogs ()I
+	public final fun getSteppedEvents ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class io/thernal/console/stepper/ui/stepper/StepperIntent : io/thernal/console/ui/core/ViewIntent {
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$AddPauseTag : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$AddPauseTag;
+	public static synthetic fun copy$default (Lio/thernal/console/stepper/ui/stepper/StepperIntent$AddPauseTag;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$AddPauseTag;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTag ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$ClearSteppedEvents : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/stepper/ui/stepper/StepperIntent$ClearSteppedEvents;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$Next : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/stepper/ui/stepper/StepperIntent$Next;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$RemovePauseTag : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$RemovePauseTag;
+	public static synthetic fun copy$default (Lio/thernal/console/stepper/ui/stepper/StepperIntent$RemovePauseTag;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$RemovePauseTag;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTag ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$SetAutoResumeSeconds : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/Integer;)V
+	public final fun component1 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/Integer;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetAutoResumeSeconds;
+	public static synthetic fun copy$default (Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetAutoResumeSeconds;Ljava/lang/Integer;ILjava/lang/Object;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetAutoResumeSeconds;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSeconds ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$SetEnabled : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetEnabled;
+	public static synthetic fun copy$default (Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetEnabled;ZILjava/lang/Object;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetEnabled;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public final fun isEnabled ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$SetPauseOnLevelAtLeast : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public fun <init> (Lio/thernal/console/core/log/LogLevel;)V
+	public final fun component1 ()Lio/thernal/console/core/log/LogLevel;
+	public final fun copy (Lio/thernal/console/core/log/LogLevel;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetPauseOnLevelAtLeast;
+	public static synthetic fun copy$default (Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetPauseOnLevelAtLeast;Lio/thernal/console/core/log/LogLevel;ILjava/lang/Object;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetPauseOnLevelAtLeast;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLevel ()Lio/thernal/console/core/log/LogLevel;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$SetPauseOnMatch : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetPauseOnMatch;
+	public static synthetic fun copy$default (Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetPauseOnMatch;ZILjava/lang/Object;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetPauseOnMatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getShouldPauseOnMatch ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$SetPaused : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetPaused;
+	public static synthetic fun copy$default (Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetPaused;ZILjava/lang/Object;)Lio/thernal/console/stepper/ui/stepper/StepperIntent$SetPaused;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public final fun isPaused ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$ToggleEnabled : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/stepper/ui/stepper/StepperIntent$ToggleEnabled;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/stepper/StepperIntent$TogglePaused : io/thernal/console/stepper/ui/stepper/StepperIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/stepper/ui/stepper/StepperIntent$TogglePaused;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/stepper/ui/view/caught/model/StepperCaughtState : io/thernal/console/ui/core/ViewState {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getSteppedEvents ()Lio/thernal/console/ui/core/ViewState$StateField;
+}
+
+public final class io/thernal/console/stepper/ui/view/caught/model/StepperCaughtViewModel : androidx/lifecycle/ViewModel, io/thernal/console/ui/core/StateHolder {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getState ()Lio/thernal/console/stepper/ui/view/caught/model/StepperCaughtState;
+	public fun getValue (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+	public fun set (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;)V
+	public fun snapshot (Lkotlin/jvm/functions/Function0;)V
+	public fun update (Lio/thernal/console/ui/core/ViewState$StateField;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/thernal/console/stepper/ui/view/overlay/model/StepperOverlayState : io/thernal/console/ui/core/ViewState {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getBlockedLogId ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getBlockedTag ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getCanStep ()Landroidx/compose/runtime/State;
+	public final fun getCaughtCount ()Landroidx/compose/runtime/State;
+	public final fun getCurrentLog ()Landroidx/compose/runtime/State;
+	public final fun getDisplayTag ()Landroidx/compose/runtime/State;
+	public final fun getPendingLogs ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getStatusText ()Landroidx/compose/runtime/State;
+	public final fun getSteppedEvents ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun isEnabled ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun isPaused ()Lio/thernal/console/ui/core/ViewState$StateField;
+}
+
+public final class io/thernal/console/stepper/ui/view/overlay/model/StepperOverlayViewModel : androidx/lifecycle/ViewModel, io/thernal/console/ui/core/StateHolder {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getState ()Lio/thernal/console/stepper/ui/view/overlay/model/StepperOverlayState;
+	public fun getValue (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+	public fun set (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;)V
+	public fun snapshot (Lkotlin/jvm/functions/Function0;)V
+	public fun update (Lio/thernal/console/ui/core/ViewState$StateField;Lkotlin/jvm/functions/Function1;)V
+}
+

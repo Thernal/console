@@ -1,0 +1,88 @@
+public final class io/thernal/console/crash/CrashFormatKt {
+	public static final field BASIC_DISCRIMINATOR Ljava/lang/String;
+	public static final field CRASH_FORMAT_VERSION I
+}
+
+public final class io/thernal/console/crash/CrashSession {
+	public fun <init> (Lio/thernal/console/crash/CrashSessionHeader;Ljava/util/List;)V
+	public final fun component1 ()Lio/thernal/console/crash/CrashSessionHeader;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lio/thernal/console/crash/CrashSessionHeader;Ljava/util/List;)Lio/thernal/console/crash/CrashSession;
+	public static synthetic fun copy$default (Lio/thernal/console/crash/CrashSession;Lio/thernal/console/crash/CrashSessionHeader;Ljava/util/List;ILjava/lang/Object;)Lio/thernal/console/crash/CrashSession;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHeader ()Lio/thernal/console/crash/CrashSessionHeader;
+	public final fun getLogs ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/crash/CrashSessionHeader {
+	public fun <init> (Ljava/lang/String;JLjava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()J
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;JLjava/lang/String;)Lio/thernal/console/crash/CrashSessionHeader;
+	public static synthetic fun copy$default (Lio/thernal/console/crash/CrashSessionHeader;Ljava/lang/String;JLjava/lang/String;ILjava/lang/Object;)Lio/thernal/console/crash/CrashSessionHeader;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCrashedAt ()J
+	public final fun getId ()Ljava/lang/String;
+	public final fun getSummary ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/crash/CrashSessionSerializer {
+	public static final field INSTANCE Lio/thernal/console/crash/CrashSessionSerializer;
+	public final fun deserialize ([B)Lio/thernal/console/crash/CrashSession;
+	public final fun encodeRecord (Lio/thernal/console/core/log/Log;)[B
+	public final fun encodeStreamPrefix (Lio/thernal/console/crash/CrashSessionHeader;)[B
+	public final fun parseHeader ([B)Lio/thernal/console/crash/CrashSessionHeader;
+	public final fun serialize (Lio/thernal/console/crash/CrashSession;)[B
+}
+
+public abstract interface class io/thernal/console/crash/LogCodec {
+	public abstract fun decode (Lio/thernal/console/crash/LogEnvelope;Ljava/util/Map;)Lio/thernal/console/core/log/Log;
+	public abstract fun encode (Lio/thernal/console/core/log/Log;)Ljava/util/Map;
+}
+
+public final class io/thernal/console/crash/LogCodecRegistry {
+	public static final field INSTANCE Lio/thernal/console/crash/LogCodecRegistry;
+}
+
+public final class io/thernal/console/crash/LogCodecRegistry$Encoder {
+	public final fun getCodec ()Lio/thernal/console/crash/LogCodec;
+	public final fun getDiscriminator ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/crash/LogEnvelope {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()J
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lio/thernal/console/crash/LogEnvelope;
+	public static synthetic fun copy$default (Lio/thernal/console/crash/LogEnvelope;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/thernal/console/crash/LogEnvelope;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getGroupId ()Ljava/lang/String;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getLevel ()Ljava/lang/String;
+	public final fun getMessage ()Ljava/lang/String;
+	public final fun getPayload ()Ljava/util/Map;
+	public final fun getTag ()Ljava/lang/String;
+	public final fun getTimestamp ()J
+	public final fun getType ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/crash/LogEnvelopeKt {
+	public static final fun toBasicLog (Lio/thernal/console/crash/LogEnvelope;)Lio/thernal/console/core/log/BasicLog;
+	public static final fun toEnvelope (Lio/thernal/console/core/log/Log;Ljava/lang/String;Ljava/util/Map;)Lio/thernal/console/crash/LogEnvelope;
+	public static synthetic fun toEnvelope$default (Lio/thernal/console/core/log/Log;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/thernal/console/crash/LogEnvelope;
+}
+

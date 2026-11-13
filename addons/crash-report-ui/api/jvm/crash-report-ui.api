@@ -1,0 +1,162 @@
+public final class io/thernal/console/crash/ui/CrashReports {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/crash/ui/CrashReports;
+	public final fun clearAll ()V
+	public final fun delete (Ljava/lang/String;)V
+	public final fun getConfig ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun getSessions ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun open (Ljava/lang/String;)Lio/thernal/console/crash/CrashSession;
+	public final fun refreshSessions ()V
+	public final fun share (Ljava/lang/String;)Ljava/lang/String;
+	public final fun updateConfig (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/thernal/console/crash/ui/addon/CrashReportAddon : io/thernal/console/api/addon/ConsoleAddon {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/crash/ui/addon/CrashReportAddon;
+	public fun contentWrapper ()Lkotlin/jvm/functions/Function3;
+	public fun dockWidget ()Lio/thernal/console/api/addon/ConsoleDockWidget;
+	public fun install ()V
+	public fun navGraph ()Lio/thernal/console/api/addon/ConsoleNavGraph;
+	public fun onInstall ()V
+	public fun overlay ()Lkotlin/jvm/functions/Function3;
+	public fun overlays ()Ljava/util/List;
+	public fun tab ()Lio/thernal/console/api/addon/ConsoleTab;
+}
+
+public final class io/thernal/console/crash/ui/config/CrashBodyPolicy : java/lang/Enum {
+	public static final field Full Lio/thernal/console/crash/ui/config/CrashBodyPolicy;
+	public static final field None Lio/thernal/console/crash/ui/config/CrashBodyPolicy;
+	public static final field Truncated Lio/thernal/console/crash/ui/config/CrashBodyPolicy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/thernal/console/crash/ui/config/CrashBodyPolicy;
+	public static fun values ()[Lio/thernal/console/crash/ui/config/CrashBodyPolicy;
+}
+
+public final class io/thernal/console/crash/ui/config/CrashReportConfig {
+	public static final field $stable I
+	public static final field Companion Lio/thernal/console/crash/ui/config/CrashReportConfig$Companion;
+	public static final field DEFAULT_MAX_BODY_SIZE I
+	public static final field DEFAULT_MAX_SESSIONS I
+	public fun <init> ()V
+	public fun <init> (ZZLio/thernal/console/core/log/LogLevel;Ljava/util/Set;Ljava/util/Set;Lio/thernal/console/crash/ui/config/CrashBodyPolicy;IILkotlin/jvm/functions/Function1;)V
+	public synthetic fun <init> (ZZLio/thernal/console/core/log/LogLevel;Ljava/util/Set;Ljava/util/Set;Lio/thernal/console/crash/ui/config/CrashBodyPolicy;IILkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Z
+	public final fun component3 ()Lio/thernal/console/core/log/LogLevel;
+	public final fun component4 ()Ljava/util/Set;
+	public final fun component5 ()Ljava/util/Set;
+	public final fun component6 ()Lio/thernal/console/crash/ui/config/CrashBodyPolicy;
+	public final fun component7 ()I
+	public final fun component8 ()I
+	public final fun component9 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (ZZLio/thernal/console/core/log/LogLevel;Ljava/util/Set;Ljava/util/Set;Lio/thernal/console/crash/ui/config/CrashBodyPolicy;IILkotlin/jvm/functions/Function1;)Lio/thernal/console/crash/ui/config/CrashReportConfig;
+	public static synthetic fun copy$default (Lio/thernal/console/crash/ui/config/CrashReportConfig;ZZLio/thernal/console/core/log/LogLevel;Ljava/util/Set;Ljava/util/Set;Lio/thernal/console/crash/ui/config/CrashBodyPolicy;IILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/thernal/console/crash/ui/config/CrashReportConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBodyPolicy ()Lio/thernal/console/crash/ui/config/CrashBodyPolicy;
+	public final fun getExcludeTags ()Ljava/util/Set;
+	public final fun getIncludeTags ()Ljava/util/Set;
+	public final fun getMaxBodySize ()I
+	public final fun getMaxSessions ()I
+	public final fun getPersistLevelAtLeast ()Lio/thernal/console/core/log/LogLevel;
+	public final fun getPersistOnMatch ()Z
+	public final fun getRedactor ()Lkotlin/jvm/functions/Function1;
+	public final fun getShowSafeSessions ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/crash/ui/config/CrashReportConfig$Companion {
+}
+
+public final class io/thernal/console/crash/ui/navigation/ComposableSingletons$CrashReportNavGraphKt {
+	public static final field INSTANCE Lio/thernal/console/crash/ui/navigation/ComposableSingletons$CrashReportNavGraphKt;
+	public fun <init> ()V
+	public final fun getLambda$1679150373$io_github_thernal_crash_report_ui ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$868960108$io_github_thernal_crash_report_ui ()Lkotlin/jvm/functions/Function3;
+}
+
+public final class io/thernal/console/crash/ui/navigation/CrashSessionLogRoute : androidx/navigation3/runtime/NavKey {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lio/thernal/console/crash/ui/navigation/CrashSessionLogRoute;
+	public static synthetic fun copy$default (Lio/thernal/console/crash/ui/navigation/CrashSessionLogRoute;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/crash/ui/navigation/CrashSessionLogRoute;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLogId ()Ljava/lang/String;
+	public final fun getSessionId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/crash/ui/navigation/CrashSessionRoute : androidx/navigation3/runtime/NavKey {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/thernal/console/crash/ui/navigation/CrashSessionRoute;
+	public static synthetic fun copy$default (Lio/thernal/console/crash/ui/navigation/CrashSessionRoute;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/crash/ui/navigation/CrashSessionRoute;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSessionId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/crash/ui/session/CrashSessionClass : java/lang/Enum {
+	public static final field Confirmed Lio/thernal/console/crash/ui/session/CrashSessionClass;
+	public static final field Probable Lio/thernal/console/crash/ui/session/CrashSessionClass;
+	public static final field Safe Lio/thernal/console/crash/ui/session/CrashSessionClass;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/thernal/console/crash/ui/session/CrashSessionClass;
+	public static fun values ()[Lio/thernal/console/crash/ui/session/CrashSessionClass;
+}
+
+public final class io/thernal/console/crash/ui/session/CrashSessionSummary {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;JLio/thernal/console/crash/ui/session/CrashSessionClass;Ljava/lang/String;Ljava/lang/Long;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()J
+	public final fun component3 ()Lio/thernal/console/crash/ui/session/CrashSessionClass;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/Long;
+	public final fun copy (Ljava/lang/String;JLio/thernal/console/crash/ui/session/CrashSessionClass;Ljava/lang/String;Ljava/lang/Long;)Lio/thernal/console/crash/ui/session/CrashSessionSummary;
+	public static synthetic fun copy$default (Lio/thernal/console/crash/ui/session/CrashSessionSummary;Ljava/lang/String;JLio/thernal/console/crash/ui/session/CrashSessionClass;Ljava/lang/String;Ljava/lang/Long;ILjava/lang/Object;)Lio/thernal/console/crash/ui/session/CrashSessionSummary;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getClassification ()Lio/thernal/console/crash/ui/session/CrashSessionClass;
+	public final fun getCrashedAtMs ()Ljava/lang/Long;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getStartedAtMs ()J
+	public final fun getSummary ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/crash/ui/view/detail/ComposableSingletons$CrashSessionDetailContentKt {
+	public static final field INSTANCE Lio/thernal/console/crash/ui/view/detail/ComposableSingletons$CrashSessionDetailContentKt;
+	public fun <init> ()V
+	public final fun getLambda$-497810794$io_github_thernal_crash_report_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-943348105$io_github_thernal_crash_report_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/crash/ui/view/detail/model/CrashSessionDetailState : io/thernal/console/ui/core/ViewState {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getLogs ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun isLoaded ()Lio/thernal/console/ui/core/ViewState$StateField;
+}
+
+public final class io/thernal/console/crash/ui/view/sessions/ComposableSingletons$CrashSessionsContentKt {
+	public static final field INSTANCE Lio/thernal/console/crash/ui/view/sessions/ComposableSingletons$CrashSessionsContentKt;
+	public fun <init> ()V
+	public final fun getLambda$-314012752$io_github_thernal_crash_report_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2078171091$io_github_thernal_crash_report_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/crash/ui/view/sessions/model/CrashSessionsState : io/thernal/console/ui/core/ViewState {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getSessions ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getShowSafeSessions ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getVisibleSessions ()Landroidx/compose/runtime/State;
+}
+

@@ -7,6 +7,7 @@ import io.modelcontextprotocol.kotlin.sdk.server.StdioServerTransport
 import io.modelcontextprotocol.kotlin.sdk.types.Implementation
 import io.modelcontextprotocol.kotlin.sdk.types.ServerCapabilities
 import io.thernal.console.mcp.hub.DeviceStore
+import io.thernal.console.mcp.hub.HubProtocol
 import io.thernal.console.mcp.hub.HubServer
 import io.thernal.console.mcp.tools.HubTools
 import io.thernal.console.mcp.tools.instructions
@@ -19,18 +20,24 @@ import kotlinx.io.asSource
 import kotlinx.io.buffered
 
 private const val SERVER_NAME = "console"
-private const val SERVER_VERSION = "0.1.0"
+private const val DEV_VERSION = "dev"
 private const val HUB_HOST = "127.0.0.1"
 private const val DEFAULT_HUB_PORT = 47_474
 private const val PORT_FLAG = "--port"
+private const val VERSION_FLAG = "--version"
 
 private const val FIRST_MANIFEST_WAIT_MILLIS = 2_500L
 
 /**
  * Starts the hub (TCP on loopback, for apps) and the MCP server (stdio, for the agent) in one process.
- * Stdout belongs to MCP, so diagnostics go to stderr.
+ * Stdout belongs to MCP, so diagnostics go to stderr. `--version` prints the version and the protocol, and exits.
  */
 fun main(args: Array<String>) {
+    val version = hubVersion()
+    if (VERSION_FLAG in args) {
+        println("console-mcp $version (protocol ${HubProtocol.CURRENT})")
+        return
+    }
     // kotlin-logging (used by the MCP SDK) prints a banner to stdout on first use, which breaks the JSON-RPC stream.
     KotlinLoggingConfiguration.logStartupMessage = false
     val port = args.indexOf(PORT_FLAG).takeIf { it >= 0 }?.let { args.getOrNull(it + 1)?.toIntOrNull() }
@@ -41,13 +48,13 @@ fun main(args: Array<String>) {
         val hubJob = launch { hub.run() }
 
         val server = Server(
-            serverInfo = Implementation(name = SERVER_NAME, version = SERVER_VERSION),
+            serverInfo = Implementation(name = SERVER_NAME, version = version),
             options = ServerOptions(
                 capabilities = ServerCapabilities(tools = ServerCapabilities.Tools(listChanged = true)),
             ),
             instructionsProvider = { instructions(store) },
         )
-        val tools = HubTools(server = server, store = store, hub = hub)
+        val tools = HubTools(server = server, store = store, hub = hub, version = version)
         tools.registerBuiltIns()
         val syncJob = launch { tools.keepInSync() }
         // Give an app that is already running a moment to connect, so the first tools/list already has its tools.
@@ -65,4 +72,9 @@ fun main(args: Array<String>) {
         syncJob.cancel()
         hubJob.cancel()
     }
+}
+
+/** The Console release this hub was built with, from its jar's manifest; [DEV_VERSION] when it runs from classes. */
+private fun hubVersion(): String {
+    return HubServer::class.java.`package`?.implementationVersion ?: DEV_VERSION
 }

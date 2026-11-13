@@ -1,0 +1,19 @@
+public abstract interface class io/thernal/console/io/AppendSink {
+	public abstract fun append ([B)Z
+	public abstract fun close ()V
+}
+
+public final class io/thernal/console/io/ConsoleFileSystem {
+	public static final field INSTANCE Lio/thernal/console/io/ConsoleFileSystem;
+	public final fun baseDirectoryPath (Ljava/lang/String;)Ljava/lang/String;
+	public final fun delete (Ljava/lang/String;)Z
+	public final fun ensureDirectory (Ljava/lang/String;)Z
+	public final fun exists (Ljava/lang/String;)Z
+	public final fun listFileNames (Ljava/lang/String;)Ljava/util/List;
+	public final fun openAppend (Ljava/lang/String;)Lio/thernal/console/io/AppendSink;
+	public final fun readBytes (Ljava/lang/String;)[B
+	public final fun rename (Ljava/lang/String;Ljava/lang/String;)Z
+	public final fun temporaryDirectoryPath ()Ljava/lang/String;
+	public final fun writeAtomically (Ljava/lang/String;[B)Z
+}
+

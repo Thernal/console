@@ -152,6 +152,9 @@ The provider class subclasses `ConsoleAutoInitProvider` and calls `MyAddon.insta
 - Fill in the PR template
 - All CI checks must pass before review
 - New public API should include a usage example in the PR description
+- A change that matters to people using Console adds a line under `## Unreleased` in [CHANGELOG.md](CHANGELOG.md)
+- A change to the public API updates its dump: `./gradlew updateKotlinAbi` (on macOS, where the iOS part compiles),
+  and commit the `api/` files with the change
 
 ## What not to contribute
 

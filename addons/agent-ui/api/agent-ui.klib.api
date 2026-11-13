@@ -1,0 +1,15 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:agent-ui>
+final object io.thernal.console.agent.ui.addon/AgentAddon : io.thernal.console.api.addon/ConsoleAddon { // io.thernal.console.agent.ui.addon/AgentAddon|null[0]
+    final fun onInstall() // io.thernal.console.agent.ui.addon/AgentAddon.onInstall|onInstall(){}[0]
+}
+
+final val io.thernal.console.agent.ui.addon/io_thernal_console_agent_ui_addon_AgentAddon$stableprop // io.thernal.console.agent.ui.addon/io_thernal_console_agent_ui_addon_AgentAddon$stableprop|#static{}io_thernal_console_agent_ui_addon_AgentAddon$stableprop[0]
+
+final fun io.thernal.console.agent.ui.addon/io_thernal_console_agent_ui_addon_AgentAddon$stableprop_getter(): kotlin/Int // io.thernal.console.agent.ui.addon/io_thernal_console_agent_ui_addon_AgentAddon$stableprop_getter|io_thernal_console_agent_ui_addon_AgentAddon$stableprop_getter(){}[0]

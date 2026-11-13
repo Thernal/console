@@ -109,6 +109,27 @@ class DeviceStoreTest {
         assertEquals(1, store.devices().single().runs)
     }
 
+    @Test
+    fun `an app that speaks another protocol is listed with the reason and shares nothing`() {
+        val store = DeviceStore()
+        val link = link()
+        store.connect(info = device, address = "a", link = link, protocol = HubProtocol.CURRENT + 1)
+        val feed = HubManifest.Feed(name = "logs", description = "Logs")
+
+        store.setManifest(
+            deviceId = "d1",
+            manifest = HubManifest(
+                sections = listOf(HubManifest.Section(id = "l", title = "L", about = "L", feeds = listOf(feed))),
+            ),
+        )
+        store.addRecord(deviceId = "d1", link = link, record = record(0))
+
+        val listed = store.devices().single()
+        assertTrue(listed.problem.orEmpty().contains("install the console-mcp"))
+        assertFalse(listed.hasFeed("logs"))
+        assertTrue(store.records("d1", "logs").isEmpty())
+    }
+
     private fun link(): HubLink {
         return HubLink(ByteChannel())
     }

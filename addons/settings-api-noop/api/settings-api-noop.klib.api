@@ -1,0 +1,29 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:settings-api-noop>
+abstract interface <#A: kotlin/Any> io.thernal.console.settings/SettingsEntriesScope { // io.thernal.console.settings/SettingsEntriesScope|null[0]
+    abstract fun <#A1: kotlin/Enum<#A1>> enum(kotlin/String, kotlin/String, kotlin.collections/List<#A1>, kotlin/String? = ..., kotlin/String? = ..., kotlin/Function1<#A, kotlin/Boolean> = ..., kotlin/Function1<#A, #A1?>, kotlin/Function2<#A, #A1?, #A>) // io.thernal.console.settings/SettingsEntriesScope.enum|enum(kotlin.String;kotlin.String;kotlin.collections.List<0:0>;kotlin.String?;kotlin.String?;kotlin.Function1<1:0,kotlin.Boolean>;kotlin.Function1<1:0,0:0?>;kotlin.Function2<1:0,0:0?,1:0>){0§<kotlin.Enum<0:0>>}[0]
+    abstract fun int(kotlin/String, kotlin/String, kotlin/Int = ..., kotlin/Int = ..., kotlin/String? = ..., kotlin/Function1<#A, kotlin/Boolean> = ..., kotlin/Function1<#A, kotlin/Int>, kotlin/Function2<#A, kotlin/Int, #A>) // io.thernal.console.settings/SettingsEntriesScope.int|int(kotlin.String;kotlin.String;kotlin.Int;kotlin.Int;kotlin.String?;kotlin.Function1<1:0,kotlin.Boolean>;kotlin.Function1<1:0,kotlin.Int>;kotlin.Function2<1:0,kotlin.Int,1:0>){}[0]
+    abstract fun tags(kotlin/String, kotlin/String, kotlin/String? = ..., kotlin/Function1<#A, kotlin/Boolean> = ..., kotlin/Function1<#A, kotlin.collections/Set<kotlin/String>>, kotlin/Function2<#A, kotlin.collections/Set<kotlin/String>, #A>) // io.thernal.console.settings/SettingsEntriesScope.tags|tags(kotlin.String;kotlin.String;kotlin.String?;kotlin.Function1<1:0,kotlin.Boolean>;kotlin.Function1<1:0,kotlin.collections.Set<kotlin.String>>;kotlin.Function2<1:0,kotlin.collections.Set<kotlin.String>,1:0>){}[0]
+    abstract fun toggle(kotlin/String, kotlin/String, kotlin/String? = ..., kotlin/Function1<#A, kotlin/Boolean> = ..., kotlin/Function1<#A, kotlin/Boolean>, kotlin/Function2<#A, kotlin/Boolean, #A>) // io.thernal.console.settings/SettingsEntriesScope.toggle|toggle(kotlin.String;kotlin.String;kotlin.String?;kotlin.Function1<1:0,kotlin.Boolean>;kotlin.Function1<1:0,kotlin.Boolean>;kotlin.Function2<1:0,kotlin.Boolean,1:0>){}[0]
+}
+
+final class io.thernal.console.settings/SettingsSection // io.thernal.console.settings/SettingsSection|null[0]
+
+final object io.thernal.console.settings/SettingsRegistry { // io.thernal.console.settings/SettingsRegistry|null[0]
+    final val sections // io.thernal.console.settings/SettingsRegistry.sections|{}sections[0]
+        final fun <get-sections>(): kotlinx.coroutines.flow/StateFlow<kotlin.collections/List<io.thernal.console.settings/SettingsSection>> // io.thernal.console.settings/SettingsRegistry.sections.<get-sections>|<get-sections>(){}[0]
+}
+
+final val io.thernal.console.settings/io_thernal_console_settings_SettingsRegistry$stableprop // io.thernal.console.settings/io_thernal_console_settings_SettingsRegistry$stableprop|#static{}io_thernal_console_settings_SettingsRegistry$stableprop[0]
+final val io.thernal.console.settings/io_thernal_console_settings_SettingsSection$stableprop // io.thernal.console.settings/io_thernal_console_settings_SettingsSection$stableprop|#static{}io_thernal_console_settings_SettingsSection$stableprop[0]
+
+final fun <#A: kotlin/Any> io.thernal.console.settings/settingsEntries(kotlin/String, kotlin/String, kotlin/Int = ..., kotlinx.coroutines.flow/StateFlow<#A>, kotlin/Function1<kotlin/Function1<#A, #A>, kotlin/Unit>, kotlin/Function1<io.thernal.console.settings/SettingsEntriesScope<#A>, kotlin/Unit>): io.thernal.console.settings/SettingsSection // io.thernal.console.settings/settingsEntries|settingsEntries(kotlin.String;kotlin.String;kotlin.Int;kotlinx.coroutines.flow.StateFlow<0:0>;kotlin.Function1<kotlin.Function1<0:0,0:0>,kotlin.Unit>;kotlin.Function1<io.thernal.console.settings.SettingsEntriesScope<0:0>,kotlin.Unit>){0§<kotlin.Any>}[0]
+final fun io.thernal.console.settings/io_thernal_console_settings_SettingsRegistry$stableprop_getter(): kotlin/Int // io.thernal.console.settings/io_thernal_console_settings_SettingsRegistry$stableprop_getter|io_thernal_console_settings_SettingsRegistry$stableprop_getter(){}[0]
+final fun io.thernal.console.settings/io_thernal_console_settings_SettingsSection$stableprop_getter(): kotlin/Int // io.thernal.console.settings/io_thernal_console_settings_SettingsSection$stableprop_getter|io_thernal_console_settings_SettingsSection$stableprop_getter(){}[0]
+final fun io.thernal.console.settings/settingsCustom(kotlin/String, kotlin/String, kotlin/Int = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin/Function1<androidx.compose.foundation.lazy/LazyListScope, kotlin/Unit>): io.thernal.console.settings/SettingsSection // io.thernal.console.settings/settingsCustom|settingsCustom(kotlin.String;kotlin.String;kotlin.Int;kotlin.collections.Set<kotlin.String>;kotlin.Function1<androidx.compose.foundation.lazy.LazyListScope,kotlin.Unit>){}[0]

@@ -23,6 +23,8 @@ class LibPublishConventionPlugin : Plugin<Project> {
             project.extensions.extraProperties["POM_ARTIFACT_ID"] = artifactId
 
             pluginManager.apply("com.vanniktech.maven.publish")
+            // What a module publishes is its API: guard it (LibAbiConventionPlugin).
+            pluginManager.apply("io.thernal.console.abi")
 
             extensions.configure<MavenPublishBaseExtension> {
                 publishToMavenCentral(automaticRelease = true)

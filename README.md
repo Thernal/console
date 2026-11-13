@@ -90,15 +90,19 @@ Swipe **↑ ↓ ← →** anywhere on screen (default gesture).
 ### 5. Connect your AI coding agent
 
 `console-bundle-ui` includes the agent bridge, so a debug build already looks for the `console-mcp` hub on your
-machine. Build the hub once from this repository and register it with your agent:
+machine. Download the hub from the release of your Console version (it needs Java 17 or newer) and register it with
+your agent:
 
 ```bash
-./gradlew -p console-mcp installDist
-claude mcp add console -- "$PWD/console-mcp/build/install/console-mcp/bin/console-mcp"
+v=<version>
+curl -fsSL -o /tmp/console-mcp.zip "https://github.com/Thernal/console/releases/download/release/v$v/console-mcp.zip"
+unzip -o -q /tmp/console-mcp.zip -d ~/.console-mcp
+claude mcp add console -- ~/.console-mcp/console-mcp/bin/console-mcp
 adb reverse tcp:47474 tcp:47474   # Android device or emulator; the iOS simulator and desktop need nothing
 ```
 
-Ask the agent to call `devices`: it lists the running app and what it shares. See [AI agents (MCP)](#ai-agents-mcp).
+Ask the agent to call `devices`: it lists the running app and what it shares. When you update Console, download the
+hub of the new version the same way. See [AI agents (MCP)](#ai-agents-mcp) and the [hub](console-mcp/README.md).
 
 ---
 
@@ -636,6 +640,27 @@ Each addon has its own README with setup, settings and architecture; start from 
 | `io.github.thernal:console-agent-ui:<version>` | Agent bridge — streams the registry to the `console-mcp` hub for AI coding agents (debug only; in `console-bundle-ui`) |
 
 ---
+
+## Releases
+
+What is new in each release: [CHANGELOG.md](CHANGELOG.md).
+
+<details>
+<summary><b>Cutting a release (for maintainers)</b></summary>
+
+A change worth telling goes under `## Unreleased` in `CHANGELOG.md` with the change itself. To release, one commit,
+`chore(release): <version>`, sets `VERSION` in `gradle.properties` and `console` in `gradle/libs.versions.toml`, and
+renames `## Unreleased` to `## <version> — <date>`. Then push the tag `release/v<version>`: `release.yml` checks that
+the tag, both versions and the changelog section agree, publishes the libraries and the settings plugin to Maven
+Central, builds `console-mcp` beside them, and makes the GitHub release, its notes the changelog section and then the
+commits since the release before (`.github/release-notes.sh`), with `console-mcp.zip` attached. A version with a
+suffix (`1.0.0-rc.1`) is a pre-release. `release-notes.yml`, run by hand, writes the notes of releases already made
+again after their section changed.
+
+CI (`ci.yml`) runs Detekt, the builds and the tests on every pull request, and checks the public API: every published
+module keeps it in `api/`, and after an intended change `./gradlew updateKotlinAbi` writes it again.
+
+</details>
 
 ## License
 

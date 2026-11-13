@@ -1,0 +1,118 @@
+public final class io/thernal/console/network/ui/addon/NetworkAddon : io/thernal/console/api/addon/ConsoleAddon {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/network/ui/addon/NetworkAddon;
+	public fun contentWrapper ()Lkotlin/jvm/functions/Function3;
+	public fun dockWidget ()Lio/thernal/console/api/addon/ConsoleDockWidget;
+	public fun install ()V
+	public fun navGraph ()Lio/thernal/console/api/addon/ConsoleNavGraph;
+	public fun onInstall ()V
+	public fun overlay ()Lkotlin/jvm/functions/Function3;
+	public fun overlays ()Ljava/util/List;
+	public fun tab ()Lio/thernal/console/api/addon/ConsoleTab;
+}
+
+public final class io/thernal/console/network/ui/addon/NetworkLogRenderer : io/thernal/console/api/ui/LogRenderer {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/network/ui/addon/NetworkLogRenderer;
+	public fun Detail (Lio/thernal/console/core/log/Log;Landroidx/compose/runtime/Composer;I)V
+	public fun Item (Lio/thernal/console/core/log/Log;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class io/thernal/console/network/ui/components/networklogitem/ComposableSingletons$NetworkLogItemKt {
+	public static final field INSTANCE Lio/thernal/console/network/ui/components/networklogitem/ComposableSingletons$NetworkLogItemKt;
+	public fun <init> ()V
+	public final fun getLambda$-203805238$io_github_thernal_network_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/network/ui/view/networklogdetail/ComposableSingletons$NetworkLogDetailContentKt {
+	public static final field INSTANCE Lio/thernal/console/network/ui/view/networklogdetail/ComposableSingletons$NetworkLogDetailContentKt;
+	public fun <init> ()V
+	public final fun getLambda$-121177012$io_github_thernal_network_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1912977523$io_github_thernal_network_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$661997714$io_github_thernal_network_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public abstract interface class io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailEffect : io/thernal/console/ui/core/ViewEffect {
+}
+
+public final class io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailEffect$Copy : io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailEffect {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailEffect$Copy;
+	public static synthetic fun copy$default (Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailEffect$Copy;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailEffect$Copy;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent : io/thernal/console/ui/core/ViewIntent {
+}
+
+public final class io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent$CopyBody : io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent$CopyBody;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent$CopyCurl : io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent$CopyCurl;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent$CopyHeaders : io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent$CopyHeaders;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent$ToggleBodyExpanded : io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent$ToggleBodyExpanded;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent$ToggleHeadersExpanded : io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent$ToggleHeadersExpanded;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailState : io/thernal/console/ui/core/ViewState {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getBodyExpanded ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getHeadersExpanded ()Lio/thernal/console/ui/core/ViewState$StateField;
+}
+
+public final class io/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailViewModel : androidx/lifecycle/ViewModel, io/thernal/console/ui/core/EffectHandler, io/thernal/console/ui/core/IntentHandler, io/thernal/console/ui/core/StateHolder {
+	public static final field $stable I
+	public fun <init> (Lio/thernal/console/network/NetworkLog;)V
+	public fun EffectChannel (Landroidx/lifecycle/ViewModel;)Lio/thernal/console/ui/core/EffectHandler$EffectChannel;
+	public fun OnEffectUpdate (Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+	public fun dispatch (Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailIntent;)V
+	public synthetic fun dispatch (Lio/thernal/console/ui/core/ViewIntent;)V
+	public fun getChannel ()Lio/thernal/console/ui/core/EffectHandler$EffectChannel;
+	public fun getHandler ()Lio/thernal/console/ui/core/IntentHandler$Handler;
+	public final fun getState ()Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailState;
+	public fun getValue (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+	public fun launchEffect (Landroidx/lifecycle/ViewModel;Lio/thernal/console/network/ui/view/networklogdetail/model/NetworkLogDetailEffect;)V
+	public synthetic fun launchEffect (Landroidx/lifecycle/ViewModel;Lio/thernal/console/ui/core/ViewEffect;)V
+	public fun onIntentUpdate (Lkotlin/jvm/functions/Function1;)Lio/thernal/console/ui/core/IntentHandler$Handler;
+	public fun set (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;)V
+	public fun snapshot (Lkotlin/jvm/functions/Function0;)V
+	public fun update (Lio/thernal/console/ui/core/ViewState$StateField;Lkotlin/jvm/functions/Function1;)V
+}
+

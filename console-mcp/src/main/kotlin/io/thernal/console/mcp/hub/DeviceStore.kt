@@ -31,15 +31,22 @@ class DeviceStore(
     /** Changes whenever a record arrives. */
     val recordsVersion: StateFlow<Long> = _recordsVersion.asStateFlow()
 
+    /**
+     * Adds [link] as a connection of the device. An app that speaks a [protocol] the hub does not read is listed with
+     * the reason, but what it sends is ignored, so the agent gets no tools the hub would misread.
+     */
     fun connect(
         info: HubDeviceInfo,
         address: String,
         link: HubLink,
+        protocol: Int? = HubProtocol.CURRENT,
     ) {
         synchronized(lock) {
             val record = records.getOrPut(info.id) { Record(info) }
             record.info = info
             record.address = address
+            record.protocol = protocol
+            if (!record.isReadable) record.manifest = HubManifest()
             record.links += link
             val run = info.run ?: info.id
             record.linkRuns[link] = run
@@ -65,7 +72,10 @@ class DeviceStore(
         deviceId: String,
         manifest: HubManifest,
     ) {
-        synchronized(lock) { records[deviceId]?.manifest = manifest }
+        synchronized(lock) {
+            val target = records[deviceId]?.takeIf { it.isReadable } ?: return
+            target.manifest = manifest
+        }
         _shape.update { it + 1 }
     }
 
@@ -76,7 +86,7 @@ class DeviceStore(
         record: HubRecord,
     ) {
         synchronized(lock) {
-            val target = records[deviceId] ?: return
+            val target = records[deviceId]?.takeIf { it.isReadable } ?: return
             val base = target.linkRuns[link]?.let { target.runBases[it] } ?: 0L
             val seq = base + record.seq
             val feed = target.feeds.getOrPut(record.feed) { TreeMap() }
@@ -99,6 +109,7 @@ class DeviceStore(
                     manifest = record.manifest,
                     recordCounts = record.feeds.mapValues { it.value.size },
                     runs = record.runBases.size,
+                    problem = HubProtocol.problem(record.protocol),
                 )
             }
         }
@@ -124,6 +135,8 @@ class DeviceStore(
     private class Record(var info: HubDeviceInfo) {
         var address: String = ""
         var manifest: HubManifest = HubManifest()
+        var protocol: Int? = HubProtocol.CURRENT
+        val isReadable: Boolean get() = HubProtocol.problem(protocol) == null
         val links = mutableListOf<HubLink>()
         val feeds = LinkedHashMap<String, TreeMap<Long, HubRecord>>()
 

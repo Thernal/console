@@ -1,0 +1,105 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:network-ui>
+sealed interface io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect : io.thernal.console.ui.core/ViewEffect { // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect|null[0]
+    final class Copy : io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect { // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect.Copy|null[0]
+        constructor <init>(kotlin/String) // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect.Copy.<init>|<init>(kotlin.String){}[0]
+
+        final val data // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect.Copy.data|{}data[0]
+            final fun <get-data>(): kotlin/String // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect.Copy.data.<get-data>|<get-data>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect.Copy.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect.Copy // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect.Copy.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect.Copy.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect.Copy.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect.Copy.toString|toString(){}[0]
+    }
+}
+
+sealed interface io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent : io.thernal.console.ui.core/ViewIntent { // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent|null[0]
+    final object CopyBody : io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent { // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyBody|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyBody.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyBody.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyBody.toString|toString(){}[0]
+    }
+
+    final object CopyCurl : io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent { // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyCurl|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyCurl.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyCurl.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyCurl.toString|toString(){}[0]
+    }
+
+    final object CopyHeaders : io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent { // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyHeaders|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyHeaders.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyHeaders.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.CopyHeaders.toString|toString(){}[0]
+    }
+
+    final object ToggleBodyExpanded : io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent { // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.ToggleBodyExpanded|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.ToggleBodyExpanded.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.ToggleBodyExpanded.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.ToggleBodyExpanded.toString|toString(){}[0]
+    }
+
+    final object ToggleHeadersExpanded : io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent { // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.ToggleHeadersExpanded|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.ToggleHeadersExpanded.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.ToggleHeadersExpanded.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent.ToggleHeadersExpanded.toString|toString(){}[0]
+    }
+}
+
+final class io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailState : io.thernal.console.ui.core/ViewState { // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailState|null[0]
+    constructor <init>() // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailState.<init>|<init>(){}[0]
+
+    final val bodyExpanded // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailState.bodyExpanded|{}bodyExpanded[0]
+        final fun <get-bodyExpanded>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Boolean> // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailState.bodyExpanded.<get-bodyExpanded>|<get-bodyExpanded>(){}[0]
+    final val headersExpanded // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailState.headersExpanded|{}headersExpanded[0]
+        final fun <get-headersExpanded>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Boolean> // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailState.headersExpanded.<get-headersExpanded>|<get-headersExpanded>(){}[0]
+}
+
+final class io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailViewModel : androidx.lifecycle/ViewModel, io.thernal.console.ui.core/EffectHandler<io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect>, io.thernal.console.ui.core/IntentHandler<io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent>, io.thernal.console.ui.core/StateHolder { // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailViewModel|null[0]
+    constructor <init>(io.thernal.console.network/NetworkLog) // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailViewModel.<init>|<init>(io.thernal.console.network.NetworkLog){}[0]
+
+    final val channel // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailViewModel.channel|{}channel[0]
+        final fun <get-channel>(): io.thernal.console.ui.core/EffectHandler.EffectChannel<io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailEffect> // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailViewModel.channel.<get-channel>|<get-channel>(){}[0]
+    final val handler // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailViewModel.handler|{}handler[0]
+        final fun <get-handler>(): io.thernal.console.ui.core/IntentHandler.Handler<io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailIntent> // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailViewModel.handler.<get-handler>|<get-handler>(){}[0]
+    final val state // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailViewModel.state|{}state[0]
+        final fun <get-state>(): io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailState // io.thernal.console.network.ui.view.networklogdetail.model/NetworkLogDetailViewModel.state.<get-state>|<get-state>(){}[0]
+}
+
+final object io.thernal.console.network.ui.addon/NetworkAddon : io.thernal.console.api.addon/ConsoleAddon { // io.thernal.console.network.ui.addon/NetworkAddon|null[0]
+    final fun onInstall() // io.thernal.console.network.ui.addon/NetworkAddon.onInstall|onInstall(){}[0]
+}
+
+final object io.thernal.console.network.ui.addon/NetworkLogRenderer : io.thernal.console.api.ui/LogRenderer { // io.thernal.console.network.ui.addon/NetworkLogRenderer|null[0]
+    final fun Detail(io.thernal.console.core.log/Log, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.network.ui.addon/NetworkLogRenderer.Detail|Detail(io.thernal.console.core.log.Log;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final fun Item(io.thernal.console.core.log/Log, androidx.compose.ui/Modifier, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.network.ui.addon/NetworkLogRenderer.Item|Item(io.thernal.console.core.log.Log;androidx.compose.ui.Modifier;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
+final val io.thernal.console.network.ui.addon/io_thernal_console_network_ui_addon_NetworkAddon$stableprop // io.thernal.console.network.ui.addon/io_thernal_console_network_ui_addon_NetworkAddon$stableprop|#static{}io_thernal_console_network_ui_addon_NetworkAddon$stableprop[0]
+final val io.thernal.console.network.ui.addon/io_thernal_console_network_ui_addon_NetworkLogRenderer$stableprop // io.thernal.console.network.ui.addon/io_thernal_console_network_ui_addon_NetworkLogRenderer$stableprop|#static{}io_thernal_console_network_ui_addon_NetworkLogRenderer$stableprop[0]
+final val io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailEffect_Copy$stableprop // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailEffect_Copy$stableprop|#static{}io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailEffect_Copy$stableprop[0]
+final val io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyBody$stableprop // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyBody$stableprop|#static{}io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyBody$stableprop[0]
+final val io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyCurl$stableprop // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyCurl$stableprop|#static{}io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyCurl$stableprop[0]
+final val io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyHeaders$stableprop // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyHeaders$stableprop|#static{}io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyHeaders$stableprop[0]
+final val io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleBodyExpanded$stableprop // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleBodyExpanded$stableprop|#static{}io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleBodyExpanded$stableprop[0]
+final val io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleHeadersExpanded$stableprop // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleHeadersExpanded$stableprop|#static{}io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleHeadersExpanded$stableprop[0]
+final val io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailState$stableprop // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailState$stableprop|#static{}io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailState$stableprop[0]
+final val io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailViewModel$stableprop // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailViewModel$stableprop|#static{}io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailViewModel$stableprop[0]
+
+final fun io.thernal.console.network.ui.addon/io_thernal_console_network_ui_addon_NetworkAddon$stableprop_getter(): kotlin/Int // io.thernal.console.network.ui.addon/io_thernal_console_network_ui_addon_NetworkAddon$stableprop_getter|io_thernal_console_network_ui_addon_NetworkAddon$stableprop_getter(){}[0]
+final fun io.thernal.console.network.ui.addon/io_thernal_console_network_ui_addon_NetworkLogRenderer$stableprop_getter(): kotlin/Int // io.thernal.console.network.ui.addon/io_thernal_console_network_ui_addon_NetworkLogRenderer$stableprop_getter|io_thernal_console_network_ui_addon_NetworkLogRenderer$stableprop_getter(){}[0]
+final fun io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailEffect_Copy$stableprop_getter(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailEffect_Copy$stableprop_getter|io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailEffect_Copy$stableprop_getter(){}[0]
+final fun io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyBody$stableprop_getter(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyBody$stableprop_getter|io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyBody$stableprop_getter(){}[0]
+final fun io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyCurl$stableprop_getter(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyCurl$stableprop_getter|io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyCurl$stableprop_getter(){}[0]
+final fun io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyHeaders$stableprop_getter(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyHeaders$stableprop_getter|io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_CopyHeaders$stableprop_getter(){}[0]
+final fun io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleBodyExpanded$stableprop_getter(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleBodyExpanded$stableprop_getter|io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleBodyExpanded$stableprop_getter(){}[0]
+final fun io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleHeadersExpanded$stableprop_getter(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleHeadersExpanded$stableprop_getter|io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailIntent_ToggleHeadersExpanded$stableprop_getter(){}[0]
+final fun io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailState$stableprop_getter(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailState$stableprop_getter|io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailState$stableprop_getter(){}[0]
+final fun io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailViewModel$stableprop_getter(): kotlin/Int // io.thernal.console.network.ui.view.networklogdetail.model/io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailViewModel$stableprop_getter|io_thernal_console_network_ui_view_networklogdetail_model_NetworkLogDetailViewModel$stableprop_getter(){}[0]

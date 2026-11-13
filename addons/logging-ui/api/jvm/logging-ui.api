@@ -1,0 +1,183 @@
+public final class io/thernal/console/logging/ui/addon/BasicLogRenderer : io/thernal/console/api/ui/LogRenderer {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function3;)V
+	public synthetic fun <init> (Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function3;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun Detail (Lio/thernal/console/core/log/Log;Landroidx/compose/runtime/Composer;I)V
+	public fun Item (Lio/thernal/console/core/log/Log;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class io/thernal/console/logging/ui/components/ComposableSingletons$BasicLogItemKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/components/ComposableSingletons$BasicLogItemKt;
+	public fun <init> ()V
+	public final fun getLambda$311363761$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$437326734$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/logging/ui/navigation/ComposableSingletons$LogsNavGraphKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/navigation/ComposableSingletons$LogsNavGraphKt;
+	public fun <init> ()V
+	public final fun getLambda$113121469$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function3;
+}
+
+public final class io/thernal/console/logging/ui/view/defaultdetail/ComposableSingletons$DefaultLogDetailContentKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/defaultdetail/ComposableSingletons$DefaultLogDetailContentKt;
+	public fun <init> ()V
+	public final fun getLambda$1286333825$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/logging/ui/view/defaultdetail/components/ComposableSingletons$MessageCardKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/defaultdetail/components/ComposableSingletons$MessageCardKt;
+	public fun <init> ()V
+	public final fun getLambda$-2086643445$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/logging/ui/view/defaultdetail/components/metacard/ComposableSingletons$MetaCardKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/defaultdetail/components/metacard/ComposableSingletons$MetaCardKt;
+	public fun <init> ()V
+	public final fun getLambda$-1215506828$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/logging/ui/view/defaultdetail/components/metacard/ComposableSingletons$MetaRowKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/defaultdetail/components/metacard/ComposableSingletons$MetaRowKt;
+	public fun <init> ()V
+	public final fun getLambda$26553143$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$997494304$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/logging/ui/view/detail/model/LogDetailViewModel : androidx/lifecycle/ViewModel, io/thernal/console/ui/core/IntentHandler, io/thernal/console/ui/core/StateHolder {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun dispatch (Lio/thernal/console/ui/core/ViewIntent;)V
+	public fun dispatch (Lio/thernal/console/ui/logdetail/model/LogDetailIntent;)V
+	public fun getHandler ()Lio/thernal/console/ui/core/IntentHandler$Handler;
+	public final fun getState ()Lio/thernal/console/ui/logdetail/model/LogDetailState;
+	public fun getValue (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+	public fun onIntentUpdate (Lkotlin/jvm/functions/Function1;)Lio/thernal/console/ui/core/IntentHandler$Handler;
+	public fun set (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;)V
+	public fun snapshot (Lkotlin/jvm/functions/Function0;)V
+	public fun update (Lio/thernal/console/ui/core/ViewState$StateField;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class io/thernal/console/logging/ui/view/logs/ComposableSingletons$LogsContentKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/logs/ComposableSingletons$LogsContentKt;
+	public fun <init> ()V
+	public final fun getLambda$873700625$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/components/ComposableSingletons$LogsActionsKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/logs/components/ComposableSingletons$LogsActionsKt;
+	public fun <init> ()V
+	public final fun getLambda$-1272057431$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-212405230$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/components/ComposableSingletons$LogsEmptyStateKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/logs/components/ComposableSingletons$LogsEmptyStateKt;
+	public fun <init> ()V
+	public final fun getLambda$1778786704$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/components/ComposableSingletons$LogsLevelFilterKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/logs/components/ComposableSingletons$LogsLevelFilterKt;
+	public fun <init> ()V
+	public final fun getLambda$1941198484$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/components/ComposableSingletons$LogsSearchBarKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/logs/components/ComposableSingletons$LogsSearchBarKt;
+	public fun <init> ()V
+	public final fun getLambda$-1263412874$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1953768310$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function3;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/components/ComposableSingletons$LogsTagFilterKt {
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/logs/components/ComposableSingletons$LogsTagFilterKt;
+	public fun <init> ()V
+	public final fun getLambda$-378787864$io_github_thernal_logging_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/components/LogListKt {
+	public static final fun LogList (Landroidx/compose/foundation/layout/ColumnScope;Landroidx/compose/runtime/State;Lio/thernal/console/api/ui/LogRenderer;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+}
+
+public abstract interface class io/thernal/console/logging/ui/view/logs/model/LogsIntent : io/thernal/console/ui/core/ViewIntent {
+}
+
+public final class io/thernal/console/logging/ui/view/logs/model/LogsIntent$SelectAllLevels : io/thernal/console/logging/ui/view/logs/model/LogsIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$SelectAllLevels;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/model/LogsIntent$SelectAllTags : io/thernal/console/logging/ui/view/logs/model/LogsIntent {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$SelectAllTags;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/model/LogsIntent$SetQuery : io/thernal/console/logging/ui/view/logs/model/LogsIntent {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/ui/text/input/TextFieldValue;)V
+	public final fun component1 ()Landroidx/compose/ui/text/input/TextFieldValue;
+	public final fun copy (Landroidx/compose/ui/text/input/TextFieldValue;)Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$SetQuery;
+	public static synthetic fun copy$default (Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$SetQuery;Landroidx/compose/ui/text/input/TextFieldValue;ILjava/lang/Object;)Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$SetQuery;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getQuery ()Landroidx/compose/ui/text/input/TextFieldValue;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/model/LogsIntent$ToggleLevel : io/thernal/console/logging/ui/view/logs/model/LogsIntent {
+	public static final field $stable I
+	public fun <init> (Lio/thernal/console/core/log/LogLevel;)V
+	public final fun component1 ()Lio/thernal/console/core/log/LogLevel;
+	public final fun copy (Lio/thernal/console/core/log/LogLevel;)Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$ToggleLevel;
+	public static synthetic fun copy$default (Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$ToggleLevel;Lio/thernal/console/core/log/LogLevel;ILjava/lang/Object;)Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$ToggleLevel;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLevel ()Lio/thernal/console/core/log/LogLevel;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/model/LogsIntent$ToggleTag : io/thernal/console/logging/ui/view/logs/model/LogsIntent {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$ToggleTag;
+	public static synthetic fun copy$default (Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$ToggleTag;Ljava/lang/String;ILjava/lang/Object;)Lio/thernal/console/logging/ui/view/logs/model/LogsIntent$ToggleTag;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTag ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/model/LogsState : io/thernal/console/ui/core/ViewState {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getHasAnyLogs ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getLogs ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getSearchQuery ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getSelectedLevels ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getSelectedTags ()Lio/thernal/console/ui/core/ViewState$StateField;
+	public final fun getTags ()Lio/thernal/console/ui/core/ViewState$StateField;
+}
+
+public final class io/thernal/console/logging/ui/view/logs/model/LogsViewModel : androidx/lifecycle/ViewModel, io/thernal/console/ui/core/IntentHandler, io/thernal/console/ui/core/StateHolder {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun dispatch (Lio/thernal/console/logging/ui/view/logs/model/LogsIntent;)V
+	public synthetic fun dispatch (Lio/thernal/console/ui/core/ViewIntent;)V
+	public fun getHandler ()Lio/thernal/console/ui/core/IntentHandler$Handler;
+	public final fun getState ()Lio/thernal/console/logging/ui/view/logs/model/LogsState;
+	public fun getValue (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+	public fun onIntentUpdate (Lkotlin/jvm/functions/Function1;)Lio/thernal/console/ui/core/IntentHandler$Handler;
+	public fun set (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;)V
+	public fun snapshot (Lkotlin/jvm/functions/Function0;)V
+	public fun update (Lio/thernal/console/ui/core/ViewState$StateField;Lkotlin/jvm/functions/Function1;)V
+}
+

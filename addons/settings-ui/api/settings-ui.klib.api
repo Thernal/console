@@ -1,0 +1,55 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:settings-ui>
+sealed interface io.thernal.console.settings.ui.view.settings.model/SettingsIntent : io.thernal.console.ui.core/ViewIntent { // io.thernal.console.settings.ui.view.settings.model/SettingsIntent|null[0]
+    final class SetQuery : io.thernal.console.settings.ui.view.settings.model/SettingsIntent { // io.thernal.console.settings.ui.view.settings.model/SettingsIntent.SetQuery|null[0]
+        constructor <init>(androidx.compose.ui.text.input/TextFieldValue) // io.thernal.console.settings.ui.view.settings.model/SettingsIntent.SetQuery.<init>|<init>(androidx.compose.ui.text.input.TextFieldValue){}[0]
+
+        final val query // io.thernal.console.settings.ui.view.settings.model/SettingsIntent.SetQuery.query|{}query[0]
+            final fun <get-query>(): androidx.compose.ui.text.input/TextFieldValue // io.thernal.console.settings.ui.view.settings.model/SettingsIntent.SetQuery.query.<get-query>|<get-query>(){}[0]
+
+        final fun component1(): androidx.compose.ui.text.input/TextFieldValue // io.thernal.console.settings.ui.view.settings.model/SettingsIntent.SetQuery.component1|component1(){}[0]
+        final fun copy(androidx.compose.ui.text.input/TextFieldValue = ...): io.thernal.console.settings.ui.view.settings.model/SettingsIntent.SetQuery // io.thernal.console.settings.ui.view.settings.model/SettingsIntent.SetQuery.copy|copy(androidx.compose.ui.text.input.TextFieldValue){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.settings.ui.view.settings.model/SettingsIntent.SetQuery.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.settings.ui.view.settings.model/SettingsIntent.SetQuery.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.settings.ui.view.settings.model/SettingsIntent.SetQuery.toString|toString(){}[0]
+    }
+}
+
+final class io.thernal.console.settings.ui.view.settings.model/SettingsState : io.thernal.console.ui.core/ViewState { // io.thernal.console.settings.ui.view.settings.model/SettingsState|null[0]
+    constructor <init>() // io.thernal.console.settings.ui.view.settings.model/SettingsState.<init>|<init>(){}[0]
+
+    final val searchQuery // io.thernal.console.settings.ui.view.settings.model/SettingsState.searchQuery|{}searchQuery[0]
+        final fun <get-searchQuery>(): io.thernal.console.ui.core/ViewState.StateField<androidx.compose.ui.text.input/TextFieldValue> // io.thernal.console.settings.ui.view.settings.model/SettingsState.searchQuery.<get-searchQuery>|<get-searchQuery>(){}[0]
+    final val sections // io.thernal.console.settings.ui.view.settings.model/SettingsState.sections|{}sections[0]
+        final fun <get-sections>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/List<io.thernal.console.settings/SettingsSection>> // io.thernal.console.settings.ui.view.settings.model/SettingsState.sections.<get-sections>|<get-sections>(){}[0]
+}
+
+final class io.thernal.console.settings.ui.view.settings.model/SettingsViewModel : androidx.lifecycle/ViewModel, io.thernal.console.ui.core/IntentHandler<io.thernal.console.settings.ui.view.settings.model/SettingsIntent>, io.thernal.console.ui.core/StateHolder { // io.thernal.console.settings.ui.view.settings.model/SettingsViewModel|null[0]
+    constructor <init>() // io.thernal.console.settings.ui.view.settings.model/SettingsViewModel.<init>|<init>(){}[0]
+
+    final val handler // io.thernal.console.settings.ui.view.settings.model/SettingsViewModel.handler|{}handler[0]
+        final fun <get-handler>(): io.thernal.console.ui.core/IntentHandler.Handler<io.thernal.console.settings.ui.view.settings.model/SettingsIntent> // io.thernal.console.settings.ui.view.settings.model/SettingsViewModel.handler.<get-handler>|<get-handler>(){}[0]
+    final val state // io.thernal.console.settings.ui.view.settings.model/SettingsViewModel.state|{}state[0]
+        final fun <get-state>(): io.thernal.console.settings.ui.view.settings.model/SettingsState // io.thernal.console.settings.ui.view.settings.model/SettingsViewModel.state.<get-state>|<get-state>(){}[0]
+}
+
+final object io.thernal.console.settings.ui.addon/SettingsAddon : io.thernal.console.api.addon/ConsoleAddon { // io.thernal.console.settings.ui.addon/SettingsAddon|null[0]
+    final fun onInstall() // io.thernal.console.settings.ui.addon/SettingsAddon.onInstall|onInstall(){}[0]
+    final fun tab(): io.thernal.console.api.addon/ConsoleTab // io.thernal.console.settings.ui.addon/SettingsAddon.tab|tab(){}[0]
+}
+
+final val io.thernal.console.settings.ui.addon/io_thernal_console_settings_ui_addon_SettingsAddon$stableprop // io.thernal.console.settings.ui.addon/io_thernal_console_settings_ui_addon_SettingsAddon$stableprop|#static{}io_thernal_console_settings_ui_addon_SettingsAddon$stableprop[0]
+final val io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsIntent_SetQuery$stableprop // io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsIntent_SetQuery$stableprop|#static{}io_thernal_console_settings_ui_view_settings_model_SettingsIntent_SetQuery$stableprop[0]
+final val io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsState$stableprop // io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsState$stableprop|#static{}io_thernal_console_settings_ui_view_settings_model_SettingsState$stableprop[0]
+final val io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsViewModel$stableprop // io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsViewModel$stableprop|#static{}io_thernal_console_settings_ui_view_settings_model_SettingsViewModel$stableprop[0]
+
+final fun io.thernal.console.settings.ui.addon/io_thernal_console_settings_ui_addon_SettingsAddon$stableprop_getter(): kotlin/Int // io.thernal.console.settings.ui.addon/io_thernal_console_settings_ui_addon_SettingsAddon$stableprop_getter|io_thernal_console_settings_ui_addon_SettingsAddon$stableprop_getter(){}[0]
+final fun io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsIntent_SetQuery$stableprop_getter(): kotlin/Int // io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsIntent_SetQuery$stableprop_getter|io_thernal_console_settings_ui_view_settings_model_SettingsIntent_SetQuery$stableprop_getter(){}[0]
+final fun io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsState$stableprop_getter(): kotlin/Int // io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsState$stableprop_getter|io_thernal_console_settings_ui_view_settings_model_SettingsState$stableprop_getter(){}[0]
+final fun io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsViewModel$stableprop_getter(): kotlin/Int // io.thernal.console.settings.ui.view.settings.model/io_thernal_console_settings_ui_view_settings_model_SettingsViewModel$stableprop_getter|io_thernal_console_settings_ui_view_settings_model_SettingsViewModel$stableprop_getter(){}[0]

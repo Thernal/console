@@ -1,0 +1,48 @@
+public final class io/thernal/console/inspector/ui/InspectorSourceInformationKt {
+	public static final fun enableInspectorSourceInformation ()V
+}
+
+public final class io/thernal/console/inspector/ui/addon/ComposableSingletons$InspectorAddonKt {
+	public static final field INSTANCE Lio/thernal/console/inspector/ui/addon/ComposableSingletons$InspectorAddonKt;
+	public fun <init> ()V
+	public final fun getLambda$-416731858$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$261667239$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$534103526$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function3;
+}
+
+public final class io/thernal/console/inspector/ui/addon/InspectorAddon : io/thernal/console/api/addon/ConsoleAddon {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/inspector/ui/addon/InspectorAddon;
+	public fun contentWrapper ()Lkotlin/jvm/functions/Function3;
+	public fun dockWidget ()Lio/thernal/console/api/addon/ConsoleDockWidget;
+	public fun install ()V
+	public fun navGraph ()Lio/thernal/console/api/addon/ConsoleNavGraph;
+	public fun onInstall ()V
+	public fun overlay ()Lkotlin/jvm/functions/Function3;
+	public fun overlays ()Ljava/util/List;
+	public fun tab ()Lio/thernal/console/api/addon/ConsoleTab;
+}
+
+public final class io/thernal/console/inspector/ui/view/inspector/components/ComposableSingletons$InspectorActionsKt {
+	public static final field INSTANCE Lio/thernal/console/inspector/ui/view/inspector/components/ComposableSingletons$InspectorActionsKt;
+	public fun <init> ()V
+	public final fun getLambda$-1132994715$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-149932371$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-431060122$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/inspector/ui/view/inspector/components/ComposableSingletons$InspectorDetailsPageKt {
+	public static final field INSTANCE Lio/thernal/console/inspector/ui/view/inspector/components/ComposableSingletons$InspectorDetailsPageKt;
+	public fun <init> ()V
+	public final fun getLambda$-1282109229$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1722388617$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-864974582$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1341737774$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function3;
+}
+
+public final class io/thernal/console/inspector/ui/view/inspector/components/ComposableSingletons$InspectorRecompositionsPageKt {
+	public static final field INSTANCE Lio/thernal/console/inspector/ui/view/inspector/components/ComposableSingletons$InspectorRecompositionsPageKt;
+	public fun <init> ()V
+	public final fun getLambda$502662483$io_github_thernal_inspector_ui ()Lkotlin/jvm/functions/Function2;
+}
+

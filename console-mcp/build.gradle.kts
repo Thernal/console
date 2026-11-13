@@ -7,6 +7,8 @@ plugins {
 }
 
 group = "io.github.thernal"
+// Released with Console, under its version: the release attaches `console-mcp.zip` (README → Set up).
+version = libs.versions.console.get()
 
 kotlin {
     jvmToolchain(libs.versions.jvm.get().toInt())
@@ -24,6 +26,18 @@ dependencies {
 application {
     applicationName = "console-mcp"
     mainClass.set("io.thernal.console.mcp.MainKt")
+}
+
+// `console-mcp --version` and the MCP server info read the version from here.
+tasks.jar {
+    manifest {
+        attributes("Implementation-Title" to "console-mcp", "Implementation-Version" to project.version)
+    }
+}
+
+// The name a release attaches, with no version in it, so the latest release's link stays the same.
+tasks.distZip {
+    archiveFileName.set("console-mcp.zip")
 }
 
 tasks.test {

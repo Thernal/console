@@ -6,6 +6,7 @@ import io.modelcontextprotocol.kotlin.sdk.types.TextContent
 import io.modelcontextprotocol.kotlin.sdk.types.ToolAnnotations
 import io.thernal.console.mcp.hub.DeviceStore
 import io.thernal.console.mcp.hub.HubManifest
+import io.thernal.console.mcp.hub.HubProtocol
 import io.thernal.console.mcp.hub.HubServer
 import io.thernal.console.mcp.hub.HubStatus
 import kotlinx.coroutines.flow.first
@@ -17,12 +18,13 @@ import kotlinx.serialization.json.jsonPrimitive
 /**
  * Keeps the MCP tool list in step with what connected apps share. `devices` is built in; every feed adds a list, a
  * get and a wait tool; every app tool is forwarded to the app that offers it. Adding or removing a tool makes the SDK
- * send `notifications/tools/list_changed`.
+ * send `notifications/tools/list_changed`. `devices` starts with the hub's [version], the Console release it came with.
  */
 class HubTools(
     private val server: Server,
     private val store: DeviceStore,
     private val hub: HubServer,
+    private val version: String,
 ) {
     private val feedTools = FeedTools(store)
     private val installed = mutableMapOf<String, String>()
@@ -35,7 +37,8 @@ class HubTools(
             toolAnnotations = readOnly(),
         ) {
             awaitFirstDevice()
-            result(ToolText(hubNote() + DeviceChoice.describe(store.devices()).ifEmpty { "No devices yet." }))
+            val hubLine = "console-mcp $version · protocol ${HubProtocol.CURRENT}\n"
+            result(ToolText(hubNote() + hubLine + DeviceChoice.describe(store.devices()).ifEmpty { "No devices yet." }))
         }
     }
 

@@ -1,0 +1,118 @@
+name: Release
+
+# A `release/v*` tag, whose version must be VERSION in gradle.properties and `console` in the version catalog,
+# publishes the libraries and the settings plugin to Maven Central, builds console-mcp beside them, and then makes the
+# GitHub release: its section of CHANGELOG.md and its commits (.github/release-notes.sh) as the notes, console-mcp.zip
+# attached. A version with a suffix (1.0.0-rc.1) is marked a pre-release. README → Releases says how to cut one.
+# Run by hand (Actions → Release → Run workflow) it only checks the version and builds console-mcp: the zip stays on
+# the run, nothing is published.
+on:
+  push:
+    tags: ['release/v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  version:
+    name: Tag matches the version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        run: |
+          version=$(sed -n 's/^VERSION=//p' gradle.properties)
+          catalog=$(sed -n 's/^console = "\(.*\)"/\1/p' gradle/libs.versions.toml)
+          if [ "$version" != "$catalog" ]; then
+            echo "::error::gradle.properties has $version, the version catalog $catalog"
+            exit 1
+          fi
+          if [ "$GITHUB_REF_TYPE" = tag ] && [ "${GITHUB_REF_NAME#release/v}" != "$version" ]; then
+            echo "::error::tag $GITHUB_REF_NAME, gradle.properties $version"
+            exit 1
+          fi
+          # A release says what is new in it: its section of CHANGELOG.md, before anything is published.
+          if [ "$GITHUB_REF_TYPE" = tag ] && ! .github/release-notes.sh --check "$version"; then
+            echo "::error::CHANGELOG.md has no section for $version"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  maven:
+    name: Maven Central
+    needs: version
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    environment: release
+    env:
+      ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
+      ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
+      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Publish libraries
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-configuration-cache
+      - name: Publish settings plugin
+        run: ./gradlew -p console-settings-plugin publishAllPublicationsToMavenCentralRepository --no-configuration-cache
+
+  # Beside the libraries, not after them: the hub is its own build.
+  hub:
+    name: console-mcp
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Test and package
+        run: |
+          ./gradlew -p console-mcp test distZip
+          cd console-mcp/build/distributions
+          unzip -q console-mcp.zip -d check
+          check/console-mcp/bin/console-mcp --version
+          sha256sum console-mcp.zip > console-mcp.zip.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: console-mcp
+          path: |
+            console-mcp/build/distributions/console-mcp.zip
+            console-mcp/build/distributions/console-mcp.zip.sha256
+
+  github:
+    name: GitHub release
+    needs: [version, maven, hub]
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # The tags and history: the notes list the commits since the release before.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: console-mcp
+          path: dist
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          pre=
+          case "$VERSION" in *-*) pre=--prerelease ;; esac
+          .github/release-notes.sh "$VERSION" > "$RUNNER_TEMP/notes.md"
+          gh release create "$GITHUB_REF_NAME" dist/console-mcp.zip dist/console-mcp.zip.sha256 \
+            --repo "$GITHUB_REPOSITORY" --title "Console $VERSION" --notes-file "$RUNNER_TEMP/notes.md" $pre

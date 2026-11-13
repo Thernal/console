@@ -1,0 +1,11 @@
+public final class io/thernal/console/network/okhttp/ConsoleNetworkOkHttpInterceptor : okhttp3/Interceptor {
+	public static final field Companion Lio/thernal/console/network/okhttp/ConsoleNetworkOkHttpInterceptor$Companion;
+	public fun <init> ()V
+	public fun <init> (JLio/thernal/console/network/SensitiveHeaders;)V
+	public synthetic fun <init> (JLio/thernal/console/network/SensitiveHeaders;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun intercept (Lokhttp3/Interceptor$Chain;)Lokhttp3/Response;
+}
+
+public final class io/thernal/console/network/okhttp/ConsoleNetworkOkHttpInterceptor$Companion {
+}
+

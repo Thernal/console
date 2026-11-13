@@ -1,0 +1,19 @@
+public final class io/thernal/console/details/ConsoleDetails {
+	public static final field INSTANCE Lio/thernal/console/details/ConsoleDetails;
+	public final fun clear ()V
+	public final fun put (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun put (Lkotlin/Pair;)V
+	public final fun remove (Ljava/lang/String;)V
+}
+
+public abstract interface class io/thernal/console/details/ConsoleKey {
+	public abstract fun getName ()Ljava/lang/String;
+	public fun remove ()V
+	public fun set (Ljava/lang/Object;)V
+}
+
+public final class io/thernal/console/details/ConsoleKey$DefaultImpls {
+	public static fun remove (Lio/thernal/console/details/ConsoleKey;)V
+	public static fun set (Lio/thernal/console/details/ConsoleKey;Ljava/lang/Object;)V
+}
+

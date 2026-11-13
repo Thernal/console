@@ -1,0 +1,38 @@
+public final class io/thernal/console/settings/SettingsCustomKt {
+	public static final fun settingsCustom (Ljava/lang/String;Ljava/lang/String;ILjava/util/Set;Lkotlin/jvm/functions/Function1;)Lio/thernal/console/settings/SettingsSection;
+	public static synthetic fun settingsCustom$default (Ljava/lang/String;Ljava/lang/String;ILjava/util/Set;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/thernal/console/settings/SettingsSection;
+}
+
+public final class io/thernal/console/settings/SettingsEntriesKt {
+	public static final fun settingsEntries (Ljava/lang/String;Ljava/lang/String;ILkotlinx/coroutines/flow/StateFlow;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Lio/thernal/console/settings/SettingsSection;
+	public static synthetic fun settingsEntries$default (Ljava/lang/String;Ljava/lang/String;ILkotlinx/coroutines/flow/StateFlow;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/thernal/console/settings/SettingsSection;
+}
+
+public abstract interface class io/thernal/console/settings/SettingsEntriesScope {
+	public abstract fun enum (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun enum$default (Lio/thernal/console/settings/SettingsEntriesScope;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public abstract fun int (Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun int$default (Lio/thernal/console/settings/SettingsEntriesScope;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public abstract fun tags (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun tags$default (Lio/thernal/console/settings/SettingsEntriesScope;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public abstract fun toggle (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun toggle$default (Lio/thernal/console/settings/SettingsEntriesScope;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+}
+
+public final class io/thernal/console/settings/SettingsEntriesScope$DefaultImpls {
+	public static synthetic fun enum$default (Lio/thernal/console/settings/SettingsEntriesScope;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static synthetic fun int$default (Lio/thernal/console/settings/SettingsEntriesScope;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static synthetic fun tags$default (Lio/thernal/console/settings/SettingsEntriesScope;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static synthetic fun toggle$default (Lio/thernal/console/settings/SettingsEntriesScope;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+}
+
+public final class io/thernal/console/settings/SettingsRegistry {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/settings/SettingsRegistry;
+	public final fun getSections ()Lkotlinx/coroutines/flow/StateFlow;
+}
+
+public final class io/thernal/console/settings/SettingsSection {
+	public static final field $stable I
+}
+

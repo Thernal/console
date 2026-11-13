@@ -1,0 +1,22 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:details-core-noop>
+abstract interface io.thernal.console.details/ConsoleKey { // io.thernal.console.details/ConsoleKey|null[0]
+    abstract val name // io.thernal.console.details/ConsoleKey.name|{}name[0]
+        abstract fun <get-name>(): kotlin/String // io.thernal.console.details/ConsoleKey.name.<get-name>|<get-name>(){}[0]
+
+    open fun remove() // io.thernal.console.details/ConsoleKey.remove|remove(){}[0]
+    open fun set(kotlin/Any?) // io.thernal.console.details/ConsoleKey.set|set(kotlin.Any?){}[0]
+}
+
+final object io.thernal.console.details/ConsoleDetails { // io.thernal.console.details/ConsoleDetails|null[0]
+    final fun clear() // io.thernal.console.details/ConsoleDetails.clear|clear(){}[0]
+    final fun put(kotlin/Pair<kotlin/String, kotlin/String>) // io.thernal.console.details/ConsoleDetails.put|put(kotlin.Pair<kotlin.String,kotlin.String>){}[0]
+    final fun put(kotlin/String, kotlin/String) // io.thernal.console.details/ConsoleDetails.put|put(kotlin.String;kotlin.String){}[0]
+    final fun remove(kotlin/String) // io.thernal.console.details/ConsoleDetails.remove|remove(kotlin.String){}[0]
+}

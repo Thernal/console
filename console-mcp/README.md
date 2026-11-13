@@ -8,17 +8,29 @@ records on the Mac, so they stay readable after the app crashed or was killed.
 ## Set up
 
 Part of setting up Console: an app with `console-bundle-ui` (or `console-agent-ui`) in its debug build connects to the
-hub on its own, so the hub is all there is to install. From a clone of this repository:
+hub on its own, so the hub is all there is to install. Every Console release attaches it as `console-mcp.zip`; take the
+one of the Console version your app uses. It runs on Java 17 or newer.
 
 ```bash
-./gradlew -p console-mcp installDist
-# → console-mcp/build/install/console-mcp/bin/console-mcp [--port 47474]
-claude mcp add console -- "$PWD/console-mcp/build/install/console-mcp/bin/console-mcp"
+v=<version>   # the app's Console version
+curl -fsSL -o /tmp/console-mcp.zip "https://github.com/Thernal/console/releases/download/release/v$v/console-mcp.zip"
+unzip -o -q /tmp/console-mcp.zip -d ~/.console-mcp
+~/.console-mcp/console-mcp/bin/console-mcp --version   # console-mcp <version> (protocol 2)
+claude mcp add console -- ~/.console-mcp/console-mcp/bin/console-mcp
 ```
 
-Any MCP client that starts a stdio server works the same way. Then run the app (on Android, `adb reverse tcp:47474
-tcp:47474` first) and ask the agent to call `devices`. Not wanted: `claude mcp remove console`, and exclude
-`console-agent-ui` from the app (see the [agent bridge](../addons/agent-ui/README.md)).
+- `releases/latest/download/console-mcp.zip` is the newest release that is not a pre-release.
+- `console-mcp.zip.sha256` beside it is the zip's checksum (`shasum -a 256 -c`).
+- On Windows, register `console-mcp\bin\console-mcp.bat`.
+- No `java` on the `PATH` (Android Studio alone)? Give the agent Android Studio's: `claude mcp add -e
+  JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" console -- …`.
+- From a clone of this repository instead: `./gradlew -p console-mcp installDist`, then register
+  `console-mcp/build/install/console-mcp/bin/console-mcp`.
+
+Any MCP client that starts a stdio server works the same way; `--port <n>` moves the hub off `47474`. Then run the
+app (on Android, `adb reverse tcp:47474 tcp:47474` first) and ask the agent to call `devices`. Not wanted:
+`claude mcp remove console`, and exclude `console-agent-ui` from the app (see the
+[agent bridge](../addons/agent-ui/README.md)).
 
 ## Tools
 
@@ -60,6 +72,14 @@ sample/agent-jvm/build/install/agent-jvm/bin/agent-jvm 120 --actions-after 30
 
 The sample counts up once a second for 120 seconds. It shares an `events` feed, a `sample_state` tool and a
 `sample_reset` action, and turns actions on after 30 seconds (`--actions` turns them on from the start).
+
+## Versions
+
+The hub carries the version of the Console release it came with (`--version`, `devices`, the MCP server info). An app
+and the hub talk in messages with a version of their own, the protocol, raised only when the messages change; the hub
+reads the apps of its own protocol (`HubProtocol`). An app that speaks another one is listed in `devices` as `not
+usable`, with what to update, and the hub ignores what it sends rather than misread it. The hub of the app's own
+Console release always fits.
 
 ## Limits
 

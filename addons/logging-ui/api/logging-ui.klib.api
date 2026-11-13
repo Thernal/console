@@ -1,0 +1,125 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:logging-ui>
+sealed interface io.thernal.console.logging.ui.view.logs.model/LogsIntent : io.thernal.console.ui.core/ViewIntent { // io.thernal.console.logging.ui.view.logs.model/LogsIntent|null[0]
+    final class SetQuery : io.thernal.console.logging.ui.view.logs.model/LogsIntent { // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SetQuery|null[0]
+        constructor <init>(androidx.compose.ui.text.input/TextFieldValue) // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SetQuery.<init>|<init>(androidx.compose.ui.text.input.TextFieldValue){}[0]
+
+        final val query // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SetQuery.query|{}query[0]
+            final fun <get-query>(): androidx.compose.ui.text.input/TextFieldValue // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SetQuery.query.<get-query>|<get-query>(){}[0]
+
+        final fun component1(): androidx.compose.ui.text.input/TextFieldValue // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SetQuery.component1|component1(){}[0]
+        final fun copy(androidx.compose.ui.text.input/TextFieldValue = ...): io.thernal.console.logging.ui.view.logs.model/LogsIntent.SetQuery // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SetQuery.copy|copy(androidx.compose.ui.text.input.TextFieldValue){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SetQuery.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SetQuery.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SetQuery.toString|toString(){}[0]
+    }
+
+    final class ToggleLevel : io.thernal.console.logging.ui.view.logs.model/LogsIntent { // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleLevel|null[0]
+        constructor <init>(io.thernal.console.core.log/LogLevel) // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleLevel.<init>|<init>(io.thernal.console.core.log.LogLevel){}[0]
+
+        final val level // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleLevel.level|{}level[0]
+            final fun <get-level>(): io.thernal.console.core.log/LogLevel // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleLevel.level.<get-level>|<get-level>(){}[0]
+
+        final fun component1(): io.thernal.console.core.log/LogLevel // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleLevel.component1|component1(){}[0]
+        final fun copy(io.thernal.console.core.log/LogLevel = ...): io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleLevel // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleLevel.copy|copy(io.thernal.console.core.log.LogLevel){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleLevel.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleLevel.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleLevel.toString|toString(){}[0]
+    }
+
+    final class ToggleTag : io.thernal.console.logging.ui.view.logs.model/LogsIntent { // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleTag|null[0]
+        constructor <init>(kotlin/String) // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleTag.<init>|<init>(kotlin.String){}[0]
+
+        final val tag // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleTag.tag|{}tag[0]
+            final fun <get-tag>(): kotlin/String // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleTag.tag.<get-tag>|<get-tag>(){}[0]
+
+        final fun component1(): kotlin/String // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleTag.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleTag // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleTag.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleTag.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleTag.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.logging.ui.view.logs.model/LogsIntent.ToggleTag.toString|toString(){}[0]
+    }
+
+    final object SelectAllLevels : io.thernal.console.logging.ui.view.logs.model/LogsIntent { // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SelectAllLevels|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SelectAllLevels.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SelectAllLevels.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SelectAllLevels.toString|toString(){}[0]
+    }
+
+    final object SelectAllTags : io.thernal.console.logging.ui.view.logs.model/LogsIntent { // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SelectAllTags|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SelectAllTags.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SelectAllTags.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // io.thernal.console.logging.ui.view.logs.model/LogsIntent.SelectAllTags.toString|toString(){}[0]
+    }
+}
+
+final class io.thernal.console.logging.ui.addon/BasicLogRenderer : io.thernal.console.api.ui/LogRenderer { // io.thernal.console.logging.ui.addon/BasicLogRenderer|null[0]
+    constructor <init>(kotlin/Function4<io.thernal.console.core.log/Log, androidx.compose.ui/Modifier, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>? = ..., kotlin/Function3<io.thernal.console.core.log/Log, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>? = ...) // io.thernal.console.logging.ui.addon/BasicLogRenderer.<init>|<init>(kotlin.Function4<io.thernal.console.core.log.Log,androidx.compose.ui.Modifier,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;kotlin.Function3<io.thernal.console.core.log.Log,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?){}[0]
+
+    final fun Detail(io.thernal.console.core.log/Log, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.logging.ui.addon/BasicLogRenderer.Detail|Detail(io.thernal.console.core.log.Log;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final fun Item(io.thernal.console.core.log/Log, androidx.compose.ui/Modifier, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.logging.ui.addon/BasicLogRenderer.Item|Item(io.thernal.console.core.log.Log;androidx.compose.ui.Modifier;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
+final class io.thernal.console.logging.ui.view.detail.model/LogDetailViewModel : androidx.lifecycle/ViewModel, io.thernal.console.ui.core/IntentHandler<io.thernal.console.ui.logdetail.model/LogDetailIntent>, io.thernal.console.ui.core/StateHolder { // io.thernal.console.logging.ui.view.detail.model/LogDetailViewModel|null[0]
+    constructor <init>(kotlin/String, kotlin/String) // io.thernal.console.logging.ui.view.detail.model/LogDetailViewModel.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+    final val handler // io.thernal.console.logging.ui.view.detail.model/LogDetailViewModel.handler|{}handler[0]
+        final fun <get-handler>(): io.thernal.console.ui.core/IntentHandler.Handler<io.thernal.console.ui.logdetail.model/LogDetailIntent> // io.thernal.console.logging.ui.view.detail.model/LogDetailViewModel.handler.<get-handler>|<get-handler>(){}[0]
+    final val state // io.thernal.console.logging.ui.view.detail.model/LogDetailViewModel.state|{}state[0]
+        final fun <get-state>(): io.thernal.console.ui.logdetail.model/LogDetailState // io.thernal.console.logging.ui.view.detail.model/LogDetailViewModel.state.<get-state>|<get-state>(){}[0]
+}
+
+final class io.thernal.console.logging.ui.view.logs.model/LogsState : io.thernal.console.ui.core/ViewState { // io.thernal.console.logging.ui.view.logs.model/LogsState|null[0]
+    constructor <init>() // io.thernal.console.logging.ui.view.logs.model/LogsState.<init>|<init>(){}[0]
+
+    final val hasAnyLogs // io.thernal.console.logging.ui.view.logs.model/LogsState.hasAnyLogs|{}hasAnyLogs[0]
+        final fun <get-hasAnyLogs>(): io.thernal.console.ui.core/ViewState.StateField<kotlin/Boolean> // io.thernal.console.logging.ui.view.logs.model/LogsState.hasAnyLogs.<get-hasAnyLogs>|<get-hasAnyLogs>(){}[0]
+    final val logs // io.thernal.console.logging.ui.view.logs.model/LogsState.logs|{}logs[0]
+        final fun <get-logs>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/List<io.thernal.console.core.log/Log>> // io.thernal.console.logging.ui.view.logs.model/LogsState.logs.<get-logs>|<get-logs>(){}[0]
+    final val searchQuery // io.thernal.console.logging.ui.view.logs.model/LogsState.searchQuery|{}searchQuery[0]
+        final fun <get-searchQuery>(): io.thernal.console.ui.core/ViewState.StateField<androidx.compose.ui.text.input/TextFieldValue> // io.thernal.console.logging.ui.view.logs.model/LogsState.searchQuery.<get-searchQuery>|<get-searchQuery>(){}[0]
+    final val selectedLevels // io.thernal.console.logging.ui.view.logs.model/LogsState.selectedLevels|{}selectedLevels[0]
+        final fun <get-selectedLevels>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/Set<io.thernal.console.core.log/LogLevel>> // io.thernal.console.logging.ui.view.logs.model/LogsState.selectedLevels.<get-selectedLevels>|<get-selectedLevels>(){}[0]
+    final val selectedTags // io.thernal.console.logging.ui.view.logs.model/LogsState.selectedTags|{}selectedTags[0]
+        final fun <get-selectedTags>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/Set<kotlin/String>> // io.thernal.console.logging.ui.view.logs.model/LogsState.selectedTags.<get-selectedTags>|<get-selectedTags>(){}[0]
+    final val tags // io.thernal.console.logging.ui.view.logs.model/LogsState.tags|{}tags[0]
+        final fun <get-tags>(): io.thernal.console.ui.core/ViewState.StateField<kotlin.collections/List<kotlin/String>> // io.thernal.console.logging.ui.view.logs.model/LogsState.tags.<get-tags>|<get-tags>(){}[0]
+}
+
+final class io.thernal.console.logging.ui.view.logs.model/LogsViewModel : androidx.lifecycle/ViewModel, io.thernal.console.ui.core/IntentHandler<io.thernal.console.logging.ui.view.logs.model/LogsIntent>, io.thernal.console.ui.core/StateHolder { // io.thernal.console.logging.ui.view.logs.model/LogsViewModel|null[0]
+    constructor <init>() // io.thernal.console.logging.ui.view.logs.model/LogsViewModel.<init>|<init>(){}[0]
+
+    final val handler // io.thernal.console.logging.ui.view.logs.model/LogsViewModel.handler|{}handler[0]
+        final fun <get-handler>(): io.thernal.console.ui.core/IntentHandler.Handler<io.thernal.console.logging.ui.view.logs.model/LogsIntent> // io.thernal.console.logging.ui.view.logs.model/LogsViewModel.handler.<get-handler>|<get-handler>(){}[0]
+    final val state // io.thernal.console.logging.ui.view.logs.model/LogsViewModel.state|{}state[0]
+        final fun <get-state>(): io.thernal.console.logging.ui.view.logs.model/LogsState // io.thernal.console.logging.ui.view.logs.model/LogsViewModel.state.<get-state>|<get-state>(){}[0]
+}
+
+final val io.thernal.console.logging.ui.addon/io_thernal_console_logging_ui_addon_BasicLogRenderer$stableprop // io.thernal.console.logging.ui.addon/io_thernal_console_logging_ui_addon_BasicLogRenderer$stableprop|#static{}io_thernal_console_logging_ui_addon_BasicLogRenderer$stableprop[0]
+final val io.thernal.console.logging.ui.view.detail.model/io_thernal_console_logging_ui_view_detail_model_LogDetailViewModel$stableprop // io.thernal.console.logging.ui.view.detail.model/io_thernal_console_logging_ui_view_detail_model_LogDetailViewModel$stableprop|#static{}io_thernal_console_logging_ui_view_detail_model_LogDetailViewModel$stableprop[0]
+final val io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllLevels$stableprop // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllLevels$stableprop|#static{}io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllLevels$stableprop[0]
+final val io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllTags$stableprop // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllTags$stableprop|#static{}io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllTags$stableprop[0]
+final val io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SetQuery$stableprop // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SetQuery$stableprop|#static{}io_thernal_console_logging_ui_view_logs_model_LogsIntent_SetQuery$stableprop[0]
+final val io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleLevel$stableprop // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleLevel$stableprop|#static{}io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleLevel$stableprop[0]
+final val io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleTag$stableprop // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleTag$stableprop|#static{}io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleTag$stableprop[0]
+final val io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsState$stableprop // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsState$stableprop|#static{}io_thernal_console_logging_ui_view_logs_model_LogsState$stableprop[0]
+final val io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsViewModel$stableprop // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsViewModel$stableprop|#static{}io_thernal_console_logging_ui_view_logs_model_LogsViewModel$stableprop[0]
+final val io.thernal.console.logging.ui/io_thernal_console_logging_ui_ConsoleLogObserver_Config$stableprop // io.thernal.console.logging.ui/io_thernal_console_logging_ui_ConsoleLogObserver_Config$stableprop|#static{}io_thernal_console_logging_ui_ConsoleLogObserver_Config$stableprop[0]
+
+final fun (androidx.compose.foundation.layout/ColumnScope).io.thernal.console.logging.ui.view.logs.components/LogList(androidx.compose.runtime/State<kotlin.collections/List<io.thernal.console.core.log/Log>>, io.thernal.console.api.ui/LogRenderer, kotlin/Function1<io.thernal.console.core.log/Log, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // io.thernal.console.logging.ui.view.logs.components/LogList|LogList@androidx.compose.foundation.layout.ColumnScope(androidx.compose.runtime.State<kotlin.collections.List<io.thernal.console.core.log.Log>>;io.thernal.console.api.ui.LogRenderer;kotlin.Function1<io.thernal.console.core.log.Log,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun io.thernal.console.logging.ui.addon/io_thernal_console_logging_ui_addon_BasicLogRenderer$stableprop_getter(): kotlin/Int // io.thernal.console.logging.ui.addon/io_thernal_console_logging_ui_addon_BasicLogRenderer$stableprop_getter|io_thernal_console_logging_ui_addon_BasicLogRenderer$stableprop_getter(){}[0]
+final fun io.thernal.console.logging.ui.view.detail.model/io_thernal_console_logging_ui_view_detail_model_LogDetailViewModel$stableprop_getter(): kotlin/Int // io.thernal.console.logging.ui.view.detail.model/io_thernal_console_logging_ui_view_detail_model_LogDetailViewModel$stableprop_getter|io_thernal_console_logging_ui_view_detail_model_LogDetailViewModel$stableprop_getter(){}[0]
+final fun io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllLevels$stableprop_getter(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllLevels$stableprop_getter|io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllLevels$stableprop_getter(){}[0]
+final fun io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllTags$stableprop_getter(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllTags$stableprop_getter|io_thernal_console_logging_ui_view_logs_model_LogsIntent_SelectAllTags$stableprop_getter(){}[0]
+final fun io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SetQuery$stableprop_getter(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_SetQuery$stableprop_getter|io_thernal_console_logging_ui_view_logs_model_LogsIntent_SetQuery$stableprop_getter(){}[0]
+final fun io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleLevel$stableprop_getter(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleLevel$stableprop_getter|io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleLevel$stableprop_getter(){}[0]
+final fun io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleTag$stableprop_getter(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleTag$stableprop_getter|io_thernal_console_logging_ui_view_logs_model_LogsIntent_ToggleTag$stableprop_getter(){}[0]
+final fun io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsState$stableprop_getter(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsState$stableprop_getter|io_thernal_console_logging_ui_view_logs_model_LogsState$stableprop_getter(){}[0]
+final fun io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsViewModel$stableprop_getter(): kotlin/Int // io.thernal.console.logging.ui.view.logs.model/io_thernal_console_logging_ui_view_logs_model_LogsViewModel$stableprop_getter|io_thernal_console_logging_ui_view_logs_model_LogsViewModel$stableprop_getter(){}[0]
+final fun io.thernal.console.logging.ui/io_thernal_console_logging_ui_ConsoleLogObserver_Config$stableprop_getter(): kotlin/Int // io.thernal.console.logging.ui/io_thernal_console_logging_ui_ConsoleLogObserver_Config$stableprop_getter|io_thernal_console_logging_ui_ConsoleLogObserver_Config$stableprop_getter(){}[0]

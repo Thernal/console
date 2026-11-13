@@ -1,0 +1,42 @@
+public final class io/thernal/console/details/ui/addon/ConsoleDetailsAddon : io/thernal/console/api/addon/ConsoleAddon {
+	public static final field $stable I
+	public static final field INSTANCE Lio/thernal/console/details/ui/addon/ConsoleDetailsAddon;
+	public fun contentWrapper ()Lkotlin/jvm/functions/Function3;
+	public fun dockWidget ()Lio/thernal/console/api/addon/ConsoleDockWidget;
+	public fun install ()V
+	public fun navGraph ()Lio/thernal/console/api/addon/ConsoleNavGraph;
+	public fun onInstall ()V
+	public fun overlay ()Lkotlin/jvm/functions/Function3;
+	public fun overlays ()Ljava/util/List;
+	public fun tab ()Lio/thernal/console/api/addon/ConsoleTab;
+}
+
+public final class io/thernal/console/details/ui/view/details/ComposableSingletons$DetailsContentKt {
+	public static final field INSTANCE Lio/thernal/console/details/ui/view/details/ComposableSingletons$DetailsContentKt;
+	public fun <init> ()V
+	public final fun getLambda$-1112197393$io_github_thernal_details_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/details/ui/view/details/components/ComposableSingletons$DetailRowKt {
+	public static final field INSTANCE Lio/thernal/console/details/ui/view/details/components/ComposableSingletons$DetailRowKt;
+	public fun <init> ()V
+	public final fun getLambda$-1346615308$io_github_thernal_details_ui ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$759514328$io_github_thernal_details_ui ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/thernal/console/details/ui/view/details/model/DetailsState : io/thernal/console/ui/core/ViewState {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getDetails ()Lio/thernal/console/ui/core/ViewState$StateField;
+}
+
+public final class io/thernal/console/details/ui/view/details/model/DetailsViewModel : androidx/lifecycle/ViewModel, io/thernal/console/ui/core/StateHolder {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getState ()Lio/thernal/console/details/ui/view/details/model/DetailsState;
+	public fun getValue (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+	public fun set (Lio/thernal/console/ui/core/ViewState$StateField;Ljava/lang/Object;)V
+	public fun snapshot (Lkotlin/jvm/functions/Function0;)V
+	public fun update (Lio/thernal/console/ui/core/ViewState$StateField;Lkotlin/jvm/functions/Function1;)V
+}
+

@@ -1,0 +1,23 @@
+public final class io/thernal/console/runtime/console/Console : io/thernal/console/core/ConsoleScope {
+	public static final field Companion Lio/thernal/console/runtime/console/Console$Companion;
+	public fun asyncNotify (Lkotlin/jvm/functions/Function0;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun blockingNotify (Lkotlin/jvm/functions/Function0;)V
+	public final fun isEnabled ()Z
+	public final fun isSealed ()Z
+	public fun notify (Lkotlin/jvm/functions/Function0;)V
+	public final fun seal ()V
+	public final fun setEnabled (Z)V
+	public fun setProcessors (Ljava/util/List;)V
+}
+
+public final class io/thernal/console/runtime/console/Console$Companion : io/thernal/console/core/ConsoleScope {
+	public fun asyncNotify (Lkotlin/jvm/functions/Function0;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun blockingNotify (Lkotlin/jvm/functions/Function0;)V
+	public final fun isEnabled ()Z
+	public final fun isSealed ()Z
+	public fun notify (Lkotlin/jvm/functions/Function0;)V
+	public final fun seal ()V
+	public final fun setEnabled (Z)V
+	public fun setProcessors (Ljava/util/List;)V
+}
+

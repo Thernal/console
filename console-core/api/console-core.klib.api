@@ -1,0 +1,95 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.thernal:console-core>
+open annotation class io.thernal.console.core/ConsoleInternalApi : kotlin/Annotation { // io.thernal.console.core/ConsoleInternalApi|null[0]
+    constructor <init>() // io.thernal.console.core/ConsoleInternalApi.<init>|<init>(){}[0]
+}
+
+final enum class io.thernal.console.core.log/LogLevel : kotlin/Enum<io.thernal.console.core.log/LogLevel> { // io.thernal.console.core.log/LogLevel|null[0]
+    enum entry Debug // io.thernal.console.core.log/LogLevel.Debug|null[0]
+    enum entry Error // io.thernal.console.core.log/LogLevel.Error|null[0]
+    enum entry Fatal // io.thernal.console.core.log/LogLevel.Fatal|null[0]
+    enum entry Info // io.thernal.console.core.log/LogLevel.Info|null[0]
+    enum entry None // io.thernal.console.core.log/LogLevel.None|null[0]
+    enum entry Success // io.thernal.console.core.log/LogLevel.Success|null[0]
+    enum entry Verbose // io.thernal.console.core.log/LogLevel.Verbose|null[0]
+    enum entry Warning // io.thernal.console.core.log/LogLevel.Warning|null[0]
+
+    final val entries // io.thernal.console.core.log/LogLevel.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.thernal.console.core.log/LogLevel> // io.thernal.console.core.log/LogLevel.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.thernal.console.core.log/LogLevel // io.thernal.console.core.log/LogLevel.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.thernal.console.core.log/LogLevel> // io.thernal.console.core.log/LogLevel.values|values#static(){}[0]
+}
+
+abstract fun interface io.thernal.console.core/LogProcessor { // io.thernal.console.core/LogProcessor|null[0]
+    abstract fun process(io.thernal.console.core.log/Log): io.thernal.console.core.log/Log // io.thernal.console.core/LogProcessor.process|process(io.thernal.console.core.log.Log){}[0]
+}
+
+abstract interface io.thernal.console.core.log/Log { // io.thernal.console.core.log/Log|null[0]
+    abstract val groupId // io.thernal.console.core.log/Log.groupId|{}groupId[0]
+        abstract fun <get-groupId>(): kotlin/String? // io.thernal.console.core.log/Log.groupId.<get-groupId>|<get-groupId>(){}[0]
+    abstract val id // io.thernal.console.core.log/Log.id|{}id[0]
+        abstract fun <get-id>(): kotlin/String // io.thernal.console.core.log/Log.id.<get-id>|<get-id>(){}[0]
+    abstract val level // io.thernal.console.core.log/Log.level|{}level[0]
+        abstract fun <get-level>(): io.thernal.console.core.log/LogLevel // io.thernal.console.core.log/Log.level.<get-level>|<get-level>(){}[0]
+    abstract val message // io.thernal.console.core.log/Log.message|{}message[0]
+        abstract fun <get-message>(): kotlin/String // io.thernal.console.core.log/Log.message.<get-message>|<get-message>(){}[0]
+    abstract val tag // io.thernal.console.core.log/Log.tag|{}tag[0]
+        abstract fun <get-tag>(): kotlin/String? // io.thernal.console.core.log/Log.tag.<get-tag>|<get-tag>(){}[0]
+    abstract val timestamp // io.thernal.console.core.log/Log.timestamp|{}timestamp[0]
+        abstract fun <get-timestamp>(): kotlin.time/Instant // io.thernal.console.core.log/Log.timestamp.<get-timestamp>|<get-timestamp>(){}[0]
+    open val tab // io.thernal.console.core.log/Log.tab|{}tab[0]
+        open fun <get-tab>(): kotlin/String // io.thernal.console.core.log/Log.tab.<get-tab>|<get-tab>(){}[0]
+
+    open fun contains(kotlin/String): kotlin/Boolean // io.thernal.console.core.log/Log.contains|contains(kotlin.String){}[0]
+    open fun toShareText(): kotlin/String // io.thernal.console.core.log/Log.toShareText|toShareText(){}[0]
+
+    final object Companion { // io.thernal.console.core.log/Log.Companion|null[0]
+        final fun invoke(kotlin/String, kotlin/String? = ..., io.thernal.console.core.log/LogLevel = ..., kotlin/String? = ...): io.thernal.console.core.log/Log // io.thernal.console.core.log/Log.Companion.invoke|invoke(kotlin.String;kotlin.String?;io.thernal.console.core.log.LogLevel;kotlin.String?){}[0]
+    }
+}
+
+abstract interface io.thernal.console.core/ConsoleScope { // io.thernal.console.core/ConsoleScope|null[0]
+    abstract fun blockingNotify(kotlin/Function0<io.thernal.console.core.log/Log>) // io.thernal.console.core/ConsoleScope.blockingNotify|blockingNotify(kotlin.Function0<io.thernal.console.core.log.Log>){}[0]
+    abstract fun notify(kotlin/Function0<io.thernal.console.core.log/Log>) // io.thernal.console.core/ConsoleScope.notify|notify(kotlin.Function0<io.thernal.console.core.log.Log>){}[0]
+    abstract fun setProcessors(kotlin.collections/List<io.thernal.console.core/LogProcessor>) // io.thernal.console.core/ConsoleScope.setProcessors|setProcessors(kotlin.collections.List<io.thernal.console.core.LogProcessor>){}[0]
+    abstract suspend fun asyncNotify(kotlin/Function0<io.thernal.console.core.log/Log>) // io.thernal.console.core/ConsoleScope.asyncNotify|asyncNotify(kotlin.Function0<io.thernal.console.core.log.Log>){}[0]
+}
+
+abstract interface io.thernal.console.core/LogObserver { // io.thernal.console.core/LogObserver|null[0]
+    abstract suspend fun emit(io.thernal.console.core.log/Log) // io.thernal.console.core/LogObserver.emit|emit(io.thernal.console.core.log.Log){}[0]
+}
+
+final class io.thernal.console.core.log/BasicLog : io.thernal.console.core.log/Log { // io.thernal.console.core.log/BasicLog|null[0]
+    constructor <init>(kotlin/String, kotlin/String? = ..., io.thernal.console.core.log/LogLevel = ..., kotlin/String = ..., kotlin.time/Instant = ..., kotlin/String? = ...) // io.thernal.console.core.log/BasicLog.<init>|<init>(kotlin.String;kotlin.String?;io.thernal.console.core.log.LogLevel;kotlin.String;kotlin.time.Instant;kotlin.String?){}[0]
+
+    final val groupId // io.thernal.console.core.log/BasicLog.groupId|{}groupId[0]
+        final fun <get-groupId>(): kotlin/String? // io.thernal.console.core.log/BasicLog.groupId.<get-groupId>|<get-groupId>(){}[0]
+    final val id // io.thernal.console.core.log/BasicLog.id|{}id[0]
+        final fun <get-id>(): kotlin/String // io.thernal.console.core.log/BasicLog.id.<get-id>|<get-id>(){}[0]
+    final val level // io.thernal.console.core.log/BasicLog.level|{}level[0]
+        final fun <get-level>(): io.thernal.console.core.log/LogLevel // io.thernal.console.core.log/BasicLog.level.<get-level>|<get-level>(){}[0]
+    final val message // io.thernal.console.core.log/BasicLog.message|{}message[0]
+        final fun <get-message>(): kotlin/String // io.thernal.console.core.log/BasicLog.message.<get-message>|<get-message>(){}[0]
+    final val tag // io.thernal.console.core.log/BasicLog.tag|{}tag[0]
+        final fun <get-tag>(): kotlin/String? // io.thernal.console.core.log/BasicLog.tag.<get-tag>|<get-tag>(){}[0]
+    final val timestamp // io.thernal.console.core.log/BasicLog.timestamp|{}timestamp[0]
+        final fun <get-timestamp>(): kotlin.time/Instant // io.thernal.console.core.log/BasicLog.timestamp.<get-timestamp>|<get-timestamp>(){}[0]
+
+    final fun component1(): kotlin/String // io.thernal.console.core.log/BasicLog.component1|component1(){}[0]
+    final fun component2(): kotlin/String? // io.thernal.console.core.log/BasicLog.component2|component2(){}[0]
+    final fun component3(): io.thernal.console.core.log/LogLevel // io.thernal.console.core.log/BasicLog.component3|component3(){}[0]
+    final fun component4(): kotlin/String // io.thernal.console.core.log/BasicLog.component4|component4(){}[0]
+    final fun component5(): kotlin.time/Instant // io.thernal.console.core.log/BasicLog.component5|component5(){}[0]
+    final fun component6(): kotlin/String? // io.thernal.console.core.log/BasicLog.component6|component6(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String? = ..., io.thernal.console.core.log/LogLevel = ..., kotlin/String = ..., kotlin.time/Instant = ..., kotlin/String? = ...): io.thernal.console.core.log/BasicLog // io.thernal.console.core.log/BasicLog.copy|copy(kotlin.String;kotlin.String?;io.thernal.console.core.log.LogLevel;kotlin.String;kotlin.time.Instant;kotlin.String?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.thernal.console.core.log/BasicLog.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.thernal.console.core.log/BasicLog.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.thernal.console.core.log/BasicLog.toString|toString(){}[0]
+}
