@@ -3,6 +3,7 @@ package io.thernal.console.logging.ui.addon
 import io.thernal.console.agent.AgentCall
 import io.thernal.console.core.ConsoleInternalApi
 import io.thernal.console.core.LogObserver
+import io.thernal.console.core.log.BasicLog
 import io.thernal.console.core.log.Log
 import io.thernal.console.core.log.LogLevel
 import io.thernal.console.runtime.console.Console
@@ -36,16 +37,16 @@ class LoggingAgentEntriesTest {
             val received = CompletableDeferred<Log>()
             val observer = object : LogObserver {
                 override suspend fun emit(event: Log) {
-                    if (event is AgentLog) received.complete(event)
+                    if (event.message == MESSAGE) received.complete(event)
                 }
             }
             Console.addObserver(observer)
             try {
                 val write = loggingAgentEntries().tools.single { it.name == "logs_write" }
-                val answer = write.run(AgentCall(mapOf("message" to "step 2", "level" to "Warning", "tag" to " ")))
+                val answer = write.run(AgentCall(mapOf("message" to MESSAGE, "level" to "Warning", "tag" to " ")))
 
                 val log = withContext(Dispatchers.Default) { withTimeout(TIMEOUT_MILLIS) { received.await() } }
-                assertEquals("step 2", log.message)
+                assertTrue(log is BasicLog)
                 assertEquals(LogLevel.Warning, log.level)
                 assertNull(log.tag)
                 assertTrue(answer.contains(log.id))
@@ -57,5 +58,6 @@ class LoggingAgentEntriesTest {
 
     private companion object {
         const val TIMEOUT_MILLIS = 5_000L
+        const val MESSAGE = "step 2"
     }
 }

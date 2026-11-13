@@ -13,7 +13,7 @@ class LogsSummaryTest {
             BasicLog(message = "a", tag = "Net", level = LogLevel.Info),
             BasicLog(message = "b", tag = "Net", level = LogLevel.Error),
             BasicLog(message = "c"),
-            AgentLog(message = "step 1", tag = AgentLog.DEFAULT_TAG, level = LogLevel.Info),
+            BasicLog(message = "step 1", tag = AGENT_LOG_TAG, level = LogLevel.Info),
         )
 
         val summary = logsSummary(logs = logs, config = ConsoleLogObserver.Config(maxLogCount = MAX_LOGS))
@@ -21,7 +21,7 @@ class LogsSummaryTest {
         val expected = """
             Logging on: 4 logs kept in the app, up to 50.
             Levels: Error 1, Info 2, None 1
-            Kinds: BasicLog 3, AgentLog 1
+            Kinds: BasicLog 4
             Tags:
             Net 2, highest Error
             (no tag) 1

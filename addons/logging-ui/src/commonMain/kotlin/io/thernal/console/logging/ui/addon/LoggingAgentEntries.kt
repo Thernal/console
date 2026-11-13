@@ -3,9 +3,13 @@ package io.thernal.console.logging.ui.addon
 import io.thernal.console.agent.AgentEntries
 import io.thernal.console.agent.agentEntries
 import io.thernal.console.agent.enum
+import io.thernal.console.core.log.BasicLog
 import io.thernal.console.core.log.LogLevel
 import io.thernal.console.logging.ui.ConsoleLogObserver
 import io.thernal.console.runtime.console.Console
+
+/** The tag `logs_write` gives a log when the agent names none, so its markers stand out from the app's logs. */
+internal const val AGENT_LOG_TAG = "agent"
 
 /** What the logging addon shares with an AI agent: every log as a feed, a summary of the list, and writing a log. */
 internal fun loggingAgentEntries(): AgentEntries {
@@ -23,12 +27,12 @@ internal fun loggingAgentEntries(): AgentEntries {
         }
         action(
             name = "logs_write",
-            description = "Writes a log of kind AgentLog: a marker between the steps of a test, or a log of any " +
-                "level and tag for testing what reacts to logs",
+            description = "Writes a log, tagged \"$AGENT_LOG_TAG\" unless told otherwise: a marker between the steps " +
+                "of a test, or a log of any level and tag for testing what reacts to logs",
         ) {
             val message = text(key = "message", description = "Log message")
             val level = enum(key = "level", description = "Log level", default = LogLevel.Info)
-            val tag = text(key = "tag", description = "Log tag; empty for none", default = AgentLog.DEFAULT_TAG)
+            val tag = text(key = "tag", description = "Log tag; empty for none", default = AGENT_LOG_TAG)
             run { call -> writeAgentLog(message = call[message], level = call[level], tag = call[tag]) }
         }
     }
@@ -42,7 +46,7 @@ private fun writeAgentLog(
 ): String {
     require(message.isNotBlank()) { "Pass a non-empty message" }
     check(Console.isEnabled) { "Console is off, so the log was not written" }
-    val log = AgentLog(message = message, tag = tag.trim().ifEmpty { null }, level = level)
+    val log = BasicLog(message = message, tag = tag.trim().ifEmpty { null }, level = level)
     Console.notify { log }
     val written = "Wrote ${level.name} log ${log.id}; `logs_get` with this id shows its seq."
     return if (ConsoleLogObserver.config.value.enabled) {

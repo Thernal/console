@@ -19,7 +19,6 @@ internal object LoggingAddon : ConsoleAddon {
     override fun onInstall() {
         Console.addObserver(ConsoleLogObserver)
         LogRendererRegistry.register<BasicLog>(BasicLogRenderer())
-        LogRendererRegistry.register<AgentLog>(BasicLogRenderer())
         SettingsRegistry.register(loggingSettingsSection())
         AgentRegistry.register(loggingAgentEntries())
     }
