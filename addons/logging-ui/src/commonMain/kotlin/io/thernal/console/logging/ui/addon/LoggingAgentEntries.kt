@@ -18,7 +18,11 @@ internal fun loggingAgentEntries(): AgentEntries {
         title = "Logs",
         about = "Every log the app writes: level, tag, message, full text by id",
     ) {
-        logFeed(name = "logs", description = "Every log the app wrote, oldest first", logs = ConsoleLogObserver.stream)
+        logFeed(
+            name = "logs",
+            description = "Every log the app wrote, oldest first",
+            logs = newLogs(ConsoleLogObserver.logs),
+        )
         tool(
             name = "logs_summary",
             description = "Logs kept in the app per level, kind and tag, and whether logging is on",

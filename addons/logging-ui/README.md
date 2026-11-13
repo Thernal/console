@@ -43,21 +43,22 @@ With [`console-agent-ui`](../agent-ui/README.md) installed, the addon shares the
 | `logs_summary` | Tool | The logs kept in the app per level, kind and tag, and whether logging is on. |
 | `logs_write` | Action | Writes a `BasicLog` (level `Info`, tag `agent` by default): a marker between the steps of a test, or a log of any level and tag for testing what reacts to logs. Offered only while *Allow actions* is on. |
 
-Logs dropped while `enabled` is off are not shared either.
+The feed reads the list the Logs tab keeps, so logs dropped while `enabled` is off, or with `maxLogCount` at 0,
+are not shared either.
 
 ## Architecture
 
 ```
 Console pipeline ──emit()──► ConsoleLogObserver ──StateFlow<List<Log>>──► LogsViewModel ──► LogsView
-                                   (ring buffer)  │                   └──► LogDetailViewModel ──► LogDetailView
-                                                  └──SharedFlow<Log>──► agent feed `logs`
+                                   (ring buffer)                     ├──► LogDetailViewModel ──► LogDetailView
+                                                                     └──► addon/NewLogs ──► agent feed `logs`
 ```
 
 | Piece | Role |
 |-------|------|
 | `addon/LoggingAddon` | `onInstall` adds the observer to `Console`, registers `BasicLogRenderer`, the settings section and the agent entries. Contributes `LogsTab` and `LogsNavGraph`. |
 | `ConsoleLogObserver` | A `LogObserver` holding the logs as an immutable list. Drops the oldest entry once `maxLogCount` is reached; lowering the cap trims immediately. |
-| `ConsoleLogObserver.stream` | Each captured log once, for the agent feed, which must tell new logs from old ones. A late subscriber gets the last 1 000 first. `emit` only calls `tryEmit` on it, so the pipeline never waits for the agent. |
+| `addon/NewLogs` | Turns the kept list into each log once for the `logs` feed: on every change, the logs after the last one passed on; all of them when that one is gone (cleared, or pushed out of the ring buffer). The first list passes every kept log, so the feed starts from the oldest whenever the bridge starts. |
 | `addon/LoggingAgentEntries` | The `logging` agent entries: the `logs` feed, `logs_summary` (built by `addon/LogsSummary`) and `logs_write`, which writes a `BasicLog` with `Console.notify`, so a log held by the stepper cannot stall the call. |
 | `view/logs/model/LogsViewModel` | Filters by selected tags, levels and the message query. Tag chips keep the order in which a tag was first seen, so they do not jump when old logs leave the ring buffer. |
 | `view/detail/model/LogDetailViewModel` | Collects the opened log plus its group, sorted by timestamp, and starts on the opened one. |

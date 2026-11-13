@@ -2,12 +2,8 @@ package io.thernal.console.logging.ui
 
 import io.thernal.console.core.log.Log
 import io.thernal.console.core.LogObserver
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
@@ -18,16 +14,6 @@ internal object ConsoleLogObserver : LogObserver {
     val logs: StateFlow<List<Log>> = _logs.asStateFlow()
     private val _config = MutableStateFlow(Config())
     val config: StateFlow<Config> = _config.asStateFlow()
-
-    /**
-     * Every captured log once, as it arrives, for consumers that must tell new logs from old ones (the agent feed).
-     * A late subscriber gets the last [DEFAULT_MAX_LOG_COUNT] first. Filled with `tryEmit`, so [emit] never suspends.
-     */
-    private val _stream = MutableSharedFlow<Log>(
-        replay = DEFAULT_MAX_LOG_COUNT,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST,
-    )
-    val stream: SharedFlow<Log> = _stream.asSharedFlow()
 
     override suspend fun emit(event: Log) {
         val configSnapshot = _config.value
@@ -42,7 +28,6 @@ internal object ConsoleLogObserver : LogObserver {
                 else -> current.drop(1) + event
             }
         }
-        _stream.tryEmit(event)
     }
 
     fun updateConfig(config: Config) {
