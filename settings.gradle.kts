@@ -45,6 +45,7 @@ dependencyResolutionManagement {
 
 includeBuild("build-logic")
 includeBuild("console-settings-plugin")
+includeBuild("console-mcp")
 
 // ── Auto-configure git hooks ──────────────────────────────────────────────────
 // Runs on every Gradle sync. Sets core.hooksPath → .githooks in .git/config
@@ -73,6 +74,7 @@ include(":sample:app")
 include(":sample:android")
 include(":sample:ios")
 include(":sample:jvm")
+include(":sample:agent-jvm")
 
 include(":console-core")
 include(":console-io")

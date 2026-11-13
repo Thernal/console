@@ -2,6 +2,8 @@ package io.thernal.console.ui.dock
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.IntSize
+import io.thernal.console.api.addon.ConsoleDockEdge
+import io.thernal.console.api.addon.ConsoleDockVertical
 import io.thernal.console.ui.core.ViewIntent
 
 internal sealed interface DockIntent : ViewIntent {
@@ -11,6 +13,13 @@ internal sealed interface DockIntent : ViewIntent {
 
     data class SizeChanged(
         val newSize: IntSize,
+        val maxWidthPx: Float,
+        val maxHeightPx: Float,
+    ) : DockIntent
+
+    data class MoveTo(
+        val edge: ConsoleDockEdge,
+        val vertical: ConsoleDockVertical,
         val maxWidthPx: Float,
         val maxHeightPx: Float,
     ) : DockIntent

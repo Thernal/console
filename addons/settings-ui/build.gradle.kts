@@ -8,6 +8,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.addons.settingsApi)
             api(projects.consoleUi)
+            implementation(projects.addons.agentApi)
             implementation(projects.consoleIo)
             implementation(projects.designsystem.components)
             implementation(libs.jetbrains.lifecycle.viewmodel.compose)

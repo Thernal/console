@@ -10,6 +10,7 @@ kotlin {
             implementation(projects.consoleRuntime)
             implementation(projects.designsystem.components)
             implementation(projects.addons.settingsApi)
+            implementation(projects.addons.agentApi)
             implementation(libs.jetbrains.navigation3.ui)
             implementation(libs.jetbrains.lifecycle.viewmodel.nav3)
             implementation(libs.compose.foundation)

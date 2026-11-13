@@ -2,6 +2,7 @@
 
 package io.thernal.console.logging.ui.addon
 
+import io.thernal.console.agent.AgentRegistry
 import io.thernal.console.api.addon.ConsoleAddon
 import io.thernal.console.api.addon.ConsoleNavGraph
 import io.thernal.console.api.addon.ConsoleTab
@@ -19,6 +20,7 @@ internal object LoggingAddon : ConsoleAddon {
         Console.addObserver(ConsoleLogObserver)
         LogRendererRegistry.register<BasicLog>(BasicLogRenderer())
         SettingsRegistry.register(loggingSettingsSection())
+        AgentRegistry.register(loggingAgentEntries())
     }
 
     override fun tab(): ConsoleTab = LogsTab

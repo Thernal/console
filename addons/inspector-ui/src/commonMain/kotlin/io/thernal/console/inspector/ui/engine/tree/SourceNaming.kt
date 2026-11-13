@@ -26,7 +26,14 @@ internal fun isFrameworkNode(
         }
     }
     if (name.firstOrNull()?.isUpperCase() != true) return true
-    return file != null && (file in frameworkFiles || frameworkFilePrefixes.any { file.startsWith(it) })
+    val common = file?.let(::commonFileName) ?: return false
+    return common in frameworkFiles || frameworkFilePrefixes.any { common.startsWith(it) }
+}
+
+/** `BasicText.android.kt` → `BasicText.kt`: a platform variant counts as the common file it belongs to. */
+private fun commonFileName(file: String): String {
+    val parts = file.split('.')
+    return if (parts.size > 2) "${parts.first()}.${parts.last()}" else file
 }
 
 private val genericNames = setOf(
@@ -54,7 +61,7 @@ private val frameworkFiles = setOf(
     "AnimatedContent.kt", "AnimatedVisibility.kt", "Crossfade.kt", "BoxWithConstraints.kt",
     "SubcomposeLayout.kt", "Popup.kt", "Dialog.kt", "Shape.kt", "Ripple.kt", "Indication.kt",
     "Background.kt", "Scroll.kt", "Scrollable.kt", "Window.kt", "ProvideContentColorTextStyle.kt",
-    "NavigationBar.kt", "NavigationRail.kt", "NavigationDrawer.kt", "WrappedContent.kt",
+    "NavigationBar.kt", "NavigationRail.kt", "NavigationDrawer.kt", "WrappedContent.kt", "NavigationEventHandler.kt",
 )
 
 /** File name prefixes that only Compose library families use. */

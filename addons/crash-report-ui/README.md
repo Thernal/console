@@ -35,6 +35,22 @@ CrashReports.delete(id)
 CrashReports.clearAll()        // the active session survives
 ```
 
+## Agent
+
+With [`console-agent-ui`](../agent-ui/README.md) installed, the addon shares the saved sessions with an AI coding agent
+(section `crash-report`). Sessions are on the device, so an agent reads a crash on the next launch even when no hub
+was running at the time.
+
+| Tool | Kind | What it does |
+|------|------|--------------|
+| `crashes`, `crashes_get`, `crashes_wait` | Feed | One record when the app starts after its previous run crashed (`Fatal` with a trace, `Error` without one), with the session's text as detail. |
+| `crash_sessions` | Tool | Saved sessions, newest first: id, how it ended, start and crash time, the exception. `crashed_only` (default on) leaves out the ones that ended without a crash; `limit` (default 10). |
+| `crash_session` | Tool | One session: how it ended, the stack trace (first 80 lines) and the last `logs` (default 30) before the end, one line each or in full with `full_logs`. |
+| `crash_delete`, `crash_clear` | Action | Delete one session, or all of them; the running session stays. Offered only while *Allow actions* is on. |
+
+A loop an agent can run: the app crashes during a test, it relaunches, `crashes_wait` (or `crash_sessions`) shows
+the crash, `crash_session` gives the trace with source lines; after the fix the next run leaves no crashed session.
+
 ## How it works
 
 - **Streaming persistence.** Each log is appended to a per-session file the moment it is emitted (flushed to the OS
@@ -59,7 +75,8 @@ next launch ─► CrashReports.refreshSessions ─► CrashStore.entries + clas
 
 | Piece | Role |
 |-------|------|
-| `addon/CrashReportAddon` | `onInstall` (guarded against a second install) starts the runtime, adds the writer to `Console`, registers the network codecs, installs the crash handler and lifecycle tracking, and registers the settings section. Contributes `CrashReportTab` and `CrashReportNavGraph`. |
+| `addon/CrashReportAddon` | `onInstall` (guarded against a second install) starts the runtime, adds the writer to `Console`, registers the network codecs, installs the crash handler and lifecycle tracking, registers the settings section and the agent entries. Contributes `CrashReportTab` and `CrashReportNavGraph`. |
+| `agent/CrashAgentEntries` | The `crash-report` agent entries, on top of `CrashReports`: the `crashes` feed (one record at startup when the newest saved session crashed), the session tools and the delete actions; text built by `CrashAgentText`. |
 | `runtime/CrashReportRuntime` | Owns the process-wide `CrashStore` and opens a fresh session at start. Without a platform directory the store stays `null` and everything no-ops. |
 | `writer/CrashStreamWriter` | The `LogObserver`. Applies the save filter, the `redactor` and the network body policy, then appends. |
 | `store/CrashStore` | File layout, append, segment rotation, sidecars, retention, delete. |

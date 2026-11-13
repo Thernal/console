@@ -142,6 +142,20 @@ Widgets are sorted by `order`, then by `title`; leave `order` unset to keep the 
 `ConsoleDock.config` (`isVisible`, `hiddenWidgetIds`), which the settings addon exposes as *Floating widgets*; a widget
 whose status is `Attention` always stays visible.
 
+The dock on screen also takes commands and reports where it is, for a test that needs it out of the way (the agent
+addon's `dock_*` tools use these):
+
+```kotlin
+ConsoleDock.dispatch(ConsoleDockCommand.MoveTo(ConsoleDockEdge.Left, ConsoleDockVertical.Bottom))
+ConsoleDock.dispatch(ConsoleDockCommand.SetMinimized(true))
+ConsoleDock.dispatch(ConsoleDockCommand.SelectWidget("stepper"))  // opens the card on that tab
+ConsoleDock.layout.value  // edge, height, minimized, selected widget, bounds in window pixels; null while off screen
+```
+
+A move is clamped inside the window like a drag, and a dock flush with the left or bottom edge stays flush when it
+opens or folds. Nothing a command changes is saved, and a command sent while no dock is on screen is dropped.
+`layout.isMoving` stays `true` until the dock has drawn the change and its animation ended.
+
 ---
 
 ## ConsoleOverlay

@@ -1,5 +1,7 @@
 package io.thernal.console.settings.ui.addon
 
+import io.thernal.console.agent.AgentRegistry
+import io.thernal.console.settings.ui.agent.settingsAgentEntries
 import io.thernal.console.api.addon.ConsoleAddon
 import io.thernal.console.api.addon.ConsoleTab
 import io.thernal.console.core.ConsoleInternalApi
@@ -16,6 +18,7 @@ object SettingsAddon : ConsoleAddon {
         SettingsStore.install()
         SettingsRegistry.register(dockSettingsSection())
         SettingsRegistry.register(generalSection())
+        AgentRegistry.register(settingsAgentEntries())
     }
 
     override fun tab(): ConsoleTab = SettingsTab

@@ -9,6 +9,7 @@ kotlin {
             api(projects.addons.inspectorCore)
             api(projects.consoleUi)
             implementation(projects.addons.settingsApi)
+            implementation(projects.addons.agentApi)
             implementation(projects.designsystem.components)
             implementation(libs.jetbrains.lifecycle.viewmodel.compose)
             implementation(libs.compose.foundation)

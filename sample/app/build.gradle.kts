@@ -24,6 +24,7 @@ kotlin {
             implementation(projects.addons.networkUi)
             implementation(projects.addons.crashReportUi)
             implementation(projects.addons.settingsUi)
+            implementation(projects.addons.agentUi)
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)

@@ -97,6 +97,15 @@ internal object SettingsStore {
         sections.forEach { section -> resetToDefault(section) }
     }
 
+    /**
+     * Deletes [section]'s override file and resets its runtime config to the code default, like [clearAll] for one
+     * section. Synchronous: callers run it off the main thread (the agent tools do).
+     */
+    fun resetSectionNow(section: SettingsSection.Entries<*>) {
+        filePath(section.id)?.let(ConsoleFileSystem::delete)
+        resetToDefault(section)
+    }
+
     private fun registeredEntrySections(): List<SettingsSection.Entries<*>> {
         return SettingsRegistry.sections.value.filterIsInstance<SettingsSection.Entries<*>>()
     }

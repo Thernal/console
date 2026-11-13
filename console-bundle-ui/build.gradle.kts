@@ -3,7 +3,9 @@ plugins {
     alias(libs.plugins.convention.publish)
 }
 
-// Aggregator artifact: the full console — every console module and addon in one dependency.
+// Aggregator artifact: the full console — every console module and addon in one dependency,
+// including the agent bridge (agent-ui), so AI coding agents reach the app through console-mcp
+// out of the box; exclude console-agent-ui to leave it out.
 // Deliberately excluded: designsystem (uikit) so its types never leak into the consumer's
 // compile classpath (consumers who want Ds components add it themselves), the HTTP
 // interceptors (client-specific, opt-in), and the -noop variants (release-time replacements,
@@ -14,6 +16,7 @@ kotlin {
             api(projects.consoleBundleCore)
             api(projects.consoleApi)
             api(projects.consoleUi)
+            api(projects.addons.agentUi)
             api(projects.addons.crashReportUi)
             api(projects.addons.detailsUi)
             api(projects.addons.inspectorUi)

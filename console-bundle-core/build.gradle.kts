@@ -12,6 +12,7 @@ kotlin {
             api(projects.consoleCore)
             api(projects.consoleIo)
             api(projects.consoleRuntime)
+            api(projects.addons.agentApi)
             api(projects.addons.crashReportCore)
             api(projects.addons.detailsCore)
             api(projects.addons.inspectorCore)

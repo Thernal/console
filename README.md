@@ -3,7 +3,8 @@
 # Console
 
 **A gesture-triggered in-app devtool for Kotlin Multiplatform apps.**  
-Drop it in, swipe to open, and inspect logs, HTTP traffic, and session state — without touching production code.
+Drop it in, swipe to open, and inspect logs, HTTP traffic, and session state — without touching production code.  
+Your AI coding agent sees the same over MCP: logs, requests, crashes, state and the UI tree, live from the device.
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.thernal/console-ui?label=Maven%20Central&color=4CAF50)](https://central.sonatype.com/artifact/io.github.thernal/console-ui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -29,6 +30,7 @@ Drop it in, swipe to open, and inspect logs, HTTP traffic, and session state —
 | 🗂️ **Details panel** | Live key/value sidebar for session info, flags, build metadata |
 | ⏸️ **Stepper** | Pause log processing and replay events one-by-one |
 | 🔬 **UI inspector** | Composable tree, bounds, recomposition counts, heatmap, quick controls, font and RTL overrides |
+| 🤖 **AI agents (MCP)** | Claude Code and other MCP clients read the app's logs, network, crashes, details, settings and UI tree, and step through flows |
 | 🖥️ **Custom tabs** | Add your own full screens to the Console navigation bar |
 | 👆 **Custom triggers** | Swap the default swipe for any gesture — double-tap, shake, etc. |
 | 🚫 **Zero prod cost** | Noop stubs with identical APIs — no UI, no overhead in release builds |
@@ -84,6 +86,19 @@ fun App() {
 ### 4. Open the console
 
 Swipe **↑ ↓ ← →** anywhere on screen (default gesture).
+
+### 5. Connect your AI coding agent
+
+`console-bundle-ui` includes the agent bridge, so a debug build already looks for the `console-mcp` hub on your
+machine. Build the hub once from this repository and register it with your agent:
+
+```bash
+./gradlew -p console-mcp installDist
+claude mcp add console -- "$PWD/console-mcp/build/install/console-mcp/bin/console-mcp"
+adb reverse tcp:47474 tcp:47474   # Android device or emulator; the iOS simulator and desktop need nothing
+```
+
+Ask the agent to call `devices`: it lists the running app and what it shares. See [AI agents (MCP)](#ai-agents-mcp).
 
 ---
 
@@ -516,6 +531,58 @@ Beyond tabs, `ConsoleAddon` also supports:
 
 ---
 
+## AI agents (MCP)
+
+Console shares what its addons see with an AI coding agent, so the agent can check its own changes in the running
+app: read the logs and requests a tap produced, see the crash and its source lines after the app died, wait for a
+detail to change, step an async flow through the stepper, and read the composable tree with source files and bounds.
+
+```
+App (debug build)                           Developer machine
+console-agent-ui ── TCP 127.0.0.1:47474 ──► console-mcp hub ── MCP (stdio) ──► Claude Code, Cursor, …
+  each addon's agentEntries                  keeps every feed record, so they outlive a crash
+```
+
+| Addon | What the agent gets |
+|-------|---------------------|
+| Logs | `logs` feed, `logs_summary`, action `logs_write` |
+| Network | `network` feed (one record per call), `network_hosts` |
+| Crash reports | `crashes` feed, `crash_sessions`, `crash_session`, actions `crash_delete`, `crash_clear` |
+| Details | `details`, `details_changes` feed |
+| Settings | `settings`, actions `settings_set`, `settings_reset` |
+| Stepper | `stepper_state`, `stepper_events` feed, actions `stepper_pause`, `stepper_next`, `stepper_resume` |
+| UI inspector | `ui_tree`, `ui_node`, `ui_find`, `recompositions`, actions `ui_font_scale`, `ui_layout_direction`, `recompositions_reset` |
+| Floating dock | `dock_state`, actions `dock_move`, `dock_minimize`, `dock_select` |
+
+Each feed also gives `<feed>_get` (one record in full) and `<feed>_wait` (waits for a matching record). Actions change
+the app, so they are offered only after you turn on Settings → *Agent* → *Allow actions*. Everything is redacted in the
+app before it leaves (authorization headers, cookies, tokens, passwords and any key an addon adds), and the hub only
+listens on the loopback interface.
+
+Your own code can share more with the same DSL ([`console-agent-api`](addons/agent-api/README.md)):
+
+```kotlin
+AgentRegistry.register(
+    agentEntries(id = "cart", title = "Cart", about = "The shopping cart") {
+        tool(name = "cart_items", description = "Items in the cart") { run { cart.items.joinToString("\n") } }
+    },
+)
+```
+
+**Leaving it out.** Turn off Settings → *Agent* → *Share with AI agents*, or drop the bridge from the bundle:
+
+```kotlin
+debugImplementation("io.github.thernal:console-bundle-ui:<version>") {
+    exclude(group = "io.github.thernal", module = "console-agent-ui")
+}
+```
+
+Release builds take `console-ui-noop`, which carries no bridge. If your own code calls `agentEntries`, add
+`releaseImplementation("io.github.thernal:console-agent-api-noop:<version>")` so it compiles and registers nothing.
+Details: [agent bridge](addons/agent-ui/README.md), [hub](console-mcp/README.md).
+
+---
+
 ## Modules
 
 ### Bundles
@@ -527,8 +594,8 @@ matching your client).
 
 | Artifact | Description |
 |----------|-------------|
-| `io.github.thernal:console-bundle-core:<version>` | Everything a plain JVM/domain module can depend on — `console-core`/`io`/`runtime` + every addon `-core` module (no Compose) |
-| `io.github.thernal:console-bundle-ui:<version>` | The full console — `console-bundle-core` + the UI shell and every addon |
+| `io.github.thernal:console-bundle-core:<version>` | Everything a plain JVM/domain module can depend on — `console-core`/`io`/`runtime`, every addon `-core` module and `console-agent-api` (no Compose) |
+| `io.github.thernal:console-bundle-ui:<version>` | The full console — `console-bundle-core` + the UI shell, every addon and the agent bridge |
 
 ### Core
 
@@ -564,6 +631,9 @@ Each addon has its own README with setup, settings and architecture; start from 
 | `io.github.thernal:console-settings-api:<version>` | Settings registration contract — `SettingsSection`, entry DSL, `SettingsRegistry` |
 | `io.github.thernal:console-settings-api-noop:<version>` | No-op stub for production builds |
 | `io.github.thernal:console-settings-ui:<version>` | Settings tab — persisted per-addon overrides, entry renderers, General section |
+| `io.github.thernal:console-agent-api:<version>` | Agent sharing contract — `agentEntries` DSL (tools, actions, feeds, redaction), `AgentRegistry`, `ConsoleAgent` |
+| `io.github.thernal:console-agent-api-noop:<version>` | No-op stub for production builds |
+| `io.github.thernal:console-agent-ui:<version>` | Agent bridge — streams the registry to the `console-mcp` hub for AI coding agents (debug only; in `console-bundle-ui`) |
 
 ---
 

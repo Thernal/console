@@ -8,7 +8,7 @@ detail screen for each request and response.
 | `console-network-core` | `NetworkLog` (`Request` / `Response`), `SensitiveHeaders`, the runtime `NetworkConfig`, body classification. No UI, no HTTP client. |
 | `console-network-ktor` | `ConsoleNetworkKtorPlugin`, a Ktor client plugin (all platforms). |
 | `console-network-okhttp` | `ConsoleNetworkOkHttpInterceptor`, an OkHttp interceptor (Android and JVM). |
-| `console-network-ui` | The renderer for network logs and the **Network** settings section. Auto-installs. |
+| `console-network-ui` | The renderer for network logs, the **Network** settings section and what an AI agent sees of the calls. Auto-installs. |
 
 ## Install
 
@@ -68,6 +68,24 @@ Section **Network** (`id = "network"`): `sensitiveHeaders`, the masked header na
   pretty-printed, binary types (`image/*`, `application/pdf`, protobuf…) and undecodable text show their type and
   size instead of bytes.
 
+## Agent
+
+With [`console-agent-ui`](../agent-ui/README.md) installed, the addon shares the HTTP calls with an AI coding agent
+(section `network`):
+
+| Tool | Kind | What it does |
+|------|------|--------------|
+| `network`, `network_get`, `network_wait` | Feed | One record per call, request and response together, under the call's id (the logs' `groupId`): summary `GET api.example.com/v1/cart → 200 (120 ms)`, fields `method`, `host`, `path`, `status`, `duration_ms`, `call_id`. |
+| `network_hosts` | Tool | Hosts the app called since it started, with call and failure counts, the last status and the average time. |
+
+Network logs also read this way in the `logs` feed (`kind` `Request` or `Response`), where a request still waiting
+for its response already shows. A call reaches the `network` feed when its response or failure arrives.
+
+What leaves the app: headers are masked at capture with the live `sensitiveHeaders` setting, as in the Network tab.
+On top of that the agent bridge redacts those names, and its own defaults (`token`, `password`, `secret`, …),
+wherever they appear: JSON bodies, query strings, header lines. A detail longer than 64 000 characters is cut, with a
+note that the Network tab shows all of it.
+
 ## Architecture
 
 ```
@@ -84,7 +102,9 @@ HTTP client ─► Ktor plugin / OkHttp interceptor ─► Console (NetworkLog.R
 | `network-core/NetworkBodyExtensions` | `resolveNetworkBody`, `toCopyText`, `toHumanReadableSize`; JSON formatting is a small dependency-free reformatter. |
 | `network-ktor/ConsoleNetworkKtorPlugin` | Hooks `Send`: logs the request, proceeds, saves the call so the body can be read without consuming it, logs the response. Errors with a response (`ResponseException`) and transport failures are logged and rethrown. Uses `asyncNotify`. |
 | `network-okhttp/ConsoleNetworkOkHttpInterceptor` | Same flow with `chain.proceed`; reads the response with `peekBody(maxBodyBytes)` (64 KB by default, a constructor parameter). Uses `blockingNotify`. |
-| `network-ui/NetworkAddon` | Registers `NetworkLogRenderer` for both `NetworkLog.Request` and `NetworkLog.Response`, and the settings section. No tab of its own: entries appear in the Logs tab. |
+| `network-ui/NetworkAddon` | Registers `NetworkLogRenderer` for both `NetworkLog.Request` and `NetworkLog.Response`, the settings section, the call observer and the agent entries. No tab of its own: entries appear in the Logs tab. |
+| `network-ui/agent/NetworkCallObserver` | A `LogObserver` that pairs each request with its response by `groupId` into one agent record per call, and counts calls per host. `emit` only calls `tryEmit`, so the pipeline never waits for the agent. |
+| `network-ui/agent/NetworkAgentEntries` | The `network` agent entries: `describe` for both log types (`NetworkAgentRecords`), the `network` feed, `network_hosts`, and the default sensitive header names as redaction keys. |
 
 `console-crash-report-ui` ships codecs for both network log types, so network logs restored from a crash session keep
 their full detail.

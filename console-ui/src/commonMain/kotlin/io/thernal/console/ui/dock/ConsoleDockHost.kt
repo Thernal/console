@@ -1,6 +1,7 @@
 package io.thernal.console.ui.dock
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
@@ -23,11 +24,16 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -61,8 +67,14 @@ internal fun ConsoleDockHost() {
         else -> DockMode.Bubble
     }
     val selected = widgets.firstOrNull { it.id == state.selectedId.value } ?: widgets.first()
+    val origin = remember { mutableStateOf(Offset.Zero) }
 
-    BoxWithConstraints(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeContent)) {
+    BoxWithConstraints(
+        Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.safeContent)
+            .onGloballyPositioned { origin.value = it.positionInWindow() },
+    ) {
         val maxWidthPx = constraints.maxWidth.toFloat()
         val maxHeightPx = constraints.maxHeight.toFloat()
         val availableWidth = maxWidth
@@ -79,6 +91,12 @@ internal fun ConsoleDockHost() {
             animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
             label = "dock-corner",
         )
+        val transition = updateTransition(targetState = mode, label = "dock-mode")
+        val shownMinimized = state.isMinimized.value
+        DockCommandLink(viewModel, selected.id, maxWidthPx, maxHeightPx, origin.value) {
+            transition.isRunning || transition.currentState != transition.targetState ||
+                shownMinimized != state.isMinimized.value || offsetX != state.offsetX.value || state.isDragging.value
+        }
         val shape = RoundedCornerShape(corner)
         val borderColor = if (needsAttention) Theme.colors.warning else Theme.colors.border
 
@@ -93,15 +111,13 @@ internal fun ConsoleDockHost() {
                 .onSizeChanged { viewModel.dispatch(DockIntent.SizeChanged(it, maxWidthPx, maxHeightPx)) }
                 .then(if (isCard) Modifier else dragModifier),
         ) {
-            AnimatedContent(
-                targetState = mode,
+            transition.AnimatedContent(
                 transitionSpec = {
                     val enter = fadeIn(tween(MORPH_FADE_MS, delayMillis = MORPH_FADE_MS / 2))
                     val exit = fadeOut(tween(MORPH_FADE_MS / 2))
                     val resize = SizeTransform(clip = true) { _, _ -> spring(stiffness = Spring.StiffnessMediumLow) }
                     enter.togetherWith(exit).using(resize)
                 },
-                label = "dock-mode",
             ) { target ->
                 when (target) {
                     DockMode.Bubble -> DockBubble(

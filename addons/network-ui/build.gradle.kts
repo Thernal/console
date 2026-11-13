@@ -9,6 +9,8 @@ kotlin {
             api(projects.addons.networkCore)
             api(projects.consoleUi)
             implementation(projects.addons.settingsApi)
+            implementation(projects.addons.agentApi)
+            implementation(projects.consoleRuntime)
             implementation(projects.designsystem.components)
             implementation(libs.jetbrains.lifecycle.viewmodel.compose)
             implementation(libs.compose.foundation)
