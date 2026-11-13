@@ -66,15 +66,21 @@ class Console private constructor() : ConsoleScope {
 
     override fun notify(event: () -> Log) {
         if (!isEnabled) return
-        val e = event()
-        asyncScope.launch {
-            processMutex.withLock { processEvent(e) }
-        }
+        enqueue(event())
     }
 
+    /**
+     * Returns once every observer has seen the event, except on the main thread, where it queues the event like
+     * [notify] and returns at once: a paused stepper holds the pipeline until its Step or Resume button is pressed,
+     * and that button needs the main thread, so waiting there would freeze the app for good.
+     */
     override fun blockingNotify(event: () -> Log) {
         if (!isEnabled) return
         val e = event()
+        if (isMainThread()) {
+            enqueue(e)
+            return
+        }
         runBlocking {
             processMutex.withLock { processEvent(e) }
         }
@@ -84,6 +90,12 @@ class Console private constructor() : ConsoleScope {
         if (!isEnabled) return
         val e = event()
         processMutex.withLock { processEvent(e) }
+    }
+
+    private fun enqueue(event: Log) {
+        asyncScope.launch {
+            processMutex.withLock { processEvent(event) }
+        }
     }
 
     private suspend fun processEvent(event: Log) {
@@ -126,6 +138,8 @@ class Console private constructor() : ConsoleScope {
         override fun notify(event: () -> Log) {
             default.notify(event)
         }
+
+        /** Waits for the observers, but only off the main thread; see the instance's `blockingNotify`. */
         override fun blockingNotify(event: () -> Log) {
             default.blockingNotify(event)
         }

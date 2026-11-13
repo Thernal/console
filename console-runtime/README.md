@@ -16,7 +16,9 @@ The log model (`Log`, `LogLevel`) and contracts (`LogObserver`, `LogProcessor`,
 ## Console
 
 Global singleton. Thread-safe — `notify` dispatches asynchronously; `asyncNotify` suspends
-until observers have processed the event.
+until observers have processed the event; `blockingNotify` blocks its thread until then, except
+on the main thread, where it queues the event like `notify` (a paused stepper would otherwise
+freeze the app, since its Step button needs that thread).
 
 ```kotlin
 // Fire-and-forget
@@ -24,6 +26,9 @@ Console.notify { Log(message = "click", tag = "UI") }
 
 // Suspending — use inside coroutines when ordering matters
 Console.asyncNotify { Log(message = "response received", level = LogLevel.Success) }
+
+// Blocking — for code off the main thread that has no coroutine (an OkHttp interceptor)
+Console.blockingNotify { Log(message = "request sent", tag = "Net") }
 ```
 
 ### Enable / disable

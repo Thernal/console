@@ -376,7 +376,9 @@ dependencies {
 No code required. Once the module is on the classpath, the stepper control appears automatically in the floating dock. Tap **Pause** to freeze the pipeline, **Step** to advance one event at a time, and **Resume** to return to live mode. While the pipeline is paused the widget stays on screen even if floating widgets are hidden.
 
 A held event holds the whole pipeline, including callers that wait for it (`asyncNotify`, `blockingNotify`, the network
-integrations). See [`addons/stepper-ui`](addons/stepper-ui/README.md) for the pause filter and auto-resume.
+integrations). On the main thread `blockingNotify` does not wait: the event queues like `notify`, so the app and the
+**Step** button keep working. See [`addons/stepper-ui`](addons/stepper-ui/README.md) for the pause filter and
+auto-resume.
 
 <!-- 📸 SCREENSHOT: Console with the Stepper overlay visible — showing the Pause / Step / Resume floating controls over the log list. Ideally captured with the pipeline paused and a queued-events badge showing a count. -->
 

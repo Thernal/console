@@ -74,4 +74,8 @@ therefore holds the **whole pipeline**, not just its own view:
 - every later event queues behind the held one;
 - callers wait too: `Console.notify` returns at once, `asyncNotify` suspends, and `blockingNotify` blocks its thread.
   The network integrations use the last two, so a held network log holds that request (a suspended Ktor call, a
-  blocked OkHttp thread) until you step.
+  blocked OkHttp thread) until you step;
+- except on the main thread: there `blockingNotify` queues the event like `notify` and returns, since blocking would
+  also block **Step** and **Resume** and freeze the app. The event is still held and shown in its turn, but the code
+  that sent it does not stop. To stop a UI change at a step, send its log with `asyncNotify` from a coroutine and
+  change the UI after it.
