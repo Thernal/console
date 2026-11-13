@@ -21,7 +21,7 @@ compose-material3 = "1.9.0"
 compose-material-icons = "1.7.3"
 
 # Navigation
-cmp-navigation3 = "1.0.0-alpha06"
+cmp-navigation3 = "1.1.1"
 cmp-navigation3-viewmodel = "2.10.0"
 
 # KotlinX
