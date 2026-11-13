@@ -90,15 +90,19 @@ Swipe **↑ ↓ ← →** anywhere on screen (default gesture).
 ### 5. Connect your AI coding agent
 
 `console-bundle-ui` includes the agent bridge, so a debug build already looks for the `console-mcp` hub on your
-machine. Build the hub once from this repository and register it with your agent:
+machine. Download the hub from the release of your Console version (it needs Java 17 or newer) and register it with
+your agent:
 
 ```bash
-./gradlew -p console-mcp installDist
-claude mcp add console -- "$PWD/console-mcp/build/install/console-mcp/bin/console-mcp"
+v=<version>
+curl -fsSL -o /tmp/console-mcp.zip "https://github.com/Thernal/console/releases/download/release/v$v/console-mcp.zip"
+unzip -o -q /tmp/console-mcp.zip -d ~/.console-mcp
+claude mcp add console -- ~/.console-mcp/console-mcp/bin/console-mcp
 adb reverse tcp:47474 tcp:47474   # Android device or emulator; the iOS simulator and desktop need nothing
 ```
 
-Ask the agent to call `devices`: it lists the running app and what it shares. See [AI agents (MCP)](#ai-agents-mcp).
+Ask the agent to call `devices`: it lists the running app and what it shares. When you update Console, download the
+hub of the new version the same way. See [AI agents (MCP)](#ai-agents-mcp) and the [hub](console-mcp/README.md).
 
 ---
 
