@@ -84,6 +84,9 @@ jobs:
       - name: Build & Test
         run: ./gradlew assemble allTests
 
+      - name: Test console-mcp
+        run: ./gradlew -p console-mcp test
+
   build-ios:
     name: Build & Test iOS
     runs-on: macos-latest
@@ -115,3 +118,7 @@ jobs:
 
       - name: Test iOS
         run: ./gradlew iosSimulatorArm64Test
+
+      # Here, where every target compiles: on Linux the iOS part of the dumps could only be taken on trust.
+      - name: Check the public API
+        run: ./gradlew checkKotlinAbi
