@@ -35,9 +35,10 @@ internal object InspectorEngine {
 
     /**
      * Slot tables of sub-compositions, filled by Compose while `LocalInspectionTables` is provided. Mutable because
-     * that local's contract is a set Compose adds to; nothing else writes it.
+     * that local's contract is a set Compose adds to; nothing else writes it. Its hash is its identity, see
+     * [InspectionTables].
      */
-    val tables: MutableSet<CompositionData> = mutableSetOf()
+    val tables: MutableSet<CompositionData> = InspectionTables()
     var rootData: CompositionData? = null
 
     private val clock = TimeSource.Monotonic.markNow()

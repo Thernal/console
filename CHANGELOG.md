@@ -5,6 +5,12 @@ What is new in each release of Console. A release's notes on GitHub are its sect
 for someone using Console, not for someone reading the code; the commits follow anyway. Releases before 1.0.0-rc.1
 have their notes on their GitHub releases only.
 
+## Unreleased
+
+- **The UI inspector no longer crashes iOS apps.** Since the inspector came in 0.2.9, an iOS app with it on could
+  stop with `IllegalStateException: … Have object hashCodes changed?` once a lazy list or another sub-composition had
+  composed a few items. Android and desktop apps did not crash.
+
 ## 1.0.0-rc.1 — 2026-11-13
 
 - **AI coding agents read the running app.** The agent addon (`console-agent-api`, `console-agent-ui`, both in
