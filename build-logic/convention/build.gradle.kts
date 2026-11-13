@@ -38,6 +38,10 @@ gradlePlugin {
             id = "io.thernal.console.publish"
             implementationClass = "io.thernal.console.buildlogic.plugins.LibPublishConventionPlugin"
         }
+        register("libAbiConvention") {
+            id = "io.thernal.console.abi"
+            implementationClass = "io.thernal.console.buildlogic.plugins.LibAbiConventionPlugin"
+        }
     }
 }
 
