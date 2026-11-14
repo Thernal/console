@@ -6,10 +6,10 @@ package io.thernal.console.mcp.hub
  * reads the apps of the releases around its own.
  */
 object HubProtocol {
-    /** The version this hub speaks. */
-    const val CURRENT = 2
+    /** The version this hub speaks. 3: a `result` carries the images the tool attached. */
+    const val CURRENT = 3
 
-    /** The oldest version this hub still reads. */
+    /** The oldest version this hub still reads: 2 sends no images, and is read as results without them. */
     const val OLDEST = 2
 
     /** Why an app that speaks [version] cannot be used, with what to update; null when the hub reads it. */

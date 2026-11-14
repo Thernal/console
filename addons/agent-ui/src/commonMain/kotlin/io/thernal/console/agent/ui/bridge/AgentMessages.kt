@@ -2,6 +2,7 @@ package io.thernal.console.agent.ui.bridge
 
 import io.thernal.console.agent.AgentEntries
 import io.thernal.console.agent.AgentFeed
+import io.thernal.console.agent.AgentImage
 import io.thernal.console.agent.AgentParam
 import io.thernal.console.agent.AgentRecord
 import io.thernal.console.agent.AgentTool
@@ -11,14 +12,16 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlin.io.encoding.Base64
 
 /**
  * Messages between the app and the hub, as JSON text. App → hub: `hello` once per connection, `manifest` whenever
- * the shared tools change, `record` per feed entry, `result` per answered call. Hub → app: `call`.
+ * the shared tools change, `record` per feed entry, `result` per answered call (its text, and the images the tool
+ * attached, base64 in `images`). Hub → app: `call`.
  */
 internal object AgentMessages {
     /** Raised only when a message changes, together with `HubProtocol` in `console-mcp`, which reads it from `hello`. */
-    const val PROTOCOL_VERSION = 2
+    const val PROTOCOL_VERSION = 3
     const val TYPE_CALL = "call"
     private const val TYPE_HELLO = "hello"
     private const val TYPE_MANIFEST = "manifest"
@@ -86,12 +89,14 @@ internal object AgentMessages {
         id: Long,
         isError: Boolean,
         text: String,
+        images: List<AgentImage> = emptyList(),
     ): String {
         return obj(
             "type" to JsonPrimitive(TYPE_RESULT),
             "id" to JsonPrimitive(id),
             "error" to JsonPrimitive(isError),
             "text" to JsonPrimitive(text),
+            "images" to JsonArray(images.map(::image)),
         ).toString()
     }
 
@@ -101,6 +106,14 @@ internal object AgentMessages {
             "description" to JsonPrimitive(tool.description),
             "action" to JsonPrimitive(tool.isAction),
             "params" to JsonArray(tool.params.map(::param)),
+        )
+    }
+
+    private fun image(image: AgentImage): JsonObject {
+        return obj(
+            "name" to JsonPrimitive(image.name),
+            "mime" to JsonPrimitive(image.mimeType),
+            "data" to JsonPrimitive(Base64.encode(image.bytes)),
         )
     }
 

@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.booleanOrNull
@@ -35,6 +36,7 @@ class HubServer(
         private set
 
     private val json = Json { ignoreUnknownKeys = true }
+    private val imageList = ListSerializer(HubImage.serializer())
 
     suspend fun run() {
         val selector = SelectorManager(dispatcher)
@@ -117,7 +119,8 @@ class HubServer(
                 val id = message["id"]?.jsonPrimitive?.longOrNull ?: return deviceId
                 val isError = message["error"]?.jsonPrimitive?.booleanOrNull ?: false
                 val text = message["text"]?.jsonPrimitive?.contentOrNull.orEmpty()
-                link.complete(id = id, result = HubCallResult(isError = isError, text = text))
+                val images = message["images"]?.let { json.decodeFromJsonElement(imageList, it) }.orEmpty()
+                link.complete(id = id, result = HubCallResult(isError = isError, text = text, images = images))
             }
         }
         return deviceId

@@ -15,7 +15,7 @@ one of the Console version your app uses. It runs on Java 17 or newer.
 v=<version>   # the app's Console version
 curl -fsSL -o /tmp/console-mcp.zip "https://github.com/Thernal/console/releases/download/release/v$v/console-mcp.zip"
 unzip -o -q /tmp/console-mcp.zip -d ~/.console-mcp
-~/.console-mcp/console-mcp/bin/console-mcp --version   # console-mcp <version> (protocol 2)
+~/.console-mcp/console-mcp/bin/console-mcp --version   # console-mcp <version> (protocol 3)
 claude mcp add console -- ~/.console-mcp/console-mcp/bin/console-mcp
 ```
 
@@ -52,6 +52,11 @@ tools stay listed after their app disconnects; its tools and actions do not. Act
 An Android or iOS app that restarts (after a crash, say) stays the same device: its feeds read on across the restart,
 with a record of kind `Restart` (tag `console`) where the new run starts, and `devices` shows the run number.
 
+A tool's answer can carry images, such as the inspector's `ui_snapshot`. The agent gets each one as image content, and
+the hub saves it in `console-mcp/images` in the system's temporary directory (`$TMPDIR` on macOS), adding `Image
+saved on this computer: <path>` to the text, so the agent can tell the person to `open` it. The system clears that
+directory over time.
+
 When an app connects, registers more, or turns actions on or off, the server sends `notifications/tools/list_changed`,
 and the agent reads the new list. The server's instructions also carry each section's `about` line, so the agent knows
 what the apps share before it calls anything.
@@ -81,8 +86,14 @@ reads the apps of its own protocol (`HubProtocol`). An app that speaks another o
 usable`, with what to update, and the hub ignores what it sends rather than misread it. The hub of the app's own
 Console release always fits.
 
+| Protocol | Console | What changed |
+|----------|---------|--------------|
+| 3 | Unreleased | A `result` carries the images the tool attached. A protocol 3 hub still reads protocol 2 apps. |
+| 2 | 1.0.0-rc.1 | First released protocol. |
+
 ## Limits
 
 - One hub per `console-mcp` process: a second agent session on the same port cannot bind it and says so.
 - The hub keeps the newest 20 000 records per device and feed, in memory, for as long as the process runs.
 - A call to an app times out after 20 seconds; the app gives its tool 15 of them.
+- A message between an app and the hub is at most 4 MB, so an image in an answer is too (about 3 MB before base64).

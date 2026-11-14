@@ -99,10 +99,13 @@ AgentBridge ──┬─ feed records ─► redact ─► seq ─► history ri
 - **Manifest.** Sent on connect and again whenever the registry or the actions switch changes; the hub turns it into
   MCP tools and tells the agent that the list changed.
 - **Calls.** Each call runs in its own coroutine: the actions switch is checked, the arguments are validated against
-  the tool's parameters, the body runs with a 15-second timeout and the result is redacted.
+  the tool's parameters, the body runs with a 15-second timeout and the result is redacted. The images the body
+  attached travel with it; images that would not fit in one frame are left out and the text says so.
 
-Wire format: a 4-byte big-endian length, then UTF-8 JSON. App to hub: `hello` (device), `manifest`, `record`, `result`.
-Hub to app: `call`.
+Wire format: a 4-byte big-endian length, then UTF-8 JSON, at most 4 MB a frame. App to hub: `hello` (device and
+protocol), `manifest`, `record`, `result` (text, and attached images as base64). Hub to app: `call`. The protocol is
+raised with every change to these messages (`AgentMessages.PROTOCOL_VERSION`, 3 since images); see
+[console-mcp → Versions](../../console-mcp/README.md#versions).
 
 | Piece | Role |
 |-------|------|

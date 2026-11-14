@@ -2,9 +2,11 @@ package io.thernal.console.mcp.tools
 
 import io.modelcontextprotocol.kotlin.sdk.server.Server
 import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
+import io.modelcontextprotocol.kotlin.sdk.types.ImageContent
 import io.modelcontextprotocol.kotlin.sdk.types.TextContent
 import io.modelcontextprotocol.kotlin.sdk.types.ToolAnnotations
 import io.thernal.console.mcp.hub.DeviceStore
+import io.thernal.console.mcp.hub.HubCallResult
 import io.thernal.console.mcp.hub.HubManifest
 import io.thernal.console.mcp.hub.HubProtocol
 import io.thernal.console.mcp.hub.HubServer
@@ -19,12 +21,14 @@ import kotlinx.serialization.json.jsonPrimitive
  * Keeps the MCP tool list in step with what connected apps share. `devices` is built in; every feed adds a list, a
  * get and a wait tool; every app tool is forwarded to the app that offers it. Adding or removing a tool makes the SDK
  * send `notifications/tools/list_changed`. `devices` starts with the hub's [version], the Console release it came with.
+ * Images in an app's answer go to the agent as image content and are saved by [imageFiles], the answer naming the file.
  */
 class HubTools(
     private val server: Server,
     private val store: DeviceStore,
     private val hub: HubServer,
     private val version: String,
+    private val imageFiles: ImageFiles = ImageFiles(),
 ) {
     private val feedTools = FeedTools(store)
     private val installed = mutableMapOf<String, String>()
@@ -129,7 +133,17 @@ class HubTools(
             ?: return ToolText("${device.info.name} is not connected.", isError = true)
         val forwarded = JsonObject(arguments - ToolSchemas.DEVICE)
         val answer = link.call(tool = name, arguments = forwarded, timeoutMillis = CALL_TIMEOUT_MILLIS)
-        return ToolText(answer.text, isError = answer.isError)
+        return ToolText(text = answer.text + savedImagesText(answer), isError = answer.isError, images = answer.images)
+    }
+
+    /** Saves the answer's images; one line per image with its path, so the agent can `open` it for the person. */
+    private fun savedImagesText(answer: HubCallResult): String {
+        return answer.images.joinToString(separator = "") { image ->
+            imageFiles.save(image).fold(
+                onSuccess = { "\nImage saved on this computer: $it" },
+                onFailure = { "\nThe image could not be saved: ${it.message ?: it::class.simpleName}" },
+            )
+        }
     }
 
     /** An app retries the hub every two seconds at most; right after a start, wait for it instead of failing. */
@@ -157,7 +171,8 @@ class HubTools(
     }
 
     private fun result(text: ToolText): CallToolResult {
-        return CallToolResult(content = listOf(TextContent(text.text)), isError = text.isError.takeIf { it })
+        val images = text.images.map { ImageContent(data = it.data, mimeType = it.mime) }
+        return CallToolResult(content = listOf(TextContent(text.text)) + images, isError = text.isError.takeIf { it })
     }
 
     private fun readOnly(): ToolAnnotations {

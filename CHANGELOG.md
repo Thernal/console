@@ -9,6 +9,9 @@ have their notes on their GitHub releases only.
 
 - **Your own agent tools can answer with images.** In a tool's `run`, `call.attach(AgentImage(bytes = png, name =
   "…"))` adds an image beside the text; the agent gets it as MCP image content and console-mcp saves it as a file.
+- **Update console-mcp along with Console.** The messages between the app and console-mcp changed (protocol 3), so
+  an app with this release is listed as `not usable` by an older console-mcp; take the `console-mcp.zip` of this
+  release. It still reads apps of 1.0.0-rc.1 and rc.2.
 
 ## 1.0.0-rc.2 — 2026-11-13
 

@@ -1,5 +1,6 @@
 package io.thernal.console.agent.ui.bridge
 
+import io.thernal.console.agent.AgentImage
 import io.thernal.console.agent.AgentRecord
 import io.thernal.console.agent.agentEntries
 import io.thernal.console.agent.ui.device.AgentDevice
@@ -13,8 +14,10 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.long
+import kotlin.io.encoding.Base64
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class AgentMessagesTest {
     private val entries = agentEntries(id = "demo", title = "Demo", about = "Demo app") {
@@ -62,6 +65,27 @@ class AgentMessagesTest {
     }
 
     @Test
+    fun `result carries attached images as base64`() {
+        val png = byteArrayOf(PNG_FIRST_BYTE, 'P'.code.toByte(), 'N'.code.toByte(), 'G'.code.toByte())
+        val image = AgentImage(bytes = png, name = "ui_snapshot")
+
+        val json = parse(AgentMessages.result(id = 4, isError = false, text = "Screen", images = listOf(image)))
+        val sent = json.getValue("images").jsonArray.single().jsonObject
+
+        assertEquals("ui_snapshot", sent.getValue("name").jsonPrimitive.content)
+        assertEquals(AgentImage.PNG, sent.getValue("mime").jsonPrimitive.content)
+        assertTrue(png.contentEquals(Base64.decode(sent.getValue("data").jsonPrimitive.content)))
+    }
+
+    @Test
+    fun `result without images sends an empty list`() {
+        val json = parse(AgentMessages.result(id = 4, isError = true, text = "Failed"))
+
+        assertTrue(json.getValue("images").jsonArray.isEmpty())
+        assertEquals(true, json.getValue("error").jsonPrimitive.boolean)
+    }
+
+    @Test
     fun `hello carries the protocol version and the device with its run`() {
         val device = AgentDevice(
             id = "d1",
@@ -94,5 +118,6 @@ class AgentMessagesTest {
 
     private companion object {
         const val TIME = 1_700_000_000_123L
+        const val PNG_FIRST_BYTE: Byte = -119
     }
 }
