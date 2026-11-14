@@ -5,7 +5,7 @@ What is new in each release of Console. A release's notes on GitHub are its sect
 for someone using Console, not for someone reading the code; the commits follow anyway. Releases before 1.0.0-rc.1
 have their notes on their GitHub releases only.
 
-## Unreleased
+## 1.0.0-rc.3 — 2026-11-15
 
 - **An agent can show you the layout problem it found.** The UI inspector's new agent tool `ui_snapshot` takes a PNG
   of the app's screen with the Inspector tab's overlay drawn on the nodes the agent names: frame, padding and margin,

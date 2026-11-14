@@ -88,7 +88,7 @@ Console release always fits.
 
 | Protocol | Console | What changed |
 |----------|---------|--------------|
-| 3 | Unreleased | A `result` carries the images the tool attached. A protocol 3 hub still reads protocol 2 apps. |
+| 3 | 1.0.0-rc.3 | A `result` carries the images the tool attached. A protocol 3 hub still reads protocol 2 apps. |
 | 2 | 1.0.0-rc.1 | First released protocol. |
 
 ## Limits
