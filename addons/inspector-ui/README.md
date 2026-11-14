@@ -109,13 +109,14 @@ variant such as `BasicText.android.kt` counts as `BasicText.kt`) and by lower-ca
 
 With [`console-agent-ui`](../agent-ui/README.md) installed, the addon shares the screen's composable tree with an AI
 coding agent (section `inspector`), so it can check a layout after a code change without a screenshot, try RTL and
-large fonts, and find recomposition hot spots.
+large fonts, and find recomposition hot spots; and when it finds a problem, show it in a snapshot of the screen.
 
 | Tool | Kind | What it does |
 |------|------|--------------|
 | `ui_tree(query, depth, framework, limit)` | Tool | One line per node: `#12 CartRow (Cart.kt) @16,320 360×56 "Total" ×3`, i.e. id, composable, source file, bounds (`x,y w×h` in dp), texts and recompositions, indented by depth. Framework nodes are hidden as in the tab unless `framework = true`; `query` keeps the nodes whose name or file contains it with everything inside them; at most `limit` lines (150 by default). |
 | `ui_node(id)` | Tool | One node in full, as the tab's details show it: size, position and pixel bounds, padding, margin, modifiers, parameters, slot values, recompositions and the last reason, plus its texts, test tags, the nodes it sits in and its children. |
 | `ui_find(text, limit)` | Tool | Nodes whose name, source file, text or `testTag` contains the text, each with the nodes it sits in. |
+| `ui_snapshot(nodes, heatmap, counters, scale)` | Tool | A PNG of the app's screen as it is now, with the overlay the tab draws on the nodes named (ids from `ui_tree` or `ui_find`, comma-separated; none for a plain screenshot): frame, padding and margin with their sizes, the size in dp and the name, and with one node its distances to its parent. `heatmap` and `counters` add the recomposition heatmap and the ×N tags. `scale` is a percent of the screen's pixels; by default the long side is about 1600 px. |
 | `recompositions(limit)` | Tool | The most recomposed nodes since the last reset, with the last reason, and the composition timings. |
 | `ui_font_scale(scale)` | Action | Scales the app's fonts over the system's (`Small` … `Huge`), or `default`. |
 | `ui_layout_direction(direction)` | Action | Forces `ltr` or `rtl`, or `system`. |
@@ -130,6 +131,15 @@ other sub-compositions are missing from the tree, and the answers say so.
 
 After changing a padding in `CartRow.kt`, for example: `ui_find("Total")` → `ui_node(id)` shows the new padding;
 `ui_layout_direction("rtl")` → `ui_tree(query = "CartRow")` shows mirrored bounds.
+
+`ui_snapshot` gives the agent an image to look at and to show the person: the agent reads it as MCP image content, and
+the hub saves it on the computer (`console-mcp/images` in the temporary directory) and names the file in the answer,
+so `open <path>` shows it. The overlay is drawn on the captured image, never on the screen, and the app draws as usual
+in between. The image is the app content only: Console's own UI, dialogs and popups are drawn outside it, so nodes in
+them are named in the answer instead of marked, as are ids that are no longer on screen. An app that draws no frame
+within 3 seconds (in the background, on Android or desktop) gets an answer that says so, without an image; a PNG over
+2.5 MB is drawn again smaller. Checked on the iOS simulator: a plain screenshot, marked nodes with padding and
+distances, several nodes, the heatmap and counters, 20 %, and RTL.
 
 ## Architecture
 
@@ -156,14 +166,14 @@ the settings section and the agent entries.
 
 | Package | Pieces |
 |---------|--------|
-| `host` | `InspectorHost` wraps the app content. Provides `LocalInspectionTables` so Compose hands every sub-composition's slot table to the engine, hands the root composition data over, starts `InspectorEngine.run()` and applies the font scale and layout direction overrides. Its structure never changes with the config, so toggling settings never resets app state. |
+| `host` | `InspectorHost` wraps the app content. Provides `LocalInspectionTables` so Compose hands every sub-composition's slot table to the engine, hands the root composition data over, starts `InspectorEngine.run()` and applies the font scale and layout direction overrides. Its structure never changes with the config, so toggling settings never resets app state. The content sits in a plain `Layout` placed like the `Box` around it, whose draw records one frame into a `GraphicsLayer` when `ContentCapture` asks for it (`ui_snapshot`); `CapturedFrame` scales it and draws the overlay on it. |
 | `engine` | `InspectorEngine`, the single owner of runtime state (snapshot, selection, inspect mode, freeze, counts, flashes, timing) as `StateFlow`s. `run()` launches five loops: observer tracking, event consumption, command consumption, auto-refresh and a 250 ms stats loop that publishes counts and rebuilds the tree when new structure appeared. `InspectorPicker` turns touches into a selection, `PickChain` implements the step-in picking, `InspectorMeasure` holds the ruler state, `InspectorQueries` and `NodeDetailsReader` build what the tab shows. |
 | `engine/tree` | `TreeBuilder` walks the slot tables: every group whose source information names a call becomes an `InspectorNode`, layout nodes attach to their nearest named owner, and recompose scopes are indexed to nodes. `InspectorSnapshot` is the immutable result; `liveBounds()` reads every node's frame from live coordinates, so the overlay follows scrolling and animation without a rebuild. `SourceNaming` decides what is framework, generic or the inspector's own UI. |
 | `engine/geometry` | `ModifierKind` classifies modifiers (padding, visual, other); `NodeBox` splits a node into frame, margin and padding; `PickRect` lets a touch on a margin pick that node; `NodeDistance` measures gaps and insets. |
 | `engine/recomposition` | `RecompositionObserver` observes every running `Recomposer` and only enqueues events, since callbacks arrive on composition threads. `ScopeSkip` reads the runtime's internal skip flag; `RecompositionCounts` keeps per-scope counts, moves the counts of scopes that left the tree onto their node, and credits hidden framework nodes to the app composable above them. |
 | `overlay` | `InspectorBackdrop` / `InspectorDrawLayer` / `DrawInspectorScene` draw on one `Canvas`, redrawn every frame (`FrameTick`) only while there is something live to draw, capped at 600 nodes and 150 labels. `InspectorCapture` / `InspectorPickLayer` swallow pointer input while inspecting. |
 | `dock` | The widget (status *Attention* while picking), its chip panel, the folded-dock quick action and the summary line. |
-| `agent` | The agent entries (`InspectorAgentEntries`), the reads they run on the main thread (`InspectorAgentReads`, `UiTreeReader`), ids kept per node key (`InspectorAgentIds`), the text of the answers, and `PlatformSemantics`, which reads the semantics tree's texts where the platform shares it (Android). |
+| `agent` | The agent entries (`InspectorAgentEntries`), the reads they run on the main thread (`InspectorAgentReads`, `UiTreeReader`), ids kept per node key (`InspectorAgentIds`), the text of the answers, `PlatformSemantics`, which reads the semantics tree's texts where the platform shares it (Android), and `encodePng`, the snapshot's PNG (Android's `Bitmap`, Skia on iOS and desktop). |
 | `view/inspector`, `navigation` | The tab: `InspectorViewModel` combines the engine flows into tree rows, details and ranking; `TreeExporter` produces the copied text. |
 
 ### Keeping the numbers honest

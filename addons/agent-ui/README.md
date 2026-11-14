@@ -41,7 +41,7 @@ Each addon registers its own entries; installing it is enough.
 | [Crash reports](../crash-report-ui/README.md#agent) | `crash-report` | `crashes` feed, `crash_sessions`, `crash_session`, actions `crash_delete`, `crash_clear` |
 | [Details](../details-ui/README.md#agent) | `details` | `details`, `details_changes` feed |
 | [Settings](../settings-ui/README.md#agent) | `settings` | `settings`, actions `settings_set`, `settings_reset`; the `agent` section is read-only |
-| [UI inspector](../inspector-ui/README.md#agent) | `inspector` | `ui_tree`, `ui_node`, `ui_find`, `recompositions`, actions `ui_font_scale`, `ui_layout_direction`, `recompositions_reset` |
+| [UI inspector](../inspector-ui/README.md#agent) | `inspector` | `ui_tree`, `ui_node`, `ui_find`, `ui_snapshot`, `recompositions`, actions `ui_font_scale`, `ui_layout_direction`, `recompositions_reset` |
 | [Stepper](../stepper-ui/README.md#agent) | `stepper` | `stepper_state`, `stepper_events` feed, actions `stepper_pause`, `stepper_next`, `stepper_resume` |
 | Floating dock (this addon) | `dock` | `dock_state`, actions `dock_move`, `dock_minimize`, `dock_select` |
 
@@ -80,7 +80,8 @@ The hub address, device name and history size are set in code with `ConsoleAgent
 - The hub listens on the loopback interface; Android reaches it through `adb reverse`. Nothing listens on the device.
 - Actions are left out of what the app shares while *Allow actions* is off, and a call to one is refused.
 - Redaction runs in the app before any feed record or tool result leaves it: the default keys plus every
-  `redact(...)` (see [`agent-api`](../agent-api/README.md#redaction)).
+  `redact(...)` (see [`agent-api`](../agent-api/README.md#redaction)). It masks text: an image a tool attaches, such as
+  the inspector's `ui_snapshot`, shows the screen as it is.
 
 ## How it works
 

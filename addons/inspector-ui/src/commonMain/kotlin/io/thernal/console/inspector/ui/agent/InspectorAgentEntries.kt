@@ -1,7 +1,9 @@
 package io.thernal.console.inspector.ui.agent
 
+import io.thernal.console.agent.AgentCall
 import io.thernal.console.agent.AgentEntries
 import io.thernal.console.agent.AgentEntriesScope
+import io.thernal.console.agent.AgentImage
 import io.thernal.console.agent.agentEntries
 import io.thernal.console.inspector.ConsoleInspector
 import io.thernal.console.inspector.InspectorFontScale
@@ -9,6 +11,7 @@ import io.thernal.console.inspector.InspectorLayoutDirection
 import io.thernal.console.inspector.ui.engine.InspectorEngine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.math.sqrt
 
 private const val DEFAULT_TREE_LIMIT = 150
 private const val MAX_TREE_LIMIT = 1_000
@@ -19,17 +22,30 @@ private const val MAX_RANKING_LIMIT = 100
 private const val MAX_DEPTH = 200
 private const val DEFAULT = "default"
 private const val SYSTEM = "system"
+private const val MIN_SCALE_PERCENT = 5
+private const val MAX_SCALE_PERCENT = 100
+private const val PERCENT = 100f
+private const val SNAPSHOT_NAME = "ui_snapshot"
+
+/** Keeps the PNG, base64 in a frame of at most 4 MB to the hub, well inside it. */
+private const val MAX_PNG_BYTES = 2_500_000
+private const val BYTES_PER_KILOBYTE = 1_000
+private const val MAX_SNAPSHOT_ATTEMPTS = 3
+
+/** Aims a little below the limit when shrinking, since PNG sizes do not follow the pixel count exactly. */
+private const val SHRINK_MARGIN = 0.9f
 
 /**
  * What the UI inspector shares with an AI agent: the composable tree on screen with source files, bounds and texts,
- * one node in full, a search, the recomposition ranking, and the font scale and layout direction overrides. The
- * engine lives on the main thread, so every body runs there.
+ * one node in full, a search, a snapshot of the screen with the overlay, the recomposition ranking, and the font scale
+ * and layout direction overrides. The engine lives on the main thread, so every body reads there.
  */
 internal fun inspectorAgentEntries(): AgentEntries {
     return agentEntries(
         id = "inspector",
         title = "UI inspector",
-        about = "The composable tree on screen, with source files, bounds, texts and recomposition counts",
+        about = "The composable tree on screen, with source files, bounds, texts and recomposition counts, and " +
+            "snapshots of the screen with nodes marked",
     ) {
         treeTool()
         tool(name = "ui_node", description = "One node in full: size, position, padding, modifiers, texts, children") {
@@ -47,6 +63,7 @@ internal fun inspectorAgentEntries(): AgentEntries {
             )
             run { call -> onMain { uiFind(call[text], call[limit]) } }
         }
+        snapshotTool()
         tool(name = "recompositions", description = "The most recomposed nodes since the last reset, with reasons") {
             val limit = int(
                 key = "limit",
@@ -95,6 +112,63 @@ private fun AgentEntriesScope.treeTool() {
     }
 }
 
+private fun AgentEntriesScope.snapshotTool() {
+    tool(
+        name = "ui_snapshot",
+        description = "A PNG of the app's screen as it is now, with the inspector's overlay on the nodes named: " +
+            "frame, padding, margin and size in dp, optionally the recomposition heatmap and ×N counters. The hub " +
+            "saves it on this computer and names the file, so the person can open it",
+    ) {
+        val nodes = optionalText(
+            key = "nodes",
+            description = "Ids from `ui_tree` or `ui_find` to mark, comma-separated; none for a plain screenshot",
+        )
+        val heatmap = toggle(key = "heatmap", description = "Tint nodes by recompositions, blue to red")
+        val counters = toggle(key = "counters", description = "×N recompositions on each node")
+        val scale = optionalInt(
+            key = "scale",
+            description = "Percent of the screen's pixels; by default the long side is about 1600 px",
+            min = MIN_SCALE_PERCENT,
+            max = MAX_SCALE_PERCENT,
+        )
+        run { call ->
+            snapshot(
+                call = call,
+                ids = nodeIds(call[nodes]),
+                hasHeatmap = call[heatmap],
+                hasCounters = call[counters],
+                scale = call[scale],
+            )
+        }
+    }
+}
+
+/**
+ * Draws the snapshot on the main thread and encodes it here, off it; attaches the PNG to [call] and returns the text.
+ * A PNG over [MAX_PNG_BYTES] is drawn again smaller.
+ */
+private suspend fun snapshot(
+    call: AgentCall,
+    ids: List<Int>,
+    hasHeatmap: Boolean,
+    hasCounters: Boolean,
+    scale: Int?,
+): String {
+    var drawScale = scale?.let { it / PERCENT }
+    repeat(MAX_SNAPSHOT_ATTEMPTS) { attempt ->
+        val drawn = onMain { drawUiSnapshot(ids, hasHeatmap, hasCounters, drawScale) }
+        val image = drawn.image ?: return drawn.text
+        val png = encodePng(image) ?: return drawn.text + "\nThis platform could not encode the image as PNG."
+        if (png.size <= MAX_PNG_BYTES) {
+            call.attach(AgentImage(bytes = png, name = SNAPSHOT_NAME))
+            val limit = MAX_PNG_BYTES / BYTES_PER_KILOBYTE
+            return drawn.text + if (attempt > 0) "\nScaled down to stay under $limit KB." else ""
+        }
+        drawScale = drawn.scale * sqrt(MAX_PNG_BYTES.toFloat() / png.size) * SHRINK_MARGIN
+    }
+    return "The image stayed over ${MAX_PNG_BYTES / BYTES_PER_KILOBYTE} KB even scaled down; pass a smaller `scale`."
+}
+
 private fun AgentEntriesScope.environmentActions() {
     action(name = "ui_font_scale", description = "Scales the app's fonts over the system setting, or stops doing so") {
         val scale = choice(
@@ -135,6 +209,6 @@ private fun AgentEntriesScope.environmentActions() {
     }
 }
 
-private suspend fun <T> onMain(block: () -> T): T {
+private suspend fun <T> onMain(block: suspend () -> T): T {
     return withContext(Dispatchers.Main) { block() }
 }

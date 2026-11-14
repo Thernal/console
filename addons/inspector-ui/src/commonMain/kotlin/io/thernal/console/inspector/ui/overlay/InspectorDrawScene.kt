@@ -5,7 +5,10 @@ import io.thernal.console.inspector.InspectorConfig
 import io.thernal.console.inspector.ui.engine.tree.InspectorNode
 import io.thernal.console.inspector.ui.engine.tree.InspectorSnapshot
 
-/** Everything the draw layer needs for one frame, resolved outside the draw lambda. */
+/**
+ * Everything the draw layer needs for one frame, resolved outside the draw lambda. [marked] are drawn as the
+ * selection is (frame, size, padding and margin), for an agent's snapshot of several nodes.
+ */
 internal class InspectorDrawScene(
     val config: InspectorConfig,
     val snapshot: InspectorSnapshot,
@@ -15,6 +18,7 @@ internal class InspectorDrawScene(
     val counts: Map<Int, Int>,
     val flashes: Map<Any, Long>,
     val nowMillis: () -> Long,
+    val marked: List<InspectorNode> = emptyList(),
 ) {
     /** Nearest visible ancestor of [node] that has bounds, used as the measurement reference. */
     fun parentBounds(

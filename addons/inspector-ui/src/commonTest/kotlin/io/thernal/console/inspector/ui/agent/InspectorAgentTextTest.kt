@@ -1,7 +1,10 @@
 package io.thernal.console.inspector.ui.agent
 
+import androidx.compose.ui.unit.IntSize
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class InspectorAgentTextTest {
     private val lines = listOf(
@@ -32,6 +35,54 @@ class InspectorAgentTextTest {
 
         assertEquals("  #12 CartRow (Cart.kt) @16,320 360×56 \"Total\" ×3", uiLine(row))
         assertEquals("Tree\n#1 HomeScreen\n… 4 more nodes; narrow with `query` or `depth`", treeText("Tree", lines, 1))
+    }
+
+    @Test
+    fun `node ids are read from commas spaces and hashes each once`() {
+        assertEquals(listOf(12, 15, 20), nodeIds(" 12, #15  20;12 "))
+        assertEquals(emptyList(), nodeIds(null))
+        assertEquals(emptyList(), nodeIds("  "))
+    }
+
+    @Test
+    fun `a token that is not an id is refused with what to pass`() {
+        val error = assertFailsWith<IllegalArgumentException> { nodeIds("12, CartRow") }
+
+        assertTrue(error.message.orEmpty().contains("\"CartRow\" is not a node id"))
+    }
+
+    @Test
+    fun `a snapshot answer gives the screen in dp and px then the image and the marked nodes`() {
+        val marked = line(id = 12, depth = 0, name = "CartRow", file = "Cart.kt").copy(bounds = "16,320 360×56")
+
+        val text = snapshotText(
+            screen = IntSize(width = 1206, height = 2622),
+            density = 3f,
+            image = IntSize(width = 736, height = 1600),
+            scale = 0.61f,
+            marked = listOf(marked),
+            notes = listOf("#99: no node with this id on screen now."),
+        )
+
+        val lines = text.lines()
+        assertEquals("Screen 402×874 dp (1206×2622 px, 3.0 px per dp); image 736×1600 px, 61%.", lines[0])
+        assertTrue(lines[1].startsWith("Marked ("))
+        val expected = listOf("#12 CartRow (Cart.kt) @16,320 360×56", "#99: no node with this id on screen now.")
+        assertEquals(expected, lines.drop(2))
+    }
+
+    @Test
+    fun `a plain snapshot has no marked section`() {
+        val text = snapshotText(
+            screen = IntSize(width = 800, height = 600),
+            density = 1f,
+            image = IntSize(width = 800, height = 600),
+            scale = 1f,
+            marked = emptyList(),
+            notes = emptyList(),
+        )
+
+        assertEquals("Screen 800×600 dp (800×600 px, 1.0 px per dp); image 800×600 px, 100%.", text)
     }
 
     private fun line(

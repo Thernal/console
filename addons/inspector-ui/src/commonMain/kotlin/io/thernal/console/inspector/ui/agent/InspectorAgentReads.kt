@@ -1,15 +1,28 @@
 package io.thernal.console.inspector.ui.agent
 
+import androidx.compose.ui.unit.IntSize
 import io.thernal.console.inspector.ConsoleInspector
 import io.thernal.console.inspector.InspectorConfig
 import io.thernal.console.inspector.ui.engine.InspectorEngine
 import io.thernal.console.inspector.ui.engine.InspectorQueries
+import io.thernal.console.inspector.ui.engine.tree.InspectorNode
 import io.thernal.console.inspector.ui.engine.tree.InspectorSnapshot
+import io.thernal.console.inspector.ui.host.CapturedFrame
+import io.thernal.console.inspector.ui.host.ContentCapture
+import io.thernal.console.inspector.ui.overlay.InspectorDrawScene
+import io.thernal.console.inspector.ui.overlay.drawInspectorScene
 import io.thernal.console.inspector.ui.view.inspector.toText
+import kotlin.math.max
+import kotlin.math.min
 
 private const val NO_UI = "No UI on screen to inspect yet."
 private const val MAX_CHILDREN = 30
 private const val TURN_ON = "settings_set(section=\"inspector\", key=\"enabled\", value=\"true\")"
+private const val FRAME_TIMEOUT_MILLIS = 3_000L
+private const val SNAPSHOT_LONG_SIDE_PX = 1_600f
+private const val NO_FRAME = "The app drew no frame within $FRAME_TIMEOUT_MILLIS ms (is it in the background, or the " +
+    "screen off?), so there is no image."
+private const val NO_HOST = "The app content is not on screen, so there is no image."
 
 /** Main thread only: each read rebuilds the tree first, so it shows the screen as it is now. */
 internal fun uiTree(
@@ -90,6 +103,91 @@ internal fun recompositionsText(limit: Int): String {
         uiLine(reader.line(node), indent = false) + reason
     }
     return (listOf(header) + lines).joinToString(separator = "\n")
+}
+
+/**
+ * Main thread: the app's next frame scaled by [scale] (by default to a long side of about 1600 px), with the nodes
+ * [ids] marked as the selection is, and the heatmap and ×N counters when asked. Only nodes in the image's window are
+ * drawn; the others are named in the text with the reason.
+ */
+internal suspend fun drawUiSnapshot(
+    ids: List<Int>,
+    hasHeatmap: Boolean,
+    hasCounters: Boolean,
+    scale: Float?,
+): UiSnapshotImage {
+    val isAttached = ContentCapture.isAttached
+    val frame = ContentCapture.nextFrame(FRAME_TIMEOUT_MILLIS)
+        ?: return UiSnapshotImage(image = null, text = if (isAttached) NO_FRAME else NO_HOST, scale = 1f)
+    InspectorEngine.refresh(force = true)
+    val snapshot = InspectorEngine.snapshot.value
+    InspectorAgentIds.retain(snapshot)
+    val config = ConsoleInspector.config.value
+    val notes = mutableListOf<String>()
+    val marked = markedNodes(ids = ids, snapshot = snapshot, frame = frame, notes = notes)
+    val isCounted = hasHeatmap || hasCounters
+    if (isCounted && (!config.enabled || !config.trackRecompositions)) {
+        notes += "Recompositions are not tracked (`enabled` and `trackRecompositions` in the settings section " +
+            "\"inspector\"), so the heatmap and counters show nothing."
+    }
+    offHint(config).takeIf { it.isNotEmpty() }?.let { notes += it.trim() }
+    val size = frame.size
+    val drawScale = scale ?: min(1f, SNAPSHOT_LONG_SIDE_PX / max(size.width, size.height).coerceAtLeast(1))
+    val scene = InspectorDrawScene(
+        config = config.copy(
+            showBounds = false,
+            showLabels = false,
+            showHeatmap = hasHeatmap,
+            showRecompositionCounters = hasCounters,
+            showMeasurements = true,
+        ),
+        snapshot = snapshot,
+        nodes = if (isCounted) snapshot.visibleNodes(config.hideFrameworkNodes).filter(frame::shows) else emptyList(),
+        selected = null,
+        anchor = null,
+        counts = InspectorEngine.nodeCounts.value,
+        flashes = emptyMap(),
+        nowMillis = InspectorEngine::nowMillis,
+        marked = marked,
+    )
+    val image = frame.render(drawScale) { drawInspectorScene(scene, frame.style, frame.measurer) }
+    val reader = UiTreeReader(snapshot, config.hideFrameworkNodes)
+    val text = snapshotText(
+        screen = size,
+        density = frame.density.density,
+        image = IntSize(image.width, image.height),
+        scale = drawScale,
+        marked = marked.map { reader.line(it, ownTextsOnly = true) },
+        notes = notes,
+    )
+    return UiSnapshotImage(image = image, text = text, scale = drawScale)
+}
+
+/** The nodes of [ids] the image can show; for each one it cannot, a line in [notes] says why. */
+private fun markedNodes(
+    ids: List<Int>,
+    snapshot: InspectorSnapshot,
+    frame: CapturedFrame,
+    notes: MutableList<String>,
+): List<InspectorNode> {
+    val bounds = snapshot.liveBounds()
+    return ids.mapNotNull { id ->
+        val node = InspectorAgentIds.nodeOf(id, snapshot)
+        val problem = when {
+            node == null -> "no node with this id on screen now; `ui_tree` or `ui_find` gives the ids"
+            bounds.getOrNull(node.id) == null -> "takes no space on screen"
+            !node.isUnderApp -> "part of Console's own UI, which the image leaves out"
+            !frame.shows(node) -> "in a dialog or a popup, which the image leaves out"
+            else -> return@mapNotNull node
+        }
+        notes += listOfNotNull("#$id", node?.name).joinToString(separator = " ") + ": $problem."
+        null
+    }
+}
+
+/** Whether [node] is app content drawn in [this] frame's window, not in a dialog, a popup or Console's own UI. */
+private fun CapturedFrame.shows(node: InspectorNode): Boolean {
+    return node.isUnderApp && node.primaryLayout?.let(::sharesWindow) == true
 }
 
 private fun refreshed(): InspectorSnapshot? {

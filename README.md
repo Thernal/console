@@ -555,7 +555,7 @@ console-agent-ui ── TCP 127.0.0.1:47474 ──► console-mcp hub ── MCP
 | Details | `details`, `details_changes` feed |
 | Settings | `settings`, actions `settings_set`, `settings_reset` |
 | Stepper | `stepper_state`, `stepper_events` feed, actions `stepper_pause`, `stepper_next`, `stepper_resume` |
-| UI inspector | `ui_tree`, `ui_node`, `ui_find`, `recompositions`, actions `ui_font_scale`, `ui_layout_direction`, `recompositions_reset` |
+| UI inspector | `ui_tree`, `ui_node`, `ui_find`, `ui_snapshot`, `recompositions`, actions `ui_font_scale`, `ui_layout_direction`, `recompositions_reset` |
 | Floating dock | `dock_state`, actions `dock_move`, `dock_minimize`, `dock_select` |
 
 Each feed also gives `<feed>_get` (one record in full) and `<feed>_wait` (waits for a matching record). Actions change

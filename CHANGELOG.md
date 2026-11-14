@@ -7,6 +7,11 @@ have their notes on their GitHub releases only.
 
 ## Unreleased
 
+- **An agent can show you the layout problem it found.** The UI inspector's new agent tool `ui_snapshot` takes a PNG
+  of the app's screen with the Inspector tab's overlay drawn on the nodes the agent names: frame, padding and margin,
+  sizes in dp and the name, and on request the recomposition heatmap and ×N counters. The agent sees the image, and
+  console-mcp saves it on your computer and gives its path, so `open <path>` shows it to you. Android, iOS and
+  desktop; the overlay is drawn on the image only, never on the screen.
 - **Your own agent tools can answer with images.** In a tool's `run`, `call.attach(AgentImage(bytes = png, name =
   "…"))` adds an image beside the text; the agent gets it as MCP image content and console-mcp saves it as a file.
 - **Update console-mcp along with Console.** The messages between the app and console-mcp changed (protocol 3), so

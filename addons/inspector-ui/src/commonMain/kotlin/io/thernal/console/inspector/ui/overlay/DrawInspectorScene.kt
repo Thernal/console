@@ -57,6 +57,9 @@ private fun DrawScope.drawPick(
 ) {
     scene.anchor?.let { drawAnchor(it, liveBounds, style, measurer) }
     scene.selected?.let { drawSelection(scene, it, liveBounds, style, measurer) }
+    // Distances to the parent only for a single node: several sets of them would cover each other.
+    val showsDistances = scene.marked.size == 1
+    scene.marked.forEach { drawSelection(scene, it, liveBounds, style, measurer, showsDistances) }
     val anchorBounds = scene.anchor?.let { liveBounds[it.id] }
     val targetBounds = scene.selected?.takeIf { it != scene.anchor }?.let { liveBounds[it.id] }
     if (anchorBounds != null && targetBounds != null) drawDistance(anchorBounds, targetBounds, style, measurer)
@@ -110,6 +113,7 @@ private fun DrawScope.drawSelection(
     liveBounds: List<Rect?>,
     style: InspectorDrawStyle,
     measurer: TextMeasurer,
+    showsDistances: Boolean = scene.anchor == null,
 ) {
     val bounds = liveBounds[node.id] ?: return
     drawRect(style.selection.copy(alpha = SELECTION_ALPHA), bounds.topLeft, bounds.size)
@@ -119,7 +123,7 @@ private fun DrawScope.drawSelection(
     val sizeLabel = "${node.name}  $widthDp×$heightDp dp"
     drawTag(sizeLabel, Offset(bounds.left, bounds.bottom), alignRight = false, style, measurer)
     if (scene.config.showMeasurements) node.primaryLayout?.let { drawBox(it, style, measurer) }
-    if (scene.config.showMeasurements && scene.anchor == null) {
+    if (scene.config.showMeasurements && showsDistances) {
         scene.parentBounds(node, liveBounds)?.let { drawMeasurements(bounds, it, style, measurer) }
     }
 }

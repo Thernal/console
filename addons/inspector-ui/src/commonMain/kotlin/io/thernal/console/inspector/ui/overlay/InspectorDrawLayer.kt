@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.text.rememberTextMeasurer
-import io.thernal.console.designsystem.foundation.theme.Theme
 import io.thernal.console.inspector.ConsoleInspector
 import io.thernal.console.inspector.ui.engine.InspectorEngine
 import io.thernal.console.inspector.ui.engine.InspectorMeasure
@@ -37,20 +36,7 @@ internal fun InspectorDrawLayer() {
     val tick by rememberFrameTick(isActive = hasLiveContent)
     val measurer = rememberTextMeasurer()
     var origin by remember { mutableStateOf(Offset.Zero) }
-    val colors = Theme.colors
-    val style = remember(colors) {
-        InspectorDrawStyle(
-            bounds = colors.info,
-            flash = colors.warning,
-            selection = colors.primary01,
-            anchor = colors.success,
-            padding = colors.warning,
-            measurement = colors.danger,
-            labelBackground = colors.background1,
-            labelText = Theme.typography.label03.copy(color = colors.content01),
-            heat = HeatColors(cold = colors.info, warm = colors.warning, hot = colors.danger),
-        )
-    }
+    val style = rememberInspectorDrawStyle()
     val scene = InspectorDrawScene(
         config = config,
         snapshot = snapshot,
