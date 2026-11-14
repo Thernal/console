@@ -5,6 +5,11 @@ What is new in each release of Console. A release's notes on GitHub are its sect
 for someone using Console, not for someone reading the code; the commits follow anyway. Releases before 1.0.0-rc.1
 have their notes on their GitHub releases only.
 
+## Unreleased
+
+- **Your own agent tools can answer with images.** In a tool's `run`, `call.attach(AgentImage(bytes = png, name =
+  "…"))` adds an image beside the text; the agent gets it as MCP image content and console-mcp saves it as a file.
+
 ## 1.0.0-rc.2 — 2026-11-13
 
 - **The UI inspector no longer crashes iOS apps.** Since the inspector came in 0.2.9, an iOS app with it on could

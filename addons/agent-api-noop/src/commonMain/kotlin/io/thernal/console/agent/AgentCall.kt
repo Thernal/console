@@ -6,4 +6,6 @@ class AgentCall(values: Map<String, Any?>) {
     operator fun <T> get(arg: AgentArg<T>): T {
         throw UnsupportedOperationException("Agent tools never run in release")
     }
+
+    fun attach(image: AgentImage) = Unit
 }

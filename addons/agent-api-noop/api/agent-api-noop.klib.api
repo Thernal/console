@@ -62,6 +62,7 @@ final class io.thernal.console.agent/AgentCall { // io.thernal.console.agent/Age
     constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/Any?>) // io.thernal.console.agent/AgentCall.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.Any?>){}[0]
 
     final fun <#A1: kotlin/Any?> get(io.thernal.console.agent/AgentArg<#A1>): #A1 // io.thernal.console.agent/AgentCall.get|get(io.thernal.console.agent.AgentArg<0:0>){0§<kotlin.Any?>}[0]
+    final fun attach(io.thernal.console.agent/AgentImage) // io.thernal.console.agent/AgentCall.attach|attach(io.thernal.console.agent.AgentImage){}[0]
 }
 
 final class io.thernal.console.agent/AgentConfig { // io.thernal.console.agent/AgentConfig|null[0]
@@ -112,6 +113,22 @@ final class io.thernal.console.agent/AgentConfig { // io.thernal.console.agent/A
 }
 
 final class io.thernal.console.agent/AgentEntries // io.thernal.console.agent/AgentEntries|null[0]
+
+final class io.thernal.console.agent/AgentImage { // io.thernal.console.agent/AgentImage|null[0]
+    constructor <init>(kotlin/ByteArray, kotlin/String, kotlin/String = ...) // io.thernal.console.agent/AgentImage.<init>|<init>(kotlin.ByteArray;kotlin.String;kotlin.String){}[0]
+
+    final val bytes // io.thernal.console.agent/AgentImage.bytes|{}bytes[0]
+        final fun <get-bytes>(): kotlin/ByteArray // io.thernal.console.agent/AgentImage.bytes.<get-bytes>|<get-bytes>(){}[0]
+    final val mimeType // io.thernal.console.agent/AgentImage.mimeType|{}mimeType[0]
+        final fun <get-mimeType>(): kotlin/String // io.thernal.console.agent/AgentImage.mimeType.<get-mimeType>|<get-mimeType>(){}[0]
+    final val name // io.thernal.console.agent/AgentImage.name|{}name[0]
+        final fun <get-name>(): kotlin/String // io.thernal.console.agent/AgentImage.name.<get-name>|<get-name>(){}[0]
+
+    final object Companion { // io.thernal.console.agent/AgentImage.Companion|null[0]
+        final const val PNG // io.thernal.console.agent/AgentImage.Companion.PNG|{}PNG[0]
+            final fun <get-PNG>(): kotlin/String // io.thernal.console.agent/AgentImage.Companion.PNG.<get-PNG>|<get-PNG>(){}[0]
+    }
+}
 
 final class io.thernal.console.agent/AgentRecord { // io.thernal.console.agent/AgentRecord|null[0]
     constructor <init>(kotlin/String, kotlin/Long, kotlin/String, kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ...) // io.thernal.console.agent/AgentRecord.<init>|<init>(kotlin.String;kotlin.Long;kotlin.String;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]

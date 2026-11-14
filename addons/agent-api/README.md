@@ -53,6 +53,11 @@ AgentRegistry.register(
 | `describe<T>(summary, detail, fields)` | How logs of exactly `T` look in every log feed. Without one: the first message line, `toShareText()`, no fields. |
 | `redact(vararg keys)` | Keys whose values never leave the app, in every feed and tool result. |
 
+A tool can answer with images beside its text, such as a screenshot: `call.attach(AgentImage(bytes = png, name =
+"screen"))` in `run`. The agent sees each one as MCP image content, and the hub saves it on the computer and names the
+file in the answer. Keep an image under about 2.5 MB: it travels base64 in one frame of at most 4 MB, and one that does
+not fit is left out with a note. Redaction does not reach into images.
+
 ### Tool arguments
 
 Each argument function returns a typed handle; read it in `run` with `call[handle]`.
